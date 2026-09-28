@@ -8,6 +8,7 @@ import slimeknights.mantle.client.book.repository.FileRepository;
 import slimeknights.mantle.client.book.transformer.BookTransformer;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.client.book.content.AmmoMaterialContent;
+import slimeknights.tconstruct.library.client.book.content.AbstractMaterialContent;
 import slimeknights.tconstruct.library.client.book.content.ArmorMaterialContent;
 import slimeknights.tconstruct.library.client.book.content.ContentMaterialSkull;
 import slimeknights.tconstruct.library.client.book.content.ContentModifier;
@@ -16,6 +17,11 @@ import slimeknights.tconstruct.library.client.book.content.FluidEffectContent;
 import slimeknights.tconstruct.library.client.book.content.MeleeHarvestMaterialContent;
 import slimeknights.tconstruct.library.client.book.content.RangedMaterialContent;
 import slimeknights.tconstruct.library.client.book.content.TooltipShowcaseContent;
+import slimeknights.tconstruct.library.client.book.content.material.LacesMaterialContent;
+import slimeknights.tconstruct.library.client.book.content.material.RibcageMaterialContent;
+import slimeknights.tconstruct.library.client.book.content.material.ShellMaterialContent;
+import slimeknights.tconstruct.library.client.book.content.material.SlimeMaterialContent;
+import slimeknights.tconstruct.library.client.recipe.ClientRecipeCache;
 import slimeknights.tconstruct.library.client.book.sectiontransformer.FluidEffectInjectingTransformer;
 import slimeknights.tconstruct.library.client.book.sectiontransformer.ModifierSectionTransformer;
 import slimeknights.tconstruct.library.client.book.sectiontransformer.ModifierTagInjectorTransformer;
@@ -31,6 +37,8 @@ import slimeknights.tconstruct.tools.stats.HandleMaterialStats;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
 import slimeknights.tconstruct.tools.stats.LimbMaterialStats;
 import slimeknights.tconstruct.tools.stats.SkullStats;
+import slimeknights.tconstruct.tools.stats.RepairStats;
+import slimeknights.tconstruct.tools.stats.SlimeStats;
 import slimeknights.tconstruct.tools.stats.StatlessMaterialStats;
 
 import java.util.Comparator;
@@ -57,6 +65,7 @@ public class TinkerBook extends BookData {
   public static final BookData FANTASTIC_FOUNDRY = BookLoader.registerBook(FANTASTIC_FOUNDRY_ID, false, false);
   public static final BookData ENCYCLOPEDIA      = BookLoader.registerBook(ENCYCLOPEDIA_ID,      false, false);
   private static final BookData[] ALL_BOOKS = {MATERIALS_AND_YOU, PUNY_SMELTING, MIGHTY_SMELTING, TINKERS_GADGETRY, FANTASTIC_FOUNDRY, ENCYCLOPEDIA};
+  private static long recipeRevision = -1;
 
   /**
    * Initializes the books
@@ -68,6 +77,11 @@ public class TinkerBook extends BookData {
     BookLoader.registerPageType(RangedMaterialContent.ID,       RangedMaterialContent.class);
     BookLoader.registerPageType(AmmoMaterialContent.ID,         AmmoMaterialContent.class);
     BookLoader.registerPageType(ArmorMaterialContent.ID,        ArmorMaterialContent.class);
+    BookLoader.registerPageType(SlimeMaterialContent.ID,        SlimeMaterialContent.class);
+    BookLoader.registerPageType(ContentMaterialSkull.ID,        ContentMaterialSkull.class);
+    BookLoader.registerPageType(RibcageMaterialContent.ID,       RibcageMaterialContent.class);
+    BookLoader.registerPageType(ShellMaterialContent.ID,         ShellMaterialContent.class);
+    BookLoader.registerPageType(LacesMaterialContent.ID,         LacesMaterialContent.class);
     BookLoader.registerPageType(ContentTool.ID, ContentTool.class);
     BookLoader.registerPageType(ContentModifier.ID, ContentModifier.class);
     BookLoader.registerPageType(TooltipShowcaseContent.ID, TooltipShowcaseContent.class);
@@ -117,6 +131,10 @@ public class TinkerBook extends BookData {
       StatlessMaterialStats.SHIELD_CORE.getIdentifier());
     TierRangeMaterialSectionTransformer.registerMaterialType(getResource("skull"), ContentMaterialSkull::new,
       Comparator.comparing(TierRangeMaterialSectionTransformer.tagOrder(TinkerTags.Materials.SLIMESKULL)), SkullStats.ID);
+    TierRangeMaterialSectionTransformer.registerMaterialType(SlimeStats.ID, SlimeMaterialContent::new);
+    TierRangeMaterialSectionTransformer.registerMaterialType(RepairStats.RIBCAGE.getStatsId(), RibcageMaterialContent::new);
+    TierRangeMaterialSectionTransformer.registerMaterialType(RepairStats.SHELL.getStatsId(), ShellMaterialContent::new);
+    TierRangeMaterialSectionTransformer.registerMaterialType(RepairStats.LACES.getStatsId(), LacesMaterialContent::new);
 
     // add transformers that load modifiers from tags
     ToolSectionTransformer armorTransformer = new ToolSectionTransformer("armor");
@@ -185,6 +203,16 @@ public class TinkerBook extends BookData {
    * @return Book
    */
   public static BookData getBook(BookType bookType) {
+    // Recipe/material packets and disconnect each publish a new revision. Rebuild on the next
+    // open instead of replacing the user's current page while they are reading during a reload.
+    long revision = ClientRecipeCache.getSnapshot().revision();
+    if (recipeRevision != revision) {
+      AbstractMaterialContent.resetPartCache();
+      for (BookData book : ALL_BOOKS) {
+        book.reset();
+      }
+      recipeRevision = revision;
+    }
     return switch (bookType) {
       case MATERIALS_AND_YOU -> MATERIALS_AND_YOU;
       case PUNY_SMELTING     -> PUNY_SMELTING;

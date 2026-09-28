@@ -49,6 +49,11 @@ public record CustomMaterialName(int index, String suffix) implements ToolNameHo
     if (IMaterial.UNKNOWN_ID.equals(material)) {
       return itemName;
     }
+    return Component.translatable(TooltipUtil.KEY_FORMAT, getMaterialName(material, suffix), itemName);
+  }
+
+  /** Material name shared by tools and material book pages. */
+  public static Component getMaterialName(MaterialVariantId material, String suffix) {
     // translate the suffixed key
     Component component;
     find: {
@@ -69,6 +74,6 @@ public record CustomMaterialName(int index, String suffix) implements ToolNameHo
       // if both failed, use the regular key
       component = MaterialTooltipCache.getDisplayName(material);
     }
-    return Component.translatable(TooltipUtil.KEY_FORMAT, component, itemName);
+    return component;
   }
 }
