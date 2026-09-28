@@ -2,7 +2,7 @@ param(
     [ValidateSet('compileJava', 'jar', 'craftingRegression', 'returningFixtureJar')]
     [string[]]$Tasks = @('jar', 'craftingRegression', 'returningFixtureJar'),
     [ValidatePattern('^[A-Za-z0-9_.-]+$')]
-    [string]$Version = '3.12.2-arthur.3'
+    [string]$Version = '3.12.2-arthur.4'
 )
 $ErrorActionPreference = 'Stop'
 $checkout = Split-Path -Parent $PSScriptRoot

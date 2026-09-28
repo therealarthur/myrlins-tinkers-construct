@@ -430,7 +430,7 @@ tasks.register('craftingRegression') {
 tasks.register('returningFixtureJar', Jar) {
     dependsOn tasks.named('returningFixtureClasses')
     archiveBaseName = 'aebm-continuum-returning-fixture'
-    archiveVersion = '0.0.3'
+    archiveVersion = '0.0.4'
     from sourceSets.returningFixture.output
     from('LICENSE') { into 'META-INF/licenses/continuum' }
 }
