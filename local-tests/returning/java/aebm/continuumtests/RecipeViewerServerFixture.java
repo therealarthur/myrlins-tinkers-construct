@@ -13,6 +13,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeMap;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -88,6 +90,15 @@ public final class RecipeViewerServerFixture {
           require(ingredient.test(stack), "material display must satisfy the real ingredient");
         }
         require(!ingredient.test(new ItemStack(part)), "plain part must fail the material/component ingredient");
+        var anyMaterial = MaterialIngredient.of(part).toVanilla();
+        var alternatives = MaterialRecipeCache.getDisplayItems(anyMaterial);
+        require(!alternatives.isEmpty(), "ANY material ingredient must retain valid material alternatives");
+        for (ItemStack stack : alternatives) {
+          var material = IMaterialItem.getMaterialFromStack(stack);
+          require(!material.equals(IMaterial.UNKNOWN_ID), "unsupported material must not become an unknown-material display");
+          require(part.canUseMaterial(material.getMaterialId()), "displayed material must be usable by the part");
+          require(anyMaterial.test(stack), "ANY material display must satisfy its actual ingredient");
+        }
       });
       test("material_melting_display_matches_runtime", this::materialMelting);
       test("material_casting_amount_and_cooling", () -> casting(MaterialCastingRecipe.class));
@@ -97,7 +108,10 @@ public final class RecipeViewerServerFixture {
       test("missing_required_cast_differs_from_no_cast", () -> {
         var id = Identifier.fromNamespaceAndPath("aebmcontinuumtests", "missing_cast");
         var missing = LegacyIngredientType.ofTag(TagKey.create(Registries.ITEM, id));
-        var serializer = (TypeAwareRecipeSerializer<?>)TinkerSmeltery.tableRecipeSerializer.get();
+        TypeAwareRecipeSerializer<ItemCastingRecipe> serializer = new TypeAwareRecipeSerializer<>() {
+          @Override public RecipeType<?> getType() { return TinkerRecipeTypes.CASTING_TABLE.get(); }
+          @Override public RecipeSerializer<ItemCastingRecipe> getSerializer() { return TinkerSmeltery.tableRecipeSerializer.get(); }
+        };
         var required = new ItemCastingRecipe(serializer, id, "", missing, FluidIngredient.EMPTY,
           ItemOutput.fromItem(Items.IRON_INGOT), 20, false, false);
         var absent = new ItemCastingRecipe(serializer, id, "", EmptyIngredient.VANILLA, FluidIngredient.EMPTY,

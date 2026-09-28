@@ -161,6 +161,7 @@ public class MaterialIngredient extends NestedIngredient {
       // find all materials matching the filter; note this only shows craftable material variants
       items = items.flatMap(stack -> MaterialRecipeCache.getAllVariants().stream()
         .filter(material::matches)
+        .filter(mat -> !(stack.getItem() instanceof IMaterialItem part) || part.canUseMaterial(mat.getMaterialId()))
         .map(mat -> IMaterialItem.withMaterial(stack, mat))
         .filter(candidate -> !candidate.isEmpty()));
       materialStacks = items.distinct().toArray(ItemStack[]::new);
