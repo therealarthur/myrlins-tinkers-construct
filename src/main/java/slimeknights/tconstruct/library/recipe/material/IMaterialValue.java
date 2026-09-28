@@ -39,6 +39,17 @@ public interface IMaterialValue {
     return ItemStack.EMPTY;
   }
 
+  /** Gets the unspent material from crafting an item of the given cost. */
+  default ItemStack getLeftover(int itemCost) {
+    int remainder = getRemainder(itemCost);
+    if (remainder > 0 && hasLeftover()) {
+      ItemStack leftover = getLeftover();
+      leftover.setCount(leftover.getCount() * remainder / getNeeded());
+      return leftover;
+    }
+    return ItemStack.EMPTY;
+  }
+
 
   /* Helpers */
 
@@ -72,6 +83,14 @@ public interface IMaterialValue {
    * @return  Number of input to consume
    */
   default int getRemainder(int itemCost) {
-    return itemCost * this.getNeeded() % this.getValue();
+    int value = getValue();
+    if (value == 0) {
+      return 0;
+    }
+    int remainder = (value - itemCost * getNeeded()) % value;
+    if (remainder < 0) {
+      remainder += value;
+    }
+    return remainder;
   }
 }

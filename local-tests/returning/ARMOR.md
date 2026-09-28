@@ -1,0 +1,11 @@
+# Armor and material fixture
+
+Run `aebmarmortest` in the coordinator's disposable server with the development fixture JAR. The fixture registers its command automatically and does not change the existing Returning/crafting/persistence fixture entry points. Expected output is ten `AEBM_ARMOR_PASS` lines and `AEBM_ARMOR_SUMMARY passed=10 failed=0`.
+
+It uses loaded material/modifier/recipe data, actual ToolStack builders, registry-aware ItemStack codecs and binary NBT roundtrips. It checks the three restored material IDs, cuirass support and venom material values; slimesuit trim/rebalance slot selection; doubled ribcage traits; one-part legacy skull remapping and idempotence; complete old skull and old/new skin preservation after serialization and stat rebuild; five loaded swap recipes covering six Travelers targets; exact costs and log-to-plank refunds; and the actual rugged/airborn modifier hooks.
+
+The swap test uses real TinkerStationBlockEntity and TinkerStationContainerWrapper instances, then calls the recipe's validation and input update methods. One custom recipe adds a leather extra requirement to a leather material swap: with stacks of five and four leather, the cost is three material items plus one extra item. The corrected transaction leaves five leather. Its negative control calls the same production shrink code but returns false, restoring the upstream loop behavior: it leaves two leather. That comparison demonstrates the extra consumption without substituting a model of the transaction.
+
+Objects stay above world build height and are never installed in chunks. This fixture does not test screen interaction, output-slot/tool-slot commit code, recipe viewer focus/display, client material rendering, full process restarts, or naturally acquired old saves. It preserves complete legacy skin variant identifiers rather than rewriting them; they continue using their backing vine material's traits. Conditional compat materials such as necronium remain defined but are not asserted in a server lacking their required external tags.
+
+This source was added without running a build or server from the armor subagent. Build/runtime results belong in the coordinator's validation record.
