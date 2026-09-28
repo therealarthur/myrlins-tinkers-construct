@@ -685,5 +685,10 @@ public class ModifierManager extends SimplePreparableReloadListener<Map<Identifi
     public boolean shouldDisplay(boolean advanced) {
       return false;
     }
+
+    @Override
+    public boolean shouldDisplay(slimeknights.tconstruct.library.modifiers.util.ModifierTooltip context) {
+      return false;
+    }
   }
 }

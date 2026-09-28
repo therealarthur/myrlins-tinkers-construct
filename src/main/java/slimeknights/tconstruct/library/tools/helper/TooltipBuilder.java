@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ToolMaterial;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
+import slimeknights.tconstruct.library.modifiers.util.ModifierTooltip;
 import slimeknights.tconstruct.library.tools.SlotType;
 import slimeknights.tconstruct.library.tools.definition.module.mining.MiningTierToolHook;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -203,14 +204,21 @@ public class TooltipBuilder {
     return this;
   }
 
-  /**
-   * Adds the modifier information to the tooltip
-   *
-   * @return the tooltip builder
-   */
+  /** @deprecated use {@link #addModifierInfo(ModifierTooltip, RegistryAccess)} */
+  @Deprecated(forRemoval = true)
   public TooltipBuilder addModifierInfo(boolean advanced, @Nullable RegistryAccess access) {
     for (ModifierEntry entry : tool.getModifierList()) {
       if (entry.getModifier().shouldDisplay(advanced)) {
+        this.tooltips.add(entry.getModifier().getDisplayName(tool, entry, access));
+      }
+    }
+    return this;
+  }
+
+  /** Adds modifier names visible in the requested tooltip context. */
+  public TooltipBuilder addModifierInfo(ModifierTooltip context, @Nullable RegistryAccess access) {
+    for (ModifierEntry entry : tool.getModifierList()) {
+      if (entry.getModifier().shouldDisplay(context)) {
         this.tooltips.add(entry.getModifier().getDisplayName(tool, entry, access));
       }
     }

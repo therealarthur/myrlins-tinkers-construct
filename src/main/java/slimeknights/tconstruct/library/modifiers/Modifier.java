@@ -18,6 +18,7 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.ModifierManager.ModifierRegistrationEvent;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedContext;
 import slimeknights.tconstruct.library.modifiers.util.ModifierLevelDisplay;
+import slimeknights.tconstruct.library.modifiers.util.ModifierTooltip;
 import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
@@ -296,13 +297,16 @@ public class Modifier {
 
   /* General hooks */
 
-  /**
-   * Determines if the modifier should display
-   * @param advanced  If true, in an advanced view such as the tinker station. False for tooltips
-   * @return  True if the modifier should show
-   */
+  /** @deprecated use {@link #shouldDisplay(ModifierTooltip)} */
+  @Deprecated(forRemoval = true)
   public boolean shouldDisplay(boolean advanced) {
     return true;
+  }
+
+  /** Determines if the modifier should display in the given item, table or book context. */
+  public boolean shouldDisplay(ModifierTooltip context) {
+    // Preserve old overrides for existing contexts; the three material contexts previously showed all traits.
+    return context.isNew() || shouldDisplay(context == ModifierTooltip.TINKER_STATION);
   }
 
 
