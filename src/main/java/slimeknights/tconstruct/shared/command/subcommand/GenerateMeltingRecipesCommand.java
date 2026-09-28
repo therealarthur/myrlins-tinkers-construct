@@ -84,7 +84,8 @@ public class GenerateMeltingRecipesCommand {
   public static final Identifier MELTING_CONFIGURATION = TConstruct.getResource("command/generate_melting_recipes.json");
   private static final String KEY_SUCCESS = TConstruct.makeTranslationKey("command", "generate.melting_recipes");
   private static final SimpleCommandExceptionType CONFIG_INVALID = new SimpleCommandExceptionType(
-    TConstruct.makeTranslation("command", "generate.melting_recipes.invalid_config"));
+    Component.translatableWithFallback(TConstruct.makeTranslationKey("command", "generate.melting_recipes.invalid_config"),
+      "Missing or invalid melting recipe generation configuration: %s", MELTING_CONFIGURATION.toString()));
   // These exact classes consume one item per placement slot and have a fixed output. Subclasses may not.
   private static final Set<Class<?>> SUPPORTED_RECIPES = Set.of(ShapedRecipe.class, ShapelessRecipe.class,
     SmeltingRecipe.class, BlastingRecipe.class, SmokingRecipe.class, CampfireCookingRecipe.class, StonecutterRecipe.class);

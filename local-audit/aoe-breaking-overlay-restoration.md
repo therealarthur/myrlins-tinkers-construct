@@ -1,0 +1,13 @@
+# Extra-block mining cracks, 2026-09-28
+
+`ToolRenderEvents.renderBlockDamageProgress` now uses NeoForge `ExtractLevelRenderStateEvent` and the actual target `LevelRenderState.blockBreakingRenderStates` list. The old, wholly commented implementation and its inaccurate claim that no equivalent public pipeline exists have been removed.
+
+Cached `26.1.2.109` NeoForge sources document this event as firing after all vanilla level states are extracted. The patched target `LevelRenderer` confirms the order: `extractBlockDestroyAnimation` fills the list, the extraction event is posted, and later `submitBlockDestroyAnimation` traverses the list, obtains each model, and calls `SubmitNodeCollector.submitBreakingBlockModel`. `BlockBreakingRenderState` is a public record of `BlockPos`, `BlockState`, and crack progress. This change needs no access transformers, custom render pipeline, or direct buffer manipulation.
+
+The original official `v3.12.1.231` constraints are retained: active `gameMode.isDestroying()`, a local player and camera, a main-hand `HARVEST` tool, a block hit, an unbroken tool, and an effective tool for the target block. A real target crack state is required; progress is never synthesized. The iterator uses `AOEMatchType.BREAKING`, with the original `BlockSideHitListener` face, and visits at most the original 60 positions per frame.
+
+The adapter appends immutable snapshots. It skips the origin and positions with an existing vanilla/other-mod crack state, preserving those states. It also skips air, unloaded chunks, and positions outside the world border. No blocks, chunk load state, or server mining progress are changed. Minecraft still chooses which block render shapes support breaking models. The current frame's list is rebuilt by vanilla every extraction, so no separate world/logout cache is added.
+
+Source/API review and `git diff --check` are the evidence produced by this subtask. No client, build, or server was launched here. The parent compiled the preceding client/command source successfully in `build-20260928-032903.log`; this overlay's later compilation and graphical acceptance remain pending. Visual checks should cover hammer/excavator mining stages 0–9, stopping or changing target, non-effective/broken tools, AOE toggles, the 60-position cap, chunk/world boundaries, overlapping cracks from another miner, and switching worlds. This is restoration of the rendering path, not proof that it has been observed on screen.
+
+The same small follow-up adds an English fallback for the command's invalid-configuration message: the existing `command.tconstruct.generate.melting_recipes.invalid_config` key has no English entry. Existing translations can still override the fallback.

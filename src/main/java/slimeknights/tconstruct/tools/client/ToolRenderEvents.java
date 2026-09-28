@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.ShapeRenderer;
+import net.minecraft.client.renderer.state.level.BlockBreakingRenderState;
 import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.core.BlockPos;
@@ -16,19 +17,24 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.CustomBlockOutlineRenderer;
 import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent;
+import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
 import slimeknights.tconstruct.library.tools.definition.module.aoe.AreaOfEffectIterator.AOEMatchType;
 import slimeknights.tconstruct.library.tools.definition.module.mining.IsEffectiveToolHook;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.utils.BlockSideHitListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.List;
 
 public class ToolRenderEvents {
@@ -113,97 +119,61 @@ public class ToolRenderEvents {
       return false;
     }
   }
-  /** Renders the block damage process on the extra blocks */
-    // TODO NeoForge 26.1: no equivalent public block-damage overlay pipeline is available.
-  // The old destroyingBlocks state, destroy texture render types, decal generator, and
-  // ModelBlockRenderer.renderBreakingTexture were removed; do not replace this with a no-op renderer.
 
-  /*
+  /** Adds extra mining cracks to the state consumed by Minecraft's normal breaking-model renderer. */
   @SubscribeEvent
-  static void renderBlockDamageProgress(RenderLevelStageEvent event) {
-        // Historical stage; retained only inside the disabled reference implementation.
-
-    if (event.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) {
+  static void renderBlockDamageProgress(ExtractLevelRenderStateEvent event) {
+    Minecraft minecraft = Minecraft.getInstance();
+    if (minecraft.gameMode == null || !minecraft.gameMode.isDestroying() || minecraft.getCameraEntity() == null) {
       return;
     }
-
-    // validate required variables are set
-    MultiPlayerGameMode controller = Minecraft.getInstance().gameMode;
-    if (controller == null || !controller.isDestroying()) {
+    Level world = event.getLevel();
+    Player player = minecraft.player;
+    if (player == null || player.level() != world) {
       return;
     }
-    Level world = Minecraft.getInstance().level;
-    Player player = Minecraft.getInstance().player;
-    if (world == null || player == null || Minecraft.getInstance().getCameraEntity() == null) {
-      return;
-    }
-    // must have the right tags
     ItemStack stack = player.getMainHandItem();
-    if (stack.isEmpty() || !stack.is(TinkerTags.Items.HARVEST)) {
+    if (stack.isEmpty() || !stack.is(TinkerTags.Items.HARVEST)
+        || !(minecraft.hitResult instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) {
       return;
     }
-    // must be targeting a block
-    HitResult result = Minecraft.getInstance().hitResult;
-    if (result == null || result.getType() != Type.BLOCK) {
-      return;
-    }
-    // must not be broken, must be right interface
     ToolStack tool = ToolStack.from(stack);
     if (tool.isBroken()) {
       return;
     }
-    // find breaking progress
-    BlockHitResult blockTrace = (BlockHitResult)result;
-    BlockPos target = blockTrace.getBlockPos();
-    BlockDestructionProgress progress = null;
-    for (Int2ObjectMap.Entry<BlockDestructionProgress> entry : Minecraft.getInstance().levelRenderer.destroyingBlocks.int2ObjectEntrySet()) {
-      if (entry.getValue().getPos().equals(target)) {
-        progress = entry.getValue();
-        break;
-      }
-    }
-    if (progress == null) {
-      return;
-    }
-    // determine extra blocks to highlight
+    BlockPos target = hit.getBlockPos();
     BlockState state = world.getBlockState(target);
-    // must not be broken, and the tool definition must be effective
     if (!IsEffectiveToolHook.isEffective(tool, state)) {
       return;
     }
-    UseOnContext context = new UseOnContext(world, player, InteractionHand.MAIN_HAND, stack, blockTrace.withDirection(BlockSideHitListener.getClientSideHit()));
-    Iterator<BlockPos> extraBlocks = tool.getHook(ToolHooks.AOE_ITERATOR).getBlocks(tool, context, state, AreaOfEffectIterator.AOEMatchType.BREAKING).iterator();
-    if (!extraBlocks.hasNext()) {
+
+    // Vanilla has already extracted this frame's cracks when the event fires. Do not invent
+    // progress or replace another miner's state for a block that is already in the list.
+    List<BlockBreakingRenderState> breaking = event.getRenderState().blockBreakingRenderStates;
+    Set<BlockPos> existing = new HashSet<>();
+    int progress = -1;
+    for (BlockBreakingRenderState entry : breaking) {
+      existing.add(entry.blockPos());
+      if (entry.blockPos().equals(target)) {
+        progress = Math.max(progress, entry.progress());
+      }
+    }
+    if (progress < 0 || progress > 9) {
       return;
     }
-
-    // set up buffers
-    PoseStack matrices = event.getPoseStack();
-    matrices.pushPose();
-    MultiBufferSource.BufferSource vertices = event.getLevelRenderer().renderBuffers.crumblingBufferSource();
-    VertexConsumer vertexBuilder = vertices.getBuffer(ModelBakery.DESTROY_TYPES.get(progress.getProgress()));
-
-    // finally, render the blocks
-    Camera renderInfo = Minecraft.getInstance().gameRenderer.getMainCamera();
-    double x = renderInfo.getPosition().x;
-    double y = renderInfo.getPosition().y;
-    double z = renderInfo.getPosition().z;
-    ModelBlockRenderer dispatcher = Minecraft.getInstance().getBlockRenderer();
-    int rendered = 0;
-    do {
-      BlockPos pos = extraBlocks.next();
-      matrices.pushPose();
-      matrices.translate(pos.getX() - x, pos.getY() - y, pos.getZ() - z);
-      PoseStack.Pose entry = matrices.last();
-      VertexConsumer blockBuilder = new SheetedDecalTextureGenerator(vertexBuilder, entry.pose(), entry.normal(), 1);
-      // TODO: is it practical to fetch model data here?
-      dispatcher.renderBreakingTexture(world.getBlockState(pos), pos, world, matrices, blockBuilder);
-      matrices.popPose();
-      rendered++;
-    } while (rendered < MAX_BLOCKS && extraBlocks.hasNext());
-    // finish rendering
-    matrices.popPose();
-    vertices.endBatch();
+    UseOnContext context = new UseOnContext(world, player, InteractionHand.MAIN_HAND, stack,
+      hit.withDirection(BlockSideHitListener.getClientSideHit()));
+    Iterator<BlockPos> extraBlocks = tool.getHook(ToolHooks.AOE_ITERATOR).getBlocks(tool, context, state, AOEMatchType.BREAKING).iterator();
+    for (int count = 0; count < MAX_BLOCKS && extraBlocks.hasNext(); count++) {
+      BlockPos pos = extraBlocks.next().immutable();
+      if (pos.equals(target) || existing.contains(pos) || !world.hasChunkAt(pos) || !world.getWorldBorder().isWithinBounds(pos)) {
+        continue;
+      }
+      BlockState extraState = world.getBlockState(pos);
+      if (!extraState.isAir()) {
+        breaking.add(new BlockBreakingRenderState(pos, extraState, progress));
+        existing.add(pos);
+      }
+    }
   }
-  */
 }
