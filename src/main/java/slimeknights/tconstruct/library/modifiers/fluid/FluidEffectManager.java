@@ -2,6 +2,7 @@ package slimeknights.tconstruct.library.modifiers.fluid;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.conditions.ICondition.IContext;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -52,9 +52,6 @@ public class FluidEffectManager extends SimpleJsonResourceReloadListener<JsonEle
   /** Empty spilling fluid instance */
   private static final FluidEffects EMPTY = new FluidEffects(FluidIngredient.EMPTY, List.of(), List.of(), true);
 
-  /** Condition context for recipe loading */
-  private IContext conditionContext = IContext.EMPTY;
-
   private FluidEffectManager() {
     super(JSON_ELEMENT_CODEC, FileToIdConverter.json(FOLDER));
   }
@@ -68,7 +65,6 @@ public class FluidEffectManager extends SimpleJsonResourceReloadListener<JsonEle
   /** Adds the managers as datapack listeners */
   private void addDataPackListeners(final AddServerReloadListenersEvent event) {
     event.addListener(TConstruct.getResource("fluid_effects"), this);
-    conditionContext = event.getConditionContext();
   }
 
   /** Creates context for modifier parsing */
@@ -88,11 +84,11 @@ public class FluidEffectManager extends SimpleJsonResourceReloadListener<JsonEle
         JsonObject json = GsonHelper.convertToJsonObject(entry.getValue(), "fluid_effect");
 
         // want to parse condition without parsing effects, as the effect serializer may be missing
-        if (!ICondition.conditionsMatched(JsonOps.INSTANCE, json)) {
+        if (!ICondition.conditionsMatched(makeConditionalOps(), json)) {
           continue;
         }
-        fluids.add(new FluidEffects.Entry(key, FluidEffects.LOADABLE.deserialize(json, contextBuilder(key).put(ContextKey.CONDITION_CONTEXT, conditionContext).build())));
-      } catch (JsonSyntaxException e) {
+        fluids.add(new FluidEffects.Entry(key, FluidEffects.LOADABLE.deserialize(json, contextBuilder(key).put(ContextKey.CONDITION_CONTEXT, getContext()).build())));
+      } catch (JsonParseException e) {
         TConstruct.LOG.error("Failed to load fluid effect {}", key, e);
       }
     }

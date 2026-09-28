@@ -1,6 +1,8 @@
 param(
     [ValidateSet('compileJava', 'jar', 'craftingRegression', 'returningFixtureJar')]
-    [string[]]$Tasks = @('jar', 'craftingRegression', 'returningFixtureJar')
+    [string[]]$Tasks = @('jar', 'craftingRegression', 'returningFixtureJar'),
+    [ValidatePattern('^[A-Za-z0-9_.-]+$')]
+    [string]$Version = '3.12.2-arthur.2'
 )
 $ErrorActionPreference = 'Stop'
 $checkout = Split-Path -Parent $PSScriptRoot
@@ -31,7 +33,7 @@ New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
 $logPath = Join-Path $logDirectory ('build-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
 Push-Location $checkout
 try {
-    & ./gradlew.bat --no-daemon --no-configuration-cache --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx1G' '-Dorg.gradle.java.installations.auto-download=false' '-PARTIFACT_VERSION=3.12.2-arthur.1' -x downloadAssets @Tasks 2>&1 | Tee-Object -FilePath $logPath
+    & ./gradlew.bat --no-daemon --no-configuration-cache --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx1G' '-Dorg.gradle.java.installations.auto-download=false' "-PARTIFACT_VERSION=$Version" -x downloadAssets @Tasks 2>&1 | Tee-Object -FilePath $logPath
     $buildExit = $LASTEXITCODE
     Write-Output "Build log: $logPath"
     exit $buildExit

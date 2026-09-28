@@ -26,7 +26,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.conditions.ICondition.IContext;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import slimeknights.mantle.util.JsonHelper;
@@ -70,9 +69,6 @@ public class StationSlotLayoutLoader extends SimpleJsonResourceReloadListener<Js
   @Getter
   private List<StationSlotLayout> sortedSlots = Collections.emptyList();
 
-  /** Context for parsing conditions */
-  private IContext conditionContext = IContext.EMPTY;
-
   private StationSlotLayoutLoader() {
     super(JsonHelper.JSON_ELEMENT_CODEC, FileToIdConverter.json(FOLDER));
   }
@@ -101,7 +97,7 @@ public class StationSlotLayoutLoader extends SimpleJsonResourceReloadListener<Js
       try {
         // skip empty objects, allows disabling a slot at a lower datapack
         JsonObject object = GsonHelper.convertToJsonObject(value, "station_layout");
-        if (!object.entrySet().isEmpty() && ICondition.conditionsMatched(com.mojang.serialization.JsonOps.INSTANCE, object)) {
+        if (!object.entrySet().isEmpty() && ICondition.conditionsMatched(makeConditionalOps(), object)) {
           // just need a valid slot information
           StationSlotLayout layout = GSON.fromJson(object, StationSlotLayout.class);
           int size = layout.getInputSlots().size() + (layout.getToolSlot().isHidden() ? 0 : 1);
@@ -145,7 +141,6 @@ public class StationSlotLayoutLoader extends SimpleJsonResourceReloadListener<Js
   /** Adds the managers as datapack listeners */
   private void addDataPackListeners(final AddServerReloadListenersEvent event) {
     event.addListener(TConstruct.getResource("station_layouts"), this);
-    conditionContext = event.getConditionContext();
   }
 
 

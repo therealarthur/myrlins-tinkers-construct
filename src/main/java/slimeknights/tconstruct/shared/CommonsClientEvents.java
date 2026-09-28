@@ -39,8 +39,7 @@ public class CommonsClientEvents extends ClientEventBase {
 
   @SubscribeEvent
   static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-    // TODO 1.21.1: Fix FluidParticle inheritance (SingleQuadParticle -> getRenderType vs getLayer)
-    // event.registerSpecial((ParticleType<FluidParticleData>) TinkerCommons.fluidParticle.get(), new FluidParticle.Factory());
+    event.registerSpecial((ParticleType<FluidParticleData>) TinkerCommons.fluidParticle.get(), new FluidParticle.Factory());
   }
 
   private static Font unicodeRenderer;

@@ -5,6 +5,9 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
@@ -12,7 +15,7 @@ import slimeknights.mantle.util.JsonHelper;
 
 import java.util.Map;
 
-/** Stub replacing removed ApplyBonusCount formula classes */
+/** Vanilla bonus formulas used by modifier-driven loot functions on the current codec API. */
 public interface BonusFormula {
     int calculateNewCount(RandomSource random, int base, int level);
     Identifier getType();
@@ -35,15 +38,14 @@ public interface BonusFormula {
         }
     );
 
-    com.mojang.serialization.Codec<BonusFormula> CODEC = net.minecraft.resources.Identifier.CODEC.dispatch(
-        BonusFormula::getType,
-        id -> {
-            if (id.toString().equals("minecraft:binomial_with_bonus_count")) return BinomialWithBonusCount.MAP_CODEC;
-            if (id.toString().equals("minecraft:ore_drops")) return OreDrops.MAP_CODEC;
-            if (id.toString().equals("minecraft:uniform_bonus_count")) return UniformBonusCount.MAP_CODEC;
-            return OreDrops.MAP_CODEC;
-        }
+    Map<Identifier, MapCodec<? extends BonusFormula>> FORMULA_CODECS = ImmutableMap.of(
+        Identifier.withDefaultNamespace("binomial_with_bonus_count"), BinomialWithBonusCount.MAP_CODEC,
+        Identifier.withDefaultNamespace("ore_drops"), OreDrops.MAP_CODEC,
+        Identifier.withDefaultNamespace("uniform_bonus_count"), UniformBonusCount.MAP_CODEC
     );
+    Codec<Identifier> FORMULA_TYPE_CODEC = Identifier.CODEC.validate(id -> FORMULA_CODECS.containsKey(id)
+        ? DataResult.success(id) : DataResult.error(() -> "Unknown bonus formula: " + id));
+    Codec<BonusFormula> CODEC = FORMULA_TYPE_CODEC.dispatch(BonusFormula::getType, FORMULA_CODECS::get);
 
     class BinomialWithBonusCount implements BonusFormula {
         public static final com.mojang.serialization.MapCodec<BinomialWithBonusCount> MAP_CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(inst -> inst.group(
@@ -81,7 +83,11 @@ public interface BonusFormula {
 
         @Override
         public int calculateNewCount(RandomSource random, int base, int level) {
-            return base + random.nextInt(level + 1);
+            if (level > 0) {
+                int bonus = Math.max(random.nextInt(level + 2) - 1, 0);
+                return base * (bonus + 1);
+            }
+            return base;
         }
         @Override
         public Identifier getType() { return Identifier.fromNamespaceAndPath("minecraft", "ore_drops"); }

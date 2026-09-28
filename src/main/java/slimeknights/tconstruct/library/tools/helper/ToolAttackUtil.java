@@ -230,14 +230,16 @@ public class ToolAttackUtil {
 
     // removed: sword special attack check and logic, replaced by this
     Entity targetEntity = context.getTarget();
-    DamageSource damageSource = context.makeDamageSource();
-    targetEntity.hurt(damageSource, damage);
-    boolean didHit = damage > 0;
-
-    // reset hand to make sure we don't mess with vanilla tools
-    ModifierLootingHandler.setLootingSlot(attackerLiving, EquipmentSlot.MAINHAND);
-    // reset knockback if needed
-    enableKnockback(knockbackModifier);
+    DamageSource damageSource;
+    boolean didHit;
+    try {
+      damageSource = context.makeDamageSource();
+      didHit = targetEntity.hurtOrSimulate(damageSource, damage);
+    } finally {
+      // Restore temporary attack state even if a damage callback throws.
+      ModifierLootingHandler.setLootingSlot(attackerLiving, EquipmentSlot.MAINHAND);
+      enableKnockback(knockbackModifier);
+    }
 
     // if we failed to hit, fire failure hooks
     // alternatively, if we cannot hit this target, we are supposed to return true for the sake of special casing endermen,
@@ -417,17 +419,23 @@ public class ToolAttackUtil {
    */
   public static boolean hurtNoInvulnerableTime(Entity target, @Nullable LivingEntity living, DamageSource source, float damage) {
     // store last damage before secondary attack
-    // lastHurt is private in modern Minecraft; secondary hits rely on invulnerability reset only.
+    float oldLastDamage = living == null ? 0 : living.lastHurt;
 
     // set hurt resistance time to 0 because we always want to deal damage in traits
     int lastInvulnerableTime = target.invulnerableTime;
-    target.invulnerableTime = 0;
-    target.hurt(source, damage);
-    boolean hit = damage > 0;
-    // reset to the old time so bows work right
-    target.invulnerableTime = lastInvulnerableTime;
-    // TODO 1.21: restore lastHurt accumulation if an accessor becomes available.
-    return hit;
+    boolean hit = false;
+    try {
+      target.invulnerableTime = 0;
+      hit = target.hurtOrSimulate(source, damage);
+      return hit;
+    } finally {
+      // Reset the timer so secondary damage does not delay the next ordinary hit.
+      target.invulnerableTime = lastInvulnerableTime;
+      if (living != null) {
+        // Only accepted secondary hits add to the previous damage threshold.
+        living.lastHurt = hit ? living.lastHurt + oldLastDamage : oldLastDamage;
+      }
+    }
   }
 
   /**
@@ -462,15 +470,14 @@ public class ToolAttackUtil {
       knockbackResistance = disableKnockback(living);
     }
 
-    // hurt the target, bypassing invulnerability
-    boolean hit = hurtNoInvulnerableTime(target, living, source, damage);
-
-    // remove no knockback marker
-    if (noKnockback) {
-      enableKnockback(knockbackResistance);
+    try {
+      return hurtNoInvulnerableTime(target, living, source, damage);
+    } finally {
+      // An event listener throwing must not leave the temporary resistance behind.
+      if (noKnockback) {
+        enableKnockback(knockbackResistance);
+      }
     }
-
-    return hit;
   }
 
 
@@ -525,11 +532,9 @@ public class ToolAttackUtil {
   @Deprecated(forRemoval = true)
   public static boolean dealDefaultDamage(LivingEntity attacker, Entity target, float damage) {
     if (attacker instanceof Player player) {
-      target.hurt(attacker.damageSources().playerAttack(player), damage);
-      return damage > 0;
+      return target.hurtOrSimulate(attacker.damageSources().playerAttack(player), damage);
     }
-    target.hurt(attacker.damageSources().mobAttack(attacker), damage);
-    return damage > 0;
+    return target.hurtOrSimulate(attacker.damageSources().mobAttack(attacker), damage);
   }
 
   /** @deprecated use {@link #performAttack(IToolStackView, ToolAttackContext)} */

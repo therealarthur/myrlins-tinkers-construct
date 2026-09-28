@@ -1,6 +1,5 @@
 package slimeknights.tconstruct.shared.particle;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import lombok.Getter;
 import net.minecraft.core.particles.ParticleOptions;
@@ -25,13 +24,13 @@ public class FluidParticleData implements ParticleOptions {
 
   /** Particle type for a fluid particle */
   public static class Type extends ParticleType<FluidParticleData> {
-    private static final MapCodec<FluidParticleData> CODEC = FluidStack.MAP_CODEC.xmap(
-      fluid -> new FluidParticleData(null, fluid), data -> data.fluid
+    private final MapCodec<FluidParticleData> codec = FluidStack.MAP_CODEC.xmap(
+      fluid -> new FluidParticleData(this, fluid), data -> data.fluid
     ).fieldOf("fluid");
 
-    private static final StreamCodec<? super RegistryFriendlyByteBuf, FluidParticleData> STREAM_CODEC =
+    private final StreamCodec<? super RegistryFriendlyByteBuf, FluidParticleData> streamCodec =
       FluidStack.STREAM_CODEC.map(
-        fluid -> new FluidParticleData(null, fluid), data -> data.fluid
+        fluid -> new FluidParticleData(this, fluid), data -> data.fluid
       );
 
     private final Identifier id;
@@ -43,12 +42,12 @@ public class FluidParticleData implements ParticleOptions {
 
     @Override
     public MapCodec<FluidParticleData> codec() {
-      return CODEC;
+      return codec;
     }
 
     @Override
     public StreamCodec<? super RegistryFriendlyByteBuf, FluidParticleData> streamCodec() {
-      return STREAM_CODEC;
+      return streamCodec;
     }
   }
 }

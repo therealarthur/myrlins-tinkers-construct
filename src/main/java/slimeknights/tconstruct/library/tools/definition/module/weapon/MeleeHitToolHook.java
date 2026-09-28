@@ -18,8 +18,7 @@ public interface MeleeHitToolHook {
 
   /** Deals damage using the given tool, applying any post damage effects */
   static boolean dealDamage(IToolStackView tool, ToolAttackContext context, float damage) {
-    context.getTarget().hurt(context.makeDamageSource(), damage);
-    boolean hit = damage > 0;
+    boolean hit = context.getTarget().hurtOrSimulate(context.makeDamageSource(), damage);
     if (hit) {
       tool.getHook(ToolHooks.MELEE_HIT).afterMeleeHit(tool, context, damage);
     }

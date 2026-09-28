@@ -33,7 +33,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.conditions.ICondition.IContext;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.bus.api.Event;
@@ -135,7 +134,6 @@ public class ModifierManager extends SimplePreparableReloadListener<Map<Identifi
   public boolean isDynamicModifiersLoaded() {
     return dynamicModifiersLoaded;
   }
-  private IContext conditionContext = IContext.EMPTY;
   /** Registries of the running server, null on a client connected to a dedicated server */
   @Nullable
   private RegistryAccess registryAccess;
@@ -170,7 +168,6 @@ public class ModifierManager extends SimplePreparableReloadListener<Map<Identifi
     TinkerEnchantmentLoadable.setLookupProvider(registryAccess);
     RegistryHelper.setFallbackRegistryAccess(registryAccess);
     event.addListener(TConstruct.getResource("modifier_manager"), this);
-    conditionContext = event.getConditionContext();
   }
 
   @Override
@@ -200,7 +197,7 @@ public class ModifierManager extends SimplePreparableReloadListener<Map<Identifi
     // load modifiers from JSON
     Map<ModifierId,ModifierId> redirects = new HashMap<>();
     this.dynamicModifiers = splashList.entrySet().stream()
-                                      .map(entry -> loadModifier(entry.getKey(), entry.getValue().getAsJsonObject(), redirects))
+                                      .map(entry -> loadModifier(entry.getKey(), entry.getValue(), redirects))
                                       .filter(Objects::nonNull)
                                       .collect(Collectors.toMap(Modifier::getId, mod -> mod));
 
@@ -396,40 +393,39 @@ public class ModifierManager extends SimplePreparableReloadListener<Map<Identifi
 
       // processed first so a modifier can both conditionally redirect and fallback to a conditional modifier
       if (json.has("redirects")) {
-        try {
-          for (JsonElement redirectEl : GsonHelper.getAsJsonArray(json, "redirects")) {
-            JsonObject redirectJson = redirectEl.getAsJsonObject();
-            ModifierId redirectTarget = new ModifierId(GsonHelper.getAsString(redirectJson, "id"));
+        for (JsonElement redirectEl : GsonHelper.getAsJsonArray(json, "redirects")) {
+          JsonObject redirectJson = GsonHelper.convertToJsonObject(redirectEl, "redirect");
+          if (conditionsMatch(redirectJson)) {
+            ModifierId redirectTarget = ModifierId.PARSER.parseString(GsonHelper.getAsString(redirectJson, "id"), "id");
             log.debug("Redirecting modifier {} to {}", key, redirectTarget);
             redirects.put(new ModifierId(key), redirectTarget);
             return null;
           }
-        } catch (Exception e) {
-          log.error("Failed to process redirects for modifier {}", key, e);
         }
       }
 
-      // FIXME: condition parsing disabled due to API changes
-      if (json.has("condition")) {
-        try {
-          JsonElement conditionJson = GsonHelper.getAsJsonObject(json, "condition");
-          if (conditionJson.isJsonObject() && conditionJson.getAsJsonObject().has("type") && conditionJson.getAsJsonObject().get("type").getAsString().equals("neoforge:never")) {
-            return null;
-          }
-        } catch (Exception e) {
-          log.error("Failed to parse condition for modifier {}", key, e);
-          return null;
-        }
+      if (!conditionsMatch(json)) {
+        return null;
       }
 
       // fallback to actual modifier
-      Modifier modifier = ComposableModifier.LOADER.deserialize(json, contextBuilder(key).put(ContextKey.CONDITION_CONTEXT, conditionContext).build());
+      Modifier modifier = ComposableModifier.LOADER.deserialize(json, contextBuilder(key).put(ContextKey.CONDITION_CONTEXT, getContext()).build());
       modifier.setId(new ModifierId(key));
       return modifier;
-    } catch (JsonSyntaxException e) {
+    } catch (JsonParseException e) {
       log.error("Failed to load modifier {}", key, e);
       return null;
     }
+  }
+
+  /** Accept both Tinkers' single condition and the current data generator's condition array. */
+  private boolean conditionsMatch(JsonObject json) {
+    var ops = makeConditionalOps();
+    if (json.has("condition") && !ICondition.CODEC.parse(ops, json.get("condition"))
+        .getOrThrow(JsonSyntaxException::new).test(getContext())) {
+      return false;
+    }
+    return ICondition.conditionsMatched(ops, json);
   }
 
   /** Updates the modifiers from the server */

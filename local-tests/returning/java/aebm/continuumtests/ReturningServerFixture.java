@@ -42,6 +42,7 @@ public final class ReturningServerFixture {
     NeoForge.EVENT_BUS.addListener(ReturningServerFixture::registerCommands);
     NeoForge.EVENT_BUS.addListener(CraftingServerFixture::registerCommands);
     NeoForge.EVENT_BUS.addListener(PersistenceServerFixture::registerCommands);
+    NeoForge.EVENT_BUS.addListener(BlockWalkerPlacementServerFixture::registerCommands);
   }
 
   private static void registerCommands(RegisterCommandsEvent event) {

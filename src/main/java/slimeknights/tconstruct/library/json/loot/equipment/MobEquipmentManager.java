@@ -13,9 +13,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.neoforged.neoforge.common.NeoForge;
-import com.mojang.serialization.JsonOps;
 import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.conditions.ICondition.IContext;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.bus.api.EventPriority;
@@ -47,7 +45,6 @@ public class MobEquipmentManager extends SimpleJsonResourceReloadListener<JsonEl
 
   /** Map of active replacements */
   private Map<EntityType<?>,List<MobEquipment>> replacements = Map.of();
-  private IContext context = IContext.EMPTY;
 
   private MobEquipmentManager() {
     super(JSON_ELEMENT_CODEC, net.minecraft.resources.FileToIdConverter.json(FOLDER));
@@ -73,11 +70,11 @@ public class MobEquipmentManager extends SimpleJsonResourceReloadListener<JsonEl
       try {
         JsonObject json = GsonHelper.convertToJsonObject(entry.getValue(), key.toString());
         // skip if conditions fail
-        if (!ICondition.conditionsMatched(JsonOps.INSTANCE, json)) {
+        if (!ICondition.conditionsMatched(makeConditionalOps(), json)) {
           continue;
         }
         // parse the object
-        List<MobEquipment> equipment = MobEquipment.LIST_LOADABLE.getIfPresent(json, "equip", TypedMapBuilder.builder().put(ContextKey.ID, key).put(ContextKey.DEBUG, "Mob Equipment " + key).build());
+        List<MobEquipment> equipment = MobEquipment.LIST_LOADABLE.getIfPresent(json, "equip", TypedMapBuilder.builder().put(ContextKey.ID, key).put(ContextKey.DEBUG, "Mob Equipment " + key).put(ContextKey.CONDITION_CONTEXT, getContext()).build());
 
         // determine the entities
         JsonElement entityElement = JsonHelper.getElement(json, "entity");
@@ -88,7 +85,7 @@ public class MobEquipmentManager extends SimpleJsonResourceReloadListener<JsonEl
           if (type.charAt(0) == '#') {
             // need to use the condition context to fetch tag values as they are not yet in the mananger
             TagKey<EntityType<?>> tag = Loadables.ENTITY_TYPE_TAG.parseString(type.substring(1), "entity");
-            for (Holder<EntityType<?>> holder : context.getTag(tag)) {
+            for (Holder<EntityType<?>> holder : getContext().getTag(tag)) {
               parsed.computeIfAbsent(holder.value(), ifAbsent).addAll(equipment);
             }
           } else {
@@ -128,7 +125,6 @@ public class MobEquipmentManager extends SimpleJsonResourceReloadListener<JsonEl
   /** Adds the managers as datapack listeners */
   private void addDataPackListeners(AddServerReloadListenersEvent event) {
     event.addListener(slimeknights.tconstruct.TConstruct.getResource("mob_equipment"), this);
-    context = event.getConditionContext();
   }
 
   /** Applies equipment to mobs after they enter the level; NeoForge 26.1 no longer exposes FinalizeSpawn. */
