@@ -1,0 +1,31 @@
+# Tool tinkering display restoration
+
+Baseline: official `TConstruct-1.20.1-3.12.1.231-sources.jar`, retained in `local-audit/upstream`. This restores the viewer-neutral interfaces and producers in the source archive's `library/recipe/display`, `library/recipe/tinkerstation/building`, `tables/recipe/TinkerStationPartSwapping`, `tables/recipe/TinkerStationDamagingRecipe`, and `library/recipe/tinkerstation/repairing/ModifierRepairTinkerStationRecipe`. It does not change station matching, validation, consumption, repair amounts or material costs.
+
+The common API exposes recipe identity, title/tooltip, input slots, before/after tools, tool-catalyst status, correlated input/output links, focus filtering and dynamic slots. It contains no viewer or Minecraft-client imports. The producers cover normal part swapping, override part swapping, fixed material swaps, material-value swaps, sacrificing another tool's material, damaging tools and modifier-based station repair. The separate REI adapter is owned by the viewer track. A crafting-repair display adapter remains separate because modern `CraftingRecipe` is a class; this patch does not pretend the old crafting interface ports unchanged.
+
+## Correlation and quantities
+
+Material-value alternatives use one filtered record per material/input/refund. Tool-stat eligibility is applied before constructing any parallel lists. Upstream's `MaterialValueSwappingRecipe#getRecipes` filtered material inputs but constructed outputs from its unfiltered material-stack list. The fixture deliberately uses an unrestricted material predicate with a cuirass slot and proves incompatible material recipes exist, then checks every actual input/output/refund pair.
+
+`DisplayRecipe#getInputCount` returns the slot span, `max(index + 1, extras + 1)`. An index-one Travelers cuirass swap with no extras has an empty slot zero and material slot one. Index one plus three extras occupies slots zero through three. Upstream returned `min(index, extras) + 1`; its viewer scanned five fixed slots, but its own input search used the declared count and omitted real inputs. Empty indexed holes remain intentional; a genuinely required ingredient whose tag resolves empty suppresses the producer entirely.
+
+Sized ingredients retain their display components and exact required count. Material-value refunds use the actual `getLeftover(cost)`. `getDisplayRemainders(slot[, focus, output])` keeps empty placeholders aligned with material alternatives. `getDisplayContainers(...)` separately exposes crafting containers from the same input list and consumption count, matching the existing station container path. A material refund and a crafting container may coexist; the adapter must not collapse the two concepts or drop empty placeholders before pairing.
+
+`linkToOutput()` names the correlated input index. Focus-specific input, output, refund and container lists must be requested with the same focus arguments, then paired by index. Material-value input focus filters unchanged material alternatives; output focus filters inputs that produce the selected material. Input-focus outputs preserve unrelated materials, upgrades, damage and ItemStack components. As in the original display contract, output focus may use simplified tools. Material swapping displays describe material changes; ordinary repairs retain their own category.
+
+Producers regenerate their lists when expanded, without retaining an internal list across material/tag reloads. The viewer snapshot layer controls expansion frequency. This does not claim live client screen refresh acceptance.
+
+## Verification
+
+The dedicated-server test mod auto-registers `aebmtooltinkeringtest`. Require nine `AEBM_TOOL_TINKERING_PASS` records and `AEBM_TOOL_TINKERING_SUMMARY passed=9 failed=0`, alongside the exact tested artifact hashes. The source is `local-tests/returning/java/aebm/continuumtests/ToolTinkeringServerFixture.java`.
+
+Cases check six loaded Travelers target/cost combinations, material-stat filtering and correlation, indexed slots plus three sized extras, unresolved required tags, focus-state preservation and no-op filtering, log-to-plank refund parity, honey-bottle container parity, and focused damage/repair outputs against production station validation. The inventory adapter only holds actual ItemStacks; all recipe lookup, matching, validation, shrinking and container/refund behavior runs production code. No blocks, players or entities are placed or spawned. It does not test inventory overflow, GUI layout, animations, search integration or viewer rendering.
+
+At authoring time the first main compile identified protected render-NBT keys; these are now isolated as literal serialized keys in display construction without widening `ToolStack`. No successful compile or runtime fixture result is claimed by this document. Parent-coordinated build/server logs are the acceptance evidence.
+
+Client acceptance remains required for REI categories, both search directions, focused tools, quantities, aligned material cycling, separate containers/refunds, missing-tag handling and reconnect/reload behavior. All seven producer families need visible client review; the nine server cases focus on the highest-risk material/value/focus behavior.
+
+## Independent observation
+
+The existing `PartSwappingOverrideRecipe#getSerializer()` returns the fixed-material serializer. That predates this display restoration and was left unchanged because station serializer mechanics are outside this patch. It needs a separate traced serialization test before changing it.

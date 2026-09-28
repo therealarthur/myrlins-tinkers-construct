@@ -1,5 +1,15 @@
 package slimeknights.tconstruct.library.recipe.tinkerstation.building;
 
+import lombok.Getter;
+import net.minecraft.network.chat.Component;
+import slimeknights.mantle.recipe.IMultiRecipe;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
+import slimeknights.tconstruct.library.recipe.tinkerstation.IDisplayToolTinkering;
+import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
+import slimeknights.tconstruct.library.tools.nbt.MaterialIdNBT;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import java.util.Arrays;
+import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +39,7 @@ import java.util.BitSet;
 import java.util.List;
 
 /** Recipe for swapping a single material on a tool given a specific input ingredient. */
-public class FixedMaterialSwappingRecipe extends MaterialSwappingRecipe {
+public class FixedMaterialSwappingRecipe extends MaterialSwappingRecipe implements IMultiRecipe<IDisplayToolTinkering> {
   public static final RecordLoadable<FixedMaterialSwappingRecipe> LOADER = RecordLoadable.create(
     ContextKey.ID.requiredField(), TOOLS_FIELD, STACK_SIZE_FIELD,
     SizedIngredient.LOADABLE.requiredField("ingredient", r -> r.ingredient),
@@ -131,5 +141,99 @@ public class FixedMaterialSwappingRecipe extends MaterialSwappingRecipe {
   @Override
   public RecipeSerializer<? extends Recipe<ITinkerStationContainer>> getSerializer() {
     return TinkerTables.fixedMaterialSwapping.get();
+  }
+
+  /* JEI */
+
+
+  @Override
+  public List<IDisplayToolTinkering> getRecipes(RegistryAccess access) {
+    if (!hasDisplayInputs()) return List.of();
+    List<ItemStack> inputs = displayItems(ingredient);
+    if (inputs.isEmpty()) return List.of();
+    MaterialVariant material = MaterialVariant.of(this.material);
+    Component variantText = Component.translatable(slimeknights.tconstruct.library.utils.Util.makeTranslationKey("material", this.material.getLocation('.')));
+    List<IDisplayToolTinkering> displays = new java.util.ArrayList<>();
+    for (int index : Arrays.stream(indices).filter(VALID_SLOT).distinct().toArray()) {
+      List<ItemStack> validTools = MaterialRecipeCache.getDisplayItems(tools).stream().filter(stack -> {
+        List<slimeknights.tconstruct.library.materials.stats.MaterialStatsId> stats = ToolMaterialHook.stats(IModifiable.getToolDefinition(stack.getItem()));
+        return index < stats.size() && stats.get(index).canUseMaterial(this.material.getMaterialId());
+      }).toList();
+      if (!validTools.isEmpty()) {
+        displays.add(new DisplayRecipe(variantText, index, inputs,
+          validTools.stream().map(stack -> withMaterial(stack.copy(), index, MaterialVariant.of(ToolBuildHandler.getRenderMaterial(index)))).toList(),
+          validTools.stream().map(stack -> withMaterial(stack.copy(), index, material)).toList()));
+      }
+    }
+    return List.copyOf(displays);
+  }
+
+  /** Overrides the title and variant for the display recipe */
+  protected class DisplayRecipe extends MaterialSwappingRecipe.DisplayRecipe {
+    @Getter
+    private final Component variant;
+    public DisplayRecipe(Component variant, int index, List<ItemStack> input, List<ItemStack> toolWithoutModifier, List<ItemStack> toolWithModifier) {
+      super(index, input, toolWithoutModifier, toolWithModifier);
+      this.variant = variant;
+    }
+
+    @Override
+    public Component getTitle() {
+      return MATERIAL_TITLE;
+    }
+
+    @Override
+    public Component getTooltip() {
+      return MATERIAL_TOOLTIP;
+    }
+
+    @Override
+    public List<ItemStack> getToolWithoutModifier(ItemStack focus, boolean focusOutput) {
+      if (!focus.isEmpty() && (focusOutput || isTool(focus))) {
+        // if focusing on an input tool, it becomes our tool without modifier provided we can change it
+        MaterialIdNBT materials = MaterialIdNBT.from(focus);
+        if (!focusOutput && !materials.getMaterial(index).sameVariant(material)) {
+          return focusInput(focus);
+        }
+        // otherwise, copy all materials to the input except the one we plan to swap
+        return createDisplayStack(materials, focus);
+      }
+      return toolWithoutModifier;
+    }
+
+    @Override
+    public List<ItemStack> getToolWithModifier(ItemStack focus, boolean focusOutput) {
+      if (!focus.isEmpty() && (focusOutput || isTool(focus))) {
+        if (focusOutput) {
+          // for output focus, want to make the simplest output with the material
+          MaterialIdNBT materials = MaterialIdNBT.from(focus);
+          // skip duplicating if the material is already there
+          if (!materials.getMaterial(index).sameVariant(material)) {
+            materials = replaceMaterialIds(materials, index, material);
+          }
+          return List.of(copyMaterials(materials, focus.getItem()));
+        } else {
+          // add the material to the input focus if its lacking
+          ToolStack tool = ToolStack.from(focus);
+          if (!tool.getMaterial(index).sameVariant(material)) {
+            return List.of(replaceMaterial(tool.copy(), MaterialVariant.of(material), focus));
+          } else {
+            // if it already has the material, strip unique properties
+            return List.of(copyMaterials(tool, tool.getMaterials()));
+          }
+        }
+      }
+      return toolWithModifier;
+    }
+
+    @Override
+    public boolean isFiltered() {
+      return true;
+    }
+
+    @Override
+    public boolean isVisibleFromItem(ItemStack focus, boolean output) {
+      return output == MaterialIdNBT.from(focus).getMaterial(index).getId().equals(material.getId());
+    }
   }
 }

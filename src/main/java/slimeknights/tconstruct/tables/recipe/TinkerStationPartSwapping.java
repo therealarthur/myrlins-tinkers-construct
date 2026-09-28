@@ -1,5 +1,18 @@
 package slimeknights.tconstruct.tables.recipe;
 
+import slimeknights.mantle.recipe.IMultiRecipe;
+import slimeknights.tconstruct.library.materials.IMaterialRegistry;
+import slimeknights.tconstruct.library.materials.MaterialRegistry;
+import slimeknights.tconstruct.library.materials.definition.MaterialId;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
+import slimeknights.tconstruct.library.recipe.tinkerstation.IDisplayToolTinkering;
+import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +43,7 @@ import java.util.List;
 /**
  * Recipe that replaces a tool part with another
  */
-public class TinkerStationPartSwapping extends MaterialSwappingRecipe {
+public class TinkerStationPartSwapping extends MaterialSwappingRecipe implements IMultiRecipe<IDisplayToolTinkering> {
   public static final RecordLoadable<TinkerStationPartSwapping> LOADER = RecordLoadable.create(ContextKey.ID.requiredField(), TOOLS_FIELD, STACK_SIZE_FIELD, EXTRA_REQUIREMENTS_FIELD, TinkerStationPartSwapping::new);
 
   protected TinkerStationPartSwapping(Identifier id, Ingredient tools, int maxStackSize, List<SizedIngredient> extraRequirements) {
@@ -129,5 +142,32 @@ public class TinkerStationPartSwapping extends MaterialSwappingRecipe {
   @Override
   public RecipeSerializer<? extends Recipe<ITinkerStationContainer>> getSerializer() {
     return TinkerTables.tinkerStationPartSwappingSerializer.get();
+  }
+
+  /* JEI */
+
+  @Override
+  public List<IDisplayToolTinkering> getRecipes(RegistryAccess access) {
+    if (!hasDisplayInputs()) return List.of();
+    IMaterialRegistry registry = MaterialRegistry.getInstance();
+    List<IDisplayToolTinkering> displays = new java.util.ArrayList<>();
+    for (ItemStack stack : MaterialRecipeCache.getDisplayItems(tools)) {
+      ToolStack tool = ToolStack.from(stack);
+      List<IToolPart> parts = ToolPartsHook.parts(tool.getDefinition());
+      if (parts.size() > MAX_SLOTS) continue;
+      for (int index = 0; index < parts.size(); index++) {
+        IToolPart part = parts.get(index);
+        List<IMaterial> materials = registry.getVisibleMaterials().stream()
+          .filter(mat -> registry.getMaterialStats(mat.getIdentifier(), part.getStatType()).isPresent()).toList();
+        if (materials.isEmpty()) continue;
+        int slot = index;
+        displays.add(new PartDisplayRecipe(slot,
+          materials.stream().map(mat -> part.withMaterialForDisplay(mat.getIdentifier())).toList(),
+          List.of(withMaterial(tool.copy(), slot, MaterialVariant.of(ToolBuildHandler.getRenderMaterial(slot)))),
+          materials.stream().map(mat -> withMaterial(tool.copy(), slot, MaterialVariant.of(mat))).toList(),
+          materials.stream().map(MaterialVariant::of).toList(), part));
+      }
+    }
+    return List.copyOf(displays);
   }
 }

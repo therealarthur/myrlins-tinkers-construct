@@ -1,5 +1,14 @@
 package slimeknights.tconstruct.library.recipe.tinkerstation.building;
 
+import slimeknights.mantle.recipe.IMultiRecipe;
+import slimeknights.tconstruct.library.materials.IMaterialRegistry;
+import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
+import slimeknights.tconstruct.library.recipe.tinkerstation.IDisplayToolTinkering;
+import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import java.util.Arrays;
+import java.util.stream.Stream;
+import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +42,7 @@ import java.util.BitSet;
 import java.util.List;
 
 /** Recipe for swapping a single material on a tool given a specific tool part. Notably allows swapping a part into a tool on an index other than the first. */
-public class PartSwappingOverrideRecipe extends MaterialSwappingRecipe {
+public class PartSwappingOverrideRecipe extends MaterialSwappingRecipe implements IMultiRecipe<IDisplayToolTinkering> {
   public static final RecordLoadable<PartSwappingOverrideRecipe> LOADER = RecordLoadable.create(
     ContextKey.ID.requiredField(), TOOLS_FIELD, STACK_SIZE_FIELD,
     TinkerLoadables.TOOL_PART_ITEM.requiredField("part", r -> r.part),
@@ -137,5 +146,30 @@ public class PartSwappingOverrideRecipe extends MaterialSwappingRecipe {
   @Override
   public RecipeSerializer<? extends Recipe<ITinkerStationContainer>> getSerializer() {
     return TinkerTables.fixedMaterialSwapping.get();
+  }
+
+  /* JEI */
+
+  @Override
+  public List<IDisplayToolTinkering> getRecipes(RegistryAccess access) {
+    if (!hasDisplayInputs()) return List.of();
+    IMaterialRegistry registry = MaterialRegistry.getInstance();
+    List<IDisplayToolTinkering> displays = new java.util.ArrayList<>();
+    for (ItemStack stack : MaterialRecipeCache.getDisplayItems(tools)) {
+      ToolStack tool = ToolStack.from(stack);
+      List<MaterialStatsId> stats = ToolMaterialHook.stats(tool.getDefinition());
+      if (stats.size() > MAX_SLOTS) continue;
+      for (int index : Arrays.stream(indices).filter(VALID_SLOT).filter(i -> i < stats.size()).distinct().toArray()) {
+        List<IMaterial> materials = registry.getVisibleMaterials().stream()
+          .filter(mat -> registry.getMaterialStats(mat.getIdentifier(), part.getStatType()).isPresent() && stats.get(index).canUseMaterial(mat.getIdentifier())).toList();
+        if (materials.isEmpty()) continue;
+        displays.add(new PartDisplayRecipe(index,
+          materials.stream().map(mat -> part.withMaterialForDisplay(mat.getIdentifier())).toList(),
+          List.of(withMaterial(tool.copy(), index, MaterialVariant.of(ToolBuildHandler.getRenderMaterial(index)))),
+          materials.stream().map(mat -> withMaterial(tool.copy(), index, MaterialVariant.of(mat))).toList(),
+          materials.stream().map(MaterialVariant::of).toList(), part));
+      }
+    }
+    return List.copyOf(displays);
   }
 }
