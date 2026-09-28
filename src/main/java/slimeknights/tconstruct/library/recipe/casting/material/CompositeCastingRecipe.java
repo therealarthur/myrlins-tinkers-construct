@@ -94,7 +94,7 @@ public class CompositeCastingRecipe extends MaterialCastingRecipe {
                            .toList();
           }
           if (!fluids.isEmpty()) {
-            fluids = resizeFluids(recipe.getFluids());
+            fluids = resizeFluids(fluids);
             MaterialVariantId inputId = input.getVariant();
             List<ItemStack> inputs;
             if (inputId.getVariant().isEmpty()) {
@@ -105,7 +105,7 @@ public class CompositeCastingRecipe extends MaterialCastingRecipe {
             }
             if (!inputs.isEmpty()) {
               recipes.add(new DisplayCastingRecipe(getId(), type, inputs, fluids, result.withMaterial(output.getVariant()),
-                ICastingRecipe.calcCoolingTime(recipe.getTemperature(), itemCost * fluids.stream().mapToInt(FluidStack::getAmount).max().orElse(0)),
+                ICastingRecipe.calcCoolingTime(recipe.getTemperature(), fluids.stream().mapToInt(FluidStack::getAmount).max().orElse(0)),
                 isConsumed()));
             }
           }

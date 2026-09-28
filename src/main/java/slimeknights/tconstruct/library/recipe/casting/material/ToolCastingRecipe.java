@@ -258,7 +258,7 @@ public class ToolCastingRecipe extends PartSwapCastingRecipe implements IMultiRe
         List<MaterialFluidRecipe> validCasting = MaterialCastingLookup.getAllCastingFluids().stream().filter(validRecipe).toList();
         for (MaterialFluidRecipe recipe : validCasting) {
           List<FluidStack> fluids = resizeFluids(recipe.getFluids());
-          int amount = itemCost * getFluidAmount(fluids);
+            int amount = getFluidAmount(fluids);
           recipes.add(new DisplayCastingRecipe(getId(), getType(), castsWithTool, fluids, materials.apply(recipe.getOutput(), castsWithTool),
             ICastingRecipe.calcCoolingTime(recipe.getTemperature(), amount), consumed));
 
@@ -275,7 +275,7 @@ public class ToolCastingRecipe extends PartSwapCastingRecipe implements IMultiRe
           .map(recipe -> {
             List<FluidStack> fluids = resizeFluids(recipe.getFluids());
             return new DisplayCastingRecipe(getId(), getType(), materials.apply(recipe.getInput(), casts), fluids, materials.apply(recipe.getOutput(), casts),
-              ICastingRecipe.calcCoolingTime(recipe.getTemperature(), itemCost * getFluidAmount(fluids)), true);
+              ICastingRecipe.calcCoolingTime(recipe.getTemperature(), getFluidAmount(fluids)), true);
           }).forEach(recipes::add);
         multiRecipes = List.copyOf(recipes);
       }

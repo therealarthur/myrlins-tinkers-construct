@@ -7,6 +7,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.util.context.ContextMap;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -159,7 +161,13 @@ public class MaterialRecipeCache {
         return items;
       }
       try {
-        return ingredient.items().map(ItemStack::new).toList();
+        // items() supplies candidate item identities, not component-bearing display stacks.
+        // In particular, material and data-component ingredients must retain their display's components.
+        RegistryAccess access = DISPLAY_REGISTRY_ACCESS;
+        var context = new ContextMap.Builder()
+          .withParameter(SlotDisplayContext.REGISTRIES, access == null ? RegistryAccess.EMPTY : access)
+          .create(SlotDisplayContext.CONTEXT);
+        return custom.display().resolveForStacks(context).stream().filter(stack -> !stack.isEmpty()).toList();
       } catch (UnsupportedOperationException | IllegalStateException ignored) {
         return List.of();
       }
