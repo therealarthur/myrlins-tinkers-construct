@@ -64,7 +64,8 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
 
   @Override
   public Optional<List<SmelteryDisplay>> generate(ViewSearchBuilder builder) {
-    if (builder.getRecipesFor().isEmpty() && builder.getUsagesFor().isEmpty() && builder.getCategories().contains(category)) {
+    if (builder.getRecipesFor().isEmpty() && builder.getUsagesFor().isEmpty()
+        && (builder.getCategories().isEmpty() || builder.getCategories().contains(category))) {
       return Optional.of(recipes.get(category));
     }
     return Optional.empty();

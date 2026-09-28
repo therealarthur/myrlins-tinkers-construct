@@ -37,6 +37,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
 
 import org.joml.Matrix4f;
 import slimeknights.tconstruct.TConstruct;
@@ -125,7 +126,8 @@ public class TinkerClient {
         ClientRecipeCache.receive(connection.registryAccess(), event.getRecipeMap());
       }
     };
-    NeoForge.EVENT_BUS.addListener(recipesUpdated);
+    // Viewers may rebuild at normal priority in this same event.
+    NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, false, RecipesReceivedEvent.class, recipesUpdated);
     NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientRecipeCache.clear());
     NeoForge.EVENT_BUS.addListener((MaterialsLoadedEvent event) ->
       Minecraft.getInstance().execute(ClientRecipeCache::materialsUpdated));
