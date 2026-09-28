@@ -1,0 +1,106 @@
+[
+  {
+    "project": "continuum",
+    "pin": "72602856c8403c51f9f488ab1580f1216fa42fda",
+    "artifact": "D:\\Myrlin-worktrees\\arthurs-even-better-minecraft\\downloads\\ContinuumConstruct-26.1.2-3.12.2.jar",
+    "artifact_sha256": "e053e6f60582bfa113ae3fedcc104490925a6a83a4389974e35f2aa7557df256",
+    "source_resource_count": 32451,
+    "counts": {
+      "newline_equal": 756,
+      "byte_equal": 31690,
+      "different": 5
+    },
+    "differences": [
+      {
+        "path": "META-INF/neoforge.mods.toml",
+        "source": {
+          "path": "src/main/resources/META-INF/neoforge.mods.toml",
+          "blob": "9f998c38747a2f4a440e63efe20ded0cfd0f5ad2"
+        },
+        "status": "different",
+        "jar_sha256": "9db6ac57608e30b8aff93904e243a16af93b5397cd193e3e1f4b55661fb8b5bc",
+        "jar_text": "modLoader=\"javafml\"\nloaderVersion=\"*\"\nissueTrackerURL=\"https://github.com/justduck25/Tinker-Construct-3-NeoForge/issues\"\nlogoFile=\"logo.png\"\nlicense=\"MIT\"\n\n[[mods]]\n    modId=\"tconstruct\"\n    version=\"3.12.2\"\n    displayName=\"Continuum Construct\"\n    authors=\"Slime Knights, justduck25\"\n    enumExtensions=\"META-INF/enumextensions.json\"\n    description='''\nCommunity NeoForge 26.1 port of the classic modular tool, material, modifier, and smeltery experience.\n    '''\n    displayURL=\"https://github.com/justduck25/Tinker-Construct-3-NeoForge\"\n\n[[mixins]]\n    config=\"tconstruct.mixins.json\"\n    \n[[dependencies.tconstruct]]\n    modId=\"neoforge\"\n    type=\"required\"\n    versionRange=\"[26.1.2.78,26.2)\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"minecraft\"\n    type=\"required\"\n    versionRange=\"[26.1,26.2)\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"mantle\"\n    type=\"required\"\n    versionRange=\"[1.12.0,1.13)\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"jei\"\n    type=\"optional\"\n    versionRange=\"[29.34.0.90,)\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"jsonthings\"\n    type=\"optional\"\n    versionRange=\"[0.18.2,)\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"apotheosis\"\n    type=\"optional\"\n    versionRange=\"[9.0.2,)\"\n    ordering=\"AFTER\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"enderio\"\n    type=\"optional\"\n    ordering=\"AFTER\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"athena\"\n    type=\"optional\"\n    ordering=\"AFTER\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"jade\"\n    type=\"optional\"\n    versionRange=\"[26.0.0,)\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n",
+        "source_text": "modLoader=\"javafml\"\nloaderVersion=\"${loader_range}\"\nissueTrackerURL=\"https://github.com/justduck25/Tinker-Construct-3-NeoForge/issues\"\nlogoFile=\"logo.png\"\nlicense=\"MIT\"\n\n[[mods]]\n    modId=\"tconstruct\"\n    version=\"${version}\"\n    displayName=\"Continuum Construct\"\n    authors=\"Slime Knights, justduck25\"\n    enumExtensions=\"META-INF/enumextensions.json\"\n    description='''\nCommunity NeoForge 26.1 port of the classic modular tool, material, modifier, and smeltery experience.\n    '''\n    displayURL=\"https://github.com/justduck25/Tinker-Construct-3-NeoForge\"\n\n[[mixins]]\n    config=\"tconstruct.mixins.json\"\n    \n[[dependencies.tconstruct]]\n    modId=\"neoforge\"\n    type=\"required\"\n    versionRange=\"${neoforge_range}\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"minecraft\"\n    type=\"required\"\n    versionRange=\"${minecraft_range}\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"mantle\"\n    type=\"required\"\n    versionRange=\"${mantle_range}\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"jei\"\n    type=\"optional\"\n    versionRange=\"${jei_range}\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"jsonthings\"\n    type=\"optional\"\n    versionRange=\"${json_things_range}\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"apotheosis\"\n    type=\"optional\"\n    versionRange=\"${apotheosis_range}\"\n    ordering=\"AFTER\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"enderio\"\n    type=\"optional\"\n    ordering=\"AFTER\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"athena\"\n    type=\"optional\"\n    ordering=\"AFTER\"\n    side=\"BOTH\"\n\n[[dependencies.tconstruct]]\n    modId=\"jade\"\n    type=\"optional\"\n    versionRange=\"${jade_range}\"\n    ordering=\"NONE\"\n    side=\"BOTH\"\n"
+      },
+      {
+        "path": "assets/tconstruct/blockstates/scorched_fuel_gauge.json",
+        "source": {
+          "path": "src/main/resources/assets/tconstruct/blockstates/scorched_fuel_gauge.json",
+          "blob": "5ae44132e6b3eeca544a70b1775efc0befe63e87"
+        },
+        "status": "different",
+        "jar_sha256": "715ac3c94fb7bd032f0c539909226d54dee20c92dd7711410af80f564f20c241",
+        "jar_text": "{\n  \"variants\": {\n    \"\": {\n      \"type\": \"tconstruct:tank\",\n      \"model\": \"tconstruct:block/foundry/tank/fuel_gauge\"\n    }\n  }\n}\n",
+        "source_text": "{\n  \"variants\": {\n    \"\": { \"model\": \"tconstruct:block/foundry/tank/fuel_gauge\"}\n  }\n}\n"
+      },
+      {
+        "path": "assets/tconstruct/blockstates/scorched_ingot_gauge.json",
+        "source": {
+          "path": "src/main/resources/assets/tconstruct/blockstates/scorched_ingot_gauge.json",
+          "blob": "3d5d2ca85887ba9dd3e69e1bcf98f3f25619d1c7"
+        },
+        "status": "different",
+        "jar_sha256": "ac6271d6e56aeec076dba64c31ebb504a083d6eeed532133f2846c6bd7a21a9d",
+        "jar_text": "{\n  \"variants\": {\n    \"\": {\n      \"type\": \"tconstruct:tank\",\n      \"model\": \"tconstruct:block/foundry/tank/ingot_gauge\"\n    }\n  }\n}\n",
+        "source_text": "{\n  \"variants\": {\n    \"\": { \"model\": \"tconstruct:block/foundry/tank/ingot_gauge\"}\n  }\n}\n"
+      },
+      {
+        "path": "assets/tconstruct/blockstates/seared_fuel_gauge.json",
+        "source": {
+          "path": "src/main/resources/assets/tconstruct/blockstates/seared_fuel_gauge.json",
+          "blob": "110c7638f2910be405df0e760c6db4dcbc37f894"
+        },
+        "status": "different",
+        "jar_sha256": "aa6d4eb5b06253e7916552c93e82eebf74ff8f25c1ae103f91a509ad4e5a20d9",
+        "jar_text": "{\n  \"variants\": {\n    \"\": {\n      \"type\": \"tconstruct:tank\",\n      \"model\": \"tconstruct:block/smeltery/tank/fuel_gauge\"\n    }\n  }\n}\n",
+        "source_text": "{\n    \"variants\": {\n        \"\": { \"model\": \"tconstruct:block/smeltery/tank/fuel_gauge\"}\n    }\n}\n"
+      },
+      {
+        "path": "assets/tconstruct/blockstates/seared_ingot_gauge.json",
+        "source": {
+          "path": "src/main/resources/assets/tconstruct/blockstates/seared_ingot_gauge.json",
+          "blob": "5916f982229ee0b6c8fbcb0e36e7088c1ab352aa"
+        },
+        "status": "different",
+        "jar_sha256": "e50085bb337cb7fe5f2f0e0457699ce23b58f8ef408731702f48c6a263c8a481",
+        "jar_text": "{\n  \"variants\": {\n    \"\": {\n      \"type\": \"tconstruct:tank\",\n      \"model\": \"tconstruct:block/smeltery/tank/ingot_gauge\"\n    }\n  }\n}\n",
+        "source_text": "{\n    \"variants\": {\n        \"\": { \"model\": \"tconstruct:block/smeltery/tank/ingot_gauge\"}\n    }\n}\n"
+      }
+    ],
+    "jar_only_nonclass": [
+      "META-INF/MANIFEST.MF"
+    ],
+    "manifest": "Manifest-Version: 1.0\r\nSpecification-Title: Continuum Construct\r\nSpecification-Vendor: Slime Knights\r\nSpecification-Version: 1\r\nImplementation-Title: TConstruct\r\nImplementation-Version: 26.1.2-3.12.2\r\nImplementation-Vendor: Slime Knights\r\nImplementation-Timestamp: 2026-09-20T22:54:15+0700\r\n\r\n",
+    "limit": "Resources compare to immutable Git objects. This is not a bytecode/source reproducibility proof."
+  },
+  {
+    "project": "continuum-core",
+    "pin": "c0f1ecc5f1194f6bf746d230e6eb38d46c42d43c",
+    "artifact": "D:\\Myrlin-worktrees\\arthurs-even-better-minecraft\\downloads\\ContinuumCore-26.1.2-1.12.0.jar",
+    "artifact_sha256": "fb011d7faaeca846665515734b6c931408095fcca2fa2586bb4dfe325bb5ee7c",
+    "source_resource_count": 103,
+    "counts": {
+      "newline_equal": 51,
+      "different": 1,
+      "byte_equal": 51
+    },
+    "differences": [
+      {
+        "path": "META-INF/neoforge.mods.toml",
+        "source": {
+          "path": "src/main/resources/META-INF/neoforge.mods.toml",
+          "blob": "951cb3332770fbc98c490fc2715f02e639079e7d"
+        },
+        "status": "different",
+        "jar_sha256": "2f3bf5e19e013ea831a2a41372fc1bc6d2545cae9df5f8f639d4937decd5ac1a",
+        "jar_text": "modLoader = \"javafml\"\nloaderVersion = \"*\"\nissueTrackerURL = \"https://github.com/justduck25/Continuum-Mantle/issues\"\nlogoFile = \"Mantle.png\"\nlicense = \"MIT\"\n\n[[mods]]\nmodId = \"mantle\"\nversion = \"1.12.0\"\ndisplayName = \"Continuum Core\"\nauthors = \"Slime Knights, justduck25\"\ndescription = '''\nShared library code for the NeoForge 26.1 Continuum Construct port.\n'''\ndisplayURL = \"https://github.com/justduck25/Continuum-Mantle\"\n\n[[dependencies.mantle]]\nmodId = \"neoforge\"\nmandatory = true\nversionRange = \"[26.1.2.78,26.2)\"\nordering = \"NONE\"\nside = \"BOTH\"\n\n[[dependencies.mantle]]\nmodId = \"minecraft\"\nmandatory = true\nversionRange = \"[26.1.2,26.2)\"\nordering = \"NONE\"\nside = \"BOTH\"\n",
+        "source_text": "modLoader = \"javafml\"\nloaderVersion = \"${loader_range}\"\nissueTrackerURL = \"https://github.com/justduck25/Continuum-Mantle/issues\"\nlogoFile = \"Mantle.png\"\nlicense = \"MIT\"\n\n[[mods]]\nmodId = \"mantle\"\nversion = \"${version}\"\ndisplayName = \"Continuum Core\"\nauthors = \"Slime Knights, justduck25\"\ndescription = '''\nShared library code for the NeoForge 26.1 Continuum Construct port.\n'''\ndisplayURL = \"https://github.com/justduck25/Continuum-Mantle\"\n\n[[dependencies.mantle]]\nmodId = \"neoforge\"\nmandatory = true\nversionRange = \"${neo_range}\"\nordering = \"NONE\"\nside = \"BOTH\"\n\n[[dependencies.mantle]]\nmodId = \"minecraft\"\nmandatory = true\nversionRange = \"${minecraft_range}\"\nordering = \"NONE\"\nside = \"BOTH\"\n"
+      }
+    ],
+    "jar_only_nonclass": [
+      "META-INF/MANIFEST.MF"
+    ],
+    "manifest": "Manifest-Version: 1.0\r\nSpecification-Title: Continuum Core\r\nSpecification-Vendor: Slime Knights\r\nSpecification-Version: 1\r\nImplementation-Title: Mantle\r\nImplementation-Version: 26.1.2-1.12.0\r\nImplementation-Vendor: Slime Knights\r\nImplementation-Timestamp: 2026-09-18T16:22:37+0700\r\n\r\n",
+    "limit": "Resources compare to immutable Git objects. This is not a bytecode/source reproducibility proof."
+  }
+]

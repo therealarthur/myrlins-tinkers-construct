@@ -1,0 +1,64 @@
+{
+  "upstream_tag": "v3.12.1.231",
+  "upstream_commit": "a5a0324954f71b7620f766fadea0a0adf2984ae0",
+  "continuum_source_commit": "72602856c8403c51f9f488ab1580f1216fa42fda",
+  "continuum_resource_artifact": "ContinuumConstruct-26.1.2-3.12.2.jar",
+  "path_normalization": {
+    "data_directory_renames": {
+      "recipes": "recipe",
+      "loot_tables": "loot_table",
+      "advancements": "advancement",
+      "structures": "structure",
+      "functions": "function"
+    },
+    "tag_directory_renames": {
+      "blocks": "block",
+      "items": "item",
+      "fluids": "fluid",
+      "entity_types": "entity_type",
+      "game_events": "game_event",
+      "functions": "function"
+    }
+  },
+  "adaptation_candidate_rules": [
+    "forge: identifier prefix to neoforge:",
+    "conditions key to neoforge:conditions"
+  ],
+  "limits": [
+    "Source presence and JSON equality do not prove gameplay parity.",
+    "Main-source comparison excludes upstream tests and build files; complete tree has separate inventory.",
+    "Upstream-only paths can represent renames, registry migrations, omitted content, or optional integrations.",
+    "Adaptation candidates require review; forge/neoforge tag membership is not assumed equivalent.",
+    "No build, client, server, or persistence tests were performed by this audit."
+  ],
+  "resources": {
+    "upstream_resources": 27494,
+    "continuum_resources": 32452,
+    "comparison": {
+      "nonjson_changed": 280,
+      "continuum_only": 7268,
+      "upstream_only": 2310,
+      "json_changed": 6138,
+      "newline_equal": 184,
+      "byte_equal": 18563,
+      "json_equal": 8,
+      "adaptation_candidate": 11
+    }
+  },
+  "sources": {
+    "upstream_java": 1938,
+    "continuum_java": 1909,
+    "comparison": {
+      "source_changed": 1527,
+      "upstream_only": 92,
+      "continuum_only": 63,
+      "byte_equal": 319
+    }
+  },
+  "complete_upstream_tree": {
+    "commit": "a5a0324954f71b7620f766fadea0a0adf2984ae0",
+    "entries": 32219,
+    "blobs": 29657,
+    "truncated": false
+  }
+}

@@ -1,0 +1,940 @@
+[
+  {
+    "id": "upstream-3.12.1-001",
+    "section": "Tools",
+    "text": "Repair kit \"stats\" no longer show in the part builder stat listing. Its just an internal type to force the repair kit item to show.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-002",
+    "section": "Tools",
+    "text": "Fix iron armor showing an untranslated internal \"iron armor\" modifier.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-003",
+    "section": "Tools",
+    "text": "Fix modifier crystal tooltips having inconsistent colors.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-004",
+    "section": "Tools",
+    "text": "The color was not added intentionally originally, was just missed as the test for that feature happened to have a white name.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-005",
+    "section": "Tools",
+    "text": "After seeing it, feature looks neat so the full name is colored now.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-006",
+    "section": "Tools",
+    "text": "Reduce protection from dragonborn from 10% to 8%.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-007",
+    "section": "Tools",
+    "text": "Reduce overslime granted from ichor, as its way easier to get now.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-008",
+    "section": "Tools",
+    "text": "Sort stats in the part builder alphabetically by ID, so the order is consistent between different materials.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-009",
+    "section": "Tools",
+    "text": "Reduce speed granted from twisting vine laces from 15% to 10%.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-010",
+    "section": "Tools",
+    "text": "Buff feather weight armor (aluminum), giving it a movement speed boost and less protection penalty.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-011",
+    "section": "Tools",
+    "text": "Fix other mods letting you glide from non-chestplate sources damaging our chestplates (#5726).",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-012",
+    "section": "Tools",
+    "text": "Fix some modifiers missing from blacklists, making them show up in recipes they shouldn't.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-013",
+    "section": "Tools",
+    "text": "Fix tool materials tooltip not showing names of \"illegal\" tool parts, as we use those for legacy and display.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-014",
+    "section": "Tools",
+    "text": "Fix material duplication when material swapping daggers using another dagger.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-015",
+    "section": "Tools",
+    "text": "Fixed unburdened on shield cores not matching the value shown in the encyclopedia.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-016",
+    "section": "Travelers Cuirass",
+    "text": "Cuirass on travelers now includes vines and wool instead of just leather variants.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-017",
+    "section": "Travelers Cuirass",
+    "text": "You can craft travelers in the crafting table using vine in place of leather in the recipe (making it available earlier game!)",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-018",
+    "section": "Travelers Cuirass",
+    "text": "Combining travelers in the anvil with the right materials will let you swap it.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-019",
+    "section": "Travelers Cuirass",
+    "text": "Leather composites still require leather as a base material. You can always swap the vine for leather before casting.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-020",
+    "section": "Travelers Cuirass",
+    "text": "New material options:",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-021",
+    "section": "Travelers Cuirass",
+    "text": "Wool: grants knockback resistance.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-022",
+    "section": "Travelers Cuirass",
+    "text": "Vine: grants solar powered, making it lose less durability in sunlight.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-023",
+    "section": "Travelers Cuirass",
+    "text": "Weeping Vine: grants flamestance, granting protection in warm biomes.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-024",
+    "section": "Travelers Cuirass",
+    "text": "Twisting Vine: grants entwined, boosting movement speed at the cost of damaging you when it is removed.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-025",
+    "section": "Travelers Cuirass",
+    "text": "Slimy vines are discussed below.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-026",
+    "section": "Travelers Cuirass",
+    "text": "Vines were removed as cuirass options to help make travelers more unique. Most of their traits were non-defensive anyways.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-027",
+    "section": "Travelers Cuirass",
+    "text": "Travelers shield also supports the new cuirass. Its wood part swapping now just uses planks in an anvil.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-028",
+    "section": "Slimeskin and Slimy Vines",
+    "text": "Sky/Ender Slimeskin and Sky/Ender Slimy Vines were split from each other, providing different traits.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-029",
+    "section": "Slimeskin and Slimy Vines",
+    "text": "As maille no longer gets vines, this means the slimeskins are meant as defensive while the vines are more utility.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-030",
+    "section": "Slimeskin and Slimy Vines",
+    "text": "Sky Slimy Vine was given skyfall, which is now travelers exclusive.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-031",
+    "section": "Slimeskin and Slimy Vines",
+    "text": "Ender Slimy Vine grants enderdodging, which was previously slimesuit exclusive. Its still end exclusive so balancewise seems fine.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-032",
+    "section": "Slimeskin and Slimy Vines",
+    "text": "Sky Slimeskin grants Airborn, reducing damage from attackers in the air. Counts dragonborn, critical hits, and flying enemies.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-033",
+    "section": "Slimeskin and Slimy Vines",
+    "text": "Ender Slimeskin grants enderclearance, teleporting away attackers. Was the previous trait on enderslime vines.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-034",
+    "section": "Slimesuit",
+    "text": "Added venom as a new slime material, grants magic resistance. Can be repaired with spider eyes or by casting venom repair kits.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-035",
+    "section": "Slimesuit",
+    "text": "Ender pearl was changed to enderclearance, better fitting how hard it is to get by comparison.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-036",
+    "section": "Slimesuit",
+    "text": "Buff leather laces. Instead of snow boots, they now grant rugged. In addition to walking on powder snow, it makes you immune to various hazardous blocks like cactus. When trimmed, it also makes you immune to thorns.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-037",
+    "section": "Slimesuit",
+    "text": "Enderdodging is now slightly weaker on level 1, restoring the previous power at level 2. This keeps slimesuit ahead of travelers since travelers gets just 1 level.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-038",
+    "section": "Slimesuit",
+    "text": "Added honey blocks as a repair material for honey and allow either it or bottles to craft honey repair kits.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-039",
+    "section": "Slimesuit",
+    "text": "Allow crafting magma slimesuits as a composite of blazing blood on earthslime. Probably not that useful of a recipe, but its thematic.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-040",
+    "section": "Slimesuit",
+    "text": "Vine laces now further increase the chance of not using durability when trimmed.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-041",
+    "section": "Slimesuit",
+    "text": "Allow crafting magma slimesuit from casting blazing blood on earthslime suit.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-042",
+    "section": "Slimesuit",
+    "text": "Fix wrong stat type conflict for slimesuit part composites, preventing creation of darkthread laces.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-043",
+    "section": "Slimesuit",
+    "text": "Fix the target of ram attacks dying causing the horn sound to cut off. It now only cuts off if you die (#5723).",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-044",
+    "section": "Slimesuit",
+    "text": "Fix clay repair kits not being craftable in the part builder.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-045",
+    "section": "Slimesuit",
+    "text": "Fix slimesuit not supporting tool recycling.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-046",
+    "section": "Banner",
+    "text": "Added banner to travelers shield, thanks to textures by @onethirdpirsquaredh in #5720.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-047",
+    "section": "Banner",
+    "text": "Using skyslime in the banner recipe will make the base color of the banner invisible.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-048",
+    "section": "Banner",
+    "text": "Fix upside-down diagonal up right banner on small plate shields",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-049",
+    "section": "Smeltery",
+    "text": "Fix being able to cast magma from non-earth congealed slime, as it was decided to be limited to earth.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-050",
+    "section": "JEI",
+    "text": "Uses more new JEI APIs, so behavior with offbrand JEI is less certain.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-051",
+    "section": "JEI",
+    "text": "Crafting table tool recipes (e.g. the recipes used for travelers gear) now properly animates between multiple materials.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-052",
+    "section": "JEI",
+    "text": "Tool building tab now properly animates between multiple materials.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-053",
+    "section": "JEI",
+    "text": "Improve sort order of materials in various recipes. Means instead of input options order being random it will match tier ordering.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-054",
+    "section": "JEI",
+    "text": "For any blacklisted fluids in JEI, also blacklist the various filled tanks. Should keep the displayed tanks down.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-055",
+    "section": "JEI",
+    "text": "For blocks with variants in catalysts, use the new JEI API to show an animation of catalyst variants.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-056",
+    "section": "JEI",
+    "text": "Sort many lists of materials to match up to material display order.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-057",
+    "section": "JEI",
+    "text": "The crafting table tab now shows repair kit and overslime recipes.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-058",
+    "section": "JEI",
+    "text": "Switch the output tool on modifier recipes from \"catalyst\" to \"render only\". Should improve behavior with some JEI addons.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-059",
+    "section": "JEI",
+    "text": "Fix order of slots in the anvil and the in the JEI categories not matching. Causes confusion with a few index sensitive recipes.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-060",
+    "section": "JEI",
+    "text": "Fix knightslime buckets being hidden from JEI.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-061",
+    "section": "JEI",
+    "text": "Fix occasional errors on newer JEI with entity melting and severing due to mobs with no spawn eggs.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-062",
+    "section": "Fuel Tab",
+    "text": "Shows info on all registered liquid fuels.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-063",
+    "section": "Fuel Tab",
+    "text": "Shows a special list for solid fuels with info on their burn times and other stats.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-064",
+    "section": "Material Tab",
+    "text": "Shows items and fluids associated with materials.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-065",
+    "section": "Material Tab",
+    "text": "For items, shows their value, the needed amount as stack size, and whether they have a leftover.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-066",
+    "section": "Material Tab",
+    "text": "For fluids, shows the fluid per unit and the composite base.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-067",
+    "section": "Material Tab",
+    "text": "For all materials, shows an animation of parts and tools using the material.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-068",
+    "section": "Material Tab",
+    "text": "Materials in the tab act as an ingredient, which can also bring you to part builder recipes.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-069",
+    "section": "Tool Tinkering Tab",
+    "text": "Added a new \"Tool Tinkering\" tab which shows ways to modify tools other than adding modifiers.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-070",
+    "section": "Tool Tinkering Tab",
+    "text": "Includes \"tool damaging\" recipes to reduce a tool durability.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-071",
+    "section": "Tool Tinkering Tab",
+    "text": "Also includes part swapping recipes in their many forms. At least the ones done in the anvil or worktable.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-072",
+    "section": "Tool Tinkering Tab",
+    "text": "Includes material repair. Repair options just shows as repair kit for simplicity, but of course repair works with regular items as well.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-073",
+    "section": "Tool Tinkering Tab",
+    "text": "Tool repair recipes are shown for all tools that are repairable regardless of materials, including flint and brick, slimestaffs, and the phantom repair material for slimelytra.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-074",
+    "section": "Tool Tinkering Tab",
+    "text": "For tools with materials, they will show material repair options when focused as it relies on the specific materials.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-075",
+    "section": "Tool Tinkering Tab",
+    "text": "Modifier repair shows the specific extra items to repair some modifiers, such as tasty with bacon.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-076",
+    "section": "Tool Focusing",
+    "text": "Improved how many categories work with focusing on a tool.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-077",
+    "section": "Tool Focusing",
+    "text": "For recipes producing a tool, the output materials now all match your focused tool if the recipe is craftable.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-078",
+    "section": "Tool Focusing",
+    "text": "For recipes consuming a tool (e.g. material swapping), the output now matches the change your specific tool would cause to the output.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-079",
+    "section": "Tool Focusing",
+    "text": "For recipes changing a tool (e.g. modifiers), the input now shows your fully modified tool, and the output shows the tool after that recipe applies. This is a bit experimental so it has a config option to disable it if it breaks.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-080",
+    "section": "Tool Focusing",
+    "text": "Some recipes show extra info from focusing, such as focusing on a banner showing the patterns on the output.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-081",
+    "section": "Tool Focusing",
+    "text": "There were a lot of edge cases to make this all function, so if you see anything in JEI that does not match up to actual recipes, please report it.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-082",
+    "section": "Tool Focusing",
+    "text": "Added a config option to disable some of the dynamic focusing that may be a little more error prone. If you need to disable this, please report an issue explaining what broke that caused you to disable it.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-083",
+    "section": "Improved Part Builder Tab",
+    "text": "Recipes now have a title if they lack a material. The title can be set in the item part recipe if you do not use a material (used for sand cast creation).",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-084",
+    "section": "Improved Part Builder Tab",
+    "text": "The pattern now has a tooltip explaining if its consumed or reusable, to clarify behavior of gold patterns.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-085",
+    "section": "Improved Part Builder Tab",
+    "text": "The material is an ingredient which will bring you to the material tab.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-086",
+    "section": "Improved Part Builder Tab",
+    "text": "The stack size now accurately reflects how many of the specific item is needed to craft the result. The cost has thus been relocated to a tooltip on the pattern to fit more recipes per page.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-087",
+    "section": "Improved Part Builder Tab",
+    "text": "Part recipes now animate all materials, showing a representative item from each material option. Focusing on the material will show all input options.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-088",
+    "section": "Recipe Count Reduction",
+    "text": "Reduce the number of recipes shown in casting and melting tabs by combining material recipes into a single animated recipe.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-089",
+    "section": "Recipe Count Reduction",
+    "text": "Did the same few other similarly animated recipes like cast duplication, container filling, potion casting, and many part builder recipes.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-090",
+    "section": "Recipe Count Reduction",
+    "text": "For a few recipes, swapped the listing from 1 per material to 1 per tool, which is a notably lower number in most cases.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-091",
+    "section": "Recipe Count Reduction",
+    "text": "This should make it easier to scroll through the recipe list to find non-tool part recipes.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-092",
+    "section": "Recipe Count Reduction",
+    "text": "This also makes the focus work better for tool crafting.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-093",
+    "section": "Recipe Count Reduction",
+    "text": "Combined some but not all part builder recipes similarly.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-094",
+    "section": "Textures",
+    "text": "Make bamboo armor stand texture a bit more ugly as vanilla has z-fighting in the model otherwise",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-095",
+    "section": "Textures",
+    "text": "Removed many duplicate modifier textures using the modifier map system. If those textures were different in a resource pack, you can change the modifier maps to refer to your texture instead.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-096",
+    "section": "Language",
+    "text": "Change name of Necrotic modifier to Lifesteal, to reduce confusion with the necrotic material.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-097",
+    "section": "Language",
+    "text": "Numerically sort attributes on godspeed.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-098",
+    "section": "Language",
+    "text": "Switch materials and you UI displays to tinkers station instead of tinkers anvil.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-099",
+    "section": "Language",
+    "text": "Fix various typos, notably including feather falling description in books and clay not mentioning its knockback resistance.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-100",
+    "section": "Language",
+    "text": "Update Simplified Chinese Translation by @Don-Trueno in #5712",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-101",
+    "section": "Technical",
+    "text": "Extend error info from modifiers that fail to serialize in datagen.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-102",
+    "section": "Technical",
+    "text": "Added a new anvil recipe for swapping materials on tools using material items (same set used for repairing). Only works well on tools with no overlap between material lists of different repairable types.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-103",
+    "section": "Technical",
+    "text": "Repair recipe now does not match undamaged tools instead of showing an error.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-104",
+    "section": "Technical",
+    "text": "Allow tool casting recipes to disable also adding part swapping. Used in slimeskull casting to avoid duplicate slimeskull slime swapping.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-105",
+    "section": "Technical",
+    "text": "Removed usages of the \"single part\" tool tag. Was previously used to fix some bugs with slimeskull focusing in JEI, but that has all been handled in other ways. If there is a case not handled that you need for your addon, make an issue about it.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-106",
+    "section": "Technical",
+    "text": "Optimize `MaterialIdNBT`. For some usages, may benefit from its new helper.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-107",
+    "section": "Technical",
+    "text": "Added an item tag for \"fuel examples\" that show in JEI for solid fuels in some contexts.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-108",
+    "section": "Technical",
+    "text": "Locked the debug dump of materials behind a config entry as few users were likely using them and string building has some potential impact on startup time. When enabled, it is now optimized to skip some logic when not producing a debug log (so minimal impact if a modpack dev forgets to turn it off).",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-109",
+    "section": "Technical",
+    "text": "Fix material ingredient not properly parsing the legacy material tag key.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-110",
+    "section": "Technical",
+    "text": "Fix cuirass stats not showing in book exports.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-111",
+    "section": "Technical",
+    "text": "Fix accidental breaking change in the API for circle and sweep weapon attacks, causing a crash in the tool leveling addon (#5722).",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-112",
+    "section": "Technical",
+    "text": "Fix a parsing error during tool stat parsing causing the whole manager to fail.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-113",
+    "section": "Technical",
+    "text": "Fix fluid capacity bar failing to fill an empty tool.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-114",
+    "section": "Modifier tooltips ",
+    "text": "Improved control of modifiers over showing in tooltips.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-115",
+    "section": "Modifier tooltips ",
+    "text": "Instead of a boolean (true for tinker station, false for item), its now an enum with 5 values:",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-116",
+    "section": "Modifier tooltips ",
+    "text": "`tool`: Shows on tooltips of tool items.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-117",
+    "section": "Modifier tooltips ",
+    "text": "`tinker_station`: Shows in modifier lists on the tinker station, tinkers anvil, and modifier worktable.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-118",
+    "section": "Modifier tooltips ",
+    "text": "`tool_part`: Shows in modifier lists on tool parts.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-119",
+    "section": "Modifier tooltips ",
+    "text": "`part_builder`: Shows in material stat listings on the part builder.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-120",
+    "section": "Modifier tooltips ",
+    "text": "`book`: Shows in book pages covering tool materials.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-121",
+    "section": "Modifier tooltips ",
+    "text": "This allows more control for different needs of internal and non-behavior affecting modifiers.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-122",
+    "section": "Modifier tooltips ",
+    "text": "On modifiers, the field `tooltip_display` was replaced with the field `show_in_tooltips`, which has extended control:",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-123",
+    "section": "Modifier tooltips ",
+    "text": "If left out, will show in all tooltips.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-124",
+    "section": "Modifier tooltips ",
+    "text": "Can be set to an array listing any number of values from the enum to show.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-125",
+    "section": "Modifier tooltips ",
+    "text": "Can be set to one of several strings for common usages:",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-126",
+    "section": "Modifier tooltips ",
+    "text": "`parts_only`: Shows in `tool_part`, `part_builder`, and `book`. Used for some tool materials that provide different traits based on the tool type, as the provided traits don't show on parts. Mimics previous behavior of `never`.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-127",
+    "section": "Modifier tooltips ",
+    "text": "`bonus_slot`: Shows everywhere except `tool`. Used for slotless modifiers that add more modifier slots, as that information is not necessary on a tool. Mimics previous behavior of `tinker_station`.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-128",
+    "section": "Modifier tooltips ",
+    "text": "`advanced`: Shows in all tool tables and the book. Meant for technical modifiers that are important to know during tool building only, like overslime friend.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-129",
+    "section": "Display Recipes",
+    "text": "Added new interface for recipes to show in the tool tinkering tab.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-130",
+    "section": "Display Recipes",
+    "text": "Make various display recipes use a builder instead of a constructor to make it easier to add new behaviors.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-131",
+    "section": "Display Recipes",
+    "text": "Implemented an interface for display melting recipes rather than using the base melting recipe.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-132",
+    "section": "Display Recipes",
+    "text": "Added hooks to various recipes for some more dynamic JEI behavior, including dynamically updating items based on current displayed ingredients (casting, modifiers, tool tinkering) and conditionally hiding recipes based on NBT (casting, tool tinkering).",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-133",
+    "section": "Display Recipes",
+    "text": "Casting and melting recipes now support dynamic time, which is in a tooltip on the arrow.",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  },
+  {
+    "id": "upstream-3.12.1-134",
+    "section": "New Contributors",
+    "text": "@onethirdpirsquaredh made their first contribution in https://github.com/SlimeKnights/TinkersConstruct/pull/5720",
+    "status": "unverified_in_continuum",
+    "source": "https://github.com/SlimeKnights/TinkersConstruct/releases/tag/v3.12.1.231"
+  }
+]

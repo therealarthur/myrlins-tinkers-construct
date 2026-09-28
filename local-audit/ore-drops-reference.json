@@ -1,0 +1,16 @@
+{
+  "minecraft": "26.1.2",
+  "cached_jar": "cache\\gradle-target\\caches\\neoformruntime\\artifacts\\minecraft_26.1.2_client.jar",
+  "class": "net/minecraft/world/level/storage/loot/functions/ApplyBonusCount$OreDrops.class",
+  "class_sha256": "f337085507be6a51fce278c6f25638bc4e06c6b9d267c37380a6fe53ce774f64",
+  "inspection": "JDK25 javap -p -c; read-only class inspection, no game launch",
+  "algorithm_observed": "level <= 0: base; otherwise base * (max(nextInt(level + 2) - 1, 0) + 1)",
+  "port_algorithm": "base + nextInt(level + 1)",
+  "port_source": "src/main/java/slimeknights/tconstruct/tools/modifiers/loot/BonusFormula.java:83",
+  "upstream_tinkers_callers": [
+    "tools/modifiers/loot/ModifierBonusLootFunction.java",
+    "tools/modifiers/loot/ChrysophiliteBonusFunction.java"
+  ],
+  "upstream_tinkers_uses": "net.minecraft.world.level.storage.loot.functions.ApplyBonusCount.OreDrops",
+  "limit": "Source/bytecode comparison only; no runtime loot generation tested."
+}

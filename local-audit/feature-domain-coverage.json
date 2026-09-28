@@ -1,0 +1,690 @@
+{
+  "resource:META-INF": {
+    "unreviewed": 3,
+    "port_addition_or_replacement_review": 2
+  },
+  "resource:assets": {
+    "content_matches_behavior_unverified": 2
+  },
+  "resource:assets/enderio/models": {
+    "port_addition_or_replacement_review": 5
+  },
+  "resource:assets/minecraft/atlases": {
+    "client_asset_or_resource_schema_review": 2
+  },
+  "resource:assets/tconstruct/blockstates": {
+    "content_matches_behavior_unverified": 359,
+    "client_asset_or_resource_schema_review": 76,
+    "port_addition_or_replacement_review": 36
+  },
+  "resource:assets/tconstruct/book/encyclopedia": {
+    "content_matches_behavior_unverified": 1081,
+    "book_translation_or_layout_review": 855,
+    "port_addition_or_replacement_review": 157,
+    "same_content_elsewhere_mapping_review": 6
+  },
+  "resource:assets/tconstruct/book/fantastic_foundry": {
+    "content_matches_behavior_unverified": 232,
+    "book_translation_or_layout_review": 105,
+    "port_addition_or_replacement_review": 21
+  },
+  "resource:assets/tconstruct/book/images": {
+    "content_matches_behavior_unverified": 69,
+    "book_translation_or_layout_review": 27
+  },
+  "resource:assets/tconstruct/book/materials_and_you": {
+    "content_matches_behavior_unverified": 236,
+    "book_translation_or_layout_review": 133,
+    "port_addition_or_replacement_review": 5
+  },
+  "resource:assets/tconstruct/book/mighty_smelting": {
+    "content_matches_behavior_unverified": 678,
+    "book_translation_or_layout_review": 378,
+    "port_addition_or_replacement_review": 37,
+    "same_content_elsewhere_mapping_review": 4
+  },
+  "resource:assets/tconstruct/book/puny_smelting": {
+    "content_matches_behavior_unverified": 820,
+    "book_translation_or_layout_review": 514,
+    "port_addition_or_replacement_review": 53,
+    "same_content_elsewhere_mapping_review": 20
+  },
+  "resource:assets/tconstruct/book/structures": {
+    "content_matches_behavior_unverified": 2
+  },
+  "resource:assets/tconstruct/book/tinkers_gadgetry": {
+    "book_translation_or_layout_review": 151,
+    "content_matches_behavior_unverified": 183,
+    "port_addition_or_replacement_review": 23
+  },
+  "resource:assets/tconstruct/equipment": {
+    "port_addition_or_replacement_review": 2
+  },
+  "resource:assets/tconstruct/items": {
+    "port_addition_or_replacement_review": 869
+  },
+  "resource:assets/tconstruct/lang": {
+    "client_asset_or_resource_schema_review": 20
+  },
+  "resource:assets/tconstruct/mantle/colors.json": {
+    "client_asset_or_resource_schema_review": 1
+  },
+  "resource:assets/tconstruct/mantle/fluid_texture": {
+    "client_asset_or_resource_schema_review": 72,
+    "port_addition_or_replacement_review": 11
+  },
+  "resource:assets/tconstruct/mantle/fluid_tooltips": {
+    "content_matches_behavior_unverified": 12
+  },
+  "resource:assets/tconstruct/mantle/model": {
+    "client_asset_or_resource_schema_review": 1,
+    "content_matches_behavior_unverified": 58,
+    "port_addition_or_replacement_review": 3
+  },
+  "resource:assets/tconstruct/models": {
+    "client_asset_or_resource_schema_review": 668,
+    "content_matches_behavior_unverified": 881,
+    "port_addition_or_replacement_review": 84
+  },
+  "resource:assets/tconstruct/particles": {
+    "content_matches_behavior_unverified": 7
+  },
+  "resource:assets/tconstruct/sounds": {
+    "content_matches_behavior_unverified": 16
+  },
+  "resource:assets/tconstruct/textures": {
+    "content_matches_behavior_unverified": 12966,
+    "client_asset_or_resource_schema_review": 838,
+    "port_addition_or_replacement_review": 4876,
+    "same_content_elsewhere_mapping_review": 63
+  },
+  "resource:assets/tconstruct/tinkering": {
+    "content_matches_behavior_unverified": 30,
+    "client_asset_or_resource_schema_review": 217,
+    "port_addition_or_replacement_review": 103
+  },
+  "resource:assets/trimmed/maps": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/apotheosis/apotheosis": {
+    "port_addition_or_replacement_review": 13
+  },
+  "resource:data/apotheosis/data_maps": {
+    "port_addition_or_replacement_review": 1
+  },
+  "resource:data/c/tags/block": {
+    "port_addition_or_replacement_review": 82
+  },
+  "resource:data/c/tags/creative_mode_tab": {
+    "unreviewed": 1
+  },
+  "resource:data/c/tags/entity_type": {
+    "port_addition_or_replacement_review": 11
+  },
+  "resource:data/c/tags/fluid": {
+    "port_addition_or_replacement_review": 56,
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/c/tags/item": {
+    "port_addition_or_replacement_review": 170,
+    "unreviewed": 1
+  },
+  "resource:data/c/tags/worldgen": {
+    "port_addition_or_replacement_review": 1
+  },
+  "resource:data/ceramics/tags/block": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/create/tags/block": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/create/tags/item": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/forge/loot_modifiers": {
+    "common_tag_namespace_membership_review": 1
+  },
+  "resource:data/forge/tags/block": {
+    "same_content_elsewhere_mapping_review": 70,
+    "common_tag_namespace_membership_review": 6
+  },
+  "resource:data/forge/tags/entity_type": {
+    "common_tag_namespace_membership_review": 14,
+    "same_content_elsewhere_mapping_review": 8
+  },
+  "resource:data/forge/tags/fluid": {
+    "same_content_elsewhere_mapping_review": 45
+  },
+  "resource:data/forge/tags/item": {
+    "same_content_elsewhere_mapping_review": 120,
+    "common_tag_namespace_membership_review": 11
+  },
+  "resource:data/forge/tags/worldgen": {
+    "same_content_elsewhere_mapping_review": 1
+  },
+  "resource:data/headlight/tags/item": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/mantle/tags/block": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/mantle/tags/block_entity_type": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/mantle/tags/fluid": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/mantle/tags/menu": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/minecraft/tags/block": {
+    "content_matches_behavior_unverified": 39,
+    "unreviewed": 2
+  },
+  "resource:data/minecraft/tags/damage_type": {
+    "content_matches_behavior_unverified": 10
+  },
+  "resource:data/minecraft/tags/entity_type": {
+    "same_content_elsewhere_mapping_review": 1,
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/minecraft/tags/item": {
+    "content_matches_behavior_unverified": 29,
+    "unreviewed": 1
+  },
+  "resource:data/minecraft/tags/villager_trade": {
+    "port_addition_or_replacement_review": 1
+  },
+  "resource:data/neoforge/tags/block": {
+    "port_addition_or_replacement_review": 2
+  },
+  "resource:data/parry/tags/item": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/tconstruct/advancement": {
+    "unreviewed": 428,
+    "port_addition_or_replacement_review": 1
+  },
+  "resource:data/tconstruct/command": {
+    "unreviewed": 1
+  },
+  "resource:data/tconstruct/damage_type": {
+    "content_matches_behavior_unverified": 32
+  },
+  "resource:data/tconstruct/function": {
+    "content_matches_behavior_unverified": 8
+  },
+  "resource:data/tconstruct/loot_modifiers": {
+    "unreviewed": 20,
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/tconstruct/loot_table": {
+    "content_matches_behavior_unverified": 246,
+    "port_addition_or_replacement_review": 32,
+    "unreviewed": 98
+  },
+  "resource:data/tconstruct/mantle": {
+    "unreviewed": 32,
+    "port_addition_or_replacement_review": 71,
+    "content_matches_behavior_unverified": 4
+  },
+  "resource:data/tconstruct/neoforge": {
+    "world_generation_or_migration_review": 8
+  },
+  "resource:data/tconstruct/recipe": {
+    "recipe_gameplay_or_schema_review": 2436,
+    "port_addition_or_replacement_review": 449,
+    "optional_metal_recipe_or_schema_review": 612,
+    "content_matches_behavior_unverified": 4,
+    "instrument_ingredient_refactor_review": 9
+  },
+  "resource:data/tconstruct/structure": {
+    "world_generation_or_migration_review": 20,
+    "content_matches_behavior_unverified": 5
+  },
+  "resource:data/tconstruct/tags/block": {
+    "content_matches_behavior_unverified": 63,
+    "unreviewed": 7
+  },
+  "resource:data/tconstruct/tags/block_entity_type": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/tconstruct/tags/damage_type": {
+    "content_matches_behavior_unverified": 8,
+    "unreviewed": 3
+  },
+  "resource:data/tconstruct/tags/enchantment": {
+    "content_matches_behavior_unverified": 21
+  },
+  "resource:data/tconstruct/tags/entity_type": {
+    "content_matches_behavior_unverified": 4,
+    "unreviewed": 15,
+    "same_content_elsewhere_mapping_review": 1
+  },
+  "resource:data/tconstruct/tags/fluid": {
+    "content_matches_behavior_unverified": 80,
+    "unreviewed": 4,
+    "port_addition_or_replacement_review": 11
+  },
+  "resource:data/tconstruct/tags/instrument": {
+    "unreviewed": 1
+  },
+  "resource:data/tconstruct/tags/item": {
+    "unreviewed": 60,
+    "content_matches_behavior_unverified": 201,
+    "port_addition_or_replacement_review": 3
+  },
+  "resource:data/tconstruct/tags/menu": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/tconstruct/tags/potion": {
+    "unreviewed": 1
+  },
+  "resource:data/tconstruct/tags/worldgen": {
+    "content_matches_behavior_unverified": 5
+  },
+  "resource:data/tconstruct/tinkering/enchantments_to_modifiers.json": {
+    "unreviewed": 1
+  },
+  "resource:data/tconstruct/tinkering/fluid_effects": {
+    "unreviewed": 81,
+    "content_matches_behavior_unverified": 4
+  },
+  "resource:data/tconstruct/tinkering/materials": {
+    "port_addition_or_replacement_review": 63,
+    "material_gameplay_review": 82,
+    "content_matches_behavior_unverified": 218,
+    "same_content_elsewhere_mapping_review": 2
+  },
+  "resource:data/tconstruct/tinkering/mob_equipment": {
+    "unreviewed": 6,
+    "port_addition_or_replacement_review": 1
+  },
+  "resource:data/tconstruct/tinkering/modifiers": {
+    "modifier_gameplay_or_static_replacement_review": 300,
+    "port_addition_or_replacement_review": 6,
+    "content_matches_behavior_unverified": 6
+  },
+  "resource:data/tconstruct/tinkering/station_layouts": {
+    "unreviewed": 23
+  },
+  "resource:data/tconstruct/tinkering/tags": {
+    "content_matches_behavior_unverified": 64,
+    "unreviewed": 13
+  },
+  "resource:data/tconstruct/tinkering/tool_definitions": {
+    "content_matches_behavior_unverified": 30,
+    "tool_gameplay_review": 15
+  },
+  "resource:data/tconstruct/trim_material": {
+    "unreviewed": 16
+  },
+  "resource:data/tconstruct/villager_trade": {
+    "port_addition_or_replacement_review": 6
+  },
+  "resource:data/tconstruct/worldgen/configured_feature": {
+    "content_matches_behavior_unverified": 9,
+    "world_generation_or_migration_review": 6
+  },
+  "resource:data/tconstruct/worldgen/placed_feature": {
+    "content_matches_behavior_unverified": 6
+  },
+  "resource:data/tconstruct/worldgen/structure": {
+    "content_matches_behavior_unverified": 5,
+    "world_generation_or_migration_review": 1
+  },
+  "resource:data/tconstruct/worldgen/structure_set": {
+    "content_matches_behavior_unverified": 4
+  },
+  "resource:data/twilightforest/tags/damage_type": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:data/twilightforest/tags/item": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:logo.png": {
+    "content_matches_behavior_unverified": 1
+  },
+  "resource:pack.mcmeta": {
+    "unreviewed": 1
+  },
+  "resource:tconstruct.mixins.json": {
+    "port_addition_or_replacement_review": 1
+  },
+  "source:": {
+    "implementation_behavior_review": 2
+  },
+  "source:common": {
+    "implementation_behavior_review": 8
+  },
+  "source:common/config": {
+    "implementation_behavior_review": 3
+  },
+  "source:common/data": {
+    "implementation_behavior_review": 39,
+    "package_metadata_review": 1,
+    "unreviewed_source_absence": 2
+  },
+  "source:common/json": {
+    "implementation_behavior_review": 3,
+    "port_addition_or_replacement_review": 1
+  },
+  "source:common/multiblock": {
+    "source_matches_runtime_unverified": 1,
+    "implementation_behavior_review": 3
+  },
+  "source:common/network": {
+    "implementation_behavior_review": 5
+  },
+  "source:common/recipe": {
+    "unreviewed_source_absence": 1,
+    "implementation_behavior_review": 2,
+    "port_addition_or_replacement_review": 1
+  },
+  "source:common/registration": {
+    "source_matches_runtime_unverified": 4,
+    "implementation_behavior_review": 6
+  },
+  "source:fluids": {
+    "implementation_behavior_review": 4
+  },
+  "source:fluids/block": {
+    "implementation_behavior_review": 3
+  },
+  "source:fluids/data": {
+    "implementation_behavior_review": 5
+  },
+  "source:fluids/fluids": {
+    "implementation_behavior_review": 4
+  },
+  "source:fluids/item": {
+    "implementation_behavior_review": 6,
+    "port_addition_or_replacement_review": 1
+  },
+  "source:fluids/util": {
+    "implementation_behavior_review": 6
+  },
+  "source:gadgets": {
+    "implementation_behavior_review": 3
+  },
+  "source:gadgets/block": {
+    "implementation_behavior_review": 5
+  },
+  "source:gadgets/capability": {
+    "implementation_behavior_review": 3
+  },
+  "source:gadgets/client": {
+    "implementation_behavior_review": 3,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:gadgets/data": {
+    "implementation_behavior_review": 2
+  },
+  "source:gadgets/entity": {
+    "implementation_behavior_review": 12
+  },
+  "source:gadgets/item": {
+    "implementation_behavior_review": 8
+  },
+  "source:library": {
+    "implementation_behavior_review": 3,
+    "port_addition_or_replacement_review": 1
+  },
+  "source:library/client": {
+    "implementation_behavior_review": 117,
+    "source_matches_runtime_unverified": 6,
+    "rendering_or_book_migration_review": 10,
+    "package_metadata_review": 1,
+    "port_addition_or_replacement_review": 7,
+    "same_classname_elsewhere_mapping_review": 4
+  },
+  "source:library/data": {
+    "implementation_behavior_review": 27,
+    "unreviewed_source_absence": 1,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:library/events": {
+    "implementation_behavior_review": 14,
+    "port_addition_or_replacement_review": 1
+  },
+  "source:library/exception": {
+    "source_matches_runtime_unverified": 1,
+    "implementation_behavior_review": 3
+  },
+  "source:library/fluid": {
+    "implementation_behavior_review": 6,
+    "port_addition_or_replacement_review": 2,
+    "source_matches_runtime_unverified": 2
+  },
+  "source:library/json": {
+    "source_matches_runtime_unverified": 60,
+    "implementation_behavior_review": 66,
+    "port_addition_or_replacement_review": 1,
+    "unreviewed_source_absence": 5
+  },
+  "source:library/materials": {
+    "implementation_behavior_review": 28,
+    "unreviewed_source_absence": 1,
+    "source_matches_runtime_unverified": 2
+  },
+  "source:library/modifiers": {
+    "source_matches_runtime_unverified": 77,
+    "implementation_behavior_review": 159,
+    "unreviewed_source_absence": 11,
+    "port_addition_or_replacement_review": 1,
+    "same_classname_elsewhere_mapping_review": 1,
+    "package_metadata_review": 1
+  },
+  "source:library/module": {
+    "source_matches_runtime_unverified": 2,
+    "implementation_behavior_review": 3
+  },
+  "source:library/recipe": {
+    "implementation_behavior_review": 143,
+    "source_matches_runtime_unverified": 12,
+    "unreviewed_source_absence": 10,
+    "package_metadata_review": 2,
+    "viewer_feature_or_api_review": 8,
+    "port_addition_or_replacement_review": 4
+  },
+  "source:library/tools": {
+    "implementation_behavior_review": 129,
+    "source_matches_runtime_unverified": 46,
+    "port_addition_or_replacement_review": 7,
+    "unreviewed_source_absence": 4,
+    "package_metadata_review": 1
+  },
+  "source:library/utils": {
+    "port_addition_or_replacement_review": 3,
+    "implementation_behavior_review": 19,
+    "source_matches_runtime_unverified": 4
+  },
+  "source:mixin/jade": {
+    "port_addition_or_replacement_review": 1
+  },
+  "source:plugin": {
+    "optional_external_integration_review": 3,
+    "implementation_behavior_review": 1
+  },
+  "source:plugin/apotheosis": {
+    "port_addition_or_replacement_review": 1
+  },
+  "source:plugin/craftingtweaks": {
+    "implementation_behavior_review": 2
+  },
+  "source:plugin/jade": {
+    "port_addition_or_replacement_review": 1
+  },
+  "source:plugin/jei": {
+    "implementation_behavior_review": 46,
+    "viewer_feature_or_api_review": 19,
+    "port_addition_or_replacement_review": 1,
+    "package_metadata_review": 3
+  },
+  "source:plugin/jsonthings": {
+    "implementation_behavior_review": 12
+  },
+  "source:shared": {
+    "port_addition_or_replacement_review": 1,
+    "implementation_behavior_review": 9
+  },
+  "source:shared/block": {
+    "source_matches_runtime_unverified": 2,
+    "implementation_behavior_review": 17
+  },
+  "source:shared/client": {
+    "implementation_behavior_review": 3
+  },
+  "source:shared/command": {
+    "source_matches_runtime_unverified": 7,
+    "implementation_behavior_review": 18
+  },
+  "source:shared/data": {
+    "implementation_behavior_review": 2
+  },
+  "source:shared/effect": {
+    "implementation_behavior_review": 3
+  },
+  "source:shared/inventory": {
+    "implementation_behavior_review": 5,
+    "port_addition_or_replacement_review": 1
+  },
+  "source:shared/item": {
+    "implementation_behavior_review": 3,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:shared/network": {
+    "implementation_behavior_review": 2
+  },
+  "source:shared/particle": {
+    "implementation_behavior_review": 2
+  },
+  "source:smeltery": {
+    "implementation_behavior_review": 3
+  },
+  "source:smeltery/block": {
+    "implementation_behavior_review": 85,
+    "source_matches_runtime_unverified": 9,
+    "port_addition_or_replacement_review": 2
+  },
+  "source:smeltery/client": {
+    "implementation_behavior_review": 26,
+    "port_addition_or_replacement_review": 9,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:smeltery/data": {
+    "source_matches_runtime_unverified": 1,
+    "implementation_behavior_review": 4
+  },
+  "source:smeltery/item": {
+    "implementation_behavior_review": 7
+  },
+  "source:smeltery/menu": {
+    "implementation_behavior_review": 5,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:smeltery/network": {
+    "implementation_behavior_review": 8
+  },
+  "source:tables": {
+    "implementation_behavior_review": 3
+  },
+  "source:tables/block": {
+    "implementation_behavior_review": 25,
+    "source_matches_runtime_unverified": 7
+  },
+  "source:tables/client": {
+    "implementation_behavior_review": 22,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:tables/data": {
+    "implementation_behavior_review": 2
+  },
+  "source:tables/item": {
+    "implementation_behavior_review": 3
+  },
+  "source:tables/menu": {
+    "implementation_behavior_review": 14,
+    "source_matches_runtime_unverified": 1
+  },
+  "source:tables/network": {
+    "implementation_behavior_review": 7,
+    "port_addition_or_replacement_review": 2
+  },
+  "source:tables/recipe": {
+    "implementation_behavior_review": 8
+  },
+  "source:tools": {
+    "implementation_behavior_review": 8
+  },
+  "source:tools/client": {
+    "implementation_behavior_review": 16,
+    "port_addition_or_replacement_review": 7
+  },
+  "source:tools/data": {
+    "implementation_behavior_review": 25
+  },
+  "source:tools/entity": {
+    "implementation_behavior_review": 8
+  },
+  "source:tools/item": {
+    "implementation_behavior_review": 10
+  },
+  "source:tools/logic": {
+    "implementation_behavior_review": 8
+  },
+  "source:tools/menu": {
+    "source_matches_runtime_unverified": 1,
+    "implementation_behavior_review": 2
+  },
+  "source:tools/modifiers": {
+    "source_matches_runtime_unverified": 41,
+    "implementation_behavior_review": 74,
+    "port_addition_or_replacement_review": 2
+  },
+  "source:tools/modules": {
+    "port_addition_or_replacement_review": 4,
+    "implementation_behavior_review": 84,
+    "source_matches_runtime_unverified": 14,
+    "unreviewed_source_absence": 1
+  },
+  "source:tools/network": {
+    "implementation_behavior_review": 8
+  },
+  "source:tools/recipe": {
+    "implementation_behavior_review": 20
+  },
+  "source:tools/stats": {
+    "source_matches_runtime_unverified": 6,
+    "implementation_behavior_review": 5
+  },
+  "source:world": {
+    "implementation_behavior_review": 6
+  },
+  "source:world/block": {
+    "source_matches_runtime_unverified": 3,
+    "implementation_behavior_review": 18
+  },
+  "source:world/client": {
+    "port_addition_or_replacement_review": 1,
+    "implementation_behavior_review": 9,
+    "rendering_or_book_migration_review": 1
+  },
+  "source:world/data": {
+    "implementation_behavior_review": 5
+  },
+  "source:world/entity": {
+    "implementation_behavior_review": 7
+  },
+  "source:world/item": {
+    "implementation_behavior_review": 3
+  },
+  "source:world/logic": {
+    "unreviewed_source_absence": 1,
+    "implementation_behavior_review": 1
+  },
+  "source:world/worldgen": {
+    "implementation_behavior_review": 11,
+    "source_matches_runtime_unverified": 4
+  }
+}

@@ -1,0 +1,750 @@
+[
+  {
+    "path": "slimeknights/tconstruct/common/data/advancement/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "bdd8fbd61b2a079988102f61170428515dc763f1b58e6c0133c3811ce57d39fa"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/CreativeTabTagProvider.java",
+    "category": "datageneration_api_or_content_review",
+    "rationale": "Generation APIs differ by Minecraft version. Compare actual produced resources and provider behavior before accepting this omission.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "0d6f80ceb4470713978fdabac7b198e1841912ed1ca32ad310e593b1b25c88fc"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/InstrumentTagProvider.java",
+    "category": "datageneration_api_or_content_review",
+    "rationale": "Generation APIs differ by Minecraft version. Compare actual produced resources and provider behavior before accepting this omission.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "d9df7da48164799afd63184b137038207ebe929181c9de10ecec5b52350f2614"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/recipe/LoadableFinishedRecipe.java",
+    "category": "datageneration_api_or_content_review",
+    "rationale": "Generation APIs differ by Minecraft version. Compare actual produced resources and provider behavior before accepting this omission.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "b6c5ecfba7e9f2af84ee68967fe079ac4835a6306c9feac6c260d85add4946bd"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/material/LacesMaterialContent.java",
+    "category": "material_book_content_gap",
+    "rationale": "Latest official material-stat book implementation is absent; existing book renderer needs behavior comparison.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "5344e807ce9b771b78999f8c4ad6c92199797f80bf8c693ec369bcb03fb73644"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/material/RibcageMaterialContent.java",
+    "category": "material_book_content_gap",
+    "rationale": "Latest official material-stat book implementation is absent; existing book renderer needs behavior comparison.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "5241cb5726edefedd48ff4576d540802c52185f8bafa6325e1c7f0c2b1a0653d"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/material/ShellMaterialContent.java",
+    "category": "material_book_content_gap",
+    "rationale": "Latest official material-stat book implementation is absent; existing book renderer needs behavior comparison.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "553437facd37fe8ba55b91c9977a5eccea2c62fdb74c529d298c31d51ff9ce92"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/material/SingleMaterialStatContent.java",
+    "category": "material_book_content_gap",
+    "rationale": "Latest official material-stat book implementation is absent; existing book renderer needs behavior comparison.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "77dad09f30bb6e9a93af49435d9d4289898a4aac045ac970b4c55aa1839594ff"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/material/SlimeMaterialContent.java",
+    "category": "material_book_content_gap",
+    "rationale": "Latest official material-stat book implementation is absent; existing book renderer needs behavior comparison.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "0ede8535f64f57c284812ee73d55877d9654732c2b3c0ea00bf716209478ecd6"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/material/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "8f9dcbe72702d21b7b21ef7773a9b8f4407d9d49331bbe728dd9b9378ef327b4"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/FluidContainerModel.java",
+    "category": "client_api_or_rendering_replacement_review",
+    "rationale": "Modern item/model/render APIs differ; inspect registered replacement paths and user-operated visuals. Class absence alone is insufficient.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "ba7c24fd34db32e4e3f734c64a794d01dfd0a5edbfbfd171b3965894fca5efe1"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/block/FluidTextureModel.java",
+    "category": "relocated_class_candidate",
+    "rationale": "A same-named class exists at the listed path. Compare implementation; relocation alone does not establish equivalent behavior.",
+    "related_port_paths": [
+      "slimeknights/tconstruct/library/client/model/FluidTextureModel.java"
+    ],
+    "parity_status": "unverified",
+    "upstream_sha256": "5a68c1d2f73066296d64183ff07f26bdbfde438627237d057a287d0b80da2f37"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/block/IncrementalFluidCuboid.java",
+    "category": "relocated_class_candidate",
+    "rationale": "A same-named class exists at the listed path. Compare implementation; relocation alone does not establish equivalent behavior.",
+    "related_port_paths": [
+      "slimeknights/tconstruct/library/client/model/IncrementalFluidCuboid.java"
+    ],
+    "parity_status": "unverified",
+    "upstream_sha256": "0fd22ef815f75e88396d8321bae55089c51ca4be39e0e2896d022e5ca8ef61ad"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/block/TankModel.java",
+    "category": "relocated_class_candidate",
+    "rationale": "A same-named class exists at the listed path. Compare implementation; relocation alone does not establish equivalent behavior.",
+    "related_port_paths": [
+      "slimeknights/tconstruct/library/client/model/TankModel.java"
+    ],
+    "parity_status": "unverified",
+    "upstream_sha256": "45659848cb9fcfc1e6497ba973cc23d2b413e4afc567df880f6b8824db7510f0"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/NestedOverrides.java",
+    "category": "client_api_or_rendering_replacement_review",
+    "rationale": "Modern item/model/render APIs differ; inspect registered replacement paths and user-operated visuals. Class absence alone is insufficient.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "427cf949b1975741a1e1b2dde9baeca22bffa6071b91a3ba66c2125d1b79fda3"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/ToolModel.java",
+    "category": "client_api_or_rendering_replacement_review",
+    "rationale": "Modern item/model/render APIs differ; inspect registered replacement paths and user-operated visuals. Class absence alone is insufficient.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "3d4dd73a87be8f2648bd5b565228e0d6a237a3cae086a5347cd3bf1dc4858844"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/modifiers/model/MaterialModifierModel.java",
+    "category": "relocated_class_candidate",
+    "rationale": "A same-named class exists at the listed path. Compare implementation; relocation alone does not establish equivalent behavior.",
+    "related_port_paths": [
+      "slimeknights/tconstruct/library/client/modifiers/MaterialModifierModel.java"
+    ],
+    "parity_status": "unverified",
+    "upstream_sha256": "5b4df34ba219e7d13cfb5fed0709ab1078faa05408c8a97eb17efbb9b39b5ad6"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/modifiers/model/ModifierModelLoadable.java",
+    "category": "client_api_or_rendering_replacement_review",
+    "rationale": "Modern item/model/render APIs differ; inspect registered replacement paths and user-operated visuals. Class absence alone is insufficient.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "8349657c0200a97cdb245176f8fca2920e177196b0ce0f9d5ef3c720cfc25373"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/modifiers/model/NestedModifierModel.java",
+    "category": "client_api_or_rendering_replacement_review",
+    "rationale": "Modern item/model/render APIs differ; inspect registered replacement paths and user-operated visuals. Class absence alone is insufficient.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "943441db757a35df85a67c083565b060dea8358d2d2f5bb48e202b2908ac046e"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/GenericStringProvider.java",
+    "category": "datageneration_api_or_content_review",
+    "rationale": "Generation APIs differ by Minecraft version. Compare actual produced resources and provider behavior before accepting this omission.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "5dcbdcee1ecff5e2a8ff9be24a97ebc7a92ea3d74e04373478564d1941656b79"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/loot/HasLootContextSetCondition.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "94856b46067d5f19f84e33b9070c1c27ac38701fbce4d2910ad26be3d35f2f4d"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/loot/TagPreferenceLootEntry.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "35578d479311aa5072fc89e1323738190d95f37ac0cdf0f67af97b863b39d25f"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/predicate/tool/ToolActionPredicate.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "f9557923e856fb204dcd6de6caba8ee0339505a8352e5e106c6263bc3b01425d"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/variable/tool/FluidAmountVariable.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "67b9e84a4a1d1633264229268142c57c4b77831d30fa87ead478e6a1bd1896ba"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/variable/tool/TankCapacityVariable.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "0132865f7283ef0e534347b678f9122ac277eec4ebf1e85282eed8e17ccd2b0b"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/materials/IMaterialUser.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "87e9f885fd0fb5f2e44d056810e5fa2369c9b9fbee62f1fbd6894c313d206090"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/hook/behavior/ToolDurabilityChangedHook.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "64df3498b1323ee173d5e526ac405b87dfad7d0ca4bded347126c74be53fe064"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/hook/interaction/EdibleEffectHook.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "92d8ccfa459f9c369267fd1ea2769faf88f3378c3c85f3a47bda5e4d5f316c52"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/capacity/FluidAsCapacityModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "0ad8d42dfba6baa14b6042155612ce4dc559ac95485c4c5e8a5e89eda419f78f"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/capacity/FluidPredicateAsCapacityModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "6b2498f44bb8a83bb6284be1bdaddb99a08303bc7b139e1609f12df088d1f43b"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/EdibleConsumeDurabilityModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "55867744c3cfcdc1c1a6195fe15645c60aea10fbca9e57dda6c1d837acbb2674"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/EdibleCureEffectsModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "e2bc21a4defaed104f92bb45390f0501f953388e5900a91eee5c7bd53ee7d635"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/EdibleCureRandomEffectModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "490c9df3df0887d365acf7977cca328463b9498954c16d002b1aeef5d37c8c65"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/EdibleModule.java",
+    "category": "relocated_class_candidate",
+    "rationale": "A same-named class exists at the listed path. Compare implementation; relocation alone does not establish equivalent behavior.",
+    "related_port_paths": [
+      "slimeknights/tconstruct/library/modifiers/modules/behavior/EdibleModule.java"
+    ],
+    "parity_status": "unverified",
+    "upstream_sha256": "61b0802c70a764187d328f49c7ff163368aa45d9960af0e61fccdf7ba1fb87a4"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/EdibleRemoveEffectModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "8fc31c19ce9a118a7b9a2897a7a6d800f0cc574b09958dc277603f5cd82bb5cc"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/EdibleRepresentativeItemModule.java",
+    "category": "modular_behavior_refactor_review",
+    "rationale": "Compare newer composition/hooks against port's monolithic behavior/EdibleModule and existing capacity code. Edible gameplay is not wholly absent.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "a52df1a3d3ae266c3ef0f53452c319e4bc31fa8c7db4e65c3466fae79e96684d"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/interaction/edible/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "65d5ff886c9a361eaed523874e759e31c42ca7721b4fe16d2d168cacdb8c94a4"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/util/ModifierTooltip.java",
+    "category": "tooltip_policy_api_gap",
+    "rationale": "Latest official five-context modifier tooltip control is absent; older tooltip_display policy remains in resources.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "50b9ff00d43c9560b211d37ce0054ea23c370fc643cd6e85abda0890a7d2a994"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/util/ModifierTooltipsField.java",
+    "category": "tooltip_policy_api_gap",
+    "rationale": "Latest official five-context modifier tooltip control is absent; older tooltip_display policy remains in resources.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "c62435cf14ff5163224484b4eb0f95d882c6fc3e5e0baa7e3a0b80cb5dba48f8"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/casting/potion/ModifierPotionCastingRecipe.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "4adaf1a8dafb9cc9011a78004e3b3c4607a156f361233658aadd8c16d89943e4"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/casting/potion/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "8df9de0ff4d91e61ef87222f45531d16aa9385aa4b9cedc9fd344db734122640"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/FilteredFluidRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "2fa79bd713bfdaa4ec52c97ba6e2232c8e3078d16855fd8f405c64e91ac51024"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/FilteredItemRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "6814c7242b04eca83ab9e1cc3b6ba94de6ca679b79078feaddc05a48bbc3aea0"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/FilteredRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "0512fef2214e618ac0575309dcd3f8095e95408d3baa30a6b8838b0e3e9f8b9d"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/FluidVisible.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "39440bd80739d722e1bc4abb95748557d894f1383cff07b986b73c9466f27f98"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/ItemVisible.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "f485a3185a806de2262d8fa0a755544ba8a328c6a297735946f22675537bcf04"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/RecipeSlot.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "869f4d972f9e244e0593735d7cad0665356d9a90014f04ec92e05f875651f66d"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/RecipeSlots.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "94c04d652ed1983d014e745c62ac5c39520b1171e9503598b2f6155aa15b39c2"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/VanillaFilteredRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "91067ca10d2442540c7bd9dc19f98ad7daa761799aace3aab30a42d12edada22"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/display/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "5291108ab7d8ca16ab0ad007e269a05174f3a1d5f1c7a4a775eb37f690fab48c"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/ingredient/InstrumentIngredient.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "cb906304d8ebfec91eb84fc91006dfb6bdf0fba929191fdf85c2b203c805afc9"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/IDisplayMaterialRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "b8d104cb02d4324ba5dbc0102a68e0252fb1c9757449504b31caf5f1724865bb"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/melting/DisplayMeltingRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "fc9ddd255f91894a270ac2dbfc8df8e02e4cc45ec6a1446755890b9419ae36f6"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/melting/IDisplayableMeltingRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "a4a2748893d29ebca17b762d862377628c1a6b2fba73daf539f3bbdfdc2bad71"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/IDisplayCraftingTinkering.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "6715d8272739d0ea52c37fd23ce19d5aca06a5f874514aa395437d99b44da026"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/IDisplayTinkerStationRecipe.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "3ab0a726b31a06a58ea5ccb582ff33172173c30ba7a3b32f788d9a2fcfe41d89"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/IDisplayToolTinkering.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "cb414a2067eddea25428bd58f7cbd8b2d08f957803bdbbaefd495e11388f57c1"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/MaterialIndexSwappingRecipe.java",
+    "category": "material_swapping_or_migration_gap",
+    "rationale": "Absent source corresponds to absent Travelers swapping recipes or slimeskull remapping data; target-compatible implementation required.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "64f2e8c076f9a53a6f060ee526377c4a5826cf6a8f06185d5590eb9b0b4b56a2"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/MaterialValueSwappingRecipe.java",
+    "category": "material_swapping_or_migration_gap",
+    "rationale": "Absent source corresponds to absent Travelers swapping recipes or slimeskull remapping data; target-compatible implementation required.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "cf9d526e51baedce5a99d2e25803596748c4833b8902fde9d0043d8902b39c0b"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/definition/module/material/RemappingMaterialsModule.java",
+    "category": "material_swapping_or_migration_gap",
+    "rationale": "Absent source corresponds to absent Travelers swapping recipes or slimeskull remapping data; target-compatible implementation required.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "c0e23640dcbdf43891155b0603edd71485f817cd341e020f31d1dc98341c0d22"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/part/MaterialItemCache.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "74e24d0a44e149f4f55c6cb04ff3a7481d29d6a1efed909b465317f926a1413e"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/stat/impl/IntegerToolStat.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "5b2e255f4877df41a9fc5b9532d07a1ac51648ee7d4ebbb2d04e182eee7c5af5"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/stat/impl/PercentToolStat.java",
+    "category": "unresolved_common_api_absence",
+    "rationale": "No concrete equivalent was established in this pass; inspect callers/registrations and preserve in the parity queue.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "3014547f2aff4adbdbd7e156a1c0c9e2fecf76b60bdc2019a09094ff717aa2bd"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/stat/impl/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "9764177550814a74dbad7c88fb22b77f7c01e46237bf8eb46177a65a1681ed46"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/DietPlugin.java",
+    "category": "optional_external_integration_absent",
+    "rationale": "External-mod integration class is absent. Keep original capability tracked without installing that external mod merely to match the source tree.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "bc3df204b2a1c3f15677890236dcf2159b67dab723aa2afa9c09869b19ce4849"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/DummmmmmyPlugin.java",
+    "category": "optional_external_integration_absent",
+    "rationale": "External-mod integration class is absent. Keep original capability tracked without installing that external mod merely to match the source tree.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "06975224dae73f6116e30e6135e0b23692715aa7b6a7e5c3837b9808b337169b"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/ImmersiveEngineeringPlugin.java",
+    "category": "optional_external_integration_absent",
+    "rationale": "External-mod integration class is absent. Keep original capability tracked without installing that external mod merely to match the source tree.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "29fc38be2840814928fda9e0cd63465af50dbf09c1879b85c24706a44e29bc6f"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/JEIPlugin.java",
+    "category": "renamed_viewer_entrypoint",
+    "rationale": "Port has plugin/jei/TConstructJEIPlugin.java with @JeiPlugin. New official viewer categories and behavior are still missing.",
+    "related_port_paths": [
+      "slimeknights/tconstruct/plugin/jei/TConstructJEIPlugin.java"
+    ],
+    "parity_status": "unverified",
+    "upstream_sha256": "0384c794686468dc0831543af9155be690e70e5594611f65141b46c0234e3517"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/casting/CastingRecipeManager.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "83db54b442ba8f675e920e742009acdddf863d8ec575af9d0a7e4e077f189b08"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/material/MaterialCategory.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "f8cafaca388f003f59293c9106a12fd8e37881763f8bad5ff9e332b8b2dfef59"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/material/MaterialIconIngredientRenderer.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "e5a4b220c39280261b9a1bb6179389ccaa24ceeeb206cd78525b7b386a9125fa"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/material/MaterialIngredientHelper.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "7d7badb675be4714faa167251cb3d3692763155a9cb01da1710ba7292785ffd3"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/material/MaterialTitleIngredientRenderer.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "d35e5bdf042eaf2f6c8d42b683f1ca855f760561751cb963d7f4edc774464774"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/material/OverslimeRecipeExtension.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "74ab069fdcab36ccca1ff2f77dce493f73b8c328c24298b74829f0f7623bbc9f"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/melting/FuelCategory.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "0fd34dcf5bde77186b5f45211989ec1b2c8883874fcd9e5b3aa8a2682b64e4e6"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/modifiers/AbstractTinkerStationCategory.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "bd5b9cad98d417d0f052b622ec4e4a4195e913105562698080f26e79d161e627"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/modifiers/ToolTinkeringCategory.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "be8d4c6cecf41aaf0dd04dbac8b1f6b05c3b49097fc896eb184ad02f95e8720b"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/modifiers/ToolTinkeringExtension.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "06d7fb30d5af0440a1219738edfc56864765b90e6f85faff43f81c80e1b9c3e1"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "045fd0dcc52af65abc89712eabf83a36355721583430194be1611dc3fd796ba9"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/transfer/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "1ca0a931f503e62ba442f72a5c53419dd71a9a9696c88b73ee668b7b14f7341d"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/CategoryUtil.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "9424a46599aabea93e27a0cd8eb44d4a1d836b508a38c86377f78490f571ae20"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/RecipeSlotWrapper.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "4d02d3dfbd5d783e725e4b3cb8d57f6e6fc8d5c6231f8c64f0bc7148bd571216"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/RecipeSlotsWrapper.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "07a9c39224bc23654aaea12f2f3822ad90d3cc4690974ea2d1379b823e68d407"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/TankHidingIngredientListener.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "2b708bcae79dc9ab27dcfb715abe8b1c6908298c141b21d40e258a375cd1894d"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/manager/AbstractRecipeCache.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "03e09f708e5c691102c42b53da6431d3c0fc39f90275226fe343ec6a5ad485ab"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/manager/FluidRecipeCache.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "4ad0dd6ddda59e0e4600d69cc69a34c0d54213270c9d13f42ad222f0204c307b"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/manager/ItemRecipeCache.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "106030433f4b04741215700b1ff680b51a459829dd580f1b53eb35a1b7d6525f"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/manager/SimpleItemRecipeManager.java",
+    "category": "viewer_display_api_gap",
+    "rationale": "Latest official display/category/focusing support is absent at this path; newer display behavior must be restored or mapped explicitly.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "dcf032845c31c3b000c8f6493cfd2eee678af4158cc5704bb37d4cd4b676c206"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/manager/package-info.java",
+    "category": "package_metadata",
+    "rationale": "Package annotations/documentation absence is not itself a missing runtime feature; retain nullability/API review.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "be3dce3d80681e5c0bb080eeb35c405b1872c89dca8cd3626aec165ce0b22290"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/armor/GoldenAttributeModule.java",
+    "category": "gold_modifier_implementation_replacement",
+    "rationale": "Port registers concrete GoldGuardModifier and ChrysophiliteModifier rather than latest data-driven files. Behavior and balance remain unverified.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "02c3a02a66bd51806a1ed225184d4e560a9a47ba413890a6b63a47fbc793abd7"
+  },
+  {
+    "path": "slimeknights/tconstruct/world/client/PiglinSkullModel.java",
+    "category": "client_api_or_rendering_replacement_review",
+    "rationale": "Modern item/model/render APIs differ; inspect registered replacement paths and user-operated visuals. Class absence alone is insufficient.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "1af5d07b4d13842dbdf6c4b5d757be0638f4eda3eab4909651cd1573cf2df942"
+  },
+  {
+    "path": "slimeknights/tconstruct/world/logic/AncientToolItemListing.java",
+    "category": "villager_trade_migration_review",
+    "rationale": "Port adds villager_trade data, but the original trade helper's behavior has not been matched.",
+    "related_port_paths": [],
+    "parity_status": "unverified",
+    "upstream_sha256": "b858681417e27c23e633f363873ffe680e46ede214648a98271887dedef5af5e"
+  }
+]

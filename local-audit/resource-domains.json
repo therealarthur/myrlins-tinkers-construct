@@ -1,0 +1,388 @@
+{
+  "META-INF": {
+    "nonjson_changed": 2,
+    "continuum_only": 2,
+    "upstream_only": 1
+  },
+  "assets": {
+    "newline_equal": 1,
+    "byte_equal": 1
+  },
+  "assets/enderio/models": {
+    "continuum_only": 5
+  },
+  "assets/minecraft/atlases": {
+    "json_changed": 2
+  },
+  "assets/tconstruct/blockstates": {
+    "byte_equal": 359,
+    "json_changed": 76,
+    "continuum_only": 36
+  },
+  "assets/tconstruct/book/encyclopedia": {
+    "byte_equal": 1073,
+    "json_changed": 421,
+    "newline_equal": 5,
+    "nonjson_changed": 11,
+    "upstream_only": 429,
+    "continuum_only": 157,
+    "json_equal": 3
+  },
+  "assets/tconstruct/book/fantastic_foundry": {
+    "byte_equal": 226,
+    "newline_equal": 6,
+    "upstream_only": 43,
+    "continuum_only": 21,
+    "json_changed": 59,
+    "nonjson_changed": 3
+  },
+  "assets/tconstruct/book/images": {
+    "byte_equal": 69,
+    "upstream_only": 25,
+    "nonjson_changed": 2
+  },
+  "assets/tconstruct/book/materials_and_you": {
+    "byte_equal": 230,
+    "json_changed": 77,
+    "newline_equal": 6,
+    "upstream_only": 53,
+    "nonjson_changed": 3,
+    "continuum_only": 5
+  },
+  "assets/tconstruct/book/mighty_smelting": {
+    "byte_equal": 671,
+    "json_changed": 189,
+    "newline_equal": 6,
+    "upstream_only": 190,
+    "continuum_only": 37,
+    "nonjson_changed": 3,
+    "json_equal": 1
+  },
+  "assets/tconstruct/book/puny_smelting": {
+    "byte_equal": 814,
+    "nonjson_changed": 4,
+    "json_changed": 259,
+    "newline_equal": 6,
+    "upstream_only": 271,
+    "continuum_only": 53
+  },
+  "assets/tconstruct/book/structures": {
+    "byte_equal": 2
+  },
+  "assets/tconstruct/book/tinkers_gadgetry": {
+    "nonjson_changed": 5,
+    "byte_equal": 171,
+    "newline_equal": 12,
+    "upstream_only": 84,
+    "continuum_only": 23,
+    "json_changed": 62
+  },
+  "assets/tconstruct/equipment": {
+    "continuum_only": 2
+  },
+  "assets/tconstruct/items": {
+    "continuum_only": 869
+  },
+  "assets/tconstruct/lang": {
+    "json_changed": 19,
+    "upstream_only": 1
+  },
+  "assets/tconstruct/mantle/colors.json": {
+    "json_changed": 1
+  },
+  "assets/tconstruct/mantle/fluid_texture": {
+    "json_changed": 72,
+    "continuum_only": 11
+  },
+  "assets/tconstruct/mantle/fluid_tooltips": {
+    "byte_equal": 12
+  },
+  "assets/tconstruct/mantle/model": {
+    "json_changed": 1,
+    "byte_equal": 58,
+    "continuum_only": 3
+  },
+  "assets/tconstruct/models": {
+    "json_changed": 626,
+    "byte_equal": 875,
+    "upstream_only": 39,
+    "continuum_only": 84,
+    "adaptation_candidate": 3,
+    "json_equal": 4,
+    "newline_equal": 2
+  },
+  "assets/tconstruct/particles": {
+    "byte_equal": 7
+  },
+  "assets/tconstruct/sounds": {
+    "newline_equal": 1,
+    "byte_equal": 15
+  },
+  "assets/tconstruct/textures": {
+    "byte_equal": 12827,
+    "nonjson_changed": 227,
+    "newline_equal": 139,
+    "continuum_only": 4876,
+    "upstream_only": 674
+  },
+  "assets/tconstruct/tinkering": {
+    "byte_equal": 30,
+    "json_changed": 120,
+    "continuum_only": 103,
+    "upstream_only": 97
+  },
+  "assets/trimmed/maps": {
+    "byte_equal": 1
+  },
+  "data/apotheosis/apotheosis": {
+    "continuum_only": 13
+  },
+  "data/apotheosis/data_maps": {
+    "continuum_only": 1
+  },
+  "data/c/tags/block": {
+    "continuum_only": 82
+  },
+  "data/c/tags/creative_mode_tab": {
+    "upstream_only": 1
+  },
+  "data/c/tags/entity_type": {
+    "continuum_only": 11
+  },
+  "data/c/tags/fluid": {
+    "continuum_only": 56,
+    "byte_equal": 1
+  },
+  "data/c/tags/item": {
+    "continuum_only": 170,
+    "json_changed": 1
+  },
+  "data/c/tags/worldgen": {
+    "continuum_only": 1
+  },
+  "data/ceramics/tags/block": {
+    "byte_equal": 1
+  },
+  "data/create/tags/block": {
+    "byte_equal": 1
+  },
+  "data/create/tags/item": {
+    "byte_equal": 1
+  },
+  "data/forge/loot_modifiers": {
+    "upstream_only": 1
+  },
+  "data/forge/tags/block": {
+    "upstream_only": 76
+  },
+  "data/forge/tags/entity_type": {
+    "upstream_only": 22
+  },
+  "data/forge/tags/fluid": {
+    "upstream_only": 45
+  },
+  "data/forge/tags/item": {
+    "upstream_only": 131
+  },
+  "data/forge/tags/worldgen": {
+    "upstream_only": 1
+  },
+  "data/headlight/tags/item": {
+    "byte_equal": 1
+  },
+  "data/mantle/tags/block": {
+    "byte_equal": 1
+  },
+  "data/mantle/tags/block_entity_type": {
+    "byte_equal": 1
+  },
+  "data/mantle/tags/fluid": {
+    "byte_equal": 1
+  },
+  "data/mantle/tags/menu": {
+    "byte_equal": 1
+  },
+  "data/minecraft/tags/block": {
+    "byte_equal": 39,
+    "json_changed": 2
+  },
+  "data/minecraft/tags/damage_type": {
+    "byte_equal": 10
+  },
+  "data/minecraft/tags/entity_type": {
+    "upstream_only": 1,
+    "byte_equal": 1
+  },
+  "data/minecraft/tags/item": {
+    "byte_equal": 29,
+    "json_changed": 1
+  },
+  "data/minecraft/tags/villager_trade": {
+    "continuum_only": 1
+  },
+  "data/neoforge/tags/block": {
+    "continuum_only": 2
+  },
+  "data/parry/tags/item": {
+    "byte_equal": 1
+  },
+  "data/tconstruct/advancement": {
+    "json_changed": 426,
+    "continuum_only": 1,
+    "upstream_only": 2
+  },
+  "data/tconstruct/command": {
+    "upstream_only": 1
+  },
+  "data/tconstruct/damage_type": {
+    "byte_equal": 32
+  },
+  "data/tconstruct/function": {
+    "byte_equal": 8
+  },
+  "data/tconstruct/loot_modifiers": {
+    "json_changed": 20,
+    "byte_equal": 1
+  },
+  "data/tconstruct/loot_table": {
+    "byte_equal": 246,
+    "continuum_only": 32,
+    "json_changed": 97,
+    "upstream_only": 1
+  },
+  "data/tconstruct/mantle": {
+    "json_changed": 28,
+    "continuum_only": 71,
+    "byte_equal": 4,
+    "upstream_only": 4
+  },
+  "data/tconstruct/neoforge": {
+    "adaptation_candidate": 7,
+    "json_changed": 1
+  },
+  "data/tconstruct/recipe": {
+    "json_changed": 2971,
+    "continuum_only": 449,
+    "upstream_only": 86,
+    "byte_equal": 4
+  },
+  "data/tconstruct/structure": {
+    "nonjson_changed": 20,
+    "byte_equal": 5
+  },
+  "data/tconstruct/tags/block": {
+    "byte_equal": 63,
+    "json_changed": 7
+  },
+  "data/tconstruct/tags/block_entity_type": {
+    "byte_equal": 1
+  },
+  "data/tconstruct/tags/damage_type": {
+    "byte_equal": 8,
+    "json_changed": 1,
+    "upstream_only": 2
+  },
+  "data/tconstruct/tags/enchantment": {
+    "byte_equal": 21
+  },
+  "data/tconstruct/tags/entity_type": {
+    "byte_equal": 4,
+    "json_changed": 8,
+    "upstream_only": 8
+  },
+  "data/tconstruct/tags/fluid": {
+    "byte_equal": 80,
+    "json_changed": 4,
+    "continuum_only": 11
+  },
+  "data/tconstruct/tags/instrument": {
+    "upstream_only": 1
+  },
+  "data/tconstruct/tags/item": {
+    "json_changed": 59,
+    "byte_equal": 201,
+    "continuum_only": 3,
+    "upstream_only": 1
+  },
+  "data/tconstruct/tags/menu": {
+    "byte_equal": 1
+  },
+  "data/tconstruct/tags/potion": {
+    "json_changed": 1
+  },
+  "data/tconstruct/tags/worldgen": {
+    "byte_equal": 5
+  },
+  "data/tconstruct/tinkering/enchantments_to_modifiers.json": {
+    "json_changed": 1
+  },
+  "data/tconstruct/tinkering/fluid_effects": {
+    "json_changed": 80,
+    "byte_equal": 4,
+    "adaptation_candidate": 1
+  },
+  "data/tconstruct/tinkering/materials": {
+    "continuum_only": 63,
+    "json_changed": 75,
+    "byte_equal": 218,
+    "upstream_only": 9
+  },
+  "data/tconstruct/tinkering/mob_equipment": {
+    "json_changed": 5,
+    "upstream_only": 1,
+    "continuum_only": 1
+  },
+  "data/tconstruct/tinkering/modifiers": {
+    "upstream_only": 5,
+    "json_changed": 295,
+    "continuum_only": 6,
+    "byte_equal": 6
+  },
+  "data/tconstruct/tinkering/station_layouts": {
+    "json_changed": 23
+  },
+  "data/tconstruct/tinkering/tags": {
+    "byte_equal": 64,
+    "json_changed": 9,
+    "upstream_only": 4
+  },
+  "data/tconstruct/tinkering/tool_definitions": {
+    "byte_equal": 30,
+    "json_changed": 15
+  },
+  "data/tconstruct/trim_material": {
+    "json_changed": 16
+  },
+  "data/tconstruct/villager_trade": {
+    "continuum_only": 6
+  },
+  "data/tconstruct/worldgen/configured_feature": {
+    "byte_equal": 9,
+    "json_changed": 6
+  },
+  "data/tconstruct/worldgen/placed_feature": {
+    "byte_equal": 6
+  },
+  "data/tconstruct/worldgen/structure": {
+    "byte_equal": 5,
+    "json_changed": 1
+  },
+  "data/tconstruct/worldgen/structure_set": {
+    "byte_equal": 4
+  },
+  "data/twilightforest/tags/damage_type": {
+    "byte_equal": 1
+  },
+  "data/twilightforest/tags/item": {
+    "byte_equal": 1
+  },
+  "logo.png": {
+    "byte_equal": 1
+  },
+  "pack.mcmeta": {
+    "json_changed": 1
+  },
+  "tconstruct.mixins.json": {
+    "continuum_only": 1
+  }
+}

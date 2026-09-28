@@ -1,0 +1,16 @@
+{
+  "candidates": 253,
+  "signal_counts": {
+    "port_or_disabled_marker": 116,
+    "empty_or_constant_return": 119,
+    "commented_gameplay_call": 17,
+    "unconditional_disabled_branch": 3
+  },
+  "method": "Scan every pinned main Java file for lines absent verbatim (trimmed) from the same upstream file; retain contexts for warning markers, commented calls, constant returns and disabled branches.",
+  "limits": [
+    "Heuristic candidates are not defects. New guard returns and optional hooks are often correct.",
+    "Does not prove absence of stubs, nor review the semantics of all 1527 changed source files.",
+    "Line comparison can flag moved equivalent code and miss semantically changed surrounding code.",
+    "All unverified changed implementations remain in review-queue.json."
+  ]
+}

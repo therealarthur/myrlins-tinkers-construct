@@ -1,0 +1,329 @@
+{
+  "": {
+    "source_changed": 2
+  },
+  "common": {
+    "source_changed": 8
+  },
+  "common/config": {
+    "source_changed": 3
+  },
+  "common/data": {
+    "source_changed": 39,
+    "upstream_only": 3
+  },
+  "common/json": {
+    "source_changed": 3,
+    "continuum_only": 1
+  },
+  "common/multiblock": {
+    "byte_equal": 1,
+    "source_changed": 3
+  },
+  "common/network": {
+    "source_changed": 5
+  },
+  "common/recipe": {
+    "upstream_only": 1,
+    "source_changed": 2,
+    "continuum_only": 1
+  },
+  "common/registration": {
+    "byte_equal": 4,
+    "source_changed": 6
+  },
+  "fluids": {
+    "source_changed": 4
+  },
+  "fluids/block": {
+    "source_changed": 3
+  },
+  "fluids/data": {
+    "source_changed": 5
+  },
+  "fluids/fluids": {
+    "source_changed": 4
+  },
+  "fluids/item": {
+    "source_changed": 6,
+    "continuum_only": 1
+  },
+  "fluids/util": {
+    "source_changed": 6
+  },
+  "gadgets": {
+    "source_changed": 3
+  },
+  "gadgets/block": {
+    "source_changed": 5
+  },
+  "gadgets/capability": {
+    "source_changed": 3
+  },
+  "gadgets/client": {
+    "source_changed": 3,
+    "byte_equal": 1
+  },
+  "gadgets/data": {
+    "source_changed": 2
+  },
+  "gadgets/entity": {
+    "source_changed": 12
+  },
+  "gadgets/item": {
+    "source_changed": 8
+  },
+  "library": {
+    "source_changed": 3,
+    "continuum_only": 1
+  },
+  "library/client": {
+    "source_changed": 117,
+    "byte_equal": 6,
+    "upstream_only": 15,
+    "continuum_only": 7
+  },
+  "library/data": {
+    "source_changed": 27,
+    "upstream_only": 1,
+    "byte_equal": 1
+  },
+  "library/events": {
+    "source_changed": 14,
+    "continuum_only": 1
+  },
+  "library/exception": {
+    "byte_equal": 1,
+    "source_changed": 3
+  },
+  "library/fluid": {
+    "source_changed": 6,
+    "continuum_only": 2,
+    "byte_equal": 2
+  },
+  "library/json": {
+    "byte_equal": 60,
+    "source_changed": 66,
+    "continuum_only": 1,
+    "upstream_only": 5
+  },
+  "library/materials": {
+    "source_changed": 28,
+    "upstream_only": 1,
+    "byte_equal": 2
+  },
+  "library/modifiers": {
+    "byte_equal": 77,
+    "source_changed": 159,
+    "upstream_only": 13,
+    "continuum_only": 1
+  },
+  "library/module": {
+    "byte_equal": 2,
+    "source_changed": 3
+  },
+  "library/recipe": {
+    "source_changed": 143,
+    "byte_equal": 12,
+    "upstream_only": 20,
+    "continuum_only": 4
+  },
+  "library/tools": {
+    "source_changed": 129,
+    "byte_equal": 46,
+    "continuum_only": 7,
+    "upstream_only": 5
+  },
+  "library/utils": {
+    "continuum_only": 3,
+    "source_changed": 19,
+    "byte_equal": 4
+  },
+  "mixin/jade": {
+    "continuum_only": 1
+  },
+  "plugin": {
+    "upstream_only": 3,
+    "source_changed": 1
+  },
+  "plugin/apotheosis": {
+    "continuum_only": 1
+  },
+  "plugin/craftingtweaks": {
+    "source_changed": 2
+  },
+  "plugin/jade": {
+    "continuum_only": 1
+  },
+  "plugin/jei": {
+    "source_changed": 46,
+    "upstream_only": 22,
+    "continuum_only": 1
+  },
+  "plugin/jsonthings": {
+    "source_changed": 12
+  },
+  "shared": {
+    "continuum_only": 1,
+    "source_changed": 9
+  },
+  "shared/block": {
+    "byte_equal": 2,
+    "source_changed": 17
+  },
+  "shared/client": {
+    "source_changed": 3
+  },
+  "shared/command": {
+    "byte_equal": 7,
+    "source_changed": 18
+  },
+  "shared/data": {
+    "source_changed": 2
+  },
+  "shared/effect": {
+    "source_changed": 3
+  },
+  "shared/inventory": {
+    "source_changed": 5,
+    "continuum_only": 1
+  },
+  "shared/item": {
+    "source_changed": 3,
+    "byte_equal": 1
+  },
+  "shared/network": {
+    "source_changed": 2
+  },
+  "shared/particle": {
+    "source_changed": 2
+  },
+  "smeltery": {
+    "source_changed": 3
+  },
+  "smeltery/block": {
+    "source_changed": 85,
+    "byte_equal": 9,
+    "continuum_only": 2
+  },
+  "smeltery/client": {
+    "source_changed": 26,
+    "continuum_only": 9,
+    "byte_equal": 1
+  },
+  "smeltery/data": {
+    "byte_equal": 1,
+    "source_changed": 4
+  },
+  "smeltery/item": {
+    "source_changed": 7
+  },
+  "smeltery/menu": {
+    "source_changed": 5,
+    "byte_equal": 1
+  },
+  "smeltery/network": {
+    "source_changed": 8
+  },
+  "tables": {
+    "source_changed": 3
+  },
+  "tables/block": {
+    "source_changed": 25,
+    "byte_equal": 7
+  },
+  "tables/client": {
+    "source_changed": 22,
+    "byte_equal": 1
+  },
+  "tables/data": {
+    "source_changed": 2
+  },
+  "tables/item": {
+    "source_changed": 3
+  },
+  "tables/menu": {
+    "source_changed": 14,
+    "byte_equal": 1
+  },
+  "tables/network": {
+    "source_changed": 7,
+    "continuum_only": 2
+  },
+  "tables/recipe": {
+    "source_changed": 8
+  },
+  "tools": {
+    "source_changed": 8
+  },
+  "tools/client": {
+    "source_changed": 16,
+    "continuum_only": 7
+  },
+  "tools/data": {
+    "source_changed": 25
+  },
+  "tools/entity": {
+    "source_changed": 8
+  },
+  "tools/item": {
+    "source_changed": 10
+  },
+  "tools/logic": {
+    "source_changed": 8
+  },
+  "tools/menu": {
+    "byte_equal": 1,
+    "source_changed": 2
+  },
+  "tools/modifiers": {
+    "byte_equal": 41,
+    "source_changed": 74,
+    "continuum_only": 2
+  },
+  "tools/modules": {
+    "continuum_only": 4,
+    "source_changed": 84,
+    "byte_equal": 14,
+    "upstream_only": 1
+  },
+  "tools/network": {
+    "source_changed": 8
+  },
+  "tools/recipe": {
+    "source_changed": 20
+  },
+  "tools/stats": {
+    "byte_equal": 6,
+    "source_changed": 5
+  },
+  "world": {
+    "source_changed": 6
+  },
+  "world/block": {
+    "byte_equal": 3,
+    "source_changed": 18
+  },
+  "world/client": {
+    "continuum_only": 1,
+    "source_changed": 9,
+    "upstream_only": 1
+  },
+  "world/data": {
+    "source_changed": 5
+  },
+  "world/entity": {
+    "source_changed": 7
+  },
+  "world/item": {
+    "source_changed": 3
+  },
+  "world/logic": {
+    "upstream_only": 1,
+    "source_changed": 1
+  },
+  "world/worldgen": {
+    "source_changed": 11,
+    "byte_equal": 4
+  }
+}

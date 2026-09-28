@@ -1,0 +1,2534 @@
+[
+  {
+    "path": "slimeknights/tconstruct/TConstruct.java",
+    "line": 112,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: port missing mapping handlers to current registry remap API.",
+    "context": "109:     MaterialRegistry.init();\n110: \n111:     // initialize modules, done this way rather than with annotations to give us control over the order\n112:     // TODO NeoForge 26.1: port missing mapping handlers to current registry remap API.\n113:     // base\n114:     bus.register(Sounds.class);\n115:     bus.register(new TinkerCommons());\n116:     // Constructor registers potion DeferredRegister; this class has no @SubscribeEvent methods.",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/TinkerEffect.java",
+    "line": 37,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "34: \n35:   /** Compatibility bridge for TCon effects using the pre-1.21 tick API. */\n36:   public boolean isDurationEffectTick(int duration, int amplifier) {\n37:     return false;\n38:   }\n39: \n40:   /** Compatibility bridge for TCon effects using the pre-1.21 tick API. */\n41:   public void applyEffectTick(LivingEntity living, int amplifier) {}",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/config/Config.java",
+    "line": 191,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "\"Disable this if a pack wants Apotheosis affix/category compat without the TCon post-cap progression recipes.\")",
+    "context": "188:           .define(\"apotheosis_prosperous_bridge\", true);\n189:         this.apotheosisPostCapRecipes = builder\n190:           .comment(\"If true, enables Apotheosis-gated TCon modifier recipes that unlock select levels past vanilla-style caps.\",\n191:             \"Disable this if a pack wants Apotheosis affix/category compat without the TCon post-cap progression recipes.\")\n192:           .worldRestart()\n193:           .define(\"apotheosis_post_cap_recipes\", true);\n194:       }\n195:       builder.pop();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/model/TinkerBlockStateProvider.java",
+    "line": 739,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "736: \n737:   private static boolean isRetexturedItem(Identifier item) {\n738:     if (!TConstruct.MOD_ID.equals(item.getNamespace())) {\n739:       return false;\n740:     }\n741:     return switch (item.getPath()) {\n742:       case \"crafting_station\", \"part_builder\", \"tinker_station\", \"modifier_worktable\", \"tinkers_anvil\", \"scorched_anvil\",\n743:            \"smeltery_controller\", \"seared_drain\", \"seared_duct\", \"seared_chute\", \"seared_melter\", \"seared_heater\",",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/model/TinkerItemModelProvider.java",
+    "line": 166,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* The 1.20 version used a Mantle model loader for this; 26.1 dispatches item models up front instead, so the",
+    "context": "163: \n164:   /**\n165:    * Builds the creative modifier slot item, which picks its texture from the slot it grants.\n166:    * The 1.20 version used a Mantle model loader for this; 26.1 dispatches item models up front instead, so the\n167:    * built in slots each get a model and anything a datapack adds falls back to the blank slot outline.\n168:    */\n169:   private void creativeSlot(List<CompletableFuture<?>> tasks, CachedOutput cache) {\n170:     JsonArray cases = new JsonArray();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/model/TinkerItemModelProvider.java",
+    "line": 384,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "381: \n382:   private static boolean isTankFluidItem(Identifier item) {\n383:     if (!TConstruct.MOD_ID.equals(item.getNamespace())) {\n384:       return false;\n385:     }\n386:     String path = item.getPath();\n387:     return path.equals(\"seared_casting_tank\")\n388:       || path.endsWith(\"_fuel_tank\")",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/model/TinkerItemModelProvider.java",
+    "line": 456,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "453:         return foliageFromPrefix(path.substring(0, split));\n454:       }\n455:     }\n456:     return null;\n457:   }\n458: \n459:   @Nullable\n460:   private static FoliageType foliageFromPrefix(String prefix) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/model/TinkerItemModelProvider.java",
+    "line": 466,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "463:         return type;\n464:       }\n465:     }\n466:     return null;\n467:   }\n468: \n469:   private static JsonObject headItemDefinition(TinkerHeadType type) {\n470:     JsonObject definition = new JsonObject();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/model/TinkerItemModelProvider.java",
+    "line": 524,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "521: \n522:   private static boolean isRetexturedItem(Identifier item) {\n523:     if (!TConstruct.MOD_ID.equals(item.getNamespace())) {\n524:       return false;\n525:     }\n526:     return switch (item.getPath()) {\n527:       case \"crafting_station\", \"part_builder\", \"tinker_station\", \"modifier_worktable\", \"tinkers_anvil\", \"scorched_anvil\",\n528:            \"smeltery_controller\", \"seared_drain\", \"seared_duct\", \"seared_chute\", \"seared_melter\", \"seared_heater\",",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/BlockTagProvider.java",
+    "line": 679,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//this.tag(BlockTags.PLANKS).add(key(object.get()));",
+    "context": "676:   /** Adds all tags relevant to the given wood object */\n677:   private void addWoodTags(WoodBlockObject object, boolean doesBurn) {\n678:     // planks, handled by slimy planks tag\n679:     //this.tag(BlockTags.PLANKS).add(key(object.get()));\n680:     this.tag(BlockTags.WOODEN_SLABS).add(key(object.getSlab()));\n681:     this.tag(BlockTags.WOODEN_STAIRS).add(key(object.getStairs()));\n682:     // logs\n683:     this.tag(object.getLogBlockTag()).add(object.getLog(), object.getStrippedLog(), object.getWood(), object.getStrippedWood());",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/BlockTagProvider.java",
+    "line": 732,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "729:     if (material == ToolMaterial.NETHERITE) {\n730:       return NEEDS_NETHERITE_TOOL;\n731:     }\n732:     return null;\n733:   }\n734: \n735:   private static int tierRank(ToolMaterial material) {\n736:     if (material == ToolMaterial.NETHERITE) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/BlockTagProvider.java",
+    "line": 751,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "748:     if (material == ToolMaterial.STONE) {\n749:       return 1;\n750:     }\n751:     return 0;\n752:   }\n753:   private static final class BlockTagAppender implements Consumer<Block> {\n754:     private final TagAppender<ResourceKey<Block>, Block> delegate;\n755: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/BlockTagProvider.java",
+    "line": 801,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "throw new IllegalArgumentException(\"Unsupported block tag entry \" + value);",
+    "context": "798:       } else if (value instanceof TagEntry entry) {\n799:         delegate.add(entry);\n800:       } else {\n801:         throw new IllegalArgumentException(\"Unsupported block tag entry \" + value);\n802:       }\n803:     }\n804: \n805:     public BlockTagAppender add(TagEntry entry) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/common/data/tags/ItemTagProvider.java",
+    "line": 922,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "throw new IllegalArgumentException(\"Unsupported item tag entry \" + value);",
+    "context": "919:       } else if (value instanceof TagEntry entry) {\n920:         delegate.add(entry);\n921:       } else {\n922:         throw new IllegalArgumentException(\"Unsupported item tag entry \" + value);\n923:       }\n924:     }\n925: \n926:     public ItemTagAppender add(TagEntry entry) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/fluids/FluidClientEvents.java",
+    "line": 39,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Fluid render layers are now inferred from FluidModel materials in NeoForge 26.1.",
+    "context": "36:   }\n37:   @SubscribeEvent\n38:   static void clientSetup(final FMLClientSetupEvent event) {\n39:     // Fluid render layers are now inferred from FluidModel materials in NeoForge 26.1.\n40:   }\n41: \n42:   // TODO: Update to use RegisterColorHandlersEvent.ItemTintSources with new API\n43:   //@SubscribeEvent",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/fluids/FluidClientEvents.java",
+    "line": 42,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Update to use RegisterColorHandlersEvent.ItemTintSources with new API",
+    "context": "39:     // Fluid render layers are now inferred from FluidModel materials in NeoForge 26.1.\n40:   }\n41: \n42:   // TODO: Update to use RegisterColorHandlersEvent.ItemTintSources with new API\n43:   //@SubscribeEvent\n44:   //static void itemColors(final RegisterColorHandlersEvent.ItemTintSources event) {\n45:   //  event.register(...)\n46:   //}",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/fluids/data/FluidTextureProvider.java",
+    "line": 26,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Adds all TCon fluid texture definitions. Shared by datagen and NeoForge 26.1 fluid model registration. */",
+    "context": "23:     addTextures(this::texture);\n24:   }\n25: \n26:   /** Adds all TCon fluid texture definitions. Shared by datagen and NeoForge 26.1 fluid model registration. */\n27:   public static void addTextures(Function<FluidObject<?>, FluidTexture.Builder> textures) {\n28:     new TextureRules(textures).addTextures();\n29:   }\n30: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/fluids/fluids/PotionFluidType.java",
+    "line": 44,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: 1.21.2 - register via IClientFluidTypeExtensions and RegisterClientExtensionsEvent",
+    "context": "41:     return itemStack;\n42:   }\n43: \n44:   // TODO: 1.21.2 - register via IClientFluidTypeExtensions and RegisterClientExtensionsEvent\n45:   /*@Override\n46:   public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {\n47:     consumer.accept(new ClientTextureFluidType(this) {\n48:       @Override",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/gadgets/block/PunjiBlock.java",
+    "line": 60,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* the old BlockPathTypes.DAMAGE_OTHER hook no longer exists in 26.1.",
+    "context": "57: \n58:   /**\n59:    * Punji is a hazard block.  It must not be selected as a pathfinding target;\n60:    * the old BlockPathTypes.DAMAGE_OTHER hook no longer exists in 26.1.\n61:    */\n62:   @Override\n63:   protected boolean isPathfindable(BlockState state, PathComputationType type) {\n64:     return false;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/gadgets/block/PunjiBlock.java",
+    "line": 64,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "61:    */\n62:   @Override\n63:   protected boolean isPathfindable(BlockState state, PathComputationType type) {\n64:     return false;\n65:   }\n66: \n67:   @SuppressWarnings(\"deprecation\")\n68:   @Deprecated",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/gadgets/entity/shuriken/ShurikenEntityBase.java",
+    "line": 80,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "77:   }\n78: \n79:   public ItemStack getItem() {\n80:     return ItemStack.EMPTY;\n81:   }\n82: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/GuiUtil.java",
+    "line": 14,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Compatibility helpers for the NeoForge 26.1 GUI extraction pipeline. */",
+    "context": "11: import net.neoforged.neoforge.fluids.FluidStack;\n12: import slimeknights.tconstruct.library.recipe.partbuilder.Pattern;\n13: \n14: /** Compatibility helpers for the NeoForge 26.1 GUI extraction pipeline. */\n15: public class GuiUtil {\n16:   public static boolean isHovered(int checkX, int checkY, int x, int y, int width, int height) {\n17:     return checkX >= x && checkY >= y && checkX < x + width && checkY < y + height;\n18:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/SafeClient.java",
+    "line": 23,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: verify side check",
+    "context": "20:    * @param newAmount   New fluid amount\n21:    */\n22:   public static void updateFluidModel(BlockEntity be, FluidTank tank, int oldAmount, int newAmount) {\n23:     // TODO NeoForge 26.1: verify side check\n24:     ClientOnly.updateFluidModel(be, tank, oldAmount, newAmount);\n25:   }\n26: \n27:   /** This class is only ever loaded client side */",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/armor/ArmorModelManager.java",
+    "line": 169,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "166:       int index = getLayerIndex(layer.textureId());\n167:       ArmorModel model = getModel(stack);\n168:       if (index < 0 || index >= model.layers().size() || model.layers().get(index) instanceof TrimArmorTextureSupplier) {\n169:         return 0;\n170:       }\n171:       ArmorTexture texture = getTinkerTexture(stack, TextureType.ARMOR, layer);\n172:       if (texture == ArmorTexture.EMPTY) {\n173:         return 0;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/armor/ArmorModelManager.java",
+    "line": 173,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "170:       }\n171:       ArmorTexture texture = getTinkerTexture(stack, TextureType.ARMOR, layer);\n172:       if (texture == ArmorTexture.EMPTY) {\n173:         return 0;\n174:       }\n175:       if (texture instanceof TintedArmorTexture tinted && tinted.color() != -1) {\n176:         return tinted.color();\n177:       }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/ContentMaterialSkull.java",
+    "line": 7,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: 1.21.4 - ArmorItem was removed",
+    "context": "4: import net.minecraft.client.Minecraft;\n5: import net.minecraft.network.chat.Component;\n6: import net.minecraft.resources.Identifier;\n7: // TODO: 1.21.4 - ArmorItem was removed\n8: //import net.minecraft.world.item.equipment.ArmorType;\n9: import net.minecraft.world.item.ItemStack;\n10: import net.minecraft.world.item.crafting.RecipeManager;\n11: import net.minecraft.world.item.equipment.ArmorType;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/ContentModifier.java",
+    "line": 153,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "150:               try {\n151:                 return recipe.getDisplayResult().matches(modifier) && (filter == null || recipe.getToolWithoutModifier(this.displayContext).stream().anyMatch(tool -> tool.is(filter)));\n152:               } catch (RuntimeException ignored) {\n153:                 return false;\n154:               }\n155:             })\n156:             .toList();\n157:         } else {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/content/ContentPageIconList.java",
+    "line": 1,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - Deprecated class, uses removed PageIconLinkElement and GuiGraphics",
+    "context": "1: // TODO: Rewrite for NeoForge 1.21.4 - Deprecated class, uses removed PageIconLinkElement and GuiGraphics",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/elements/CycleRecipeElement.java",
+    "line": 36,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed",
+    "context": "33:     handler.play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));\n34:   }\n35: \n36:   // TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed\n37:   //@Override\n38:   //public void drawOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {\n39:   //  if (this.isHovered(mouseX, mouseY)) {\n40:   //    this.drawTooltip(graphics, Collections.singletonList(Component.translatable(\"gui.tconstruct.manual.cycle.recipes\")), mouseX, mouseY, fontRenderer);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/elements/FluidItemElement.java",
+    "line": 30,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed",
+    "context": "27:     this(x, y, scale, createItemList(fluids), fluids);\n28:   }\n29: \n30:   // TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed\n31:   //@Override\n32:   //public void drawOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {\n33:   //  if (this.isHovered(mouseX, mouseY) && this.currentItem < this.fluids.size()) {\n34:   //    this.drawTooltip(graphics, FluidTooltipHandler.getFluidTooltip(this.fluids.get(this.currentItem)), mouseX, mouseY, fontRenderer);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/elements/ListingCenteredElement.java",
+    "line": 23,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed",
+    "context": "20:     this.text[this.text.length - 1].color = \"dark red\";\n21:   }\n22: \n23:   // TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed\n24:   //@Override\n25:   //public void draw(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {\n26:   //  if (this.isHovered(mouseX, mouseY)) {\n27:   //    this.text[0].text = \"> \";",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/elements/PageIconLinkElement.java",
+    "line": 1,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4",
+    "context": "1: // TODO: Rewrite for NeoForge 1.21.4\n2: /*\n3: package slimeknights.tconstruct.library.client.book.elements;\n4: \n5: import com.google.common.collect.ImmutableList;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/elements/TinkerItemElement.java",
+    "line": 48,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed",
+    "context": "45:     super(x, y, scale, itemCycle, action);\n46:   }\n47: \n48:   // TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed\n49:   //@Override\n50:   //public void drawOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {\n51:   //  if (this.noTooltip) {\n52:   //    return;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/book/elements/TinkerItemElement.java",
+    "line": 52,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//    return;",
+    "context": "49:   //@Override\n50:   //public void drawOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {\n51:   //  if (this.noTooltip) {\n52:   //    return;\n53:   //  }\n54:   //  if (this.tooltip == null) {\n55:   //    fontRenderer = mc.font;\n56:   //  }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/DynamicTextureLoader.java",
+    "line": 19,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* client resource reload. This is the NeoForge 26.1 equivalent of the old",
+    "context": "16: \n17: /**\n18:  * Tracks dynamic item textures and optionally reports missing resources during a\n19:  * client resource reload. This is the NeoForge 26.1 equivalent of the old\n20:  * RegisterClientReloadListenersEvent validator.\n21:  */\n22: @Log4j2\n23: public class DynamicTextureLoader extends ResourceValidator {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/DynamicTextureLoader.java",
+    "line": 33,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// When missing-texture logging is disabled, cache available resources so the",
+    "context": "30: \n31:   @Override\n32:   public void onReloadSafe(ResourceManager manager) {\n33:     // When missing-texture logging is disabled, cache available resources so the\n34:     // model validator can try fallback roots without triggering vanilla warnings.\n35:     if (!Config.CLIENT.logMissingModifierTextures.get()) {\n36:       super.onReloadSafe(manager);\n37:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/DynamicTextureLoader.java",
+    "line": 57,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Material no longer stores an atlas identifier in MC 26.1. Item texture",
+    "context": "54:       return material -> !MissingTextureAtlasSprite.getLocation().equals(spriteGetter.apply(material).contents().name());\n55:     }\n56:     return material -> {\n57:       // Material no longer stores an atlas identifier in MC 26.1. Item texture\n58:       // paths can still be checked from our cache before trying another root.\n59:       Identifier texture = material.sprite();\n60:       if (texture.getPath().startsWith(\"item/\")) {\n61:         return INSTANCE.test(texture);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/FluidTextureModel.java",
+    "line": 99,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "96: \n97:   private static List<CuboidModelElement> parseElements(JsonObject json, JsonDeserializationContext context) {\n98:     if (!json.has(\"elements\")) {\n99:       return List.of();\n100:     }\n101:     JsonArray elementsJson = GsonHelper.getAsJsonArray(json, \"elements\");\n102:     List<CuboidModelElement> elements = new ArrayList<>(elementsJson.size());\n103:     for (int i = 0; i < elementsJson.size(); i++) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/FluidTextureModel.java",
+    "line": 176,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "173:           return source;\n174:         }\n175:       }\n176:       return null;\n177:     }\n178: \n179:     @Override\n180:     public void collectParts(RandomSource random, List<BlockStateModelPart> parts) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/FluidTextureModel.java",
+    "line": 274,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "271: \n272:     private Material.Baked retextured(String slot) {\n273:       if (key.texture() == null || key.texture() == Blocks.AIR) {\n274:         return null;\n275:       }\n276:       return RetexturedBlockStateModel.bakedTextureMaterial(key.texture(), RetexturedBlockStateModel.isEndTextureSlot(slot));\n277:     }\n278:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/LegacyPassthroughModelLoader.java",
+    "line": 11,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* TODO NeoForge 26.1: replace this bridge with real dynamic TConstruct tool/fluid item models.",
+    "context": "8: import net.neoforged.neoforge.client.model.UnbakedModelLoader;\n9: \n10: /**\n11:  * TODO NeoForge 26.1: replace this bridge with real dynamic TConstruct tool/fluid item models.\n12:  * Keeps legacy custom-loader JSON readable by delegating the vanilla-compatible parts to CuboidModel.\n13:  */\n14: public enum LegacyPassthroughModelLoader implements UnbakedModelLoader<UnbakedModel> {\n15:   INSTANCE;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/TankModel.java",
+    "line": 103,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "100: \n101:   private static List<CuboidModelElement> parseElements(JsonObject json, JsonDeserializationContext context) {\n102:     if (!json.has(\"elements\")) {\n103:       return List.of();\n104:     }\n105:     JsonArray array = GsonHelper.getAsJsonArray(json, \"elements\");\n106:     List<CuboidModelElement> result = new ArrayList<>(array.size());\n107:     for (JsonElementRef element : JsonElementRef.iterate(array)) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/TankModel.java",
+    "line": 161,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "158:           return model;\n159:         }\n160:       }\n161:       return null;\n162:     }\n163: \n164:     private static Quadrant quadrant(int angle) {\n165:       return switch (Math.floorMod(angle, 360)) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/MaterialBlockModel.java",
+    "line": 84,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "81: \n82:   @Override\n83:   public int materialFlags() {\n84:     return 0;\n85:   }\n86: \n87:   private static final class CubePart implements BlockStateModelPart {\n88:     private final Map<Direction, List<BakedQuad>> quads = new EnumMap<>(Direction.class);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/MaterialBlockModel.java",
+    "line": 115,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "112: \n113:     @Override\n114:     public int materialFlags() {\n115:       return 0;\n116:     }\n117: \n118:     private static BakedQuad createQuad(Direction direction, Material.Baked sprite, int color, int emission) {\n119:       QuadBakingVertexConsumer builder = new QuadBakingVertexConsumer();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/MaterialItemModel.java",
+    "line": 38,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Dynamic item model for single-material tool parts and repair kits in NeoForge 26.1. */",
+    "context": "35: import java.util.List;\n36: import java.util.Map;\n37: \n38: /** Dynamic item model for single-material tool parts and repair kits in NeoForge 26.1. */\n39: public class MaterialItemModel implements ItemModel {\n40:   private final Unbaked unbaked;\n41:   private final ItemModel.BakingContext context;\n42:   private final Matrix4fc transformation;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/ToolItemModel.java",
+    "line": 60,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Dynamic item model for completed Tinkers' tools in NeoForge 26.1. */",
+    "context": "57: import java.util.Set;\n58: import java.util.function.Function;\n59: \n60: /** Dynamic item model for completed Tinkers' tools in NeoForge 26.1. */\n61: public class ToolItemModel implements ItemModel {\n62:   private final Unbaked unbaked;\n63:   private final ItemModel.BakingContext context;\n64:   private final Matrix4fc transformation;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/model/tools/ToolItemModel.java",
+    "line": 201,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "198: \n199:   private ItemStack getAmmo(IToolStackView tool) {\n200:     if (unbaked.ammo.isEmpty()) {\n201:       return ItemStack.EMPTY;\n202:     }\n203:     CompoundTag tag = tool.getPersistentData().getCompound(unbaked.ammo.get().key);\n204:     return tag.isEmpty() ? ItemStack.EMPTY : ItemStackNbtHelper.parse(tag);\n205:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/modifiers/MaterialModifierModel.java",
+    "line": 32,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* TODO 1.21: move to {@link slimeknights.tconstruct.library.modifiers.modules}",
+    "context": "29: \n30: /**\n31:  * Model for a modifier that has variants based on a material\n32:  * TODO 1.21: move to {@link slimeknights.tconstruct.library.modifiers.modules}\n33:  */\n34: @Getter\n35: @Accessors(fluent = true)\n36: @RequiredArgsConstructor",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/modifiers/TrimModifierModel.java",
+    "line": 60,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: ArmorItem was removed in 1.21.4, need new approach",
+    "context": "57: \n58:   @Override\n59:   public void addQuads(IToolStackView tool, ModifierEntry modifier, Function<Material,TextureAtlasSprite> spriteGetter, Transformation transforms, boolean isLarge, int startTintIndex, Consumer<Collection<BakedQuad>> quadConsumer, @Nullable ItemLayerPixels pixels) {\n60:     // TODO: ArmorItem was removed in 1.21.4, need new approach\n61:   }\n62: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/client/modifiers/model/TraitModel.java",
+    "line": 55,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "52:     if (trait.getLevel() > 0) {\n53:       return nested.getCacheKey(tool, trait);\n54:     }\n55:     return null;\n56:   }\n57: \n58:   @Override\n59:   public void addQuads(IToolStackView tool, ModifierEntry modifier, Function<Material, TextureAtlasSprite> spriteGetter, Transformation transforms, boolean isLarge, int startTintIndex, Consumer<Collection<BakedQuad>> quadConsumer, @Nullable ItemLayerPixels pixels) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/AbstractModifierModelMapProvider.java",
+    "line": 48,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Argument for {@code largeSeparator} to disable large textures entirely. */",
+    "context": "45: public abstract class AbstractModifierModelMapProvider extends GenericDataProvider {\n46:   private final Map<Identifier, Builder> models = new HashMap<>();\n47: \n48:   /** Argument for {@code largeSeparator} to disable large textures entirely. */\n49:   protected static final char SMALL = '\\0';\n50: \n51:   private final String modId;\n52:   public AbstractModifierModelMapProvider(PackOutput output, String modId) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/AbstractStructureRepalleter.java",
+    "line": 94,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: restore structure-template reprocessing once a datagen RegistryAccess is threaded here.",
+    "context": "91:             newStructure.put(\"palettes\", palettes);\n92:           }\n93:           // if requested, run it through the structure template to cleanup NBT (e.g. compact palettes)\n94:           // TODO: restore structure-template reprocessing once a datagen RegistryAccess is threaded here.\n95:           tasks.add(saveNBT(cache, Identifier.fromNamespaceAndPath(modId, task.location), newStructure));\n96:         }\n97:       }\n98:       catch (IOException e) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/AbstractTagProvider.java",
+    "line": 69,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// validation disabled after removal of ExistingFileHelper",
+    "context": "66:   /** Checks if a given reference exists in another data pack */\n67:   private boolean missing(TagEntry reference) {\n68:     if (reference.isRequired()) {\n69:       // validation disabled after removal of ExistingFileHelper\n70:       return false;\n71:     }\n72:     return false;\n73:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/AbstractToolItemModelProvider.java",
+    "line": 451,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Add particle texture from the parent to avoid missing texture warning in NeoForge 26.1",
+    "context": "448:     model.addProperty(\"parent\", parent.withPrefix(\"item/\").toString());\n449:     model.add(\"display\", properties.get(\"display\"));\n450: \n451:     // Add particle texture from the parent to avoid missing texture warning in NeoForge 26.1\n452:     JsonObject textures = new JsonObject();\n453:     textures.addProperty(\"layer0\", \"tconstruct:item/empty\");\n454:     textures.addProperty(\"particle\", \"tconstruct:item/empty\");\n455:     model.add(\"textures\", textures);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/recipe/CraftingNBTWrapper.java",
+    "line": 15,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: 1.21.2 - reimplement NBT injection for crafting recipes",
+    "context": "12: public record CraftingNBTWrapper(RecipeOutput output, CompoundTag nbt) implements RecipeOutput {\n13:   @Override\n14:   public void accept(ResourceKey<Recipe<?>> key, Recipe<?> recipe, AdvancementHolder advancement, ICondition... conditions) {\n15:     // TODO: 1.21.2 - reimplement NBT injection for crafting recipes\n16:     output.accept(key, recipe, advancement, conditions);\n17:   }\n18: \n19:   @Override",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/data/recipe/SmelteryRecipeBuilder.java",
+    "line": 324,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// NeoForge 26.1 removed ConditionalRecipe.Builder. Save each ordered alternative as a",
+    "context": "321:               .setOre(oreRate, oreByproducts[0].getOreRate())\n322:               .save(wrapped, location);\n323:     } else {\n324:       // NeoForge 26.1 removed ConditionalRecipe.Builder. Save each ordered alternative as a\n325:       // separate condition-wrapped recipe; condition filtering preserves the upstream fallback.\n326:       boolean alwaysPresent = false;\n327:       int index = 0;\n328:       for (IByproduct byproduct : oreByproducts) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/TinkerEnchantmentLoadable.java",
+    "line": 49,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "46:   @javax.annotation.Nullable\n47:   public static ResourceKey<Enchantment> getKey(Enchantment enchantment) {\n48:     if (enchantment == null) {\n49:       return null;\n50:     }\n51:     ResourceKey<Enchantment> cached = KEY_CACHE.get(enchantment);\n52:     if (cached != null) {\n53:       return cached;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/TinkerEnchantmentLoadable.java",
+    "line": 66,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "63:         })\n64:         .orElse(null);\n65:     }\n66:     return null;\n67:   }\n68: \n69:   /** Compares datapack enchantment instances by registry key instead of object identity. */\n70:   public static boolean matches(Enchantment left, Enchantment right) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/TinkerEnchantmentLoadable.java",
+    "line": 75,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "72:       return true;\n73:     }\n74:     if (left == null || right == null) {\n75:       return false;\n76:     }\n77:     ResourceKey<Enchantment> leftKey = getKey(left);\n78:     ResourceKey<Enchantment> rightKey = getKey(right);\n79:     return leftKey != null && leftKey.equals(rightKey);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/loot/AddToolDataFunction.java",
+    "line": 131,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "128:   /** Selects a random subset of modifier entries without replacement. */\n129:   private List<ModifierEntry> selectRandomModifiers(RandomSource random) {\n130:     if (randomModifiers.isEmpty() || randomModifierMax <= 0) {\n131:       return List.of();\n132:     }\n133:     int max = Math.min(randomModifierMax, randomModifiers.size());\n134:     int min = Math.min(randomModifierMin, max);\n135:     int count = min + random.nextInt(max - min + 1);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/json/loot/equipment/MobEquipmentManager.java",
+    "line": 134,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Applies equipment to mobs after they enter the level; NeoForge 26.1 no longer exposes FinalizeSpawn. */",
+    "context": "131:     context = event.getConditionContext();\n132:   }\n133: \n134:   /** Applies equipment to mobs after they enter the level; NeoForge 26.1 no longer exposes FinalizeSpawn. */\n135:   private void onEntityJoinLevel(EntityJoinLevelEvent event) {\n136:     if (event.loadedFromDisk() || event.getLevel().isClientSide() || !(event.getEntity() instanceof Mob mob)) {\n137:       return;\n138:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/materials/MaterialRegistry.java",
+    "line": 88,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "// DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, LoggedOutEvent.class, e -> fullyLoaded = false));",
+    "context": "85:     // on the client, mark materials not fully loaded when the client logs out.\n86:     // this also runs when starting a world in SP, but its early enough that the player login event will correct the state later (see handleLogin method)\n87:     // TODO: is this still needed? disabled as it runs before the world finishes unloading in SP\n88:     // DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, LoggedOutEvent.class, e -> fullyLoaded = false));\n89:   }\n90: \n91:   /**\n92:    * Returns true if the material registry is initialized",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/materials/definition/MaterialManager.java",
+    "line": 232,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TagLoader now exposes separate load and build steps in NeoForge 26.1.",
+    "context": "229:     log.info(\"Loaded {} materials in {} ms\", materials.size(), (timeStep - time) / 1000000f);\n230: \n231: \n232:     // TagLoader now exposes separate load and build steps in NeoForge 26.1.\n233:     TagLoader<IMaterial> tagLoader = new TagLoader<>((id, required) -> getMaterial(new MaterialId(id)), TAG_FOLDER);\n234:     Map<Identifier,Collection<IMaterial>> loadedTags = new HashMap<>();\n235:     loadedTags.putAll(tagLoader.build(tagLoader.load(resourceManagerIn)));\n236:     this.tags = GenericTagUtil.mapLoaderResults(REGISTRY_KEY, loadedTags);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/ModifierManager.java",
+    "line": 412,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// FIXME: condition parsing disabled due to API changes",
+    "context": "409:         }\n410:       }\n411: \n412:       // FIXME: condition parsing disabled due to API changes\n413:       if (json.has(\"condition\")) {\n414:         try {\n415:           JsonElement conditionJson = GsonHelper.getAsJsonObject(json, \"condition\");\n416:           if (conditionJson.isJsonObject() && conditionJson.getAsJsonObject().has(\"type\") && conditionJson.getAsJsonObject().get(\"type\").getAsString().equals(\"neoforge:never\")) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/fluid/FluidEffectContext.java",
+    "line": 131,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (player == null || player.getAbilities().mayBuild) return false;",
+    "context": "128: \n129:   /** If true, this context is not allowed to place blocks at the given position */\n130:   public boolean placeRestricted(ItemStack stack) {\n131:     if (player == null || player.getAbilities().mayBuild) return false;\n132:     AdventureModePredicate predicate = stack.get(DataComponents.CAN_PLACE_ON);\n133:     return predicate == null || !predicate.test(new BlockInWorld(level, getBlockPos(), false));\n134:   }\n135: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/hook/mining/HarvestEnchantmentsModifierHook.java",
+    "line": 26,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Original enchantments for stacks temporarily prepared for vanilla block drops during {@link net.neoforged.neoforge.event.level.block.BreakBlockEvent}. */",
+    "context": "23: \n24: public interface HarvestEnchantmentsModifierHook {\n25:   EquipmentSlot[] APPLICABLE_SLOTS = { EquipmentSlot.OFFHAND, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };\n26:   /** Original enchantments for stacks temporarily prepared for vanilla block drops during {@link net.neoforged.neoforge.event.level.block.BreakBlockEvent}. */\n27:   Map<ItemStack,ItemEnchantments> ACTIVE_HARVEST_ENCHANTMENTS = java.util.Collections.synchronizedMap(new IdentityHashMap<>());\n28:   /**\n29:    * Snapshot of a stack taken right after its modifier enchantments were written into the enchantment component.\n30:    * Vanilla copies the tool before {@code mineBlock} but only computes loot after it, so the copy handed to the loot",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/hook/mining/HarvestEnchantmentsModifierHook.java",
+    "line": 99,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Checks if a stack already has temporary harvest enchantments prepared. */",
+    "context": "96:     return EnchantmentModifierHook.getHolder(context.getWorld().registryAccess().lookupOrThrow(Registries.ENCHANTMENT), enchantment);\n97:   }\n98: \n99:   /** Checks if a stack already has temporary harvest enchantments prepared. */\n100:   static boolean hasActiveHarvestEnchantments(ItemStack stack) {\n101:     return ACTIVE_HARVEST_ENCHANTMENTS.containsKey(stack);\n102:   }\n103: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/armor/EffectImmunityModule.java",
+    "line": 131,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "128:         return multiset.count(immune);\n129:       }\n130:     }\n131:     return 0;\n132:   }\n133: \n134:   private static int scanEquipment(LivingEntity entity, Holder<MobEffect> effect) {\n135:     int total = 0;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/armor/EffectImmunityModule.java",
+    "line": 165,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "162:       }\n163:       return sum;\n164:     }\n165:     return 0;\n166:   }\n167: \n168:   private static boolean matches(MobEffect stored, MobEffect value, Identifier key) {\n169:     return stored == value || Objects.equals(key, BuiltInRegistries.MOB_EFFECT.getKey(stored));",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/armor/ReplaceBlockWalkerModule.java",
+    "line": 74,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/* TODO: 1.21.4 ForgeEventFactory removed",
+    "context": "71:           BlockState state = replacement.state;\n72:           if (replacement.target.matches(world.getBlockState(mutable))\n73:               && state.canSurvive(world, mutable) && world.isUnobstructed(state, mutable, CollisionContext.empty())\n74:               /* TODO: 1.21.4 ForgeEventFactory removed\n75:               && !ForgeEventFactory.onBlockPlace(living, BlockSnapshot.create(world.dimension(), world, mutable), Direction.UP) */\n76:               ) {\n77:             world.setBlockAndUpdate(mutable, state);\n78:             world.scheduleTick(mutable, state.getBlock(), Mth.nextInt(living.getRandom(), 60, 120));",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/behavior/BlockItemProviderModule.java",
+    "line": 109,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (!ItemStack.isSameItemSameComponents(new ItemStack(item, count), backingStack)) return false;",
+    "context": "106: \n107:     @Override\n108:     public boolean consumeBlockItem(IToolStackView tool, ModifierEntry modifier, ItemStack backingStack, @Nullable LivingEntity entity) {\n109:         if (!ItemStack.isSameItemSameComponents(new ItemStack(item, count), backingStack)) return false;\n110:         if (damage > 0) {\n111:             ToolDamageUtil.damageAnimated(tool, damage, entity, modifier.getId());\n112:         }\n113:         return true;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/modifiers/modules/build/RarityModule.java",
+    "line": 59,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Writes the computed tool rarity onto the vanilla 26.1 name-color component. */",
+    "context": "56:     return values[Mth.clamp(rarity, 0, values.length - 1)];\n57:   }\n58: \n59:   /** Writes the computed tool rarity onto the vanilla 26.1 name-color component. */\n60:   public static void applyToStack(ItemStack stack) {\n61:     stack.set(DataComponents.RARITY, getRarity(stack));\n62:   }\n63: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/alloying/IAlloyTank.java",
+    "line": 14,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "11: public interface IAlloyTank extends IEmptyContainer, RecipeInput {\n12:   @Override\n13:   default int size() {\n14:     return 0;\n15:   }\n16: \n17:   @Override\n18:   default ItemStack getItem(int index) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/alloying/IAlloyTank.java",
+    "line": 19,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "16: \n17:   @Override\n18:   default ItemStack getItem(int index) {\n19:     return ItemStack.EMPTY;\n20:   }\n21: \n22:   @Override\n23:   default boolean isEmpty() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/casting/container/ContainerFillingRecipe.java",
+    "line": 121,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "118: \n119:   private static int getFillAmount(ItemStack stack, FluidStack fluid) {\n120:     if (stack.isEmpty() || fluid.isEmpty()) {\n121:       return 0;\n122:     }\n123:     ItemAccess access = ItemAccess.forStack(stack).oneByOne();\n124:     ResourceHandler<FluidResource> handler = access.getCapability(Capabilities.Fluid.ITEM);\n125:     if (handler == null) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/casting/container/ContainerFillingRecipe.java",
+    "line": 140,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "137: \n138:   private static ItemStack fillContainer(ItemStack stack, FluidStack fluid) {\n139:     if (stack.isEmpty() || fluid.isEmpty()) {\n140:       return ItemStack.EMPTY;\n141:     }\n142:     ItemAccess access = ItemAccess.forStack(stack).oneByOne();\n143:     ResourceHandler<FluidResource> handler = access.getCapability(Capabilities.Fluid.ITEM);\n144:     if (handler == null) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/casting/container/ContainerFillingRecipe.java",
+    "line": 160,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "157: \n158:   private static ItemStack getBucketResult(ItemStack stack, FluidStack fluid) {\n159:     if (!stack.is(Items.BUCKET) || fluid.getAmount() < FluidType.BUCKET_VOLUME) {\n160:       return ItemStack.EMPTY;\n161:     }\n162:     ItemStack result = fluid.getFluidType().getBucket(fluid);\n163:     if (result.isEmpty() || result.getItem() == Items.AIR || result.getItem() == Items.BUCKET) {\n164:       Item bucket = fluid.getFluid().getBucket();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/casting/container/ContainerFillingRecipe.java",
+    "line": 166,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "163:     if (result.isEmpty() || result.getItem() == Items.AIR || result.getItem() == Items.BUCKET) {\n164:       Item bucket = fluid.getFluid().getBucket();\n165:       if (bucket == Items.AIR || bucket == Items.BUCKET) {\n166:         return ItemStack.EMPTY;\n167:       }\n168:       result = new ItemStack(bucket);\n169:     }\n170:     return result;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/ingredient/LegacyIngredientType.java",
+    "line": 23,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Bridges TCon's legacy JSON ingredient parsers onto NeoForge 26.1 IngredientType codecs. */",
+    "context": "20: \n21: import java.util.function.Function;\n22: \n23: /** Bridges TCon's legacy JSON ingredient parsers onto NeoForge 26.1 IngredientType codecs. */\n24: public final class LegacyIngredientType {\n25:   private static final Codec<JsonElement> JSON_CODEC = Codec.PASSTHROUGH.xmap(dynamic -> dynamic.convert(JsonOps.INSTANCE).getValue(), json -> new Dynamic<>(JsonOps.INSTANCE, json));\n26: \n27:   private LegacyIngredientType() {}",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/MaterialRecipe.java",
+    "line": 96,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "93: \n94:   @Override\n95:   public boolean showNotification() {\n96:     return false;\n97:   }\n98: \n99:   @Override\n100:   public RecipeType<? extends Recipe<ISingleStackContainer>> getType() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/MaterialRecipeCache.java",
+    "line": 164,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "161:       try {\n162:         return ingredient.items().map(ItemStack::new).toList();\n163:       } catch (UnsupportedOperationException | IllegalStateException ignored) {\n164:         return List.of();\n165:       }\n166:     }\n167:     return resolveDisplayItems(ingredient);\n168:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/MaterialRecipeCache.java",
+    "line": 173,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "170:   /** Resolves an ItemOutput tag to all concrete item stacks for JEI display. */\n171:   public static List<ItemStack> getDisplayItems(ItemOutput output) {\n172:     if (output == null) {\n173:       return List.of();\n174:     }\n175:     try {\n176:       JsonElement serialized = output.serialize(false);\n177:       RegistryAccess access = DISPLAY_REGISTRY_ACCESS;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/MaterialRecipeCache.java",
+    "line": 207,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "204:     try {\n205:       return ingredient.items().map(ItemStack::new).toList();\n206:     } catch (UnsupportedOperationException | IllegalStateException ignored) {\n207:       return List.of();\n208:     }\n209:   }\n210: \n211:   private static boolean matchesDisplayIngredient(Ingredient ingredient, ItemStack stack) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/MaterialRecipeCodecs.java",
+    "line": 9,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Mojang codecs used by the 26.1 recipe serializers. */",
+    "context": "6: \n7: import java.util.List;\n8: \n9: /** Mojang codecs used by the 26.1 recipe serializers. */\n10: final class MaterialRecipeCodecs {\n11:   static final Codec<MaterialVariantId> MATERIAL = Codec.STRING.comapFlatMap(\n12:     text -> {\n13:       MaterialVariantId material = MaterialVariantId.tryParse(text);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/material/MaterialRecipeWrapper.java",
+    "line": 115,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "112:     if (recipe instanceof MaterialRecipeWrapper<?> wrapped) {\n113:       return wrapped;\n114:     }\n115:     return null;\n116:   }\n117: \n118:   /** Finds the original vanilla recipe below both datagen wrappers. */\n119:   static Recipe<?> original(Recipe<?> recipe) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/melting/MeltingRecipe.java",
+    "line": 112,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "109:   /** If nonnull, recipe is boosted by this ore type */\n110:   @Nullable\n111:   public OreRateType getOreType() {\n112:     return null;\n113:   }\n114: \n115:   @Override\n116:   public void handleByproducts(IMeltingContainer inv, IFluidHandler handler) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/modifiers/adding/AbstractModifierRecipe.java",
+    "line": 292,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "289:     if (display instanceof SlotDisplay.OnlyWithComponent component) {\n290:       return resolveDisplayFallback(component.source(), amount);\n291:     }\n292:     return List.of();\n293:   }\n294: \n295:   /** Last resort display resolver for NeoForge custom ingredients that expose neither SlotDisplay nor item holders. */\n296:   private static List<ItemStack> resolveByTestingItems(Ingredient ingredient, int amount) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/modifiers/adding/DisplayModifierRecipe.java",
+    "line": 72,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "69:     if (slot >= 0 && slot < inputs.size()) {\n70:       return inputs.get(slot);\n71:     }\n72:     return Collections.emptyList();\n73:   }\n74: \n75:   /** Creates a new builder instance */\n76:   public static Builder builder() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/modifiers/adding/IncrementalModifierRecipe.java",
+    "line": 223,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "220:     if (slot >= 0 && slot < inputs.size()) {\n221:       return inputs.get(slot);\n222:     }\n223:     return Collections.emptyList();\n224:   }\n225: \n226:   /** @deprecated use {@link #getDisplayItems(int, ContextMap)} */\n227:   @Deprecated",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/modifiers/adding/IncrementalModifierRecipe.java",
+    "line": 233,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "230:     if (slot >= 0 && slot < inputs.size()) {\n231:       return inputs.get(slot);\n232:     }\n233:     return Collections.emptyList();\n234:   }\n235: \n236:   /* Helpers */\n237: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/modifiers/adding/ModifierRecipe.java",
+    "line": 229,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "226:         return stacks;\n227:       }\n228:     }\n229:     return Collections.emptyList();\n230:   }\n231: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/modifiers/adding/OverslimeModifierRecipe.java",
+    "line": 156,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "153:     if (slot == 0) {\n154:       return AbstractModifierRecipe.getDisplayStacks(ingredient, 1, displayContext);\n155:     }\n156:     return Collections.emptyList();\n157:   }\n158: \n159:   @Override\n160:   public List<ItemStack> getToolWithoutModifier() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/molding/MoldingRecipeBuilder.java",
+    "line": 107,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//      json.add(\"material\", material.toJson());",
+    "context": "104: //\n105: //    @Override\n106: //    public void serializeRecipeData(JsonObject json) {\n107: //      json.add(\"material\", material.toJson());\n108: //      if (pattern != Ingredient.EMPTY) {\n109: //        json.add(\"pattern\", pattern.toJson());\n110: //        if (patternConsumed) {\n111: //          json.addProperty(\"pattern_consumed\", true);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/molding/MoldingRecipeBuilder.java",
+    "line": 109,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//        json.add(\"pattern\", pattern.toJson());",
+    "context": "106: //    public void serializeRecipeData(JsonObject json) {\n107: //      json.add(\"material\", material.toJson());\n108: //      if (pattern != Ingredient.EMPTY) {\n109: //        json.add(\"pattern\", pattern.toJson());\n110: //        if (patternConsumed) {\n111: //          json.addProperty(\"pattern_consumed\", true);\n112: //        }\n113: //      }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/molding/MoldingRecipeBuilder.java",
+    "line": 111,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//          json.addProperty(\"pattern_consumed\", true);",
+    "context": "108: //      if (pattern != Ingredient.EMPTY) {\n109: //        json.add(\"pattern\", pattern.toJson());\n110: //        if (patternConsumed) {\n111: //          json.addProperty(\"pattern_consumed\", true);\n112: //        }\n113: //      }\n114: //      json.add(\"result\", output.serialize(false));\n115: //    }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/molding/MoldingRecipeBuilder.java",
+    "line": 114,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//      json.add(\"result\", output.serialize(false));",
+    "context": "111: //          json.addProperty(\"pattern_consumed\", true);\n112: //        }\n113: //      }\n114: //      json.add(\"result\", output.serialize(false));\n115: //    }\n116: //\n117: //    @Override\n118: //    public RecipeSerializer<?> getType() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/molding/MoldingRecipeBuilder.java",
+    "line": 119,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//      return serializer;",
+    "context": "116: //\n117: //    @Override\n118: //    public RecipeSerializer<?> getType() {\n119: //      return serializer;\n120: //    }\n121: //  }\n122: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/partbuilder/IDisplayPartBuilderRecipe.java",
+    "line": 19,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* TODO 1.21: make this return {@link slimeknights.tconstruct.library.materials.definition.MaterialVariantId}",
+    "context": "16: public interface IDisplayPartBuilderRecipe extends IPartBuilderRecipe {\n17:   /**\n18:    * Gets the material variant required to craft this recipe.\n19:    * TODO 1.21: make this return {@link slimeknights.tconstruct.library.materials.definition.MaterialVariantId}\n20:    */\n21:   MaterialVariant getMaterial();\n22: \n23:   /** Gets a list of input material items for display in the material slot. */",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/partbuilder/IPartBuilderRecipe.java",
+    "line": 114,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "111: \n112:   /** Gets the text to display on the part builder screen */\n113:   default List<Component> getText(IPartBuilderContainer inv) {\n114:     return Collections.emptyList();\n115:   }\n116: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/ITinkerStationRecipe.java",
+    "line": 40,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "37: \n38:   @Override\n39:   default boolean showNotification() {\n40:     return false;\n41:   }\n42: \n43:   @Override\n44:   default PlacementInfo placementInfo() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/MaterialSwappingRecipe.java",
+    "line": 68,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "65:     for (ModifierEntry entry : tool.getModifiers()) {\n66:       count = entry.getHook(ModifierHooks.CRAFT_COUNT).modifyCraftCount(tool, entry, count);\n67:       if (count <= 0) {\n68:         return 0;\n69:       }\n70:     }\n71:     return (int) count;\n72:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/PartSwappingOverrideRecipe.java",
+    "line": 59,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "56:   public boolean matches(ITinkerStationContainer inv, Level world) {\n57:     ItemStack tinkerable = inv.getTinkerableStack();\n58:     if (tinkerable.isEmpty() || !tools.test(tinkerable)) {\n59:       return false;\n60:     }\n61:     // must be a valid material index\n62:     List<MaterialStatsId> materials = ToolMaterialHook.stats(IModifiable.getToolDefinition(tinkerable.getItem()));\n63:     if (indices[0] >= materials.size()) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/PartSwappingOverrideRecipe.java",
+    "line": 64,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "61:     // must be a valid material index\n62:     List<MaterialStatsId> materials = ToolMaterialHook.stats(IModifiable.getToolDefinition(tinkerable.getItem()));\n63:     if (indices[0] >= materials.size()) {\n64:       return false;\n65:     }\n66:     // find the part and mark it as used\n67:     BitSet used = ModifierRecipe.makeBitset(inv);\n68:     boolean found = false;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/PartSwappingOverrideRecipe.java",
+    "line": 134,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "131:       inv.shrinkInput(index, 1);\n132:       return true;\n133:     }\n134:     return false;\n135:   }\n136: \n137:   @Override\n138:   public RecipeSerializer<? extends Recipe<ITinkerStationContainer>> getSerializer() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/ToolBuildingRecipe.java",
+    "line": 131,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "128:     }\n129:     ToolDefinition definition = getOutputDefinition();\n130:     if (definition == null) {\n131:       return List.of();\n132:     }\n133:     return ToolPartsHook.parts(definition);\n134:   }\n135: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/ToolBuildingRecipe.java",
+    "line": 149,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "146:     int maxInputs = inv.getInputCount();\n147:     // disallow if we have no inputs, or if we have too few slots\n148:     if (requiredInputs == 0 || requiredInputs > maxInputs) {\n149:       return null;\n150:     }\n151: \n152:     boolean[] used = new boolean[maxInputs];\n153:     int[] matchedSlots = new int[requiredInputs];",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/ToolBuildingRecipe.java",
+    "line": 159,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "156:     for (IToolPart part : parts) {\n157:       int slot = findUnusedInput(inv, used, Ingredient.of(part.asItem()));\n158:       if (slot < 0) {\n159:         return null;\n160:       }\n161:       used[slot] = true;\n162:       matchedSlots[matched++] = slot;\n163:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/ToolBuildingRecipe.java",
+    "line": 168,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "165:     for (Ingredient ingredient : ingredients) {\n166:       int slot = findUnusedInput(inv, used, ingredient);\n167:       if (slot < 0) {\n168:         return null;\n169:       }\n170:       used[slot] = true;\n171:       matchedSlots[matched++] = slot;\n172:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/ToolBuildingRecipe.java",
+    "line": 176,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "173: \n174:     for (int i = 0; i < maxInputs; i++) {\n175:       if (!used[i] && !inv.getInput(i).isEmpty()) {\n176:         return null;\n177:       }\n178:     }\n179:     return matchedSlots;\n180:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/tinkerstation/building/ToolBuildingRecipe.java",
+    "line": 351,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: restore display marker with a data component once tooltips are ported.",
+    "context": "348:           } else {\n349:             // not a full list? mark it for display with just the materials on the end\n350:             result = new MaterialIdNBT(list).updateStack(new ItemStack(output, outputCount));\n351:             // TODO 1.21: restore display marker with a data component once tooltips are ported.\n352:           }\n353:         }\n354:       }\n355:         }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/worktable/AbstractWorktableRecipe.java",
+    "line": 80,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "77:       } catch (UnsupportedOperationException exception) {\n78:         // JEI may construct layouts before tag holders are resolved. Do not cache a partial list;\n79:         // the normal lookup will run again once tags are available.\n80:         return Collections.emptyList();\n81:       }\n82:     }\n83:     return tools;\n84:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/recipe/worktable/AbstractWorktableRecipe.java",
+    "line": 89,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "86:   @Override\n87:   public List<ItemStack> getDisplayItems(int slot) {\n88:     if (slot < 0 || slot >= inputs.size()) {\n89:       return Collections.emptyList();\n90:     }\n91:     return inputs.get(slot).getMatchingStacks();\n92:   }\n93: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/capability/BlockItemProviderModifierHook.java",
+    "line": 81,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "78:             if (cap == BlockItemProviderCapability.CAPABILITY) {\n79:                 return new CapabilityImpl(this.tool.get());\n80:             }\n81:             return null;\n82:         }\n83:     }\n84: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/capability/TinkerDataCapability.java",
+    "line": 41,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// 26.1 EntityType.getBaseClass() is always Entity, so filter at lookup time instead.",
+    "context": "38: \n39:   /** Registers this capability */\n40:   public static void register(RegisterCapabilitiesEvent event) {\n41:     // 26.1 EntityType.getBaseClass() is always Entity, so filter at lookup time instead.\n42:     for (EntityType<?> type : BuiltInRegistries.ENTITY_TYPE.stream().toList()) {\n43:       event.registerEntity(CAPABILITY, type, (entity, ctx) -> entity instanceof LivingEntity living ? CACHE.computeIfAbsent(living, ignored -> new Holder()) : null);\n44:     }\n45:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/capability/ToolCapabilityProvider.java",
+    "line": 44,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "41:         return capability;\n42:       }\n43:     }\n44:     return null;\n45:   }\n46: \n47:   /** Registers a tool capability provider constructor. Every new tool will call this constructor to create your provider.\n48:    * Is it valid for this constructor to return null, just note that it will not be called a second time if the tools state changes. Thus you should avoid conditioning on anything other than item type */",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/capability/ToolEnergyCapability.java",
+    "line": 139,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "136:       if (cap == Capabilities.Energy.ITEM && tool.getStats().getInt(MAX_STAT) > 0) {\n137:         return energyCap;\n138:       }\n139:       return null;\n140:     }\n141:   }\n142: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/capability/fluid/ToolFluidCapability.java",
+    "line": 335,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "332:       if (cap == Capabilities.Fluid.ITEM && tool.getVolatileData().getInt(TOTAL_TANKS) > 0) {\n333:         return fluidCap;\n334:       }\n335:       return null;\n336:     }\n337:   }\n338: \n339:   /** NeoForge transfer API wrapper for tool tanks. */",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/capability/inventory/InventoryModule.java",
+    "line": 140,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// 26.1: builtin item holders often omit datapack tags, so also accept stacks whose live tags match this filter",
+    "context": "137:     if (filter.matches(item)) {\n138:       return true;\n139:     }\n140:     // 26.1: builtin item holders often omit datapack tags, so also accept stacks whose live tags match this filter\n141:     String filterJson = serializeFilter();\n142:     Identifier itemId = BuiltInRegistries.ITEM.getKey(item);\n143:     if (filterJson.contains(itemId.toString()) || filterJson.contains(itemId.getPath())) {\n144:       return true;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/definition/module/weapon/SweepWeaponAttack.java",
+    "line": 85,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: restore sweep animation hook if NeoForge exposes one.",
+    "context": "82: \n83:       level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);\n84:       if (attacker instanceof Player player) {\n85:         // TODO 1.21: restore sweep animation hook if NeoForge exposes one.\n86:       }\n87:     }\n88:   }\n89: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/helper/ToolAttackUtil.java",
+    "line": 429,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: restore lastHurt accumulation if an accessor becomes available.",
+    "context": "426:     boolean hit = damage > 0;\n427:     // reset to the old time so bows work right\n428:     target.invulnerableTime = lastInvulnerableTime;\n429:     // TODO 1.21: restore lastHurt accumulation if an accessor becomes available.\n430:     return hit;\n431:   }\n432: \n433:   /**",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/helper/ToolDamageUtil.java",
+    "line": 67,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* NeoForge/Minecraft 26.1 uses these components to decide if an item stack is",
+    "context": "64: \n65:   /**\n66:    * Syncs Tinkers durability stored in custom data back to vanilla data components.\n67:    * NeoForge/Minecraft 26.1 uses these components to decide if an item stack is\n68:    * damageable and to render/use the damage bar.\n69:    */\n70:   public static void syncDamageComponents(IToolStackView tool, @Nullable ItemStack stack) {\n71:     if (stack == null || stack.isEmpty()) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/helper/ToolDamageUtil.java",
+    "line": 217,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: why don't we fire EventHooks.onPlayerDestroyItem here?",
+    "context": "214:   public static boolean damageAnimated(IToolStackView tool, int amount, LivingEntity entity, InteractionHand hand, ModifierId cause) {\n215:     if (damage(tool, amount, entity, entity.getItemInHand(hand), cause)) {\n216:       entity.getItemInHand(hand).hurtAndBreak(0, entity, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);\n217:       // TODO: why don't we fire EventHooks.onPlayerDestroyItem here?\n218:       return true;\n219:     }\n220:     return false;\n221:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/helper/TooltipUtil.java",
+    "line": 304,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  builder.add(ToolStats.BLOCK_AMOUNT);",
+    "context": "301:       builder.addOptional(ToolStats.KNOCKBACK_RESISTANCE, 10f);\n302:     }\n303:     //if (ModifierUtil.canPerformAction(tool, ItemAbilities.SHIELD_BLOCK)) {\n304:     //  builder.add(ToolStats.BLOCK_AMOUNT);\n305:     //  builder.add(ToolStats.BLOCK_ANGLE);\n306:     //}\n307: \n308:     builder.addAllFreeSlots();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/helper/TooltipUtil.java",
+    "line": 305,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  builder.add(ToolStats.BLOCK_ANGLE);",
+    "context": "302:     }\n303:     //if (ModifierUtil.canPerformAction(tool, ItemAbilities.SHIELD_BLOCK)) {\n304:     //  builder.add(ToolStats.BLOCK_AMOUNT);\n305:     //  builder.add(ToolStats.BLOCK_ANGLE);\n306:     //}\n307: \n308:     builder.addAllFreeSlots();\n309:     for (ModifierEntry entry : tool.getModifierList()) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/ModifiableArrowItem.java",
+    "line": 75,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** @deprecated kept for old addon callers; Minecraft 26.1 calls the weapon-aware overload above. */",
+    "context": "72:     return arrow;\n73:   }\n74: \n75:   /** @deprecated kept for old addon callers; Minecraft 26.1 calls the weapon-aware overload above. */\n76:   @Deprecated(forRemoval = true)\n77:   public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {\n78:     return createArrow(level, stack, shooter, null);\n79:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/armor/ModifiableArmorItem.java",
+    "line": 152,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** 26.1 renamed the enderman mask hook and widened it to cover every gaze attack, such as the creaking */",
+    "context": "149:   public boolean canWalkOnPowderedSnow(ItemStack stack, LivingEntity wearer) {\n150:     return type == ArmorType.BOOTS && ModifierUtil.checkVolatileFlag(stack, SNOW_BOOTS);\n151:   }\n152:   /** 26.1 renamed the enderman mask hook and widened it to cover every gaze attack, such as the creaking */\n153:   @Override\n154:   public boolean isGazeDisguise(ItemStack stack, Player player, @Nullable LivingEntity target) {\n155:     return type == ArmorType.HELMET && ModifierUtil.checkVolatileFlag(stack, ENDERMASK);\n156:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/ranged/ModifiableBowItem.java",
+    "line": 161,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "158: \n159:     // no broken\n160:     if (tool.isBroken()) {\n161:       return false;\n162:     }\n163: \n164:     // just not handling vanilla infinity at all, we have our own hooks which someone could use to mimic infinity if they wish with a bit of effort\n165:     Player player = living instanceof Player p ? p : null;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/ranged/ModifiableBowItem.java",
+    "line": 186,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "183: \n184:     // no ammo? no charge? nothing to do\n185:     if (!hasAmmo || chargeTime < 0) {\n186:       return false;\n187:     }\n188: \n189:     // calculate arrow power\n190:     float charge = GeneralInteractionModifierHook.getToolCharge(tool, chargeTime);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/ranged/ModifiableBowItem.java",
+    "line": 194,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "191:     float velocity = ConditionalStatModifierHook.getModifiedStat(tool, living, ToolStats.VELOCITY);\n192:     float power = charge * velocity;\n193:     if (power < 0.1f) {\n194:       return false;\n195:     }\n196: \n197:     // launch the arrow\n198:     if (level instanceof ServerLevel serverLevel) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/ranged/ModifiableCrossbowItem.java",
+    "line": 200,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "197:     // specifically: broken, not fully charged, already have ammo\n198:     ModDataNBT persistentData = tool.getPersistentData();\n199:     if (tool.isBroken() || getUseDuration(bow, living) - chargeRemaining < persistentData.getInt(KEY_DRAWTIME) || persistentData.contains(KEY_CROSSBOW_AMMO, Tag.TAG_COMPOUND)) {\n200:       return false;\n201:     }\n202: \n203:     // find ammo and store it on the bow\n204:     Player player = living instanceof Player p ? p : null;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/item/ranged/ModifiableCrossbowItem.java",
+    "line": 291,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// setup projectile. Match original TConstruct and vanilla MC 26.1 crossbow behavior: rotate the view vector around the shooter up-vector.",
+    "context": "288: \n289:         // TODO: can we get piglins/illagers to use our crossbow?\n290: \n291:         // setup projectile. Match original TConstruct and vanilla MC 26.1 crossbow behavior: rotate the view vector around the shooter up-vector.\n292:         float angle = startAngle + (10 * arrowIndex);\n293:         Vec3 upVector = living.getUpVector(1.0F);\n294:         Quaternionf upQuaternion = new Quaternionf().setAngleAxis(angle * Math.PI / 180F, upVector.x, upVector.y, upVector.z);\n295:         Vector3f targetVector = living.getViewVector(1.0F).toVector3f().rotate(upQuaternion);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/layout/LayoutIcon.java",
+    "line": 144,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: serialize data components for item icons once layout JSON is moved to codecs.",
+    "context": "141:     public JsonObject toJson() {\n142:       JsonObject json = new JsonObject();\n143:       json.addProperty(\"item\", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());\n144:       // TODO: serialize data components for item icons once layout JSON is moved to codecs.\n145:       return json;\n146:     }\n147:   }\n148: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/MaterialNBT.java",
+    "line": 180,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (o == null || getClass() != o.getClass()) return false;",
+    "context": "177:   @Override\n178:   public boolean equals(@Nullable Object o) {\n179:     if (this == o) return true;\n180:     if (o == null || getClass() != o.getClass()) return false;\n181:     MaterialNBT that = (MaterialNBT) o;\n182:     return list.equals(that.list);\n183:   }\n184: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/ModDataNBT.java",
+    "line": 55,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "52:   public boolean contains(Identifier name, int type) {\n53:     Tag value = data.get(name.toString());\n54:     if (value == null) {\n55:       return false;\n56:     }\n57:     int id = value.getId();\n58:     if (id == type) {\n59:       return true;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/ModDataNBT.java",
+    "line": 149,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (o == null || getClass() != o.getClass()) return false;",
+    "context": "146:   @Override\n147:   public boolean equals(@Nullable Object o) {\n148:     if (this == o) return true;\n149:     if (o == null || getClass() != o.getClass()) return false;\n150:     ModDataNBT that = (ModDataNBT) o;\n151:     return data.equals(that.data);\n152:   }\n153: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/MultiplierNBT.java",
+    "line": 95,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (o == null || getClass() != o.getClass()) return false;",
+    "context": "92:   @Override\n93:   public boolean equals(@Nullable Object o) {\n94:     if (this == o) return true;\n95:     if (o == null || getClass() != o.getClass()) return false;\n96:     MultiplierNBT that = (MultiplierNBT) o;\n97:     return stats.equals(that.stats);\n98:   }\n99: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/StatsNBT.java",
+    "line": 44,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (o == null || getClass() != o.getClass()) return false;",
+    "context": "41:   @Override\n42:   public boolean equals(Object o) {\n43:     if (this == o) return true;\n44:     if (o == null || getClass() != o.getClass()) return false;\n45:     StatsNBT statsNBT = (StatsNBT) o;\n46:     return stats.equals(statsNBT.stats);\n47:   }\n48: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/ToolStack.java",
+    "line": 146,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* Updates vanilla item components that gate damageability in MC 26.1.",
+    "context": "143:   private IModDataView volatileModData;\n144: \n145:   /**\n146:    * Updates vanilla item components that gate damageability in MC 26.1.\n147:    * Tinkers still stores the real dynamic durability in tool NBT/stats, but vanilla now requires\n148:    * MAX_DAMAGE and DAMAGE components to treat the stack as damageable at all.\n149:    */\n150:   private void updateStackComponents(ItemStack stack) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/ToolStack.java",
+    "line": 162,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// 26.1 gates gliding on DataComponents.GLIDER, the IItemExtension#canElytraFly hook no longer exists",
+    "context": "159:     if (hasTag(TinkerTags.Items.HARVEST)) {\n160:       stack.set(DataComponents.TOOL, buildToolComponent());\n161:     }\n162:     // 26.1 gates gliding on DataComponents.GLIDER, the IItemExtension#canElytraFly hook no longer exists\n163:     if (!isBroken() && getVolatileData().getBoolean(ModifiableArmorItem.ELYTRA)) {\n164:       stack.set(DataComponents.GLIDER, Unit.INSTANCE);\n165:     } else {\n166:       stack.remove(DataComponents.GLIDER);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/nbt/ToolStack.java",
+    "line": 168,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// 26.1 colors the item name from DataComponents.RARITY, not Item.getRarity(ItemStack)",
+    "context": "165:     } else {\n166:       stack.remove(DataComponents.GLIDER);\n167:     }\n168:     // 26.1 colors the item name from DataComponents.RARITY, not Item.getRarity(ItemStack)\n169:     RarityModule.applyToStack(stack);\n170:   }\n171: \n172:   /** Builds a vanilla tool component so external mods checking DataComponents.TOOL see Tinkers' dynamic mining tier. */",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/part/IMaterialItem.java",
+    "line": 53,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Writes this material's rarity onto the vanilla 26.1 name-color component. */",
+    "context": "50:     return true;\n51:   }\n52: \n53:   /** Writes this material's rarity onto the vanilla 26.1 name-color component. */\n54:   default void applyMaterialDisplay(ItemStack stack, MaterialVariantId material) {\n55:     if (usesMaterialRarity()) {\n56:       stack.set(DataComponents.RARITY, MaterialRegistry.getMaterial(material.getMaterialId()).getRarity());\n57:     } else {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/part/block/MaterialBlockEntity.java",
+    "line": 38,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed",
+    "context": "35:     this(TinkerToolParts.materialBlock.get(), pos, state);\n36:   }\n37: \n38:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n39:   //@Override\n40:   //public ModelData getModelData() {\n41:   //  return ModelData.builder().with(ModelProperties.MATERIAL, material).build();\n42:   //}",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/tools/part/block/MaterialBlockEntity.java",
+    "line": 41,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  return ModelData.builder().with(ModelProperties.MATERIAL, material).build();",
+    "context": "38:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n39:   //@Override\n40:   //public ModelData getModelData() {\n41:   //  return ModelData.builder().with(ModelProperties.MATERIAL, material).build();\n42:   //}\n43: \n44:   /** Called to update the material on the block. */\n45:   public void setMaterial(MaterialVariantId material) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/utils/HarvestTiers.java",
+    "line": 141,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "138:     if (material == ToolMaterial.GOLD) {\n139:       return 1;\n140:     }\n141:     return 0;\n142:   }\n143: \n144:   /** Makes a translation key for the given name */\n145:   private static MutableComponent makeLevelKey(Object tier) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/utils/ItemStackNbtHelper.java",
+    "line": 44,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "41:         return new ItemStack(item, Math.max(1, tag.getInt(\"count\").orElse(1)));\n42:       }\n43:     }\n44:     return ItemStack.EMPTY;\n45:   }\n46: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/utils/ResourceId.java",
+    "line": 49,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (o == null || getClass() != o.getClass()) return false;",
+    "context": "46:   @Override\n47:   public boolean equals(Object o) {\n48:     if (this == o) return true;\n49:     if (o == null || getClass() != o.getClass()) return false;\n50:     ResourceId that = (ResourceId) o;\n51:     return id.equals(that.id);\n52:   }\n53: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/utils/RestrictedCompoundTag.java",
+    "line": 34,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "31:    */\n32:   public boolean contains(String name, int type) {\n33:     if (restrictedKeys.contains(name)) {\n34:       return false;\n35:     }\n36:     Tag value = tag.get(name);\n37:     if (value == null) {\n38:       return false;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/library/utils/RestrictedCompoundTag.java",
+    "line": 38,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "35:     }\n36:     Tag value = tag.get(name);\n37:     if (value == null) {\n38:       return false;\n39:     }\n40:     int id = value.getId();\n41:     if (id == type) {\n42:       return true;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/apotheosis/ApotheosisModifierBridge.java",
+    "line": 82,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "79:                                                  Identifier expectedEnchantment, int baseLevel) {\n80:       dev.shadowsoffire.apotheosis.affix.Affix affix = instance.getAffix();\n81:       if (!(affix instanceof dev.shadowsoffire.apotheosis.affix.effect.EnchantmentAffix)) {\n82:         return 0;\n83:       }\n84:       try {\n85:         net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> target =\n86:             (net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>) ENCHANTMENT_FIELD.get(affix);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/apotheosis/ApotheosisModifierBridge.java",
+    "line": 88,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "85:         net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> target =\n86:             (net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>) ENCHANTMENT_FIELD.get(affix);\n87:         if (!target.is(expectedEnchantment)) {\n88:           return 0;\n89:         }\n90:         net.minecraft.world.item.enchantment.ItemEnchantments.Mutable mutable =\n91:             new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);\n92:         mutable.set(target, baseLevel);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/apotheosis/ApotheosisModifierBridge.java",
+    "line": 98,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "95:         instance.getEnchantmentLevels(event);\n96:         return Math.max(0, mutable.getLevel(target) - baseLevel);\n97:       } catch (IllegalAccessException e) {\n98:         return 0;\n99:       }\n100:     }\n101: \n102:     private static java.lang.reflect.Field findEnchantmentField() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jade/TConstructJadePlugin.java",
+    "line": 69,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "66:       if (accessor.getBlockEntity() instanceof ProxyTankBlockEntity tank) {\n67:         return tank.getItemTank();\n68:       }\n69:       return null;\n70:     }\n71:   }\n72: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/modifiers/ModifierRecipeCategory.java",
+    "line": 258,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: for double part tools (e.g. travelers), this does leave out a lot of materials. But the size of options will quicky explode. Worth fixing?",
+    "context": "255:   /** Function to compute lookup items for each tool */\n256:   private static final Function<IModifiable,List<ItemStack>> LOOKUP_GETTER = modifiable -> {\n257:     List<ItemStack> variants = new ArrayList<>();\n258:     // TODO: for double part tools (e.g. travelers), this does leave out a lot of materials. But the size of options will quicky explode. Worth fixing?\n259:     ToolBuildHandler.addVariants(variants::add, modifiable, \"\");\n260:     return variants;\n261:   };\n262: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/modifiers/ModifierRecipeCategory.java",
+    "line": 268,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** TODO 1.21: rename to be more appropiate */",
+    "context": "265:     return LOOKUP_CACHE.computeIfAbsent(modifiable, LOOKUP_GETTER);\n266:   }\n267: \n268:   /** TODO 1.21: rename to be more appropiate */\n269:   @Internal\n270:   public static void clearSlimeskullCache() {\n271:     LOOKUP_CACHE.clear();\n272:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/partbuilder/PartBuilderCategory.java",
+    "line": 85,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: material ingredient input?",
+    "context": "82:     builder.addSlot(RecipeIngredientRole.INPUT,  4, 16).addItemStacks(recipe.getPatternItems());\n83:     // patterns\n84:     builder.addSlot(RecipeIngredientRole.INPUT, 46, 16).addIngredient(TConstructJEIConstants.PATTERN_TYPE, recipe.getPattern());\n85:     // TODO: material ingredient input?\n86: \n87:     // output\n88:     List<ItemStack> resultItems = recipe.getResultItems();\n89:     IRecipeSlotBuilder resultSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 15).addItemStacks(resultItems);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jei/util/PotionSubtypeInterpreter.java",
+    "line": 9,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Common subtype logic for potion item/fluid ingredients in Minecraft 26.1. */",
+    "context": "6: import net.minecraft.world.item.alchemy.PotionContents;\n7: import javax.annotation.Nullable;\n8: \n9: /** Common subtype logic for potion item/fluid ingredients in Minecraft 26.1. */\n10: public interface PotionSubtypeInterpreter<T> extends ISubtypeInterpreter<T> {\n11:   @Nullable\n12:   PotionContents getPotionContents(T ingredient);\n13: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/plugin/jsonthings/PluginClient.java",
+    "line": 12,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// No JsonThings-specific client registration is required on NeoForge 26.1.",
+    "context": "9:    * Tcon4 registers item model/tint behavior through its global NeoForge client events.\n10:    */\n11:   public static void init() {\n12:     // No JsonThings-specific client registration is required on NeoForge 26.1.\n13:   }\n14: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/AchievementEvents.java",
+    "line": 22,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: reevaluate",
+    "context": "19: //import slimeknights.tconstruct.tools.common.entity.EntityArrow;\n20: //import slimeknights.tconstruct.tools.tools.Pickaxe;\n21: \n22: // TODO: reevaluate\n23: public final class AchievementEvents {\n24: \n25:   private static final String ADVANCEMENT_STORY_ROOT = \"minecraft:story/root\";\n26:   private static final String ADVANCEMENT_STONE_PICK = \"minecraft:story/upgrade_tools\";",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/CommonsClientEvents.java",
+    "line": 42,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21.1: Fix FluidParticle inheritance (SingleQuadParticle -> getRenderType vs getLayer)",
+    "context": "39: \n40:   @SubscribeEvent\n41:   static void registerParticleFactories(RegisterParticleProvidersEvent event) {\n42:     // TODO 1.21.1: Fix FluidParticle inheritance (SingleQuadParticle -> getRenderType vs getLayer)\n43:     // event.registerSpecial((ParticleType<FluidParticleData>) TinkerCommons.fluidParticle.get(), new FluidParticle.Factory());\n44:   }\n45: \n46:   private static Font unicodeRenderer;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/TinkerClient.java",
+    "line": 212,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "209: \n210:       @Override\n211:       public boolean isVisibleInInventory(MobEffectInstance instance) {\n212:         return false;\n213:       }\n214: \n215:       @Override\n216:       public boolean renderGuiIcon(MobEffectInstance instance, net.minecraft.client.gui.Gui gui, net.minecraft.client.gui.GuiGraphicsExtractor graphics, int x, int y, float z, float alpha) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/client/FluidParticle.java",
+    "line": 15,
+    "signals": [
+      "port_or_disabled_marker",
+      "empty_or_constant_return"
+    ],
+    "text": "return null; // TODO 1.21.1: fix particle",
+    "context": "12:   public static class Factory implements ParticleProvider<FluidParticleData> {\n13:     @Override\n14:     public Particle createParticle(FluidParticleData data, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {\n15:       return null; // TODO 1.21.1: fix particle\n16:     }\n17:   }\n18: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/command/subcommand/GenerateMeltingRecipesCommand.java",
+    "line": 12,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Command to generate missing melting recipes. TODO: port recipe scanning to NeoForge 26 RecipeHolder/Fluid APIs. */",
+    "context": "9: import slimeknights.mantle.command.MantleCommand;\n10: import slimeknights.tconstruct.TConstruct;\n11: \n12: /** Command to generate missing melting recipes. TODO: port recipe scanning to NeoForge 26 RecipeHolder/Fluid APIs. */\n13: public class GenerateMeltingRecipesCommand {\n14:   public static final Identifier MELTING_CONFIGURATION = TConstruct.getResource(\"melting_recipe_generation\");\n15:   private static final Component DISABLED = TConstruct.makeTranslation(\"command\", \"generate_melting_recipes.disabled\");\n16: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/command/subcommand/GenerateMeltingRecipesCommand.java",
+    "line": 15,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "private static final Component DISABLED = TConstruct.makeTranslation(\"command\", \"generate_melting_recipes.disabled\");",
+    "context": "12: /** Command to generate missing melting recipes. TODO: port recipe scanning to NeoForge 26 RecipeHolder/Fluid APIs. */\n13: public class GenerateMeltingRecipesCommand {\n14:   public static final Identifier MELTING_CONFIGURATION = TConstruct.getResource(\"melting_recipe_generation\");\n15:   private static final Component DISABLED = TConstruct.makeTranslation(\"command\", \"generate_melting_recipes.disabled\");\n16: \n17:   public static void register(LiteralArgumentBuilder<CommandSourceStack> subCommand, CommandBuildContext context) {\n18:     register(subCommand);\n19:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/command/subcommand/GenerateMeltingRecipesCommand.java",
+    "line": 27,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "context.getSource().sendSuccess(() -> DISABLED, false);",
+    "context": "24:   }\n25: \n26:   private static int run(CommandContext<CommandSourceStack> context) {\n27:     context.getSource().sendSuccess(() -> DISABLED, false);\n28:     return 0;\n29:   }\n30: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/shared/command/subcommand/GenerateMeltingRecipesCommand.java",
+    "line": 28,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "25: \n26:   private static int run(CommandContext<CommandSourceStack> context) {\n27:     context.getSource().sendSuccess(() -> DISABLED, false);\n28:     return 0;\n29:   }\n30: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/TinkerSmeltery.java",
+    "line": 447,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** TODO NeoForge 26.1: bridge DeferredHolder recipe types for legacy datagen builders. */",
+    "context": "444:   // alloying\n445:   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AlloyRecipe>> alloyingSerializer = RECIPE_SERIALIZERS.register(\"alloy\", () -> LoadableRecipeSerializer.of(AlloyRecipe.LOADER));\n446: \n447:   /** TODO NeoForge 26.1: bridge DeferredHolder recipe types for legacy datagen builders. */\n448:   public static <T extends net.minecraft.world.item.crafting.Recipe<?>> slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer<T> typeAware(Object type, java.util.function.Supplier<? extends net.minecraft.world.item.crafting.RecipeSerializer<T>> serializer) {\n449:     net.minecraft.world.item.crafting.RecipeType<?> recipeType = type instanceof net.neoforged.neoforge.registries.DeferredHolder<?, ?> holder ? (net.minecraft.world.item.crafting.RecipeType<?>) holder.get() : (net.minecraft.world.item.crafting.RecipeType<?>) type;\n450:     return new slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer<>() {\n451:       @Override public net.minecraft.world.item.crafting.RecipeType<?> getType() { return recipeType; }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/KnightMetalFluidCannonBlock.java",
+    "line": 30,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "27: \n28:   @Nullable\n29:   public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {\n30:     return null;\n31:   }\n32: \n33:   public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {\n34:     entity.hurt(CombatHelper.damageSource(level, TinkerDamageTypes.KNIGHTMETAL), KnightMetalBlock.BLOCK_DAMAGE);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/controller/HeatingControllerBlock.java",
+    "line": 38,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "35:   protected boolean openGui(Player player, Level world, BlockPos pos) {\n36:     BlockState state = world.getBlockState(pos);\n37:     if (state.getBlock() != this) {\n38:       return false;\n39:     }\n40:     if (!canOpenGui(state)) {\n41:       return displayStatus(player, world, pos, state);\n42:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/CastingTankBlockEntity.java",
+    "line": 240,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed",
+    "context": "237:     return tank;\n238:   }\n239: \n240:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n241:   //@Nonnull\n242:   //@Override\n243:   //public ModelData getModelData() {\n244:   //  return ModelData.builder()",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/CastingTankBlockEntity.java",
+    "line": 244,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  return ModelData.builder()",
+    "context": "241:   //@Nonnull\n242:   //@Override\n243:   //public ModelData getModelData() {\n244:   //  return ModelData.builder()\n245:   //    .with(ModelProperties.FLUID_STACK, tank.getFluid())\n246:   //    .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();\n247:   //}\n248: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/ItemHandlerResourceHandler.java",
+    "line": 50,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "47:   @Override\n48:   public int insert(int index, ItemResource resource, int maxAmount, TransactionContext transaction) {\n49:     if (resource.isEmpty() || maxAmount <= 0) {\n50:       return 0;\n51:     }\n52:     journal.updateSnapshots(transaction);\n53:     ItemStack remaining = handler.insertItem(index, resource.toStack(maxAmount), false);\n54:     return maxAmount - remaining.getCount();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/ItemHandlerResourceHandler.java",
+    "line": 60,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "57:   @Override\n58:   public int extract(int index, ItemResource resource, int maxAmount, TransactionContext transaction) {\n59:     if (resource.isEmpty() || maxAmount <= 0 || !resource.matches(handler.getStackInSlot(index))) {\n60:       return 0;\n61:     }\n62:     journal.updateSnapshots(transaction);\n63:     return handler.extractItem(index, maxAmount, false).getCount();\n64:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/LanternBlockEntity.java",
+    "line": 20,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// matching seared tanks. Forcing the model path left placed lanterns empty in 26.1.",
+    "context": "17:   }\n18: \n19:   // fluid is drawn by the tank TESR unless the tank-fluid-model config is on,\n20:   // matching seared tanks. Forcing the model path left placed lanterns empty in 26.1.\n21: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/TankResourceHandler.java",
+    "line": 52,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "49:   @Override\n50:   public int insert(int index, FluidResource resource, int maxAmount, TransactionContext transaction) {\n51:     if (resource.isEmpty() || maxAmount <= 0) {\n52:       return 0;\n53:     }\n54:     journal.updateSnapshots(transaction);\n55:     return tank.fill(resource.toStack(maxAmount), EXECUTE);\n56:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/TankResourceHandler.java",
+    "line": 61,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "58:   @Override\n59:   public int extract(int index, FluidResource resource, int maxAmount, TransactionContext transaction) {\n60:     if (resource.isEmpty() || maxAmount <= 0) {\n61:       return 0;\n62:     }\n63:     journal.updateSnapshots(transaction);\n64:     return tank.drain(resource.toStack(maxAmount), EXECUTE).getAmount();\n65:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/component/DrainBlockEntity.java",
+    "line": 32,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed",
+    "context": "29:     super(type, pos, state);\n30:   }\n31: \n32:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n33:   //@Nonnull\n34:   //@Override\n35:   //public ModelData getModelData() {\n36:   //  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, displayFluid).build();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/component/DrainBlockEntity.java",
+    "line": 36,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, displayFluid).build();",
+    "context": "33:   //@Nonnull\n34:   //@Override\n35:   //public ModelData getModelData() {\n36:   //  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, displayFluid).build();\n37:   //}\n38: \n39:   @Override\n40:   public void notifyDisplayFluidUpdated(FluidStack fluid) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/component/DuctBlockEntity.java",
+    "line": 77,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed",
+    "context": "74:     }\n75:   }\n76: \n77:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n78:   //@Nonnull\n79:   //@Override\n80:   //public ModelData getModelData() {\n81:   //  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, itemHandler.getFluid().copy()).build();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/component/DuctBlockEntity.java",
+    "line": 81,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, itemHandler.getFluid().copy()).build();",
+    "context": "78:   //@Nonnull\n79:   //@Override\n80:   //public ModelData getModelData() {\n81:   //  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, itemHandler.getFluid().copy()).build();\n82:   //}\n83: \n84:   /** Updates the fluid in model data */\n85:   public void updateFluid() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/component/TankBlockEntity.java",
+    "line": 177,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "174:   @Nullable\n175:   public static CustomData writeTankData(FluidStack fluid) {\n176:     if (fluid.isEmpty()) {\n177:       return null;\n178:     }\n179:     CompoundTag tag = new CompoundTag();\n180:     tag.put(NBTTags.TANK, FluidStackNbt.write(fluid));\n181:     return CustomData.of(tag);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/controller/HeatingStructureBlockEntity.java",
+    "line": 372,
+    "signals": [
+      "unconditional_disabled_branch"
+    ],
+    "text": "if (true) {",
+    "context": "369:    */\n370:   public void updateStructure() {\n371:     structureUpdateQueued = true;\n372:     if (true) {\n373:     }\n374:   }\n375: \n376:   /** Refreshes the multiblock immediately before opening the menu. */",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/controller/HeatingStructureBlockEntity.java",
+    "line": 405,
+    "signals": [
+      "unconditional_disabled_branch"
+    ],
+    "text": "if (true) {",
+    "context": "402: \n403:     // update block state\n404:     boolean formed = newStructure != null;\n405:     if (true) {\n406:     }\n407:     if (formed != wasFormed) {\n408:       BlockState newState = getBlockState().setValue(ControllerBlock.IN_STRUCTURE, formed);\n409:       // ensure unformed smelteries are marked as inactive",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/controller/MelterBlockEntity.java",
+    "line": 97,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed",
+    "context": "94:    * Tank methods\n95:    */\n96: \n97:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n98:   //@Override\n99:   //public @NotNull ModelData getModelData() {\n100:   //  return ModelData.builder()\n101:   //                  .with(ModelProperties.FLUID_STACK, tank.getFluid())",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/controller/MelterBlockEntity.java",
+    "line": 100,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//  return ModelData.builder()",
+    "context": "97:   // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed\n98:   //@Override\n99:   //public @NotNull ModelData getModelData() {\n100:   //  return ModelData.builder()\n101:   //                  .with(ModelProperties.FLUID_STACK, tank.getFluid())\n102:   //                  .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();\n103:   //}\n104: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/inventory/HeaterItemHandler.java",
+    "line": 21,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "18:   protected boolean isItemValid(ItemStack stack) {\n19:     // fuel module divides by 4, so anything 3 or less is treated as 0\n20:     if (parent.getLevel() == null) {\n21:       return false;\n22:     }\n23:     int burnTime = parent.getLevel().fuelValues().burnDuration(stack);\n24:     int hookTime = EventHooks.getItemBurnTime(stack, burnTime, TinkerRecipeTypes.FUEL.get(), parent.getLevel().fuelValues());\n25:     return Math.max(hookTime, burnTime) > 3;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/module/EntityMeltingModule.java",
+    "line": 94,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "91:     // find a new recipe if the last recipe does not match\n92:     Level level = getLevel();\n93:     if (level.getServer() == null) {\n94:       return null;\n95:     }\n96:     EntityMeltingRecipe recipe = EntityMeltingRecipeCache.findRecipe(level.getServer().getRecipeManager(), type);\n97:     if (recipe != null) {\n98:       lastRecipe = recipe;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/module/MultitankFuelModule.java",
+    "line": 229,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Rebuild the cached tank handlers if the selected handler temporarily",
+    "context": "226:     FuelInfo info = super.getFuelInfo();\n227:     if (info.isEmpty()) {\n228:       // NeoForge capabilities are direct handlers, unlike Forge LazyOptional.\n229:       // Rebuild the cached tank handlers if the selected handler temporarily\n230:       // reports empty; otherwise the client fuel column can remain hidden until\n231:       // the screen is reopened even though the tank still contains fuel.\n232:       tankHandlers = null;\n233:       clearLastListener();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/block/entity/tank/ProxyItemTank.java",
+    "line": 79,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "76:   /** Checks if this stack exposes NeoForge's item fluid transfer capability. */\n77:   private static boolean hasFluidHandler(ItemStack stack) {\n78:     if (stack.isEmpty()) {\n79:       return false;\n80:     }\n81:     return ItemAccess.forStack(stack).oneByOne().getCapability(Capabilities.Fluid.ITEM) != null;\n82:   }\n83: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/client/render/TankItemFluidSpecialRenderer.java",
+    "line": 48,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "45:   @Override\n46:   public @Nullable TankContents extractArgument(ItemStack stack) {\n47:     if (stack.isEmpty() || !(stack.getItem() instanceof TankItem)) {\n48:       return null;\n49:     }\n50:     FluidTank tank = TankItem.getTank(stack, 1);\n51:     FluidStack fluid = tank.getFluid();\n52:     if (fluid.isEmpty()) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/client/render/TankItemFluidSpecialRenderer.java",
+    "line": 53,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "50:     FluidTank tank = TankItem.getTank(stack, 1);\n51:     FluidStack fluid = tank.getFluid();\n52:     if (fluid.isEmpty()) {\n53:       return null;\n54:     }\n55:     Identifier itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());\n56:     String path = itemId.getPath();\n57:     FluidCuboid cuboid;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/smeltery/item/TankItem.java",
+    "line": 146,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (tank.isEmpty() && ItemStack.isSameItemSameComponents(stack, held)) return false;",
+    "context": "143:     if (action == ClickAction.SECONDARY && slot.allowModification(player) && !held.isEmpty() && mayHaveFluid(held)) {\n144:       if (stack.getCount() == 1 || held.getItem() instanceof TankItem) {\n145:         FluidTank tank = getTank(stack);\n146:         if (tank.isEmpty() && ItemStack.isSameItemSameComponents(stack, held)) return false;\n147:         TransferResult result = FluidTransferHelper.interactWithStack(tank, held, TransferDirection.AUTO);\n148:         if (result != null) {\n149:           if (player.level().isClientSide()) player.playSound(result.getSound());\n150:           setTank(stack, tank);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/TableClientEvents.java",
+    "line": 70,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* Item tinting is data-driven in NeoForge 26.1. The Tinker Chest client item",
+    "context": "67:   }\n68: \n69:   /*\n70:    * Item tinting is data-driven in NeoForge 26.1. The Tinker Chest client item\n71:    * definition uses vanilla minecraft:dye, which reads DataComponents.DYED_COLOR.\n72:    */\n73: \n74: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/block/entity/inventory/LazyResultContainer.java",
+    "line": 115,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* Used by client screens for custom recipes that are not available through the client recipe access in MC 26.1.",
+    "context": "112:   }\n113:   /**\n114:    * Sets the cached result from a server sync packet.\n115:    * Used by client screens for custom recipes that are not available through the client recipe access in MC 26.1.\n116:    * @param result  Synced result stack\n117:    */\n118:   public void setSyncedResult(ItemStack result) {\n119:     this.result = result.copy();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/block/entity/table/ModifierWorktableBlockEntity.java",
+    "line": 181,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Gets a full recipe manager when available; client recipe access only exposes recipe display data in MC 26.1. */",
+    "context": "178:     this.craftingResult.setSyncedResult(resultStack);\n179:   }\n180: \n181:   /** Gets a full recipe manager when available; client recipe access only exposes recipe display data in MC 26.1. */\n182:   @Nullable\n183:   private RecipeManager getRecipeManager() {\n184:     if (level == null || level.isClientSide()) {\n185:       return null;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/block/entity/table/PartBuilderBlockEntity.java",
+    "line": 60,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Client-side lightweight recipe data synced from the server, as MC 26.1 clients do not receive full custom recipes. */",
+    "context": "57:   private Map<Pattern,IPartBuilderRecipe> recipes = null;\n58:   @Nullable\n59:   private List<Pattern> sortedButtons = null;\n60:   /** Client-side lightweight recipe data synced from the server, as MC 26.1 clients do not receive full custom recipes. */\n61:   private Map<Pattern,IPartBuilderRecipe> clientRecipes = Collections.emptyMap();\n62:   private List<Pattern> clientSortedButtons = Collections.emptyList();\n63:   /** Currently selected recipe index */\n64:   private Pattern selectedPattern = null;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/block/entity/table/TinkerStationBlockEntity.java",
+    "line": 193,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// MC 26.1 no longer exposes the full custom recipe manager on the client, so sync the result stack too.",
+    "context": "190:         this.lastRecipeId = null;\n191:       }\n192: \n193:       // MC 26.1 no longer exposes the full custom recipe manager on the client, so sync the result stack too.\n194:       syncToRelevantPlayers(this::syncRecipe);\n195:       syncScreenToRelevantPlayers();\n196:     }\n197:     // client side only needs to update result, server syncs message elsewhere",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/client/inventory/TinkerStationScreen.java",
+    "line": 485,
+    "signals": [
+      "port_or_disabled_marker",
+      "unconditional_disabled_branch"
+    ],
+    "text": "if (false) { // TODO: Minecraft.ON_OSX removed, replace with platform check",
+    "context": "482:     if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {\n483:       return true;\n484:     }\n485:     if (false) { // TODO: Minecraft.ON_OSX removed, replace with platform check\n486:       return keyCode == GLFW.GLFW_KEY_LEFT_SUPER || keyCode == GLFW.GLFW_KEY_RIGHT_SUPER;\n487:     }\n488:     return keyCode == GLFW.GLFW_KEY_LEFT_CONTROL || keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL;\n489:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/menu/TabbedContainerMenu.java",
+    "line": 176,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "if (world == null) return false;",
+    "context": "173:    */\n174:   private static boolean hasItemHandler(BlockEntity tileEntity, @Nullable Direction direction) {\n175:     Level world = tileEntity.getLevel();\n176:     if (world == null) return false;\n177:     ResourceHandler<ItemResource> handler = world.getCapability(Capabilities.Item.BLOCK, tileEntity.getBlockPos(), direction);\n178:     return handler != null && handler.size() > 0;\n179:   }\n180: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/network/UpdateModifierWorktableButtonsPacket.java",
+    "line": 23,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Syncs Modifier Worktable button data from the server, as MC 26.1 clients no longer receive full custom recipes. */",
+    "context": "20: import java.util.ArrayList;\n21: import java.util.List;\n22: \n23: /** Syncs Modifier Worktable button data from the server, as MC 26.1 clients no longer receive full custom recipes. */\n24: public class UpdateModifierWorktableButtonsPacket implements IThreadsafePacket, CustomPacketPayload {\n25:   public static final Type<UpdateModifierWorktableButtonsPacket> TYPE = new Type<>(TConstruct.getResource(\"update_modifier_worktable_buttons\"));\n26:   public static final StreamCodec<RegistryFriendlyByteBuf, UpdateModifierWorktableButtonsPacket> STREAM_CODEC = StreamCodec.of(\n27:     (buffer, packet) -> packet.encode(buffer),",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tables/network/UpdatePartBuilderButtonsPacket.java",
+    "line": 22,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Syncs Part Builder button data from the server, as MC 26.1 clients no longer receive full custom recipes. */",
+    "context": "19: import java.util.ArrayList;\n20: import java.util.List;\n21: \n22: /** Syncs Part Builder button data from the server, as MC 26.1 clients no longer receive full custom recipes. */\n23: public class UpdatePartBuilderButtonsPacket implements IThreadsafePacket, CustomPacketPayload {\n24:   public static final Type<UpdatePartBuilderButtonsPacket> TYPE = new Type<>(TConstruct.getResource(\"update_part_builder_buttons\"));\n25:   public static final StreamCodec<RegistryFriendlyByteBuf, UpdatePartBuilderButtonsPacket> STREAM_CODEC = StreamCodec.of(\n26:     (buffer, packet) -> packet.encode(buffer),",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/TinkerTools.java",
+    "line": 238,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: restore Twilight Forest-only registration bridge later.",
+    "context": "235:   public static final ItemObject<ModifiableCrossbowItem> warPick = ITEMS.register(\"war_pick\", () -> new ModifiableCrossbowItem(UNSTACKABLE_PROPS, ToolDefinitions.WAR_PICK));\n236:   public static final ItemObject<ModifiableItem> battlesign = ITEMS.register(\"battlesign\", () -> new ModifiableItem(UNSTACKABLE_PROPS, ToolDefinitions.BATTLESIGN));\n237:   public static final ItemObject<ModifiableItem> swasher = ITEMS.register(\"swasher\", () -> new ModifiableItem(UNSTACKABLE_PROPS, ToolDefinitions.SWASHER));\n238:   // TODO NeoForge 26.1: restore Twilight Forest-only registration bridge later.\n239:   public static final ItemObject<ModifiableItem> minotaurAxe = ITEMS.register(\"minotaur_axe\", () -> new ModifiableItem(UNSTACKABLE_PROPS, ToolDefinitions.MINOTAUR_AXE));\n240: \n241:   // armor\n242:   public static final EnumObject<ArmorType,ModifiableArmorItem> travelersGear = ITEMS.registerEnum(\"travelers\", ModifiableArmorMaterial.ARMOR_TYPES, type -> new MultilayerArmorItem(ArmorDefinitions.TRAVELERS, type, UNSTACKABLE_PROPS));",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/TinkerTools.java",
+    "line": 327,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "blocksAttacks.disable(serverLevel, player, 5.0f, blockingWith);",
+    "context": "324:           ItemStack blockingWith = player.getUseItem();\n325:           BlocksAttacks blocksAttacks = blockingWith.get(DataComponents.BLOCKS_ATTACKS);\n326:           if (blocksAttacks != null && player.level() instanceof ServerLevel serverLevel) {\n327:             blocksAttacks.disable(serverLevel, player, 5.0f, blockingWith);\n328:           } else {\n329:             player.stopUsingItem();\n330:           }\n331:         }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/ToolClientEvents.java",
+    "line": 200,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO: Rewrite for NeoForge 1.21.4 - TinkerItemProperties is commented out",
+    "context": "197:       AbstractMaterialContent.registerFallbackPart(TinkerToolParts.fakeIngot);\n198:       AbstractMaterialContent.registerFallbackPart(TinkerToolParts.fakeStorageBlockItem);\n199: \n200:       // TODO: Rewrite for NeoForge 1.21.4 - TinkerItemProperties is commented out\n201:       //// properties\n202:       //// stone\n203:       //TinkerItemProperties.registerToolProperties(TinkerTools.pickaxe);\n204:       //TinkerItemProperties.registerToolProperties(TinkerTools.sledgeHammer);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/ToolClientEvents.java",
+    "line": 263,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: restore tool and armor item tints using ItemTintSource MapCodec.",
+    "context": "260:     event.registerSpriteSet(TinkerTools.bonkAttackParticle.get(), factory);\n261:   }\n262: \n263:   // TODO NeoForge 26.1: restore tool and armor item tints using ItemTintSource MapCodec.\n264: \n265:   // values to check if a key was being pressed last tick, safe as a static value as we only care about a single player client side\n266:   /** If true, we were jumping last tick */\n267:   private static boolean wasJumping = false;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/ToolClientEvents.java",
+    "line": 345,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: ClientInput now stores movement in a protected Vec2; restore scaling via the supported input API.",
+    "context": "342:       }\n343:       // next, add in deprecated key bonus\n344:       speed = Mth.clamp(speed + ArmorStatModule.getStat(player, TinkerDataKeys.USE_ITEM_SPEED), 0, 1);\n345:       // TODO NeoForge 26.1: ClientInput now stores movement in a protected Vec2; restore scaling via the supported input API.\n346:     }\n347:   }\n348: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ModifierClientEvents.java",
+    "line": 34,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Client modifier render hooks that still depend on removed 26.1 rendering internals are documented below.",
+    "context": "31: import java.util.List;\n32: \n33: /** Modifier event hooks that run client side */\n34: // Client modifier render hooks that still depend on removed 26.1 rendering internals are documented below.\n35: \n36: @SuppressWarnings(\"all\")\n37: public class ModifierClientEvents {\n38:   @SubscribeEvent",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ModifierClientEvents.java",
+    "line": 53,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: the forced-arm branch still needs a real renderer port.",
+    "context": "50:   }\n51: \n52:   /** Determines whether to render the given hand based on modifiers */\n53:     // TODO NeoForge 26.1: the forced-arm branch still needs a real renderer port.\n54:   // RenderHandEvent now exposes SubmitNodeCollector, but ItemInHandRenderer.renderPlayerArm is private;\n55:   // RenderArmEvent only runs when vanilla already schedules an arm render and cannot force this branch.\n56: \n57:   /*",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ModifierClientEvents.java",
+    "line": 226,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: the hotbar/map renderer still needs a real GUI-extractor port.",
+    "context": "223:   }\n224: \n225:   /** Render the item in the first shield slot */\n226:     // TODO NeoForge 26.1: the hotbar/map renderer still needs a real GUI-extractor port.\n227:   // RenderGuiLayerEvent now supplies GuiGraphicsExtractor; the old Gui/vertex/map-background pipeline is gone.\n228: \n229:   /*\n230:   @SubscribeEvent",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/RayTracer.java",
+    "line": 96,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// In 26.1, block reach is exposed through BLOCK_INTERACTION_RANGE.",
+    "context": "93:      * @return the block reach distance from the client\n94:      */\n95:     private static double getBlockReachDistanceClient() {\n96:             // In 26.1, block reach is exposed through BLOCK_INTERACTION_RANGE.\n97: \n98:       Player player = Minecraft.getInstance().player;\n99:       if (player != null) {\n100:         return player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/SlimeskullArmorModel.java",
+    "line": 40,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Renders the skull under a slimeskull helmet on the 26.1 equipment pipeline. */",
+    "context": "37: import java.util.Map.Entry;\n38: import java.util.function.Function;\n39: \n40: /** Renders the skull under a slimeskull helmet on the 26.1 equipment pipeline. */\n41: public final class SlimeskullArmorModel {\n42:   public static final SlimeskullArmorModel INSTANCE = new SlimeskullArmorModel();\n43:   static final SimpleCache<MaterialVariantId,Integer> MATERIAL_COLOR_CACHE = new SimpleCache<>(mat ->\n44:     MaterialRenderInfoLoader.INSTANCE.getRenderInfo(mat)",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ToolRenderEvents.java",
+    "line": 103,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "100:     @Override\n101:     public boolean render(BlockOutlineRenderState renderState, MultiBufferSource.BufferSource buffer, PoseStack poseStack, boolean translucentPass, LevelRenderState levelRenderState) {\n102:       if (translucentPass != renderState.isTranslucent()) {\n103:         return false;\n104:       }\n105: \n106:       VertexConsumer vertexBuilder = buffer.getBuffer(RenderTypes.lines());\n107:       int color = renderState.highContrast() ? 0xFFFFFFFF : 0xFF000000;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ToolRenderEvents.java",
+    "line": 113,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "110:         BlockPos pos = outline.pos();\n111:         ShapeRenderer.renderShape(poseStack, vertexBuilder, outline.shape(), pos.getX() - camera.x(), pos.getY() - camera.y(), pos.getZ() - camera.z(), color, alpha);\n112:       }\n113:       return false;\n114:     }\n115:   }\n116:   /** Renders the block damage process on the extra blocks */\n117:     // TODO NeoForge 26.1: no equivalent public block-damage overlay pipeline is available.",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ToolRenderEvents.java",
+    "line": 117,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO NeoForge 26.1: no equivalent public block-damage overlay pipeline is available.",
+    "context": "114:     }\n115:   }\n116:   /** Renders the block damage process on the extra blocks */\n117:     // TODO NeoForge 26.1: no equivalent public block-damage overlay pipeline is available.\n118:   // The old destroyingBlocks state, destroy texture render types, decal generator, and\n119:   // ModelBlockRenderer.renderBreakingTexture were removed; do not replace this with a no-op renderer.\n120: \n121:   /*",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/client/ToolRenderEvents.java",
+    "line": 124,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Historical stage; retained only inside the disabled reference implementation.",
+    "context": "121:   /*\n122:   @SubscribeEvent\n123:   static void renderBlockDamageProgress(RenderLevelStageEvent event) {\n124:         // Historical stage; retained only inside the disabled reference implementation.\n125: \n126:     if (event.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) {\n127:       return;\n128:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/data/ModifierProvider.java",
+    "line": 1834,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.26: Enchantment registry not available during datagen in MC 26.1. See enchantment() method.",
+    "context": "1831:     return slimeknights.tconstruct.library.recipe.ingredient.LegacyIngredientType.ofTag(tag);\n1832:   }\n1833: \n1834:   // TODO 1.26: Enchantment registry not available during datagen in MC 26.1. See enchantment() method.\n1835:   // When RegistryAccess is available, uncomment the following lines.\n1836:   private Enchantment enchantment(ResourceKey<Enchantment> key) {\n1837:     var reg = lookupProvider.join().lookupOrThrow(Registries.ENCHANTMENT);\n1838:     Enchantment ench = reg.getOrThrow(key).value();",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/data/material/MaterialDataProvider.java",
+    "line": 149,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: consider making this an and condition, so we only get pewter if pewter is present or we have both",
+    "context": "146:     addCompatAlloy(MaterialIds.bronze,          3, ORDER_COMPAT + ORDER_HARVEST, \"tin\");\n147:     addCompatAlloy(MaterialIds.constantan,      3, ORDER_COMPAT + ORDER_HARVEST, \"nickel\");\n148:     addCompatAlloy(MaterialIds.invar,           3, ORDER_COMPAT + ORDER_WEAPON,  \"nickel\");\n149:     // TODO 1.21: consider making this an and condition, so we only get pewter if pewter is present or we have both\n150:     addCompatAlloy(MaterialIds.pewter,          3, ORDER_COMPAT + ORDER_WEAPON,  or(tagExistsCondition(\"ingots/tin\"), tagExistsCondition(\"ingots/lead\")));\n151:     addCompatAlloy(MaterialIds.platedSlimewood, 3, ORDER_COMPAT + ORDER_SPECIAL, \"zinc\");\n152:     addCompatMaterial(MaterialIds.necronium,       3, ORDER_COMPAT + ORDER_WEAPON, true, \"ingots/uranium\");\n153:     addCompatMetalMaterial(MaterialIds.steeleaf, 3, ORDER_COMPAT + ORDER_SPECIAL);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/data/material/MaterialStatsDataProvider.java",
+    "line": 791,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// embellishments - TODO migrate to slimesuit slime materials",
+    "context": "788:     // slimelytra - repair\n789:     addMaterialStats(MaterialIds.phantom, StatlessMaterialStats.REPAIR_KIT);\n790: \n791:     // embellishments - TODO migrate to slimesuit slime materials\n792:     addMaterialStats(MaterialIds.clay);\n793:     addMaterialStats(MaterialIds.honey);\n794:   }\n795: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/entity/CustomFireball.java",
+    "line": 87,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "84: \n85:   @Override\n86:   protected @Nullable ParticleOptions getTrailParticle() {\n87:     return null;\n88:   }\n89: \n90:   @Override\n91:   public boolean isPickable() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/entity/CustomFireball.java",
+    "line": 146,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* 26.1's constructor seeds motion at 0.1, which made the slimeball almost twice as fast on the first ticks.",
+    "context": "143: \n144:   /**\n145:    * Matches 3.12 launch: xPower = normalize(look) * 0.1 * velocity, initial motion stays 0.\n146:    * 26.1's constructor seeds motion at 0.1, which made the slimeball almost twice as fast on the first ticks.\n147:    */\n148:   public void initOriginalFlight(float velocity) {\n149:     Vec3 direction = getDeltaMovement();\n150:     if (direction.lengthSqr() < 1.0E-8) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/entity/ModifiableArrow.java",
+    "line": 321,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "318: \n319:   @Override\n320:   protected ItemStack getDefaultPickupItem() {\n321:     return ItemStack.EMPTY;\n322:   }\n323: \n324:   @Override\n325:   public ItemStack getDisplayTool() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/item/CreativeSlotItem.java",
+    "line": 155,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// 26.1 CustomData is a copy; write the mutated NBT back onto the live stack",
+    "context": "152:             // neither add or removing modifier, just build it\n153:             tool.rebuildStats();\n154:           }\n155:           // 26.1 CustomData is a copy; write the mutated NBT back onto the live stack\n156:           tool.updateStack(toolItem);\n157:           if (amount > 0) {\n158:             FluidTransferHelper.playUISound(player, SoundEvents.ENCHANTMENT_TABLE_USE);\n159:           } else {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/item/CrystalshotItem.java",
+    "line": 63,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** @deprecated kept for old addon callers; Minecraft 26.1 calls the weapon-aware overload above. */",
+    "context": "60:     return arrow;\n61:   }\n62: \n63:   /** @deprecated kept for old addon callers; Minecraft 26.1 calls the weapon-aware overload above. */\n64:   @Deprecated(forRemoval = true)\n65:   public AbstractArrow createArrow(Level pLevel, ItemStack pStack, LivingEntity pShooter) {\n66:     return createArrow(pLevel, pStack, pShooter, null);\n67:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/logic/ModifierEvents.java",
+    "line": 564,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "* 26.1 dropped {@code IItemExtension#elytraFlightTick}, so gliding itself comes from the glider component",
+    "context": "561: \n562:   /**\n563:    * Runs the elytra flight modifier hooks for a Tinkers chestplate.\n564:    * 26.1 dropped {@code IItemExtension#elytraFlightTick}, so gliding itself comes from the glider component\n565:    * and this only exists to keep the modifier hooks running.\n566:    */\n567:   private static void elytraFlightTick(LivingEntity entity) {\n568:     if (!entity.isFallFlying()) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modifiers/ability/interaction/ShearsAbilityModifier.java",
+    "line": 63,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: restore sweep animation hook if NeoForge exposes one.",
+    "context": "60:   @Deprecated(forRemoval = true)\n61:   protected void swingTool(Player player, InteractionHand hand) {\n62:     player.swing(hand);\n63:     // TODO 1.21: restore sweep animation hook if NeoForge exposes one.\n64:   }\n65: \n66:   @Override\n67:   public boolean canPerformAction(IToolStackView tool, ModifierEntry modifier, ItemAbility itemAbility) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modifiers/loot/BonusFormula.java",
+    "line": 15,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Stub replacing removed ApplyBonusCount formula classes */",
+    "context": "12: \n13: import java.util.Map;\n14: \n15: /** Stub replacing removed ApplyBonusCount formula classes */\n16: public interface BonusFormula {\n17:     int calculateNewCount(RandomSource random, int base, int level);\n18:     Identifier getType();\n19:     void serializeParams(JsonObject json, JsonSerializationContext context);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modifiers/traits/skull/ChrysophiliteModifier.java",
+    "line": 99,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return 0;",
+    "context": "96:       TotalGold gold = data == null ? null : data.get(ChrysophiliteModifier.TOTAL_GOLD);\n97:       return gold == null ? 0 : gold.getTotalGold();\n98:     }\n99:     return 0;\n100:   }\n101: \n102:   /** Checks if the given stack has the vanishing curse. */\n103:   private static boolean hasVanishingCurse(LivingEntity target, ItemStack stack) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modifiers/traits/skull/ChrysophiliteModifier.java",
+    "line": 165,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "162:           return true;\n163:         }\n164:       }\n165:       return false;\n166:     }\n167: \n168:     /** Initializes the gold data */\n169:     public void initialize(EquipmentChangeContext context) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/ApothicEnchantmentCapModule.java",
+    "line": 70,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "67:         return Component.translatable(TRANSLATION_KEY, cap);\n68:       }\n69:     }\n70:     return null;\n71:   }\n72: \n73:   @Nullable\n74:   @Override",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/ApothicEnchantmentCapModule.java",
+    "line": 87,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "84: \n85:   @Override\n86:   public List<ModifierEntry> displayModifiers(ModifierEntry entry) {\n87:     return List.of();\n88:   }\n89: \n90:   @Override\n91:   public RecordLoadable<ApothicEnchantmentCapModule> getLoader() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/LuckApothicEnchantmentCapModule.java",
+    "line": 60,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "57:     if (tool.hasTag(TinkerTags.Items.HARVEST)) {\n58:       return fortune;\n59:     }\n60:     return null;\n61:   }\n62: \n63:   /** Gets the configured cap, falling back to the existing fixed cap if Apothic Enchanting is not present. */\n64:   private int getCap(Enchantment enchantment) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/LuckApothicEnchantmentCapModule.java",
+    "line": 89,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "86:         }\n87:       }\n88:     }\n89:     return null;\n90:   }\n91: \n92:   @Nullable\n93:   @Override",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/LuckApothicEnchantmentCapModule.java",
+    "line": 101,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "98:   @Nullable\n99:   @Override\n100:   public Component requirementsError(ModifierEntry entry) {\n101:     return null;\n102:   }\n103: \n104:   @Override\n105:   public List<ModifierEntry> displayModifiers(ModifierEntry entry) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/LuckApothicEnchantmentCapModule.java",
+    "line": 106,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return List.of();",
+    "context": "103: \n104:   @Override\n105:   public List<ModifierEntry> displayModifiers(ModifierEntry entry) {\n106:     return List.of();\n107:   }\n108: \n109:   @Override\n110:   public RecordLoadable<LuckApothicEnchantmentCapModule> getLoader() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/armor/MinimapModule.java",
+    "line": 128,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "serverPlayer.sendSystemMessage(DISABLED, true);",
+    "context": "125:   @Override\n126:   public void onDisableSelection(IToolStackView tool, ModifierEntry modifier, Player player) {\n127:     if (player instanceof ServerPlayer serverPlayer) {\n128:       serverPlayer.sendSystemMessage(DISABLED, true);\n129:     } else {\n130:       player.sendSystemMessage(DISABLED);\n131:     }\n132:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/armor/MinimapModule.java",
+    "line": 130,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "player.sendSystemMessage(DISABLED);",
+    "context": "127:     if (player instanceof ServerPlayer serverPlayer) {\n128:       serverPlayer.sendSystemMessage(DISABLED, true);\n129:     } else {\n130:       player.sendSystemMessage(DISABLED);\n131:     }\n132:   }\n133: \n134:   @Override",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/armor/SleevesModule.java",
+    "line": 65,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "serverPlayer.sendSystemMessage(DISABLED, true);",
+    "context": "62:   @Override\n63:   public void onDisableSelection(IToolStackView tool, ModifierEntry modifier, Player player) {\n64:     if (player instanceof ServerPlayer serverPlayer) {\n65:       serverPlayer.sendSystemMessage(DISABLED, true);\n66:     } else {\n67:       player.sendSystemMessage(DISABLED);\n68:     }\n69:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/armor/SleevesModule.java",
+    "line": 67,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "player.sendSystemMessage(DISABLED);",
+    "context": "64:     if (player instanceof ServerPlayer serverPlayer) {\n65:       serverPlayer.sendSystemMessage(DISABLED, true);\n66:     } else {\n67:       player.sendSystemMessage(DISABLED);\n68:     }\n69:   }\n70: \n71:   @Override",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/durability/FullAllthemodiumSetModule.java",
+    "line": 56,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "53: \n54:   private static boolean isFullAllthemodiumSet(IToolStackView tool) {\n55:     if (tool.getMaterials().isEmpty()) {\n56:       return false;\n57:     }\n58:     for (MaterialVariant material : tool.getMaterials()) {\n59:       if (!MATERIALS.contains(material.getVariant().getMaterialId())) {\n60:         return false;",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/durability/FullAllthemodiumSetModule.java",
+    "line": 60,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return false;",
+    "context": "57:     }\n58:     for (MaterialVariant material : tool.getMaterials()) {\n59:       if (!MATERIALS.contains(material.getVariant().getMaterialId())) {\n60:         return false;\n61:       }\n62:     }\n63:     return true;\n64:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/interaction/FireballModule.java",
+    "line": 151,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "/** Matches a fireball option by item identity first; 26.1 tag ingredients often have empty holders. */",
+    "context": "148:     return FireballType.EMPTY;\n149:   }\n150: \n151:   /** Matches a fireball option by item identity first; 26.1 tag ingredients often have empty holders. */\n152:   private static boolean matchesOption(Ingredient match, Item item, ItemStack stack) {\n153:     if (match.test(stack) || match.test(new ItemStack(item))) {\n154:       return true;\n155:     }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/interaction/FireballModule.java",
+    "line": 179,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return null;",
+    "context": "176:         return slimeType;\n177:       }\n178:     }\n179:     return null;\n180:   }\n181: \n182:   private static String serializeIngredient(Ingredient match) {\n183:     try {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/interaction/HarvestModule.java",
+    "line": 262,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: restore sweep animation hook if NeoForge exposes one.",
+    "context": "259:         // animations\n260:         if (player != null) {\n261:           if (didHarvest) {\n262:             // TODO 1.21: restore sweep animation hook if NeoForge exposes one.\n263:           }\n264:           if (broken) {\n265:             player.onEquippedItemBroken(stack.getItem(), context.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND : net.minecraft.world.entity.EquipmentSlot.OFFHAND);\n266:           }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/interaction/ShearsModule.java",
+    "line": 123,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// TODO 1.21: restore sweep animation hook if NeoForge exposes one.",
+    "context": "120:     if (shearEntity(stack, tool, world, player, target, looting)) {\n121:       boolean broken = ToolDamageUtil.damageAnimated(tool, 1, player, slotType, modifier.getId());\n122:       player.swing(hand);\n123:       // TODO 1.21: restore sweep animation hook if NeoForge exposes one.\n124:       runShearHook(tool, player, target, true);\n125: \n126:       // AOE shearing\n127:       if (!broken) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/ranged/TrickQuiverModule.java",
+    "line": 66,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "63:     int selected = tool.getPersistentData().getInt(SELECTED_SLOT);\n64:     // cycling past the last slot disables the quiver so player inventory ammo can be used\n65:     if (selected >= slots) {\n66:       return ItemStack.EMPTY;\n67:     }\n68:     ItemStack selectedStack = inventory.getStack(tool, modifier, selected);\n69:     if (!selectedStack.isEmpty() && ammoPredicate.test(selectedStack)) {\n70:       tool.getPersistentData().putInt(LAST_SLOT, selected);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/ranged/TrickQuiverModule.java",
+    "line": 79,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return ItemStack.EMPTY;",
+    "context": "76:       tool.getPersistentData().putInt(LAST_SLOT, match.slot());\n77:       return match.stack();\n78:     }\n79:     return ItemStack.EMPTY;\n80:   }\n81: \n82:   @Override\n83:   public void shrinkAmmo(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, ItemStack ammo, int needed) {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/modules/ranged/TrickQuiverModule.java",
+    "line": 91,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "Component message = Component.translatable(DISABLED, modifier.getModifier().getDisplayName());",
+    "context": "88: \n89:   @Override\n90:   public void onDisableSelection(IToolStackView tool, ModifierEntry modifier, Player player) {\n91:     Component message = Component.translatable(DISABLED, modifier.getModifier().getDisplayName());\n92:     if (player instanceof ServerPlayer serverPlayer) {\n93:       serverPlayer.sendSystemMessage(message, true);\n94:     } else {\n95:       player.sendSystemMessage(message);",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/recipe/ArmorDyeingRecipe.java",
+    "line": 208,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "205:       if (slot == 0) {\n206:         return dyes;\n207:       }\n208:       return Collections.emptyList();\n209:     }\n210: \n211:     @Override\n212:     public IntRange getLevel() {",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/recipe/ModifierRemovalRecipe.java",
+    "line": 194,
+    "signals": [
+      "empty_or_constant_return"
+    ],
+    "text": "return Collections.emptyList();",
+    "context": "191:       } catch (UnsupportedOperationException exception) {\n192:         // JEI may construct layouts before tag holders are resolved. Do not cache a partial list;\n193:         // the normal lookup will run again once tags are available.\n194:         return Collections.emptyList();\n195:       }\n196:     }\n197:     return tools;\n198:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/tools/recipe/severing/SpecialSeveringRecipeBuilder.java",
+    "line": 56,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "throw new IllegalStateException(\"Unsupported special severing serializer: \" + serializer);",
+    "context": "53:     } else if (serializer == TinkerModifiers.sheepShearing.get()) {\n54:       recipe = new SheepShearingRecipe(id, baseChance, lootingBonus);\n55:     } else {\n56:       throw new IllegalStateException(\"Unsupported special severing serializer: \" + serializer);\n57:     }\n58:     var key = recipeKey(id);\n59:     consumer.accept(key, recipe, buildOptionalAdvancement(key, \"severing\"));\n60:   }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/world/TinkerStructures.java",
+    "line": 120,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//    generator.addProvider(server, new StructureUpdater(packOutput, event.getResourceManager(PackType.DATA), TConstruct.MOD_ID, Target.DATA_PACK, \"structures\"));",
+    "context": "117:     PackOutput packOutput = generator.getPackOutput();\n118:     generator.addProvider(true, new StructureRepalleter(packOutput, event.getResourceManager(PackType.SERVER_DATA)));\n119: \n120: //    generator.addProvider(server, new StructureUpdater(packOutput, event.getResourceManager(PackType.DATA), TConstruct.MOD_ID, Target.DATA_PACK, \"structures\"));\n121: //    generator.addProvider(event.includeClient(), new StructureUpdater(packOutput, event.getResourceManager(PackType.CLIENT_RESOURCES), TConstruct.MOD_ID, Target.RESOURCE_PACK, \"book/structures\"));\n122:   }\n123: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/world/TinkerStructures.java",
+    "line": 121,
+    "signals": [
+      "commented_gameplay_call"
+    ],
+    "text": "//    generator.addProvider(event.includeClient(), new StructureUpdater(packOutput, event.getResourceManager(PackType.CLIENT_RESOURCES), TConstruct.MOD_ID, Target.RESOURCE_PACK, \"book/structures\"));",
+    "context": "118:     generator.addProvider(true, new StructureRepalleter(packOutput, event.getResourceManager(PackType.SERVER_DATA)));\n119: \n120: //    generator.addProvider(server, new StructureUpdater(packOutput, event.getResourceManager(PackType.DATA), TConstruct.MOD_ID, Target.DATA_PACK, \"structures\"));\n121: //    generator.addProvider(event.includeClient(), new StructureUpdater(packOutput, event.getResourceManager(PackType.CLIENT_RESOURCES), TConstruct.MOD_ID, Target.RESOURCE_PACK, \"book/structures\"));\n122:   }\n123: }",
+    "status": "unreviewed_candidate_not_a_defect"
+  },
+  {
+    "path": "slimeknights/tconstruct/world/block/SlimeGrassBlock.java",
+    "line": 142,
+    "signals": [
+      "port_or_disabled_marker"
+    ],
+    "text": "// Match vanilla's light opacity check. The 26.1 API exposes the shape-aware",
+    "context": "139:     if (aboveState.getFluidState().getAmount() == 8) {\n140:       return false;\n141:     }\n142:     // Match vanilla's light opacity check. The 26.1 API exposes the shape-aware\n143:     // LightEngine overload instead of the older Level/BlockPos overload.\n144:     return LightEngine.getLightBlockInto(targetState, aboveState, Direction.UP, aboveState.getLightDampening()) < LightEngine.MAX_LEVEL;\n145:   }\n146: ",
+    "status": "unreviewed_candidate_not_a_defect"
+  }
+]
