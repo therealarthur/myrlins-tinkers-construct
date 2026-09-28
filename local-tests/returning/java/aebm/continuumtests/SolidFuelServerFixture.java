@@ -24,10 +24,12 @@ import net.minecraft.world.level.block.entity.FuelValues;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.fuel.MeltingFuelLookup;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.smeltery.block.entity.HeaterBlockEntity;
@@ -38,6 +40,8 @@ import slimeknights.tconstruct.smeltery.block.entity.module.SolidFuelModule;
 public final class SolidFuelServerFixture {
   private static final Identifier FUEL = Identifier.fromNamespaceAndPath("aebmcontinuumtests", "container_fuel");
   private static final ThreadLocal<List<ItemStack>> DROPS = new ThreadLocal<>();
+  private static final ThreadLocal<Integer> BURN_TIME = new ThreadLocal<>();
+  private static final ThreadLocal<int[]> BURN_EVENTS = new ThreadLocal<>();
   private SolidFuelServerFixture() {}
 
   @SubscribeEvent
@@ -69,6 +73,15 @@ public final class SolidFuelServerFixture {
     if (drops != null && event.getEntity() instanceof ItemEntity item) {
       drops.add(item.getItem().copy());
       event.setCanceled(true);
+    }
+  }
+
+  @SubscribeEvent
+  public static void adjustFixtureBurnTime(FurnaceFuelBurnTimeEvent event) {
+    Integer time = BURN_TIME.get();
+    if (time != null && event.getRecipeType() == TinkerRecipeTypes.FUEL.get()) {
+      BURN_EVENTS.get()[0]++;
+      event.setBurnTime(time);
     }
   }
 
@@ -133,6 +146,58 @@ public final class SolidFuelServerFixture {
         require(total(fixture.drops) == 1 && fixture.drops.getFirst().is(Items.BUCKET), "only the uninserted third container may drop");
         require(handler.getStackInSlot(0).getCount() + total(fixture.drops) == 3, "partial insertion must conserve remainder count");
       });
+      test("heater_accepts_item_burn_time_override", () -> {
+        ItemStack fuel = fuel();
+        Component name = Component.literal("heater custom fuel");
+        fuel.set(DataComponents.CUSTOM_NAME, name);
+        require(level.fuelValues().burnDuration(fuel) == 0, "control item must be absent from the fuel data map");
+        var fixture = fixture();
+        var handler = fixture.parent.getItemCapability();
+        require(handler.insertItem(0, fuel, false).isEmpty(), "real heater must accept the item's 400-tick override");
+        invoke(fixture.module, handler, true, fixture.drops);
+        require(fixture.module.getFuel() == 100 && handler.getStackInSlot(0).isEmpty(), "heater must consume one custom fuel for 400/4 ticks");
+        require(total(fixture.drops) == 3 && fixture.drops.stream().allMatch(stack -> stack.is(Items.BUCKET) && name.equals(stack.get(DataComponents.CUSTOM_NAME))), "heater must eject all three named containers once");
+      });
+      test("burn_event_zero_veto_is_authoritative", () -> withBurnTime(0, () -> {
+        ItemStack coal = new ItemStack(Items.COAL);
+        require(level.fuelValues().burnDuration(coal) > 3, "coal control must have a positive data-map burn time");
+        var fixture = fixture();
+        var heater = fixture.parent.getItemCapability();
+        ItemStack rejected = heater.insertItem(0, coal.copy(), false);
+        require(rejected.is(Items.COAL) && rejected.getCount() == 1 && heater.getStackInSlot(0).isEmpty(), "real heater must reject event-vetoed fuel");
+        var handler = new ItemStackHandler(1);
+        handler.setStackInSlot(0, coal);
+        require(invoke(fixture.module, handler, false, fixture.drops) == 0, "preview must honor zero event burn time");
+        require(invoke(fixture.module, handler, true, fixture.drops) == 0, "consumption must honor zero event burn time");
+        require(handler.getStackInSlot(0).is(Items.COAL) && handler.getStackInSlot(0).getCount() == 1 && fixture.module.getFuel() == 0 && fixture.drops.isEmpty(), "vetoed fuel must remain intact without granting fuel or containers");
+      }));
+      test("burn_event_reduction_applies_once", () -> withBurnTime(8, () -> {
+        var handler = new ItemStackHandler(1);
+        ItemStack coal = new ItemStack(Items.COAL);
+        require(level.fuelValues().burnDuration(coal) > 8, "coal control must exceed the reduced duration");
+        handler.setStackInSlot(0, coal);
+        var fixture = fixture();
+        invoke(fixture.module, handler, true, fixture.drops);
+        require(BURN_EVENTS.get()[0] == 1, "consumption must evaluate the burn event once");
+        require(fixture.module.getFuel() == 2 && handler.getStackInSlot(0).isEmpty() && fixture.drops.isEmpty(), "event reduction must grant exactly 8/4 ticks");
+      }));
+      test("heater_and_module_share_three_four_tick_boundary", () -> {
+        withBurnTime(3, () -> {
+          var fixture = fixture();
+          var heater = fixture.parent.getItemCapability();
+          require(!heater.insertItem(0, new ItemStack(Items.COAL), false).isEmpty() && heater.getStackInSlot(0).isEmpty(), "heater must reject three ticks");
+          var handler = new ItemStackHandler(1);
+          handler.setStackInSlot(0, new ItemStack(Items.COAL));
+          require(invoke(fixture.module, handler, true, fixture.drops) == 0 && handler.getStackInSlot(0).getCount() == 1 && fixture.module.getFuel() == 0 && fixture.drops.isEmpty(), "module must preserve three-tick fuel");
+        });
+        withBurnTime(4, () -> {
+          var fixture = fixture();
+          var heater = fixture.parent.getItemCapability();
+          require(heater.insertItem(0, new ItemStack(Items.COAL), false).isEmpty(), "heater must accept four ticks");
+          invoke(fixture.module, heater, true, fixture.drops);
+          require(fixture.module.getFuel() == 1 && heater.getStackInSlot(0).isEmpty() && fixture.drops.isEmpty(), "module must grant exactly one fuel tick");
+        });
+      });
       test("rejected_extraction_creates_nothing", () -> {
         var handler = new ItemStackHandler(1) {
           @Override public ItemStack extractItem(int slot, int amount, boolean simulate) { return ItemStack.EMPTY; }
@@ -174,6 +239,12 @@ public final class SolidFuelServerFixture {
     DROPS.set(drops);
     try { return (int)method.invoke(module, handler, consume); }
     finally { DROPS.remove(); }
+  }
+  private static void withBurnTime(int time, CheckedRunnable runnable) throws Exception {
+    BURN_TIME.set(time);
+    BURN_EVENTS.set(new int[1]);
+    try { runnable.run(); }
+    finally { BURN_TIME.remove(); BURN_EVENTS.remove(); }
   }
   private static Item fuelItem() { return BuiltInRegistries.ITEM.getValue(FUEL); }
   private static ItemStack fuel() { return new ItemStack(fuelItem()); }

@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.fluids.FluidStack;
 import slimeknights.mantle.recipe.helper.RecipeHelper;
 import slimeknights.mantle.recipe.ingredient.FluidIngredient;
@@ -252,10 +251,8 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
       if (level == null) return;
       for (var item : BuiltInRegistries.ITEM) {
         ItemStack stack = new ItemStack(item);
-        int burnTime = level.fuelValues().burnDuration(stack);
-        int hookTime = EventHooks.getItemBurnTime(stack, burnTime, TinkerRecipeTypes.FUEL.get(), level.fuelValues());
-        // Match SolidFuelModule, including its fallback and integer division.
-        int duration = (hookTime > 0 ? hookTime : burnTime) / 4;
+        // Match SolidFuelModule's item override, event result and integer division.
+        int duration = stack.getBurnTime(TinkerRecipeTypes.FUEL.get(), level.fuelValues()) / 4;
         if (duration > 0) {
           var remainder = stack.getCraftingRemainder();
           ItemStack container = remainder == null ? ItemStack.EMPTY : remainder.create();

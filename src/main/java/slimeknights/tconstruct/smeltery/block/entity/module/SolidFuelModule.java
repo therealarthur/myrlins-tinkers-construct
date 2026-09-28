@@ -5,7 +5,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler;
@@ -55,9 +54,8 @@ public class SolidFuelModule extends FuelModule {
       ItemStack stack = handler.getStackInSlot(i);
       if (consume || !stack.isEmpty()) {
       }
-      int burnTime = getLevel().fuelValues().burnDuration(stack);
-      int hookTime = EventHooks.getItemBurnTime(stack, burnTime, TinkerRecipeTypes.FUEL.get(), getLevel().fuelValues());
-      int time = (hookTime > 0 ? hookTime : burnTime) / 4;
+      // The stack API applies the item's override before the burn-time event, including a zero veto.
+      int time = stack.getBurnTime(TinkerRecipeTypes.FUEL.get(), getLevel().fuelValues()) / 4;
       if (time > 0) {
         MeltingFuel solid = MeltingFuelLookup.getSolid();
         if (consume) {

@@ -1,7 +1,6 @@
 package slimeknights.tconstruct.smeltery.block.entity.inventory;
 
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.event.EventHooks;
 import slimeknights.mantle.block.entity.MantleBlockEntity;
 import slimeknights.mantle.inventory.SingleItemHandler;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
@@ -20,8 +19,6 @@ public class HeaterItemHandler extends SingleItemHandler<MantleBlockEntity> {
     if (parent.getLevel() == null) {
       return false;
     }
-    int burnTime = parent.getLevel().fuelValues().burnDuration(stack);
-    int hookTime = EventHooks.getItemBurnTime(stack, burnTime, TinkerRecipeTypes.FUEL.get(), parent.getLevel().fuelValues());
-    return Math.max(hookTime, burnTime) > 3;
+    return stack.getBurnTime(TinkerRecipeTypes.FUEL.get(), parent.getLevel().fuelValues()) > 3;
   }
 }
