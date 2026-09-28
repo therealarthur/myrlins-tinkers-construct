@@ -1,0 +1,88 @@
+{
+  "date": "2026-09-28",
+  "minecraft": "26.1.2",
+  "neoforge": "26.1.2.109",
+  "java": 25,
+  "targetVersion": "3.12.2-arthur.2",
+  "mainAndFixtureCompile": "build/local-evidence/build-20260928-034130.log",
+  "fmlPass": "build/local-evidence/build-20260928-034315.log",
+  "passed": 27,
+  "failed": 0,
+  "skipped": 3,
+  "serverFixtures": "compiled, not executed",
+  "client": "not launched; book tests skipped on dedicated distribution",
+  "suites": [
+    {
+      "suite": "aebm.continuumtests.BonusFormulaParityTest",
+      "tests": 3,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-aebm.continuumtests.BonusFormulaParityTest.xml",
+      "sha256": "baa8cc53a77380f70f4d0948d6126ffcb7d4ad64ae2a872b4d63d16cfd19575a"
+    },
+    {
+      "suite": "aebm.continuumtests.ClientRecipeCacheTest",
+      "tests": 1,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-aebm.continuumtests.ClientRecipeCacheTest.xml",
+      "sha256": "3a3dd774c7ab84aa332451a7a5ab750718baf3eccf765571e39836f665d9017d"
+    },
+    {
+      "suite": "aebm.continuumtests.FluidParticleCodecTest",
+      "tests": 2,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-aebm.continuumtests.FluidParticleCodecTest.xml",
+      "sha256": "acc2cfe0bbdb68098460e6ff37bc6d9ed13efd3738196207c5ab3f398dca0e11"
+    },
+    {
+      "suite": "aebm.continuumtests.IngredientDisplayTest",
+      "tests": 1,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-aebm.continuumtests.IngredientDisplayTest.xml",
+      "sha256": "74b3d1f4e26aa07d6c93128cf2404345fba4042b7a6b7ce6d938394c8e43a867"
+    },
+    {
+      "suite": "aebm.continuumtests.MaterialBookContentTest",
+      "tests": 3,
+      "failures": 0,
+      "skipped": 3,
+      "xml": "TEST-aebm.continuumtests.MaterialBookContentTest.xml",
+      "sha256": "3c96dd2870a44ea8f002d1f00c7d2f6cc3cd6d27d9459db0644673020de6c526"
+    },
+    {
+      "suite": "aebm.continuumtests.ModifierConditionTest",
+      "tests": 7,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-aebm.continuumtests.ModifierConditionTest.xml",
+      "sha256": "46258a57ee24fd889d18725221174fa2860afca1dce55c9add3390460b15327e"
+    },
+    {
+      "suite": "aebm.continuumtests.SideInventoryTest",
+      "tests": 1,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-aebm.continuumtests.SideInventoryTest.xml",
+      "sha256": "1f3e2b7e66cb46cdb99d7c15dad5cbff773dca827126071f231eaebb1ac6c618"
+    },
+    {
+      "suite": "slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommandTest",
+      "tests": 11,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommandTest.xml",
+      "sha256": "c703ffb0dea7edb9c08f2ae125801fc910eb9e21c3688b97b400b80279efd0e3"
+    },
+    {
+      "suite": "slimeknights.tconstruct.tables.data.NamedForgeRecipeTest",
+      "tests": 1,
+      "failures": 0,
+      "skipped": 0,
+      "xml": "TEST-slimeknights.tconstruct.tables.data.NamedForgeRecipeTest.xml",
+      "sha256": "2fa056c1d7461b130f7a46e1ba9089aacf8295ae949e49ebe8d70cce6285aafa"
+    }
+  ]
+}

@@ -13,7 +13,12 @@
     "m m"
   ],
   "result": {
-    "id": "tconstruct:scorched_anvil"
+    "id": "tconstruct:scorched_anvil",
+    "components": {
+      "minecraft:custom_name": {
+        "translate": "block.tconstruct.tool_forge"
+      }
+    }
   },
   "texture": "#tconstruct:anvil_metal"
 }

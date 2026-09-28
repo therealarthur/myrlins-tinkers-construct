@@ -14,6 +14,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.network.connection.ConnectionType;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.shared.particle.FluidParticleData;
 
@@ -21,6 +22,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Exercise the actual global particle codecs, including a second encoding after decode. */
 final class FluidParticleCodecTest {
+  @BeforeAll
+  static void initializeComponents() {
+    ComponentTestSetup.initialize();
+  }
+
   private static List<FluidStack> fluids() {
     FluidStack named = new FluidStack(Fluids.WATER, 73);
     named.set(DataComponents.CUSTOM_NAME, Component.literal("particle component regression"));

@@ -1,4 +1,4 @@
-# Arthur's Continuum compatibility candidate
+# Arthur's Continuum compatibility and parity restoration
 
 Private local branch based on upstream `72602856c8403c51f9f488ab1580f1216fa42fda`. The installed reference release is Continuum Construct 26.1.2-3.12.2, SHA-256 `e053e6f60582bfa113ae3fedcc104490925a6a83a4389974e35f2aa7557df256`. Source properties at that commit still identify 3.12.1; full published-binary reproducibility is not established. Both reported defect paths were checked in the released bytecode before changing source.
 
@@ -6,7 +6,11 @@ This candidate reconnects Returning tools to vanilla trident loyalty and impact 
 
 Build from a granted coordinator compile slot using `tools/Build-Local.ps1`. It uses the pinned existing Core JAR, shared D: Gradle cache, validated D: TEMP and Java 25. The Gradle wrapper is now a portable 9.2.1 URL instead of the author's machine-local ZIP. ModDev 2.0.147 matches the shared target toolchain. Optional integration dependencies are compile inputs, not authorization to add mods to the pack.
 
-`craftingRegression` runs actual inventory classes under headless FML/JUnit. It passed 105 assertions on September 28 in `build/local-evidence/build-20260928-024510.log`. `returningFixtureJar` packages a development-only server fixture, separate from the main JAR, with commands `aebmreturningtest`, `aebmcraftingtest` and `aebmpersistencetest`. All compile; their server execution remains pending the integration coordinator. The old `src/test` suite is not part of these targeted checks and has not been certified on 26.1.2. Do not invoke runClient or deploy artifacts from this branch automatically.
+The frozen `.1` compatibility JAR passed the integration coordinator's 20 controlled Returning/crafting/persistence cases in `evidence/combined-candidates-017`, with a normal server exit. `craftingRegression` also passed 105 actual inventory assertions in `build/local-evidence/build-20260928-024510.log`. Preserve that JAR and its fixture. These checks do not establish natural returning flight, real reconnects or graphical behavior.
+
+The runner now builds the separate `.2` parity restoration requested by Arthur. `local-audit/PARITY-RESTORATION.md` tracks restored armor materials and swaps, placement cancellation, actual damage results, conditions, vanilla loot, particles, fuel containers, modifier HUD/input, material books, recipe display fidelity, the initial six REI categories, block rendering and the developer melting command. The named-forge recipes now use native result components rather than the obsolete no-op NBT wrapper. Both retextured recipes and both material fallback recipes retain the translated output name. Current Continuum numerical tuning is preserved while original balance remains an optional decision.
+
+`returningFixtureJar` remains a development-only artifact, separate from the main JAR. New commands cover armor, block-walker placement, combat, solid fuel and recipe displays. Their expected counts and limits are in the handoff and individual `local-tests/returning/` documents. The old `src/test` suite is not part of the targeted FML tests and has not been certified on 26.1.2. Do not invoke runClient or deploy artifacts from this branch automatically.
 
 The local runner reuses `cache/gradle-target/caches/minecraft-assets` index 30 and skips ModDev's downloadAssets task after writing a validated asset reference. An earlier default task downloaded a duplicate 435 MiB at `cache/gradle-target/caches/neoformruntime/assets`. The integration coordinator explicitly requested retaining that shared cache until all workstreams are idle; this workstream must not delete it.
 
