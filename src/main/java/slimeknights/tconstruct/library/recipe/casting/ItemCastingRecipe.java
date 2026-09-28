@@ -89,7 +89,8 @@ public class ItemCastingRecipe extends AbstractCastingRecipe implements IDisplay
 
   @Override
   public boolean hasCast() {
-    return !MaterialRecipeCache.getDisplayItems(getCast()).isEmpty();
+    // An unresolved required tag is still a requirement, not a recipe with an empty cast slot.
+    return !matchesCast(ItemStack.EMPTY);
   }
 
   @Override

@@ -28,6 +28,7 @@ import slimeknights.tconstruct.library.recipe.casting.DisplayCastingRecipe;
 import slimeknights.tconstruct.library.recipe.casting.ICastingContainer;
 import slimeknights.tconstruct.library.recipe.casting.ICastingRecipe;
 import slimeknights.tconstruct.library.recipe.casting.IDisplayableCastingRecipe;
+import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import slimeknights.tconstruct.library.tools.definition.module.material.ToolMaterialHook;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
@@ -240,7 +241,7 @@ public class ToolCastingRecipe extends PartSwapCastingRecipe implements IMultiRe
         ItemStack partSwapDisplay = ToolBuildHandler.buildItemFromMaterials(result, partSwapMaterials.build());
         TooltipUtil.setDisplay(partSwapDisplay);
 
-        List<ItemStack> casts = getCast().items().map(ItemStack::new).toList();
+        List<ItemStack> casts = MaterialRecipeCache.getDisplayItems(getCast());
         // if the cast is consumed, add the tool to the list of cast items to show that part swapping is an option
         boolean consumed = castPurpose != CastPurpose.CATALYST;
         List<ItemStack> castsWithTool = consumed ? Streams.concat(casts.stream(), Stream.of(partSwapDisplay)).toList() : casts;
@@ -258,9 +259,11 @@ public class ToolCastingRecipe extends PartSwapCastingRecipe implements IMultiRe
         List<MaterialFluidRecipe> validCasting = MaterialCastingLookup.getAllCastingFluids().stream().filter(validRecipe).toList();
         for (MaterialFluidRecipe recipe : validCasting) {
           List<FluidStack> fluids = resizeFluids(recipe.getFluids());
-            int amount = getFluidAmount(fluids);
-          recipes.add(new DisplayCastingRecipe(getId(), getType(), castsWithTool, fluids, materials.apply(recipe.getOutput(), castsWithTool),
-            ICastingRecipe.calcCoolingTime(recipe.getTemperature(), amount), consumed));
+          int amount = getFluidAmount(fluids);
+          if (!castsWithTool.isEmpty() || matchesCast(ItemStack.EMPTY)) {
+            recipes.add(new DisplayCastingRecipe(getId(), getType(), castsWithTool, fluids, materials.apply(recipe.getOutput(), castsWithTool),
+              ICastingRecipe.calcCoolingTime(recipe.getTemperature(), amount), consumed));
+          }
 
           // if the cast is not consumed, then part swapping will have to be done separately for the proper consumed flag
           if (!consumed) {

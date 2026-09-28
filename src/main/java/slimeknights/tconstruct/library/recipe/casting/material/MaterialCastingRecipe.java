@@ -86,6 +86,10 @@ public class MaterialCastingRecipe extends AbstractMaterialCastingRecipe impleme
     if (multiRecipes == null) {
       RecipeType<?> type = getType();
       List<ItemStack> castItems = MaterialRecipeCache.getDisplayItems(getCast());
+      if (castItems.isEmpty() && !matchesCast(ItemStack.EMPTY)) {
+        multiRecipes = List.of();
+        return multiRecipes;
+      }
       multiRecipes = MaterialCastingLookup
         .getAllCastingFluids().stream()
         .filter(recipe -> {

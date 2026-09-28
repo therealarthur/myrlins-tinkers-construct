@@ -5,9 +5,13 @@ import java.util.stream.Stream;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,11 +20,18 @@ import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import slimeknights.mantle.recipe.IMultiRecipe;
+import slimeknights.mantle.recipe.helper.IngredientHelper;
+import slimeknights.mantle.recipe.helper.ItemOutput;
+import slimeknights.mantle.recipe.helper.TypeAwareRecipeSerializer;
+import slimeknights.mantle.recipe.ingredient.EmptyIngredient;
+import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 import slimeknights.tconstruct.common.recipe.TinkerRecipeCacheRebuilder;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
+import slimeknights.tconstruct.library.materials.definition.IMaterial;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.casting.ICastingContainer;
 import slimeknights.tconstruct.library.recipe.casting.IDisplayableCastingRecipe;
+import slimeknights.tconstruct.library.recipe.casting.ItemCastingRecipe;
 import slimeknights.tconstruct.library.recipe.casting.material.AbstractMaterialCastingRecipe;
 import slimeknights.tconstruct.library.recipe.casting.material.CompositeCastingRecipe;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingLookup;
@@ -28,12 +39,14 @@ import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRe
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialFluidRecipe;
 import slimeknights.tconstruct.library.recipe.casting.material.ToolCastingRecipe;
 import slimeknights.tconstruct.library.recipe.ingredient.MaterialIngredient;
+import slimeknights.tconstruct.library.recipe.ingredient.LegacyIngredientType;
 import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import slimeknights.tconstruct.library.recipe.melting.IMeltingContainer;
 import slimeknights.tconstruct.library.recipe.melting.MaterialMeltingRecipe;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 import slimeknights.tconstruct.tools.TinkerToolParts;
 import slimeknights.tconstruct.tools.data.material.MaterialIds;
+import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 /** Checks actual loaded recipe displays without loading either viewer or changing world state. */
 @EventBusSubscriber(modid = "aebmcontinuumtests")
@@ -80,6 +93,21 @@ public final class RecipeViewerServerFixture {
       test("material_casting_amount_and_cooling", () -> casting(MaterialCastingRecipe.class));
       test("composite_casting_amount_cooling_and_fluid_filter", () -> casting(CompositeCastingRecipe.class));
       test("tool_casting_amount_and_cooling", () -> casting(ToolCastingRecipe.class));
+      test("tool_casting_retains_material_casts", this::toolMaterialCasts);
+      test("missing_required_cast_differs_from_no_cast", () -> {
+        var id = Identifier.fromNamespaceAndPath("aebmcontinuumtests", "missing_cast");
+        var missing = LegacyIngredientType.ofTag(TagKey.create(Registries.ITEM, id));
+        var serializer = (TypeAwareRecipeSerializer<?>)TinkerSmeltery.tableRecipeSerializer.get();
+        var required = new ItemCastingRecipe(serializer, id, "", missing, FluidIngredient.EMPTY,
+          ItemOutput.fromItem(Items.IRON_INGOT), 20, false, false);
+        var absent = new ItemCastingRecipe(serializer, id, "", EmptyIngredient.VANILLA, FluidIngredient.EMPTY,
+          ItemOutput.fromItem(Items.IRON_INGOT), 20, false, false);
+        require(required.getCastItems().isEmpty(), "fixture tag must have no alternatives");
+        require(required.hasCast(), "missing required tag must not advertise a free cast slot");
+        require(!IngredientHelper.test(required.getCast(), ItemStack.EMPTY), "runtime must reject absent required cast");
+        require(!absent.hasCast(), "intentionally absent cast must remain absent");
+        require(IngredientHelper.test(absent.getCast(), ItemStack.EMPTY), "runtime must accept intentionally absent cast");
+      });
       source.sendSuccess(() -> Component.literal("AEBM_VIEWER_SUMMARY passed=" + passed + " failed=" + failed), false);
       return failed == 0 ? 1 : 0;
     }
@@ -107,6 +135,22 @@ public final class RecipeViewerServerFixture {
         if (checked > 0) break;
       }
       require(checked > 0, "fixture found no visible material melting recipe");
+    }
+
+    private void toolMaterialCasts() {
+      int checked = 0;
+      for (var original : TinkerRecipeCacheRebuilder.getRecipes(recipes, TinkerRecipeTypes.CASTING_TABLE.get(), ToolCastingRecipe.class)) {
+        for (var display : original.getRecipes(level.registryAccess())) {
+          for (ItemStack cast : display.getCastItems()) {
+            if (cast.getItem() instanceof IMaterialItem) {
+              require(!IMaterialItem.getMaterialFromStack(cast).equals(IMaterial.UNKNOWN_ID), "tool cast lost its material");
+              require(IngredientHelper.test(original.getCast(), cast), "material-bearing tool cast fails real cast ingredient");
+              checked++;
+            }
+          }
+        }
+      }
+      require(checked > 0, "fixture needs at least one material-bearing tool cast");
     }
 
     @SuppressWarnings("unchecked")
