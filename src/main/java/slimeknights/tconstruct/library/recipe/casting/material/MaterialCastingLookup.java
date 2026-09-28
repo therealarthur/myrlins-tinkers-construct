@@ -111,13 +111,22 @@ public class MaterialCastingLookup {
 
   /** Rebuilds the material casting lookup from already-loaded recipes, used after client recipe sync. */
   public static void rebuildRecipes(Collection<MaterialFluidRecipe> fluids, Collection<MaterialCastingRecipe> castingRecipes, Collection<ToolCastingRecipe> toolCastingRecipes) {
+    rebuildRecipes(fluids, castingRecipes, toolCastingRecipes, false);
+  }
+
+  /** Replaces a complete client snapshot, including the case where all fluid recipes were removed. */
+  public static void rebuildRecipesExact(Collection<MaterialFluidRecipe> fluids, Collection<MaterialCastingRecipe> castingRecipes, Collection<ToolCastingRecipe> toolCastingRecipes) {
+    rebuildRecipes(fluids, castingRecipes, toolCastingRecipes, true);
+  }
+
+  private static void rebuildRecipes(Collection<MaterialFluidRecipe> fluids, Collection<MaterialCastingRecipe> castingRecipes, Collection<ToolCastingRecipe> toolCastingRecipes, boolean replaceEmpty) {
     LISTENER.cancelQueued();
     ITEM_COST_LOOKUP.clear();
     CASTING_CACHE.clear();
     MATERIAL_CASTABLE.clear();
     MATERIAL_COMPOSITE.clear();
     COMPOSITE_CACHE.clear();
-    if (fluids.isEmpty()) {
+    if (fluids.isEmpty() && !replaceEmpty) {
       TConstruct.LOG.warn("Recipe map has 0 tconstruct:data material_fluid recipes; keeping {} casting and {} composite fluids", CASTING_FLUIDS.size(), COMPOSITE_FLUIDS.size());
     } else {
       CASTING_FLUIDS.clear();

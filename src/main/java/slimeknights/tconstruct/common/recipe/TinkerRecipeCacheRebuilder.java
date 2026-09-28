@@ -27,6 +27,15 @@ public final class TinkerRecipeCacheRebuilder {
 
   /** Rebuilds material and material casting lookups from a recipe map. */
   public static void rebuild(RegistryAccess registryAccess, RecipeMap recipeMap) {
+    rebuild(registryAccess, recipeMap, false);
+  }
+
+  /** Client snapshots are complete: an empty DATA type must remove old fluids, never borrow another server's data. */
+  public static void rebuildClient(RegistryAccess registryAccess, RecipeMap recipeMap) {
+    rebuild(registryAccess, recipeMap, true);
+  }
+
+  private static void rebuild(RegistryAccess registryAccess, RecipeMap recipeMap, boolean clientSnapshot) {
     MaterialRecipeCache.setDisplayRegistryAccess(registryAccess);
     MaterialRecipeCache.rebuildRecipes(getRecipes(recipeMap, TinkerRecipeTypes.MATERIAL.get(), MaterialRecipe.class));
 
@@ -38,14 +47,18 @@ public final class TinkerRecipeCacheRebuilder {
       getRecipes(recipeMap, TinkerRecipeTypes.CASTING_BASIN.get(), ToolCastingRecipe.class).stream()).toList();
 
     List<MaterialFluidRecipe> fluids = getRecipes(recipeMap, TinkerRecipeTypes.DATA.get(), MaterialFluidRecipe.class);
-    if (fluids.isEmpty()) {
+    if (!clientSnapshot && fluids.isEmpty()) {
       var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
       if (server != null) {
         fluids = getRecipes(server.getRecipeManager().recipeMap(), TinkerRecipeTypes.DATA.get(), MaterialFluidRecipe.class);
       }
     }
 
-    MaterialCastingLookup.rebuildRecipes(fluids, materialCastingRecipes, toolCastingRecipes);
+    if (clientSnapshot) {
+      MaterialCastingLookup.rebuildRecipesExact(fluids, materialCastingRecipes, toolCastingRecipes);
+    } else {
+      MaterialCastingLookup.rebuildRecipes(fluids, materialCastingRecipes, toolCastingRecipes);
+    }
   }
 
   /** Gets all recipes of the given type and class from a loaded recipe map. */

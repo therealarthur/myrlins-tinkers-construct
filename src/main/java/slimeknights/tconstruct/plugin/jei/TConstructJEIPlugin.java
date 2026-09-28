@@ -1,5 +1,4 @@
 package slimeknights.tconstruct.plugin.jei;
-import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -60,6 +59,7 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.mantle.util.RetexturedHelper;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.recipe.TinkerRecipeCacheRebuilder;
+import slimeknights.tconstruct.library.client.recipe.ClientRecipeCache;
 import slimeknights.tconstruct.fluids.TinkerFluids;
 import slimeknights.tconstruct.library.recipe.material.ShapedMaterialRecipe;
 import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
@@ -85,16 +85,6 @@ import slimeknights.tconstruct.tools.item.ModifierCrystalItem;
 
 @JeiPlugin
 public class TConstructJEIPlugin implements IModPlugin {
-  /** Client recipe map received after tags are bound; used for multi-recipe expansion. */
-  private static RecipeMap clientRecipeMap = RecipeMap.EMPTY;
-
-  public static void onRecipesReceived(RecipesReceivedEvent event) {
-    clientRecipeMap = event.getRecipeMap();
-    Minecraft minecraft = Minecraft.getInstance();
-    if (minecraft.level != null) {
-      TinkerRecipeCacheRebuilder.rebuild(minecraft.level.registryAccess(), clientRecipeMap);
-    }
-  }
   @Override
   public Identifier getPluginUid() {
     return TConstruct.getResource("jei");
@@ -240,19 +230,13 @@ public class TConstructJEIPlugin implements IModPlugin {
     }
     RegistryAccess registryAccess = minecraft.level.registryAccess();
     MaterialRecipeCache.setDisplayRegistryAccess(registryAccess);
-    net.minecraft.world.item.crafting.RecipeManager manager = null;
-    if (minecraft.level.recipeAccess() instanceof net.minecraft.world.item.crafting.RecipeManager clientManager) {
-      manager = clientManager;
-    } else if (minecraft.getSingleplayerServer() != null) {
-      manager = minecraft.getSingleplayerServer().getRecipeManager();
-    }
-    RecipeMap activeRecipeMap = clientRecipeMap != RecipeMap.EMPTY ? clientRecipeMap : manager == null ? RecipeMap.EMPTY : manager.recipeMap();
+    RecipeMap activeRecipeMap = ClientRecipeCache.getSnapshot().recipes();
     if (activeRecipeMap == RecipeMap.EMPTY || activeRecipeMap.values().isEmpty()) {
       TConstruct.LOG.warn("Skipping Continuum Construct JEI recipes because no client recipe map is available");
       return;
     }
 
-    TinkerRecipeCacheRebuilder.rebuild(registryAccess, activeRecipeMap);
+    TinkerRecipeCacheRebuilder.rebuildClient(registryAccess, activeRecipeMap);
 
     List<IDisplayPartBuilderRecipe> recipes = getSyncedJEIRecipes(registryAccess, activeRecipeMap, TinkerRecipeTypes.PART_BUILDER.get(), IDisplayPartBuilderRecipe.class);
     registration.addRecipes(TConstructJEIConstants.PART_BUILDER, recipes);
@@ -309,29 +293,13 @@ public class TConstructJEIPlugin implements IModPlugin {
     registration.addRecipes(TConstructJEIConstants.MODIFIER_WORKTABLE, worktableRecipes);
   }
 
-  private static <C> List<C> getSyncedJEIRecipes(RegistryAccess access, net.minecraft.world.item.crafting.RecipeManager manager, RecipeType<?> type, Class<C> clazz) {
-    return RecipeHelper.getJEIRecipes(access, getSyncedRecipeStream(manager, type), clazz);
-  }
-
   private static <C> List<C> getSyncedJEIRecipes(RegistryAccess access, RecipeMap recipeMap, RecipeType<?> type, Class<C> clazz) {
     return RecipeHelper.getJEIRecipes(access, getSyncedRecipeStream(recipeMap, type), clazz);
   }
 
   @SuppressWarnings({"rawtypes", "unchecked"})
-  private static Stream<? extends RecipeHolder<?>> getSyncedRecipeStream(net.minecraft.world.item.crafting.RecipeManager manager, RecipeType<?> type) {
-    return getSyncedRecipeStream(getActiveRecipeMap(manager), type);
-  }
-
-  @SuppressWarnings({"rawtypes", "unchecked"})
   private static Stream<? extends RecipeHolder<?>> getSyncedRecipeStream(RecipeMap recipeMap, RecipeType<?> type) {
     return ((RecipeMap)recipeMap).byType((RecipeType)type).stream();
-  }
-
-  private static RecipeMap getActiveRecipeMap(net.minecraft.world.item.crafting.RecipeManager manager) {
-    if (clientRecipeMap != RecipeMap.EMPTY) {
-      return clientRecipeMap;
-    }
-    return manager.recipeMap();
   }
 
   /** Sort key for modifier recipes; null slotless recipes stay last as before. */
