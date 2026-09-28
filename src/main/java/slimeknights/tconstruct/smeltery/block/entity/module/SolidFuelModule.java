@@ -69,7 +69,8 @@ public class SolidFuelModule extends FuelModule {
             rate = solid.getRate();
             parent.setChangedFast();
             // return the container
-            ItemStack container = ItemStack.EMPTY;
+            var remainder = extracted.getCraftingRemainder();
+            ItemStack container = remainder == null ? ItemStack.EMPTY : remainder.create();
             if (!container.isEmpty()) {
               // if we cannot insert the container back, spit it on the ground
               ItemStack notInserted = ItemHandlerHelper.insertItem(handler, container, false);
@@ -78,7 +79,7 @@ public class SolidFuelModule extends FuelModule {
                 double x = (world.getRandom().nextFloat() * 0.5F) + 0.25D;
                 double y = (world.getRandom().nextFloat() * 0.5F) + 0.25D;
                 double z = (world.getRandom().nextFloat() * 0.5F) + 0.25D;
-                ItemEntity itementity = new ItemEntity(world, fuelPos.getX() + x, fuelPos.getY() + y, fuelPos.getZ() + z, container);
+                ItemEntity itementity = new ItemEntity(world, fuelPos.getX() + x, fuelPos.getY() + y, fuelPos.getZ() + z, notInserted);
                 itementity.setDefaultPickUpDelay();
                 world.addFreshEntity(itementity);
               }
