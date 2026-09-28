@@ -43,7 +43,7 @@ final class OptionalMeltingRecipeTest {
 
   @Test
   void everyConvertedBranchUsesTheOriginalFirstMatchForAllTagPresenceCombinations() throws Exception {
-    var manifest = JsonParser.parseString(Files.readString(Path.of("local-audit/optional-melting-branch-validation.json")))
+    var manifest = JsonParser.parseString(Files.readString(auditManifest()))
       .getAsJsonObject();
     var groups = manifest.getAsJsonArray("groups");
     assertEquals(61, groups.size());
@@ -132,6 +132,20 @@ final class OptionalMeltingRecipeTest {
       result.add(ICondition.CODEC.parse(JsonOps.INSTANCE, value).getOrThrow());
     }
     return result;
+  }
+
+  /** FML runs below build/, so resolve the checked-in audit from a project ancestor. */
+  private static Path auditManifest() {
+    String projectRoot = System.getProperty("aebm.continuum.projectRoot");
+    Path start = projectRoot == null ? Path.of("").toAbsolutePath() : Path.of(projectRoot).toAbsolutePath();
+    for (Path directory = start; directory != null; directory = directory.getParent()) {
+      Path candidate = directory.resolve("local-audit/optional-melting-branch-validation.json");
+      if (Files.isRegularFile(candidate)) {
+        return candidate;
+      }
+    }
+    throw new AssertionError("Cannot find the checked-in melting audit above " + start
+      + "; set aebm.continuum.projectRoot when running outside the project");
   }
 
   private static boolean passes(List<ICondition> conditions, ICondition.IContext context) {
