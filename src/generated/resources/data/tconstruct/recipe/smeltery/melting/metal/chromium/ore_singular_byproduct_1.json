@@ -6,6 +6,13 @@
       "match": [
         "c:ores/chromium"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/aluminum"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

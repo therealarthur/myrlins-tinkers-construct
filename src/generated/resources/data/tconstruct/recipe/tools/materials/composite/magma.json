@@ -1,0 +1,11 @@
+{
+  "type": "tconstruct:material_fluid",
+  "fluid": {
+    "amount": 50,
+    "tag": "tconstruct:blazing_blood"
+  },
+  "id": "tconstruct:tools/materials/composite/magma",
+  "input": "tconstruct:earthslime",
+  "output": "tconstruct:magma",
+  "temperature": 1500
+}

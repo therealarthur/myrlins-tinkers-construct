@@ -20,7 +20,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
 import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
 import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.conditions.AlwaysCondition;
+import net.neoforged.neoforge.common.conditions.NotCondition;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 import slimeknights.mantle.recipe.condition.TagCombinationCondition;
@@ -321,15 +321,15 @@ public class SmelteryRecipeBuilder {
               .setOre(oreRate, oreByproducts[0].getOreRate())
               .save(wrapped, location);
     } else {
-      // NeoForge 26.1 removed ConditionalRecipe.Builder. Save each ordered alternative as a
-      // separate condition-wrapped recipe; condition filtering preserves the upstream fallback.
+      // Separate recipes must retain ConditionalRecipe's first-match behavior. Each later
+      // alternative excludes every earlier optional byproduct, including the final fallback.
       boolean alwaysPresent = false;
       int index = 0;
+      RecipeOutput remaining = wrapped;
       for (IByproduct byproduct : oreByproducts) {
         alwaysPresent = byproduct.isAlwaysPresent();
-        RecipeOutput byproductOutput = alwaysPresent
-          ? wrapped
-          : wrapped.withConditions(tagCondition("ingots/" + byproduct.getName()));
+        ICondition available = alwaysPresent ? null : tagCondition("ingots/" + byproduct.getName());
+        RecipeOutput byproductOutput = available == null ? remaining : remaining.withConditions(available);
         supplier.get()
                 .addByproduct(byproduct.getFluid(scale))
                 .setOre(oreRate, byproduct.getOreRate())
@@ -338,9 +338,10 @@ public class SmelteryRecipeBuilder {
         if (alwaysPresent) {
           break;
         }
+        remaining = remaining.withConditions(new NotCondition(available));
       }
       if (!alwaysPresent) {
-        supplier.get().save(wrapped.withConditions(AlwaysCondition.INSTANCE), location.withSuffix("_fallback"));
+        supplier.get().save(remaining, location.withSuffix("_fallback"));
       }
     }
 

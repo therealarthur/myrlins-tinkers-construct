@@ -1,0 +1,8 @@
+{
+  "type": "tconstruct:material",
+  "id": "tconstruct:tools/materials/honey_block",
+  "ingredient": "minecraft:honey_block",
+  "material": "tconstruct:honey",
+  "needed": 1,
+  "value": 4
+}

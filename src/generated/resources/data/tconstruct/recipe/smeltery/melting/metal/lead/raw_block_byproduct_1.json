@@ -3,6 +3,13 @@
     {
       "type": "mantle:tag_filled",
       "tag": "c:storage_blocks/raw_lead"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/silver"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

@@ -6,6 +6,13 @@
         "c:ores/cadmium",
         "c:ore_rates/sparse"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/lead"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

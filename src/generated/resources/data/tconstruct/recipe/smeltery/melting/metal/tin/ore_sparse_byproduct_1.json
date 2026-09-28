@@ -6,6 +6,13 @@
         "c:ores/tin",
         "c:ore_rates/sparse"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/nickel"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

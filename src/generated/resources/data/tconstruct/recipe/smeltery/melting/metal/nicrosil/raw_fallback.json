@@ -5,7 +5,11 @@
       "tag": "c:raw_materials/nicrosil"
     },
     {
-      "type": "neoforge:always"
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/chromium"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

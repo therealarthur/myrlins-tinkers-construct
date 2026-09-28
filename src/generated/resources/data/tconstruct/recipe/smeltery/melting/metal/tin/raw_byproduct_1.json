@@ -3,6 +3,13 @@
     {
       "type": "mantle:tag_filled",
       "tag": "c:raw_materials/tin"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/nickel"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

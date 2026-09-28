@@ -6,6 +6,13 @@
         "c:ores/silver",
         "c:ore_rates/dense"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/lead"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

@@ -1,0 +1,6108 @@
+{
+  "upstream": {
+    "path": "local-audit/upstream/TConstruct-1.20.1-3.12.1.231.jar",
+    "sha256": "474bb3e14646be1b4e343aa0d3a8482ff5db6350da19355fac6c5ddd2050ac19",
+    "version": "TConstruct 1.20.1-3.12.1.231"
+  },
+  "scope": "All generated recipe paths ending in _byproduct_N or _fallback; 61 original ordered conditional recipe families.",
+  "limits": "Exhaustive byproduct-ingot tag presence combinations, each with outer eligibility false and true. Outer ingredient tag intersections/differences are byte-for-byte semantically unchanged; this static table does not simulate tag item membership or world melting.",
+  "family_count": 61,
+  "branch_count": 124,
+  "truth_row_count": 252,
+  "groups": [
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/bendalloy/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/bendalloy"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/bendalloy/raw_byproduct_0.json",
+          "payload_sha256": "2b81b95a9bde1b5daa6dc9b7b28f0aaa3f9fcd126744c053484dad5341f8caee",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/cadmium"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/bendalloy"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/cadmium"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/bendalloy/raw_fallback.json",
+          "payload_sha256": "3202fd4e731b9962c0159281d5eba61a641e3a6c06253fbdb3a5f24252585ae9",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/bendalloy"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/cadmium"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/cadmium": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/cadmium": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/cadmium": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/cadmium": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/bendalloy/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_bendalloy"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/bendalloy/raw_block_byproduct_0.json",
+          "payload_sha256": "e51e6fa6a63919e5330a793d5020087736b6618e991d08efa0c782ecfc34284d",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/cadmium"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_bendalloy"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/cadmium"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/bendalloy/raw_block_fallback.json",
+          "payload_sha256": "1ce1c5a2d747a5ba1d391f66ae895e123109b68265d57c530e9fbab46cf81a6b",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_bendalloy"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/cadmium"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/cadmium": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/cadmium": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/cadmium": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/cadmium": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/brass/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/brass"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/brass/raw_byproduct_0.json",
+          "payload_sha256": "979a0276b807a27d2ad54113a205d599aa48cbd5d0d65d3124276a3cbe73837c",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/zinc"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/brass"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/zinc"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/brass/raw_byproduct_1.json",
+          "payload_sha256": "d56c5a67dc08ff8ac445a1b7400ecd7c4ba68e0495a238dddf8bae3a2831090c",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/brass"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/zinc"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/zinc": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/zinc": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/zinc": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/zinc": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/brass/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_brass"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/brass/raw_block_byproduct_0.json",
+          "payload_sha256": "ad4b0462764b7605ff9a928e274886507b0fc57d6e603fc7a4c19a55c80c189c",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/zinc"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_brass"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/zinc"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/brass/raw_block_byproduct_1.json",
+          "payload_sha256": "ef6f27aee0c1620ead4809b24d06a2cfdee14b52296c0886374d12e0c4f21a36",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_brass"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/zinc"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/zinc": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/zinc": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/zinc": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/zinc": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/cadmium/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/cadmium",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_dense_byproduct_0.json",
+          "payload_sha256": "68a3230e4fd9bcc1661a1e39b63826d90a31394d23a28472d98379dd7cffd724",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/cadmium",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_dense_byproduct_1.json",
+          "payload_sha256": "6f1fa44b0aa4c5c9612b66716053025530bce79b0bb0104a23d5c3ede1dc1dbb",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/cadmium",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/cadmium/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/cadmium"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_singular_byproduct_0.json",
+          "payload_sha256": "a749d0c7c56cbe5c6c57db8e4017d9ebe21cb53a400d1fded7a9fa460d3220ec",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/cadmium"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_singular_byproduct_1.json",
+          "payload_sha256": "80f30b8e620fddc98fcedbc1d277eea8ac3789ffc38c1e13682a88cebb3344f0",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/cadmium"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/cadmium/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/cadmium",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_sparse_byproduct_0.json",
+          "payload_sha256": "24e24a47c6cc5a39293e531ee635d819b96aac32c62cf5596a29e3387fe92926",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/cadmium",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_sparse_byproduct_1.json",
+          "payload_sha256": "8a3d451853c616b176dc83c16b88928acce5dec1866384b0a779b44491e4a7a5",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/cadmium",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/cadmium/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/cadmium"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/raw_byproduct_0.json",
+          "payload_sha256": "88f2c1312bc46303b8030c922f30cb98b0d96a570c754737f246f9da51d3e5ea",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/cadmium"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/raw_byproduct_1.json",
+          "payload_sha256": "3c7efc11749e781606796f67a2e6420600d1019fe843d9bef5cdd1775b91290f",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/cadmium"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/cadmium/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_cadmium"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/raw_block_byproduct_0.json",
+          "payload_sha256": "ca252af3949a1bb7d7017b132b3f0981482c0474be426d893672c600688e2d20",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_cadmium"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/cadmium/raw_block_byproduct_1.json",
+          "payload_sha256": "be9b2b3e6102ae57b81abbb5abbaec9e172124882f2a9d3f6aa64a0fb7b8e9c6",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_cadmium"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/chromium/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/chromium",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_dense_byproduct_0.json",
+          "payload_sha256": "a1c0c83227faef9326f442884943847b6eee7fadcf7727765f9b62a2af561fdb",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/chromium",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_dense_byproduct_1.json",
+          "payload_sha256": "75e8565a3f2c063361aef22c948a102e9524a56823bc7fff74676fbe47b67185",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/chromium",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/chromium/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/chromium"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_singular_byproduct_0.json",
+          "payload_sha256": "b4f2850d0f454fd803d2051167d583748f91faa6f2ad36a3eeba2b87fa774661",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/chromium"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_singular_byproduct_1.json",
+          "payload_sha256": "444318e6808a055985e02e79a83e75b268c06a30fdbd30cb3d5aa9a080a6c113",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/chromium"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/chromium/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/chromium",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_sparse_byproduct_0.json",
+          "payload_sha256": "0e8e2316c91608f255f22a1304baa11810fa887364ef6ea0cb9b62cd15c5f353",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/chromium",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_sparse_byproduct_1.json",
+          "payload_sha256": "f4fefa3fefdc9b5242628bd8e7a940752d93a17db1f48d42b55515a3e129ce22",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/chromium",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/chromium/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/chromium"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/raw_byproduct_0.json",
+          "payload_sha256": "c6ba0fe3694c58f4dac61246eafc83ba61a09f0ea70d552e1206ece1d038613f",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/chromium"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/raw_byproduct_1.json",
+          "payload_sha256": "7a0701c22cecd0a8eef067a9a63e29b4d2e12a9cf78f0f47406dbec516a3fc2d",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/chromium"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/chromium/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_chromium"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/raw_block_byproduct_0.json",
+          "payload_sha256": "71ca844e3797e24814a85f084c1fd7ddb54437ea22e5e92114892dbbf32dce2b",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_chromium"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/chromium/raw_block_byproduct_1.json",
+          "payload_sha256": "13445741c919247029f3f81942d5df7a6f9dc26a4d5e6298546ad3ae5da56c7a",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_chromium"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/duralumin/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/duralumin"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/duralumin/raw_byproduct_0.json",
+          "payload_sha256": "a174e8cf357c767fdf22f08cde7f668c485b2b06055c95e245bcd5229f01a586",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/duralumin"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/duralumin/raw_byproduct_1.json",
+          "payload_sha256": "fc13847549afbeee225637ac69cb14b57620ac7a53a052c24312e812aaf3cf73",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/duralumin"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/duralumin/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_duralumin"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/duralumin/raw_block_byproduct_0.json",
+          "payload_sha256": "e370b1ae10ddf4681a217fd1380cf37c72625018b4b3630f207ac8453d1482d4",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_duralumin"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/aluminum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/duralumin/raw_block_byproduct_1.json",
+          "payload_sha256": "b6e3ebc2d85e53688d9eee318cccaa18cc367b189f5580fd93fbb59e199fd720",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_duralumin"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/aluminum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/aluminum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/electrum/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/electrum"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/electrum/raw_byproduct_0.json",
+          "payload_sha256": "3112bd9b4672dcbc55c8ea0b0e00c89ad4df11ab754bf0f398d48cfd9387ee88",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/electrum"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/electrum/raw_byproduct_1.json",
+          "payload_sha256": "3192b6d5007a1240c4112862b8e4dbf01e884de501f037c33ae1e202b164010d",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/electrum"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/electrum/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_electrum"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/electrum/raw_block_byproduct_0.json",
+          "payload_sha256": "c96368f24eb225f82830cffff8475dbec6565be0daeaf710cf69c336319ba74f",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_electrum"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/electrum/raw_block_byproduct_1.json",
+          "payload_sha256": "0bbdf93800df076711db4d553074db9af9acb0c948f02c2ff6395fae77c2d8f7",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_electrum"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/lead/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/lead",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/ore_dense_byproduct_0.json",
+          "payload_sha256": "e8d2ba597342f333e2c103bea3a254c51303f14354eb072cbdc87d6a0345199e",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/lead",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/ore_dense_byproduct_1.json",
+          "payload_sha256": "bb94ede3c37662885042b6fd4885158ace33402f296f2a9190277a9e114c8528",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/lead",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/lead/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/lead"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/ore_singular_byproduct_0.json",
+          "payload_sha256": "7afacf9cd7d341fe255e5543559d4d6cb0aefc0bb1c017f366cf0bebc5fa335c",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/lead"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/ore_singular_byproduct_1.json",
+          "payload_sha256": "532b4135c6eb3db59bad73e1b012c7e50e5ce20312e74d1ef8b0a006d1334609",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/lead"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/lead/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/lead",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/ore_sparse_byproduct_0.json",
+          "payload_sha256": "be5b9e107d747e7b68ed42913f20dac4dcf0b05ed3e06a16a46474b9f8baafb9",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/lead",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/ore_sparse_byproduct_1.json",
+          "payload_sha256": "5ce787429f851fb98319b59d10babf632bb6996a783b0a80cb371cf278295c00",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/lead",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/lead/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/lead"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/raw_byproduct_0.json",
+          "payload_sha256": "db0d70de0bb4ea3218f1964bc25b79a8bc5db36ed681db67c002d258efe46a9c",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/lead"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/raw_byproduct_1.json",
+          "payload_sha256": "ca711354d530fa485741d06c83e5b076e27d2b3efd137371dd0d57ca2453e3c4",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/lead"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/lead/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_lead"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/raw_block_byproduct_0.json",
+          "payload_sha256": "68a84834b1ab4e80f286279338f4416feea6de9f8ac0863c78b959a31a55a618",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_lead"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/silver"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/lead/raw_block_byproduct_1.json",
+          "payload_sha256": "09ec70061e9dc96f7496085610844ec5804e05f8d43f86496e72ef3825ec4a4c",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_lead"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/silver"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/silver": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nickel/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/nickel",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_dense_byproduct_0.json",
+          "payload_sha256": "905bff56e35b79534afbc62c3b6e6143f810371aeab63afecf12e00eb61ebfc2",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/nickel",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_dense_byproduct_1.json",
+          "payload_sha256": "4f59d5a7808b5ad1dd5dfea74ec131ccfc8f62824ced2ed7f54df50bf7fda2f2",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/nickel",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nickel/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/nickel"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_singular_byproduct_0.json",
+          "payload_sha256": "f48cd2f5aa9f0e9ac175a2afbeb9bee94e185d5775d2604bc160b4f3fca679ca",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/nickel"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_singular_byproduct_1.json",
+          "payload_sha256": "5974999fa9d317349daed1fc998872b667fc9880cdf6a0476e6b8dcce71e8de5",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/nickel"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nickel/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/nickel",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_sparse_byproduct_0.json",
+          "payload_sha256": "d75e48bf52e9bc49851e3d88526fd5dda28ab285ac95b1c9674baa06078a24a0",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/nickel",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_sparse_byproduct_1.json",
+          "payload_sha256": "6a0ea7b69e9e4fc54e3ef482a481e47465f73f93f120a0111c4cd6ff97ecccfc",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/nickel",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nickel/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/nickel"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/raw_byproduct_0.json",
+          "payload_sha256": "2ffbd0f7592714db52b2bfbd57b664dbc849b0914359328804be1e11f8de98a4",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/nickel"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/raw_byproduct_1.json",
+          "payload_sha256": "38220ed04038a0c1ff0e9408c6bf6d0da8978d3960df39dbc337626242289d2a",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/nickel"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nickel/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_nickel"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/raw_block_byproduct_0.json",
+          "payload_sha256": "3159397f318d98dcc1a1f34c214c91668ab4d1b6ca8486325fdd05bf5ab05ccd",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_nickel"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nickel/raw_block_byproduct_1.json",
+          "payload_sha256": "175c9e21910352853f54d23baac28b9dc34fc3df42170c27264591126bfd2abf",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_nickel"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nicrosil/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/nicrosil"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nicrosil/raw_byproduct_0.json",
+          "payload_sha256": "eed5eb78f450ba6fbc412a35d8744eddeb5d42c9282ea1fd34fcf32f3720eff4",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/chromium"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/nicrosil"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/chromium"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nicrosil/raw_fallback.json",
+          "payload_sha256": "8a1b61d1d0ab890b51d41c61ddc4d814d3ba8bbcf9dc56dac309c9cdf0a5e2b5",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/nicrosil"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/chromium"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/chromium": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/chromium": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/chromium": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/chromium": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/nicrosil/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_nicrosil"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nicrosil/raw_block_byproduct_0.json",
+          "payload_sha256": "f1a712317e625a6a3b78335bb2ea7843ccadc90b530d725a84bccd9e7c03e529",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/chromium"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_nicrosil"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/chromium"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/nicrosil/raw_block_fallback.json",
+          "payload_sha256": "56f82d0ffb036fb643ba5f4cb9df883560b748e61750743059309dfc1f3e746c",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_nicrosil"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/chromium"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/chromium": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/chromium": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/chromium": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/chromium": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/pewter/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/pewter"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_byproduct_0.json",
+          "payload_sha256": "f2b6a53b88adc2eba6f5f2d86b9655e77ff2c7d512d0e632359573c7b4d19f94",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/pewter"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_byproduct_1.json",
+          "payload_sha256": "b9ca5fa6b01ae42e6e382009250177ee1b735fae2cbee75f77f585f6800a10e0",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/pewter"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_byproduct_2.json",
+          "payload_sha256": "66b1ed7e1a8477e4d5195ba2ac5a16388ac3fdf32381317633a5805cf55cd087",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/pewter"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 2,
+          "converted_enabled_branches": [
+            2
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/pewter/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_pewter"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_block_byproduct_0.json",
+          "payload_sha256": "33874c696512f9496fb92b464b383cc2d1a2d6388a5701bf48e8d97a89023edc",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_pewter"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_block_byproduct_1.json",
+          "payload_sha256": "e72ad17266748bcfcb56f0c77b6248131f7e3afcab9eed59f7a207b7418b3485",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_pewter"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_block_byproduct_2.json",
+          "payload_sha256": "219b67d5e6dd897f8093b091ed81da4a9d81e4d4d97220fa5a118280a1c1f5f8",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_pewter"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 2,
+          "converted_enabled_branches": [
+            2
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true,
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/silver/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/silver",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/ore_dense_byproduct_0.json",
+          "payload_sha256": "9018a6abd28a85a7bf6ad17724c851a517654f711928775a108fd5e168f09d1e",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/silver",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/ore_dense_byproduct_1.json",
+          "payload_sha256": "058ec84abaaeea3832990702603c3a50f534d187a5de64ed80b5421b7df5c1d6",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/silver",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/silver/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/silver"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/ore_singular_byproduct_0.json",
+          "payload_sha256": "347d4d157c75d196dd78930bb88d378a60db9c2217bad56fabee5b316ac2b833",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/silver"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/ore_singular_byproduct_1.json",
+          "payload_sha256": "85b13849ae25f4dce62b2936d3c7d71b0dba4312f9cd44a4b7003b28951e758e",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/silver"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/silver/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/silver",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/ore_sparse_byproduct_0.json",
+          "payload_sha256": "39beb8a1f7b3f5a826e38de35dececc0b47ca7aa6cd61cb9e3714122a1bcec69",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/silver",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/ore_sparse_byproduct_1.json",
+          "payload_sha256": "1f0ecb0782bdcc38404d24e872e2de568b4842acc33d7b34bbff2f5d59ba7831",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/silver",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/silver/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/silver"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/raw_byproduct_0.json",
+          "payload_sha256": "fe8c5bfded0afbee6e64b84cbcc18b92d27b3bb8b23fb5a0ff4aed665934d1b8",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/silver"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/raw_byproduct_1.json",
+          "payload_sha256": "a1c9ce4919ca74dc62fc39345e8b518b22810cab6e292926d55a8ba71dbf7800",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/silver"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/silver/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_silver"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/raw_block_byproduct_0.json",
+          "payload_sha256": "4b5650e276b480b7f30ea4dd1226f7cfbbedcef47c345b1d88a31a7486a54745",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_silver"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/silver/raw_block_byproduct_1.json",
+          "payload_sha256": "4e9a91dd37c4ade974f495038b9b62441062fa7b61dc68f824fc48414515d384",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_silver"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tin/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/tin",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/ore_dense_byproduct_0.json",
+          "payload_sha256": "5e8c6aecd6a0b9d005d39bbbc7266aefb9ae6671959a46049bb10533a6bf5e83",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tin",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/ore_dense_byproduct_1.json",
+          "payload_sha256": "15fe9418d5445c2264b29f4809ce038b1f701cf663b3436b769378f6457bf17a",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tin",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/nickel"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tin/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/tin"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/ore_singular_byproduct_0.json",
+          "payload_sha256": "a8ec587bdad3f9f284ad6e4eb999cd73f94fc046ac43a2573ff939203ecfe484",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/tin"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/ore_singular_byproduct_1.json",
+          "payload_sha256": "862b5b15bec90adb436f98e98d368a09e45b23823ed4fa5179defd31f16adda2",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/tin"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/nickel"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tin/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/tin",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/ore_sparse_byproduct_0.json",
+          "payload_sha256": "ed94166d3be284314db3a57f82cd49324f48dbc1eac8479df2bc8b132ea44df3",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tin",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/ore_sparse_byproduct_1.json",
+          "payload_sha256": "80e56bd7e2383a88374c4a776d71632954333b49a40b4a6fc7c813059448dbf3",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tin",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/nickel"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tin/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/tin"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/raw_byproduct_0.json",
+          "payload_sha256": "c1ad92a121ba2ca7d81a6550079de3cc8a8d0a76dbeb7d3c9d2cace306f209eb",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/tin"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/raw_byproduct_1.json",
+          "payload_sha256": "e1dd1648197a3fb97f9712e2004b62da524f614c54bd65ea969b4c7321c613d0",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/tin"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/nickel"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tin/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_tin"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/raw_block_byproduct_0.json",
+          "payload_sha256": "b44958c19b4f37e89e460eb8b69e9cbbfad18ca5a46eb191ac0d757efd55724c",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_tin"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/nickel"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tin/raw_block_byproduct_1.json",
+          "payload_sha256": "e695eabc3d2c478356b4f8ed78068bc71f6425d9db677ab534ecbf12d4b57ba8",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_tin"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/nickel"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/nickel": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tungsten/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/tungsten",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_dense_byproduct_0.json",
+          "payload_sha256": "8a176a95d139505b39350835d82f75073903a6fe10c1a3f052aa7abb91be19cf",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tungsten",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_dense_byproduct_1.json",
+          "payload_sha256": "fe7499f40f3e8ee793753bbbe1e76b4209dd13fd166beecb5ef768c4426c800e",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tungsten",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tungsten/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/tungsten"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_singular_byproduct_0.json",
+          "payload_sha256": "a537eb3c0c9b03253fcd9b2a4d6684d318c2194ccc9dba1944b7b10377e76141",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/tungsten"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_singular_byproduct_1.json",
+          "payload_sha256": "3bccad7ade9528de8e7701c8ce39269b9562d1da54d73225a87d3b8059e14c6a",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/tungsten"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tungsten/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/tungsten",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_sparse_byproduct_0.json",
+          "payload_sha256": "89b97c353cca7912cfb43512a1968b102182bec0e17cdab6c344a8698e886565",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tungsten",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_sparse_byproduct_1.json",
+          "payload_sha256": "15450e7e3feb22f1e72594a8ed5f5e847adab0fe800250f920b4c178e505e58c",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/tungsten",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tungsten/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/tungsten"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/raw_byproduct_0.json",
+          "payload_sha256": "432e27996b72c6da6a052e42f3284c48ba7002b9d29433b45c94052de5f2b0b5",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/tungsten"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/raw_byproduct_1.json",
+          "payload_sha256": "4423d121cd4a0e7930a33543b53e73bb4c1dfd1f12b8490b1cd3faa0f5d5498a",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/tungsten"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/tungsten/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_tungsten"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/raw_block_byproduct_0.json",
+          "payload_sha256": "b082934b387d9df4392c514fbf17e66741e0c5fbeb2fe38f2dac7f15fa3be66c",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_tungsten"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/platinum"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/tungsten/raw_block_byproduct_1.json",
+          "payload_sha256": "569edee8d75c178aa1905801ab43f7720fb510ad7ea8ea7d47c580e5814d1e7f",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_tungsten"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/platinum"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/platinum": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/uranium/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/uranium",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_dense_byproduct_0.json",
+          "payload_sha256": "c21f62d4da288ce97b6863b01260d7e94707f39aade2a5441b5a8faaaf451118",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/uranium",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_dense_byproduct_1.json",
+          "payload_sha256": "1d483eecde0839df9297c87b3e7836f867ccfd4099c4273c0684224b4dac50fb",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/uranium",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/uranium/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/uranium"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_singular_byproduct_0.json",
+          "payload_sha256": "192b60284e47103e1531e5f6b1fd3f366cb51fe46311d6720134bab3747fbd18",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/uranium"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_singular_byproduct_1.json",
+          "payload_sha256": "c24b7eccedd12ec541c2a6045b64fe810a9124932e315b42607c2235f32278e9",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/uranium"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/uranium/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/uranium",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_sparse_byproduct_0.json",
+          "payload_sha256": "9226d06fcad6ec311cdb01b2c06c581ee075d3bef9411ef4e5630432cbe77447",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/uranium",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_sparse_byproduct_1.json",
+          "payload_sha256": "629ab9e50aff7f81ef87ad8d0b2b49db79b12109108732aa0367081cf1d74538",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/uranium",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/uranium/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/uranium"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/raw_byproduct_0.json",
+          "payload_sha256": "717367c4d5c42e7b0585f4629acc867696981a35c6470c72a5e4eb1a80cce0dd",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/uranium"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/raw_byproduct_1.json",
+          "payload_sha256": "3c0a03aff6f765cecb440f8f3a8719bf73dd79d8b14a8c6e28b2efb114af13f0",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/uranium"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/uranium/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_uranium"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/raw_block_byproduct_0.json",
+          "payload_sha256": "3f569a95d22cf7d7c9e54a548833d734a1a3d54c1252aa1947ea9ead3e765d8d",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_uranium"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/lead"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/uranium/raw_block_byproduct_1.json",
+          "payload_sha256": "8e2c1e87b6d5ab76943cb585e7d1f8a88c12acb1bfe3891e686c50dfa89ae6d9",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_uranium"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/lead"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/lead": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/geore/bud_large.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:geore_large_buds/zinc"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_large_byproduct_0.json",
+          "payload_sha256": "901ebcddb14e30afff85062385613b61eee7a4132d3d7a369cb78c46c5148676",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_large_buds/zinc"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_large_byproduct_1.json",
+          "payload_sha256": "f6a6d819ec12aa663ff942bb7316a4312f094cabcf16cee15651d15739f7f0df",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_large_buds/zinc"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/geore/bud_medium.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:geore_medium_buds/zinc"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_medium_byproduct_0.json",
+          "payload_sha256": "7cb576824d57a8e38ed331da4cd5a4c07523845a1e658c2131e3521ca46b4199",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_medium_buds/zinc"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_medium_byproduct_1.json",
+          "payload_sha256": "1ce00705561c02e510663ee327a501972fab895f6aab1fa8b04af6c9f1c9b947",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_medium_buds/zinc"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/geore/bud_small.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:geore_small_buds/zinc"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_small_byproduct_0.json",
+          "payload_sha256": "77ac691c00259ba8438a712b202de0b630e98eebc8ce853cb4a628f99f1713ba",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_small_buds/zinc"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_small_byproduct_1.json",
+          "payload_sha256": "a0ccac12f6afd7db463bdee2684743ca4ef66d03a30687de36899ff9d91ac475",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_small_buds/zinc"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/geore/cluster.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:geore_clusters/zinc"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/cluster_byproduct_0.json",
+          "payload_sha256": "6b94422f18c895a2e23d0f4e34e202887c3e94474e36761fb98fa9cee6a392f4",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_clusters/zinc"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/cluster_byproduct_1.json",
+          "payload_sha256": "d29b9ef9e4708bf43aad0befe545e09aca008659cbc4485550157fdc78e78603",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:geore_clusters/zinc"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/ore_dense.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/zinc",
+            "c:ore_rates/dense"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_dense_byproduct_0.json",
+          "payload_sha256": "9583f1bcc797c78ded960bd8ae74d7d3599a6b481b3fe4ada10cb69288efb82b",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/zinc",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_dense_byproduct_1.json",
+          "payload_sha256": "067b6d36055072c939993b34fbee1a466e164e5bcc3d98f82e955a7a081048a1",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/zinc",
+                "c:ore_rates/dense"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/ore_singular.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "ignore": "tconstruct:non_singular_ore_rates",
+          "match": [
+            "c:ores/zinc"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_singular_byproduct_0.json",
+          "payload_sha256": "d46ac12a7ee73e8c2c2b9e2595ceae91f0f7a6d6aead36707543f2b78d619e64",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/zinc"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_singular_byproduct_1.json",
+          "payload_sha256": "26a99997e20c63d3f5fdf3103fb74a4f89a6e80428d265fb15a6552296bfc9b9",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "ignore": "tconstruct:non_singular_ore_rates",
+              "match": [
+                "c:ores/zinc"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/ore_sparse.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_combination_filled",
+          "match": [
+            "c:ores/zinc",
+            "c:ore_rates/sparse"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_sparse_byproduct_0.json",
+          "payload_sha256": "635a53d36979fe76192260c68f0a49197ad58340f0fe7812b2dc16863e2cae8a",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/zinc",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_sparse_byproduct_1.json",
+          "payload_sha256": "011fd342b0acb4f27a4a5ec8b17e437a20112df7e7f6ef7042e7a789d22630bb",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_combination_filled",
+              "match": [
+                "c:ores/zinc",
+                "c:ore_rates/sparse"
+              ]
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/raw.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:raw_materials/zinc"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/raw_byproduct_0.json",
+          "payload_sha256": "53029e9f88622a9c1d6d55a57983df9cb4c0cb612dde838a67361c5b781e669b",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/zinc"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/raw_byproduct_1.json",
+          "payload_sha256": "0380ebff2a494386ae8298043575b76f6795aec99afd241a896085631ec843eb",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:raw_materials/zinc"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/smeltery/melting/metal/zinc/raw_block.json",
+      "outer_conditions_unchanged": [
+        {
+          "type": "mantle:tag_filled",
+          "tag": "c:storage_blocks/raw_zinc"
+        }
+      ],
+      "branches": [
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/raw_block_byproduct_0.json",
+          "payload_sha256": "8a5c06300284936382e058c58c14da3dd4f2c0afe3f49ee21e4b3832701fc2d4",
+          "original_eligibility": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_zinc"
+            },
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:ingots/tin"
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        },
+        {
+          "path": "src/generated/resources/data/tconstruct/recipe/smeltery/melting/metal/zinc/raw_block_byproduct_1.json",
+          "payload_sha256": "c05558bc727537886991cccb10ae1e274c9d7185bb8dcbadfc7f71d63bb44c41",
+          "original_eligibility": [
+            {
+              "type": "neoforge:always"
+            }
+          ],
+          "fixed_conditions": [
+            {
+              "type": "mantle:tag_filled",
+              "tag": "c:storage_blocks/raw_zinc"
+            },
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "mantle:tag_filled",
+                "tag": "c:ingots/tin"
+              }
+            }
+          ],
+          "original_amounts_rates_temperature_time_preserved": true
+        }
+      ],
+      "truth_table": [
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": false
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 1,
+          "converted_enabled_branches": [
+            1
+          ]
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": false,
+          "original_first_match": null,
+          "converted_enabled_branches": []
+        },
+        {
+          "tags": {
+            "c:ingots/tin": true
+          },
+          "outer_conditions_pass": true,
+          "original_first_match": 0,
+          "converted_enabled_branches": [
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "restored_recipes": [
+    {
+      "original_resource": "data/tconstruct/recipes/tools/materials/honey_block.json",
+      "path": "src/generated/resources/data/tconstruct/recipe/tools/materials/honey_block.json",
+      "payload_sha256": "58d0c07907cead6fb795b10d4e617c419e6185ce2b52cecfc560d82b58813ac0",
+      "complete_payload_equals_original_after_ingredient_syntax_migration": true
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/tools/materials/composite/magma.json",
+      "path": "src/generated/resources/data/tconstruct/recipe/tools/materials/composite/magma.json",
+      "payload_sha256": "9e3681c47b978ab0413a1b39eb0904debc6f015cb70a366950486e72f3ec26c5",
+      "complete_payload_equals_original_after_ingredient_syntax_migration": true
+    },
+    {
+      "original_resource": "data/tconstruct/recipes/tools/modifiers/tasty_crafting_table.json",
+      "path": "src/generated/resources/data/tconstruct/recipe/tools/modifiers/tasty_crafting_table.json",
+      "payload_sha256": "6bb36c17d5685c6df21fb504ae679a7bbafedbb7e38e1203a95c3c39d67677a7",
+      "complete_payload_equals_original_after_ingredient_syntax_migration": true
+    }
+  ]
+}

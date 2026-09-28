@@ -6,6 +6,13 @@
         "c:ores/lead",
         "c:ore_rates/sparse"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/silver"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

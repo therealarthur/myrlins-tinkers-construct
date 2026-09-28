@@ -3,6 +3,20 @@
     {
       "type": "mantle:tag_filled",
       "tag": "c:raw_materials/pewter"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/tin"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/lead"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

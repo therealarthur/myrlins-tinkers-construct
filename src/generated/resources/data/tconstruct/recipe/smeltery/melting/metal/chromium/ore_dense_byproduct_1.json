@@ -6,6 +6,13 @@
         "c:ores/chromium",
         "c:ore_rates/dense"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/aluminum"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

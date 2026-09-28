@@ -6,6 +6,13 @@
         "c:ores/tungsten",
         "c:ore_rates/sparse"
       ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/platinum"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

@@ -177,8 +177,9 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                             .save(consumer, prefix(TinkerModifiers.silkyCloth, folder));
 
     // modifier repair
-    // pig iron - from bacon, only in the tinker station
+    // pig iron - from bacon in the station or crafting grid
     ModifierRepairRecipeBuilder.repair(ModifierIds.tasty, Ingredient.of(TinkerCommons.bacon), 25)
+                               .buildCraftingTable(consumer, prefix(ModifierIds.tasty, folder).withSuffix("_crafting_table"))
                                .save(consumer, prefix(ModifierIds.tasty, folder));
   }
 

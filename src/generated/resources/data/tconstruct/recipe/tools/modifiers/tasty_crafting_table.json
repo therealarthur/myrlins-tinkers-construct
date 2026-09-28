@@ -1,0 +1,7 @@
+{
+  "type": "tconstruct:crafting_modifier_repair",
+  "id": "tconstruct:tools/modifiers/tasty_crafting_table",
+  "ingredient": "tconstruct:bacon",
+  "modifier": "tconstruct:tasty",
+  "repair_amount": 25
+}

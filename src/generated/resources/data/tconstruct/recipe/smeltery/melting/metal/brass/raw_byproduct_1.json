@@ -3,6 +3,13 @@
     {
       "type": "mantle:tag_filled",
       "tag": "c:raw_materials/brass"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/zinc"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",

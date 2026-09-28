@@ -5,7 +5,11 @@
       "tag": "c:storage_blocks/raw_bendalloy"
     },
     {
-      "type": "neoforge:always"
+      "type": "neoforge:not",
+      "value": {
+        "type": "mantle:tag_filled",
+        "tag": "c:ingots/cadmium"
+      }
     }
   ],
   "type": "tconstruct:ore_melting",
