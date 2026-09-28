@@ -9,11 +9,13 @@ import java.util.function.Supplier;
 public class LazyMaterial implements Supplier<IMaterial> {
   /** ID to fetch */
   private final MaterialId id;
-  /** Cached material fetched from the registry */
-  private IMaterial material;
+  /** Explicit material for data generation; ID-based instances always follow registry reloads. */
+  @Nullable
+  private final IMaterial material;
 
   protected LazyMaterial(MaterialId id) {
     this.id = id;
+    this.material = null;
   }
 
   protected LazyMaterial(IMaterial material) {
@@ -37,13 +39,12 @@ public class LazyMaterial implements Supplier<IMaterial> {
 
   @Override
   public IMaterial get() {
-    if (material == null) {
-      if (!MaterialRegistry.isFullyLoaded()) {
-        return IMaterial.UNKNOWN;
-      }
-      material = MaterialRegistry.getMaterial(id);
+    if (material != null) {
+      return material;
     }
-    return material;
+    // Recipes survive material synchronization and datapack reloads. Neither an old
+    // material object nor a previously missing ID may be cached across those changes.
+    return MaterialRegistry.isFullyLoaded() ? MaterialRegistry.getMaterial(id) : IMaterial.UNKNOWN;
   }
 
   /** If true, this material is intentionally the unknown ID. Unlike {@link #isUnknown()} this will not match if the material is a valid ID but is not found */

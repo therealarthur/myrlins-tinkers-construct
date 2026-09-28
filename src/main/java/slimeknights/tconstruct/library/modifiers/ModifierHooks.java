@@ -1,5 +1,7 @@
 package slimeknights.tconstruct.library.modifiers;
 
+import slimeknights.tconstruct.library.modifiers.hook.behavior.ToolDurabilityChangedHook;
+
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -124,6 +126,12 @@ public class ModifierHooks {
 
   /** Hook for modifying the damage amount for tools */
   public static final ModuleHook<ToolDamageModifierHook> TOOL_DAMAGE = register("tool_damage", ToolDamageModifierHook.class, ToolDamageModifierHook.Merger::new, (tool, modifier, amount, holder) -> amount);
+
+  /** Notification after an accepted durability change, without changing its amount. */
+  public static final ModuleHook<ToolDurabilityChangedHook> DURABILITY_CHANGED = register(
+    "durability_changed", ToolDurabilityChangedHook.class,
+    ToolDurabilityChangedHook.Merger::new,
+    new ToolDurabilityChangedHook() {});
 
   /** Hook running while the tool is in the inventory */
   public static final ModuleHook<InventoryTickModifierHook> INVENTORY_TICK = register("inventory_tick", InventoryTickModifierHook.class, InventoryTickModifierHook.AllMerger::new, (tool, modifier, world, holder, itemSlot, isSelected, isCorrectSlot, stack) -> {});

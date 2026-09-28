@@ -48,8 +48,9 @@ public class TipClearingCastingRecipe extends PotionCastingRecipe {
 
   public ItemStack assemble(ICastingContainer inv) {
     ItemStack result = inv.getStack().copy();
-    ToolStack.from(result).getPersistentData().remove(modifier.getId());
-    return result;
+    ToolStack tool = ToolStack.from(result);
+    tool.getPersistentData().remove(modifier.getId());
+    return tool.copyStack(result);
   }
 
 
@@ -57,6 +58,7 @@ public class TipClearingCastingRecipe extends PotionCastingRecipe {
 
   @Override
   public List<DisplayCastingRecipe> getRecipes(RegistryAccess access) {
+    refreshDisplayCache();
     if (displayRecipes == null) {
       // create a list of tools with the modifier
       List<ItemStack> tools = MaterialRecipeCache.getDisplayItems(bottle).stream()

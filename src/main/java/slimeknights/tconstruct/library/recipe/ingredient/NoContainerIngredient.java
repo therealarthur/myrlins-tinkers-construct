@@ -30,7 +30,11 @@ public class NoContainerIngredient extends NestedIngredient {
 
   @Override
   public boolean test(@Nullable ItemStack stack) {
-    return stack != null && super.test(stack) && stack.getCraftingRemainder() == null;
+    if (stack == null || !super.test(stack)) {
+      return false;
+    }
+    var remainder = stack.getCraftingRemainder();
+    return remainder == null || remainder.create().isEmpty();
   }
 
   @Override

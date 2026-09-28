@@ -93,7 +93,7 @@ public class ToolDamageUtil {
   /* Damaging and repairing */
 
   /**
-   * Directly damages the tool, bypassing modifier hooks
+   * Directly damages the tool, bypassing damage adjustment hooks and notifying durability listeners
    * @param tool    Tool to damage
    * @param amount  Amount to damage
    * @param entity  Entity holding the tool
@@ -130,6 +130,10 @@ public class ToolDamageUtil {
       }
 
       tool.setDamage(newDamage);
+      for (ModifierEntry modifier : tool.getModifiers()) {
+        modifier.getHook(ModifierHooks.DURABILITY_CHANGED).afterDamageTool(tool, modifier, amount, entity,
+          stack == null ? ItemStack.EMPTY : stack);
+      }
       syncToolStack(tool, stack);
       return newDamage >= durability;
     }
@@ -313,7 +317,11 @@ public class ToolDamageUtil {
     // note modifiers are run in the recipe instead
 
     // ensure we never repair more than max durability
-    int newDamage = damage - Math.min(amount, damage);
+    int repaired = Math.min(amount, damage);
+    int newDamage = damage - repaired;
     tool.setDamage(newDamage);
+    for (ModifierEntry modifier : tool.getModifiers()) {
+      modifier.getHook(ModifierHooks.DURABILITY_CHANGED).afterRepairTool(tool, modifier, repaired);
+    }
   }
 }

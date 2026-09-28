@@ -8,6 +8,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Instruments;
+import net.minecraft.tags.InstrumentTags;
+import slimeknights.tconstruct.library.recipe.ingredient.InstrumentIngredient;
 import net.minecraft.world.item.crafting.Ingredient;
 import slimeknights.tconstruct.library.recipe.ingredient.LegacyIngredientType;
 import net.minecraft.world.level.block.Blocks;
@@ -268,10 +271,18 @@ public class MaterialRecipeProvider extends BaseRecipeProvider implements IMater
     // slimesuit
     materialRecipe(consumer, MaterialIds.enderslime, Ingredient.of(TinkerWorld.enderGeode), 1, 1, folder + "enderslime");
     materialRecipe(consumer, MaterialIds.phantom,    Ingredient.of(Items.PHANTOM_MEMBRANE), 1, 1, folder + "phantom_membrane");
-    materialRecipe(consumer, MaterialIds.horn,       Ingredient.of(Items.GOAT_HORN),        4, 1, folder + "horn");
+    for (var instrument : List.of(Instruments.PONDER_GOAT_HORN, Instruments.SING_GOAT_HORN,
+        Instruments.SEEK_GOAT_HORN, Instruments.FEEL_GOAT_HORN, Instruments.ADMIRE_GOAT_HORN,
+        Instruments.CALL_GOAT_HORN, Instruments.YEARN_GOAT_HORN, Instruments.DREAM_GOAT_HORN)) {
+      materialRecipe(consumer, MaterialVariantId.create(MaterialIds.horn, instrument.identifier().toString().replace(':', '.')),
+        InstrumentIngredient.of(Items.GOAT_HORN, instrument).toVanilla(), 4, 1, folder + "horn/" + instrument.identifier().getPath());
+    }
+    materialRecipe(withCondition(consumer, TagCombinationCondition.difference(InstrumentTags.GOAT_HORNS, TinkerTags.Instruments.VARIANT_HORNS)),
+      MaterialIds.horn, InstrumentIngredient.of(Items.GOAT_HORN, TinkerTags.Instruments.VARIANT_HORNS).toVanilla(), 4, 1, folder + "horn/default");
     materialRecipe(consumer, MaterialIds.venom, Ingredient.of(Items.SPIDER_EYE), 1, 1, folder + "venom_eye");
     materialRecipe(consumer, MaterialIds.venom, Ingredient.of(Items.FERMENTED_SPIDER_EYE), 2, 1, folder + "venom_fermented");
     materialRecipe(consumer, MaterialIds.honey,      Ingredient.of(Items.HONEY_BOTTLE),     1, 1, folder + "honey");
+    materialRecipe(consumer, MaterialIds.honey,      Ingredient.of(Items.HONEY_BLOCK),      4, 1, folder + "honey_block");
     materialRecipe(consumer, MaterialIds.cheese,     Ingredient.of(TinkerCommons.cheeseIngot), 1, 1, folder + "cheese_ingot");
     materialRecipe(consumer, MaterialIds.cheese,     Ingredient.of(TinkerCommons.cheeseBlock), 4, 1, folder + "cheese_block");
   }
@@ -406,6 +417,11 @@ public class MaterialRecipeProvider extends BaseRecipeProvider implements IMater
     materialMeltingCasting(consumer, MaterialIds.ichor,      TinkerFluids.ichor,      FluidValues.SLIMEBALL, folder);
     materialMeltingCasting(consumer, MaterialIds.enderslime, TinkerFluids.enderSlime, FluidValues.SLIMEBALL, folder);
     materialMeltingCasting(consumer, MaterialIds.magma,      TinkerFluids.magma,      FluidValues.SLIMEBALL, folder);
+    MaterialFluidRecipeBuilder.material(MaterialIds.magma)
+      .setInputId(MaterialIds.earthslime)
+      .setFluid(TagKey.create(net.minecraft.core.registries.Registries.FLUID, TinkerFluids.blazingBlood.getId()), 50)
+      .setTemperature(1500)
+      .save(consumer, location(folder + "composite/magma"));
     // slimesuit - pseudoslime
     materialMeltingCasting(consumer, MaterialIds.clay,       TinkerFluids.moltenClay,  FluidValues.BRICK,    folder);
     // Keep the original local venom tag while accepting the registered source fluid directly.

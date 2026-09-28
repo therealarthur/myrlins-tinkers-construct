@@ -1,8 +1,0 @@
-{
-  "type": "tconstruct:material",
-  "id": "tconstruct:tools/materials/horn",
-  "ingredient": "minecraft:goat_horn",
-  "material": "tconstruct:horn",
-  "needed": 1,
-  "value": 4
-}

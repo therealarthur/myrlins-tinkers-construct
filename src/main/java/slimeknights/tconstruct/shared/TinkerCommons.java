@@ -181,6 +181,8 @@ public final class TinkerCommons extends TinkerModule {
   @SuppressWarnings("removal")
   @SubscribeEvent
   void registerRecipeSerializers(RegisterEvent event) {
+    event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES, slimeknights.tconstruct.library.recipe.ingredient.InstrumentIngredient.ID,
+      () -> slimeknights.tconstruct.library.recipe.ingredient.InstrumentIngredient.TYPE);
     event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES, NoContainerIngredient.ID, () -> NoContainerIngredient.TYPE);
     event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES, BlockTagIngredient.ID, () -> BlockTagIngredient.TYPE);
     if (event.getRegistryKey() == Registries.RECIPE_SERIALIZER) {

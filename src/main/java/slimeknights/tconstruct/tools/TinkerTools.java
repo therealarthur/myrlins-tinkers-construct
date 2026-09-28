@@ -1,5 +1,7 @@
 package slimeknights.tconstruct.tools;
 
+import slimeknights.tconstruct.library.json.predicate.tool.ToolActionPredicate;
+
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.server.packs.PackType;
@@ -421,6 +423,7 @@ public final class TinkerTools extends TinkerModule {
       ToolContextPredicate.LOADER.register(getResource("has_persistent_key"), PersistentDataPredicate.LOADER);
       ToolContextPredicate.LOADER.register(getResource("has_hook"), HasToolHookPredicate.LOADER);
       ToolStackPredicate.LOADER.register(getResource("not_broken"), ToolStackPredicate.NOT_BROKEN.getLoader());
+      ToolStackPredicate.LOADER.register(getResource("tool_action"), ToolActionPredicate.LOADER);
       ToolStackPredicate.LOADER.register(getResource("stat_in_range"), StatInRangePredicate.LOADER);
       ToolStackPredicate.LOADER.register(getResource("stat_in_set"), StatInSetPredicate.LOADER);
       ToolStackPredicate.LOADER.register(getResource("has_volatile_key"), VolatileDataPredicate.LOADER);

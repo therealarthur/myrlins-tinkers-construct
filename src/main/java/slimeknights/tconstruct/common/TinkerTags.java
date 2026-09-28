@@ -955,4 +955,9 @@ public class TinkerTags {
     /** Any potion variants in this tag will be hidden from the variants of the potion fluid shown in JEI. */
     public static final TagKey<Potion> HIDDEN_FLUID = TagKey.create(Registries.POTION, getResource("hide_in_fluid"));
   }
+
+  public static class Instruments {
+    /** Horn instruments with separate material texture variants. */
+    public static final TagKey<net.minecraft.world.item.Instrument> VARIANT_HORNS = TagKey.create(Registries.INSTRUMENT, getResource("variant_horns"));
+  }
 }

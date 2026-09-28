@@ -43,8 +43,39 @@ The remaining three passing tests cover recipe cache replacement, component-awar
 
 Keep the existing Continuum numerical tuning while the optional original-balance preference is unanswered, as confirmed by the integration coordinator. Record all differences. Missing behavior and concrete migration defects are restored independently of that choice.
 
+## Separate arthur.3 source restoration
+
+This checkpoint adds the eight original instrument-specific horn material recipes
+and fallback, component-sensitive material lookup, five modifier-tooltip contexts,
+and the original common fluid variables, capacity modules, action predicate,
+durability-change hook and material-user APIs. Material references now follow
+completed reloads, potion casting retains modern components, and copied modifier
+display data is written before freezing its component. See `common-api-parity.md`
+and `modifier-tooltip-parity.md` for boundaries and actual-class tests.
+
+All 15 original recipe category types now have REI display data, with five custom
+entry types, correlated tool-tinkering producers, actual cost/refund calculations,
+component-aware cache invalidation and recycling corrections. This does not close
+focus behavior, dynamic slots, transfer, crafting extensions, client reload or
+JEI adapter parity. `recipe-viewer-parity-plan.md` retains those open items. The
+server fixture adds nine tool-tinkering and fourteen recipe-mapper cases to the
+previous 54; all 77 compile, with execution left to the integration coordinator.
+
+Three missing recipes are restored: honey-block material, earthslime-to-magma
+conversion, and bacon crafting repair. Optional ore-melting alternatives across
+61 families now preserve the original first-passing-branch behavior; the retained
+truth-table report checks all 252 combinations. Tank model data and blockstate
+dispatch, modifier-sensitive model cache keys, extruded tool geometry, the proxy
+tank's GUI geometry and three book tooltip overrides are also restored. Five
+client-only tests remain explicitly separate from dedicated-distribution tests.
+
+Authoritative test counts, XML hashes and retained evidence for this checkpoint
+are in `VERIFICATION-ARTHUR-3.json`; its artifact hashes and source commit are in
+`../../../docs/handoffs/continuum.md`. Neither frozen earlier checkpoint is
+overwritten. Server fixtures and graphical acceptance are separate obligations.
+
 ## Open coverage
 
-The complete source/resource review queue remains authoritative. This restoration does not close all 15 recipe categories and their focus/transfer behavior, actual client rendering/book behavior, translated books and changed assets, runtime developer-command generation, optional external integrations, all 1,527 changed Java bodies, or the full material/modifier/resource comparison. Known additional gaps include proxy-tank GUI geometry and newer common datapack APIs (fluid variables/capacity, tool-action predicates, durability notifications, instrument ingredients and tooltip policies). Some paths are current API replacements and require an explicit mapping rather than a duplicate implementation.
+The complete source/resource review queue remains authoritative. This restoration does not close recipe focus/transfer behavior, actual client rendering/book behavior, translated books and changed assets, runtime developer-command generation, optional external integrations, all 1,527 changed Java bodies, or the full material/modifier/resource comparison. Known additional gaps include fluid tint/emission, remaining embedded tank GUI geometry and generic resource-pack GUI loaders, modular edible effects and their schemas, conditional-stat registration, and the wandering-trader ancient-tool trade. Some paths are current API replacements and require an explicit mapping rather than a duplicate implementation.
 
 Next checks must also cover smeltery/foundry reconstruction and saved contents, fluid/container conservation, modifier conversion and tag reloads, actual recipe registration, world generation, equipment interactions, and Arthur-operated client visuals. Do not use file counts, successful compilation, or a server boot as evidence that these are complete.

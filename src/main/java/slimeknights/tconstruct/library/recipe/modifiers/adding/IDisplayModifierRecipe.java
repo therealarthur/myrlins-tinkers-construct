@@ -186,8 +186,8 @@ public interface IDisplayModifierRecipe extends IModifierRecipe {
       entry.getHook(ModifierHooks.VOLATILE_DATA).addVolatileData(context, entry, volatileData);
     }
     nbt.put(ToolStack.TAG_VOLATILE_MOD_DATA, volatileNBT);
-    output.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
     nbt.put(ToolStack.TAG_PERSISTENT_MOD_DATA, persistentNBT);
+    output.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
 
     return output;
   }

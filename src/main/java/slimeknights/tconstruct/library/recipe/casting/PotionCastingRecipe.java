@@ -114,14 +114,20 @@ public class PotionCastingRecipe implements ICastingRecipe, IMultiRecipe<Display
 
   public ItemStack assemble(ICastingContainer inv) {
     ItemStack result = new ItemStack(this.result);
-    PotionContents contents = PotionFluidType.getPotionContents(inv.getFluidStack());
-    if (contents == PotionContents.EMPTY) {
-      contents = getPotionContents(inv.getFluidTag());
-    }
+    PotionContents contents = getPotionContents(inv);
     if (contents != PotionContents.EMPTY) {
       result.set(DataComponents.POTION_CONTENTS, contents);
     }
     return result;
+  }
+
+  /** Reads current component storage, retaining support for older casting containers. */
+  protected static PotionContents getPotionContents(ICastingContainer inv) {
+    PotionContents contents = PotionFluidType.getPotionContents(inv.getFluidStack());
+    if (contents == PotionContents.EMPTY) {
+      contents = getPotionContents(inv.getFluidTag());
+    }
+    return contents;
   }
 
   protected static PotionContents potionContents(Potion potion) {
@@ -149,9 +155,20 @@ public class PotionCastingRecipe implements ICastingRecipe, IMultiRecipe<Display
 
   /* JEI */
   protected List<DisplayCastingRecipe> displayRecipes = null;
+  private long displayRevision = -1;
+
+  /** Materials and recipes can change without replacing this recipe object. */
+  protected void refreshDisplayCache() {
+    long revision = slimeknights.tconstruct.library.client.recipe.ClientRecipeCache.getSnapshot().revision();
+    if (displayRevision != revision) {
+      displayRevision = revision;
+      displayRecipes = null;
+    }
+  }
 
   @Override
   public List<DisplayCastingRecipe> getRecipes(RegistryAccess access) {
+    refreshDisplayCache();
     if (displayRecipes == null) {
       // create a subrecipe for every potion variant
       List<ItemStack> bottles = MaterialRecipeCache.getDisplayItems(bottle);

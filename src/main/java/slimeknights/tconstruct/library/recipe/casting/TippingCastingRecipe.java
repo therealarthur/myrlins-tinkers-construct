@@ -48,7 +48,7 @@ public class TippingCastingRecipe extends PotionCastingRecipe {
     ItemStack stack = inv.getStack();
     if (super.matches(inv, level) && ToolStack.from(stack).getModifierLevel(modifier) > 0) {
       // must also have a specific potion, and it cannot match what is already on the stack
-      String potion = getPotionId(getPotionContents(inv.getFluidTag()));
+      String potion = getPotionId(getPotionContents(inv));
       return !potion.isEmpty() && !ModifierUtil.getPersistentString(stack, modifier.getId()).equals(potion);
     }
     return false;
@@ -57,7 +57,7 @@ public class TippingCastingRecipe extends PotionCastingRecipe {
   @Override
   public ItemStack assemble(ICastingContainer inv) {
     ItemStack result = inv.getStack().copy();
-    String potion = getPotionId(getPotionContents(inv.getFluidTag()));
+    String potion = getPotionId(getPotionContents(inv));
     if (!potion.isEmpty()) {
       ToolStack tool = ToolStack.from(result);
       tool.getPersistentData().putString(modifier.getId(), potion);
@@ -71,6 +71,7 @@ public class TippingCastingRecipe extends PotionCastingRecipe {
 
   @Override
   public List<DisplayCastingRecipe> getRecipes(RegistryAccess access) {
+    refreshDisplayCache();
     if (displayRecipes == null) {
       // create a list of tools with the modifier
       List<ItemStack> tools = MaterialRecipeCache.getDisplayItems(bottle).stream()

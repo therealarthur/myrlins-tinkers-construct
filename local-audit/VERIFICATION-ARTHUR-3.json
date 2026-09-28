@@ -1,0 +1,198 @@
+{
+  "date": "2026-09-28",
+  "minecraft": "26.1.2",
+  "neoforge": "26.1.2.109",
+  "java": 25,
+  "targetVersion": "3.12.2-arthur.3",
+  "mainAndFixtureCompile": "build/local-evidence/build-20260928-042523.log",
+  "fmlPass": "build/local-evidence/build-20260928-043419.log",
+  "passed": 59,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 5,
+  "serverFixtures": "77 cases compiled, not executed",
+  "client": "No game client launched; three book and two tool-model cases skipped on dedicated distribution",
+  "loggingLimit": "Malformed-condition negative controls emit expected load errors; FML log exception formatting also reports classloader errors, so XML assertions and failure counts are authoritative for these cases",
+  "suites": [
+    {
+      "suite": "aebm.continuumtests.BonusFormulaParityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.BonusFormulaParityTest.xml",
+      "sha256": "76daaed819f139b8cd95a0403137e235f49f7e81cc43f520106db2254fb0d61f"
+    },
+    {
+      "suite": "aebm.continuumtests.ClientRecipeCacheTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.ClientRecipeCacheTest.xml",
+      "sha256": "fef94119a823b42643c6b0c47f0a1ab64ca038f5eeb6fa6ce1b48f734429eac1"
+    },
+    {
+      "suite": "aebm.continuumtests.FluidParticleCodecTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.FluidParticleCodecTest.xml",
+      "sha256": "fe4a26cf1c52c434929bb8fff68c8bcf9718ae716f5df36155e047aba9975c8c"
+    },
+    {
+      "suite": "aebm.continuumtests.IngredientDisplayTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.IngredientDisplayTest.xml",
+      "sha256": "03ed9a37f5b127a72cdcc0d31c1f8c9aa35aa828287a79e30d79396835da7872"
+    },
+    {
+      "suite": "aebm.continuumtests.InstrumentIngredientTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.InstrumentIngredientTest.xml",
+      "sha256": "1baea9ac0513af0ed276e8c7a198faf7447f0457298918835907ff28a46bf20b"
+    },
+    {
+      "suite": "aebm.continuumtests.MaterialBookContentTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.MaterialBookContentTest.xml",
+      "sha256": "d79d4b44152a6a8be59cc28f31770a1516d13b23d9781b86bd9a10debcd80521"
+    },
+    {
+      "suite": "aebm.continuumtests.MaterialRecipeComponentCacheTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.MaterialRecipeComponentCacheTest.xml",
+      "sha256": "b133aa17ffa19a80540f209675c92763b11a0deec4bcaeb42a39f962f183da22"
+    },
+    {
+      "suite": "aebm.continuumtests.ModifierConditionTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.ModifierConditionTest.xml",
+      "sha256": "74569f16f4ba94d2f52122ecb22a0705b3f6bab7c7513749935271a2973653c6"
+    },
+    {
+      "suite": "aebm.continuumtests.ModifierTooltipParityTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.ModifierTooltipParityTest.xml",
+      "sha256": "825b1ba0532e847e90813e65e17826e3c68b2f264eead7c7dd393e8bccc7ac4d"
+    },
+    {
+      "suite": "aebm.continuumtests.OptionalMeltingRecipeTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.OptionalMeltingRecipeTest.xml",
+      "sha256": "d8ab1e964991b95a23ca57f0db304d4d0511a86e9594c00cea4e43596c00d09c"
+    },
+    {
+      "suite": "aebm.continuumtests.PotionCastingParityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.PotionCastingParityTest.xml",
+      "sha256": "0ef62f4534c36d940291097df4e736a9e09f6d14c84f90870536546e4d051bb4"
+    },
+    {
+      "suite": "aebm.continuumtests.RecipeDisplayMapperTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.RecipeDisplayMapperTest.xml",
+      "sha256": "f3ecd3b11265995f24b26b21e2fee27c7b436f9850ea9a0a8cbd2c9729252ed4"
+    },
+    {
+      "suite": "aebm.continuumtests.SideInventoryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.SideInventoryTest.xml",
+      "sha256": "37a813d36a90f739c31fbc4149802c3430baa0e38e5c60d99d4d8e3df7e3b431"
+    },
+    {
+      "suite": "aebm.continuumtests.TankModelDataTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.TankModelDataTest.xml",
+      "sha256": "eb10a023ee208575f7ba02dddf704d52ed8d23115615e578c942ff82b98fd05f"
+    },
+    {
+      "suite": "aebm.continuumtests.ToolApiParityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-aebm.continuumtests.ToolApiParityTest.xml",
+      "sha256": "c10633b285e6d9a6449c63633b71f65f599b86eca424b081a84fd1b5dcc965fa"
+    },
+    {
+      "suite": "slimeknights.tconstruct.library.client.model.tools.ToolModelGeometryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-slimeknights.tconstruct.library.client.model.tools.ToolModelGeometryTest.xml",
+      "sha256": "7def69501ccf7f26fd27d48be8c4a08e7337c5aa1da79a0ceb1a07ff36f9819c"
+    },
+    {
+      "suite": "slimeknights.tconstruct.library.materials.MaterialReloadTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-slimeknights.tconstruct.library.materials.MaterialReloadTest.xml",
+      "sha256": "6da2410a7245e9ec5a79df49608749ce150c00da6bb9b5b4dbb9bd53df5942dd"
+    },
+    {
+      "suite": "slimeknights.tconstruct.library.recipe.tinkerstation.building.PartSwappingOverrideCodecTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-slimeknights.tconstruct.library.recipe.tinkerstation.building.PartSwappingOverrideCodecTest.xml",
+      "sha256": "982175e55ca82fa4593367f1b99d972362da392b2f97b93222f484e0458b831e"
+    },
+    {
+      "suite": "slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommandTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommandTest.xml",
+      "sha256": "2b7c7df20b91b6f6bfd0b8d65682a90000f6e33200aaa59c9d5893bda33e29af"
+    },
+    {
+      "suite": "slimeknights.tconstruct.tables.data.NamedForgeRecipeTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "build/local-evidence/arthur3-unit-results/TEST-slimeknights.tconstruct.tables.data.NamedForgeRecipeTest.xml",
+      "sha256": "145ad198ba7687f899ba454aa7962115101b0f1e9c841783c9aa59864cf447a7"
+    }
+  ]
+}

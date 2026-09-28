@@ -221,7 +221,6 @@ public class MaterialManager extends SimpleJsonResourceReloadListener<JsonElemen
       }
     }
     this.redirects = redirects;
-    onMaterialUpdate();
     
     log.debug("Loaded materials: {}", Util.toIndentedStringList(materials.keySet().stream().sorted(Comparator.comparing(Object::toString)).toList()));
     log.debug("Loaded redirects: {}", Util.toIndentedStringList(redirects.keySet().stream().sorted(Comparator.comparing(Object::toString)).toList()));
@@ -236,7 +235,9 @@ public class MaterialManager extends SimpleJsonResourceReloadListener<JsonElemen
     this.tags = GenericTagUtil.mapLoaderResults(REGISTRY_KEY, loadedTags);
     this.reverseTags = GenericTagUtil.reverseTags(IMaterial::getIdentifier, tags);
     log.info("Loaded {} material tags for {} materials in {} ms", tags.size(), reverseTags.size(), (System.nanoTime() - timeStep) / 1000000f);
-
+    // Consumers may rebuild recipes as soon as all material managers are ready.
+    // Publish only after tag lookups and the material list describe the same reload.
+    onMaterialUpdate();
   }
 
   /**

@@ -1,5 +1,13 @@
 package slimeknights.tconstruct.tools;
 
+import slimeknights.tconstruct.library.modifiers.modules.capacity.FluidPredicateAsCapacityModule;
+
+import slimeknights.tconstruct.library.modifiers.modules.capacity.FluidAsCapacityModule;
+
+import slimeknights.tconstruct.library.json.variable.tool.TankCapacityVariable;
+
+import slimeknights.tconstruct.library.json.variable.tool.FluidAmountVariable;
+
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
@@ -918,6 +926,8 @@ public final class TinkerModifiers extends TinkerModule {
       ModifierModule.LOADER.register(getResource("capacity_bar"), CapacityBarModule.LOADER);
       ModifierModule.LOADER.register(getResource("durability_as_capacity"), DurabilityAsCapacityModule.LOADER);
       ModifierModule.LOADER.register(getResource("energy_as_capacity"), EnergyAsCapacityModule.LOADER);
+      ModifierModule.LOADER.register(getResource("fluid_as_capacity"), FluidAsCapacityModule.LOADER);
+      ModifierModule.LOADER.register(getResource("fluid_predicate_as_capacity"), FluidPredicateAsCapacityModule.LOADER);
       ModifierModule.LOADER.register(getResource("durability_shield"), DurabilityShieldModule.LOADER);
       ModifierModule.LOADER.register(getResource("loot_to_capacity"), LootToCapacityModule.LOADER);
       ModifierModule.LOADER.register(getResource("damage_to_capacity"), DamageToCapacityModule.LOADER);
@@ -1063,6 +1073,8 @@ public final class TinkerModifiers extends TinkerModule {
       ToolVariable.register(getResource("stat_multiplier"), StatMultiplierVariable.LOADER);
       ToolVariable.register(getResource("mod_data"), ModDataVariable.LOADER);
       ToolVariable.register(getResource("modifier_level"), ModifierLevelVariable.LOADER);
+      ToolVariable.register(getResource("fluid_amount"), FluidAmountVariable.LOADER);
+      ToolVariable.register(getResource("tank_capacity"), TankCapacityVariable.LOADER);
       // stat
       ConditionalStatVariable.LOADER.register(getResource("constant"), ConditionalStatVariable.Constant.LOADER);
       ConditionalStatVariable.register(getResource("entity"), EntityConditionalStatVariable.LOADER);

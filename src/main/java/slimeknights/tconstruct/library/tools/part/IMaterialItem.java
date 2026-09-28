@@ -9,6 +9,7 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
+import slimeknights.tconstruct.library.materials.IMaterialUser;
 import slimeknights.tconstruct.library.materials.definition.IMaterial;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
@@ -18,7 +19,7 @@ import java.util.function.Consumer;
 /**
  * Items implementing this interface contain a material
  */
-public interface IMaterialItem extends ItemLike {
+public interface IMaterialItem extends ItemLike, IMaterialUser {
   /** Tag used in NBT for the material ID */
   String MATERIAL_TAG = "Material";
 

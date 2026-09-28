@@ -18,6 +18,16 @@ public class CapacityStat extends FloatToolStat {
 
   @Override
   public Component formatValue(float value) {
+    return formatCapacity((int) value);
+  }
+
+  @Override
+  public Component formatValue(Float value) {
+    return formatCapacity(value.intValue());
+  }
+
+  /** Formats capacity in whole units, as used by the stored capacity. */
+  public Component formatCapacity(int value) {
     return Component.translatable(getTranslationKey())
                     .append(Component.translatable(formatKey, Util.COMMA_FORMAT.format(value))
                                      .withStyle(style -> style.withColor(getColor())));
