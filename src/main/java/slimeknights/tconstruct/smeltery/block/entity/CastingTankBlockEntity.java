@@ -28,6 +28,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.model.data.ModelData;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import slimeknights.mantle.fluid.FluidTransferHelper;
@@ -36,7 +37,7 @@ import slimeknights.mantle.fluid.transfer.IFluidContainerTransfer;
 import slimeknights.mantle.fluid.transfer.IFluidContainerTransfer.TransferResult;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.Sounds;
-//import slimeknights.tconstruct.library.client.model.ModelProperties;
+import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
 import slimeknights.tconstruct.library.utils.NBTTags;
 import slimeknights.tconstruct.shared.block.entity.TableBlockEntity;
@@ -237,14 +238,13 @@ public class CastingTankBlockEntity extends TableBlockEntity implements ITankBlo
     return tank;
   }
 
-  // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed
-  //@Nonnull
-  //@Override
-  //public ModelData getModelData() {
-  //  return ModelData.builder()
-  //    .with(ModelProperties.FLUID_STACK, tank.getFluid())
-  //    .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();
-  //}
+  @Nonnull
+  @Override
+  public ModelData getModelData() {
+    return ModelData.builder()
+      .with(ModelProperties.FLUID_STACK, tank.getFluid().copy())
+      .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();
+  }
 
   @Override
   public void onTankContentsChanged() {

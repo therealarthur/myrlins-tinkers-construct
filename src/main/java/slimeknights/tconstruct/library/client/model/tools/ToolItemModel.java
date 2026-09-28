@@ -63,6 +63,8 @@ public class ToolItemModel implements ItemModel {
   private final ItemModel.BakingContext context;
   private final Matrix4fc transformation;
   private final Map<ToolCacheKey,ItemModel> cache = new HashMap<>();
+  @Nullable
+  private ModifierModelMap modifierModels;
   private static final Identifier ARROW_HEAD_TEXTURE = TConstruct.getResource("item/tool/ammo/arrow_head");
   private static final Identifier ARROW_SHAFT_TEXTURE = TConstruct.getResource("item/tool/ammo/arrow_shaft");
   private static final Identifier ARROW_FEATHER_TEXTURE = TConstruct.getResource("item/tool/ammo/arrow_feather");
@@ -85,12 +87,44 @@ public class ToolItemModel implements ItemModel {
   }
 
   private ToolCacheKey buildCacheKey(List<MaterialVariantId> materials, IToolStackView tool, boolean largeModel, boolean leftHand, ItemStack ammo) {
-    if (unbaked.modifierMaps.isEmpty()) {
-      return new ToolCacheKey(materials, List.of(), Set.of(), largeModel, leftHand, ammoKey(ammo));
-    }
     ModifierNBT modifiers = unbaked.showTraits ? tool.getModifiers() : tool.getUpgrades();
     Set<ModifierId> hidden = ModifierSetWorktableRecipe.getModifierSet(tool.getPersistentData(), TConstruct.getResource("invisible_modifiers"));
-    return new ToolCacheKey(materials, List.copyOf(modifiers.getModifiers()), Set.copyOf(hidden), largeModel, leftHand, ammoKey(ammo));
+    List<ModifierEntry> entries = List.copyOf(modifiers.getModifiers());
+    return new ToolCacheKey(materials, entries, Set.copyOf(hidden), modifierCacheKeys(getModifierModels(), tool, entries, hidden), largeModel, leftHand, ammoKey(ammo));
+  }
+
+  /** Includes the data that actually changes modifier geometry, even when modifier levels stay the same. */
+  static Map<String,Object> modifierCacheKeys(ModifierModelMap models, IToolStackView tool, List<ModifierEntry> entries, Set<ModifierId> hidden) {
+    Map<String,Object> keys = new HashMap<>();
+    for (ModifierEntry entry : entries) {
+      if (!hidden.contains(entry.getId())) {
+        IBakedModifierModel model = models.get(entry.getId());
+        if (model != null) {
+          Object key = model.getCacheKey(tool, entry);
+          if (key != null) {
+            keys.put("modifier:" + entry.getId(), key);
+          }
+        }
+      }
+    }
+    models.constant().forEach((name, model) -> {
+      Object key = model.getCacheKey(tool, ModifierEntry.EMPTY);
+      if (key != null) {
+        keys.put("constant:" + name, key);
+      }
+    });
+    return Map.copyOf(keys);
+  }
+
+  private ModifierModelMap getModifierModels() {
+    if (modifierModels == null) {
+      ModelBaker baker = context.blockModelBaker();
+      ModelDebugName debugName = () -> TConstruct.MOD_ID + ":tool_item/" + unbaked.model;
+      modifierModels = ModifierModelMapManager.INSTANCE.getModelsForTool(
+        mat -> baker.materials().get(mat, debugName).sprite(), unbaked.modifierMaps,
+        unbaked.modifierRoots.small, unbaked.modifierRoots.large, unbaked.model);
+    }
+    return modifierModels;
   }
 
   private ItemModel bakeForTool(ToolCacheKey key, IToolStackView tool) {
@@ -149,10 +183,7 @@ public class ToolItemModel implements ItemModel {
   }
 
   private void addModifierQuads(IToolStackView tool, Function<Material,net.minecraft.client.renderer.texture.TextureAtlasSprite> spriteGetter, java.util.function.Consumer<Collection<BakedQuad>> quadConsumer, ItemLayerPixels pixels, Transformation modifierTransform, boolean largeModel) {
-    if (unbaked.modifierMaps.isEmpty()) {
-      return;
-    }
-    ModifierModelMap modifierModels = ModifierModelMapManager.INSTANCE.getModelsForTool(spriteGetter, unbaked.modifierMaps, unbaked.modifierRoots.small, unbaked.modifierRoots.large, unbaked.model);
+    ModifierModelMap modifierModels = getModifierModels();
     if (modifierModels.isEmpty()) {
       return;
     }
@@ -237,13 +268,11 @@ public class ToolItemModel implements ItemModel {
       || displayContext == TinkerItemDisplays.CASTING_TABLE;
   }
 
-  private static void addLayers(QuadCollection.Builder fullBuilder, QuadCollection.Builder guiBuilder, List<Collection<BakedQuad>> layers) {
+  static void addLayers(QuadCollection.Builder fullBuilder, QuadCollection.Builder guiBuilder, List<Collection<BakedQuad>> layers) {
     for (int i = layers.size() - 1; i >= 0; i--) {
       for (BakedQuad quad : layers.get(i)) {
         Direction direction = quad.direction();
-        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-          fullBuilder.addUnculledFace(quad);
-        }
+        fullBuilder.addUnculledFace(quad);
         if (direction == Direction.SOUTH) {
           guiBuilder.addUnculledFace(quad);
         }
@@ -262,7 +291,7 @@ public class ToolItemModel implements ItemModel {
     }
   }
 
-  private record ToolCacheKey(List<MaterialVariantId> materials, List<ModifierEntry> modifierData, Set<ModifierId> hiddenModifiers, boolean largeModel, boolean leftHand, String ammoKey) {}
+  private record ToolCacheKey(List<MaterialVariantId> materials, List<ModifierEntry> modifierData, Set<ModifierId> hiddenModifiers, Map<String,Object> modelData, boolean largeModel, boolean leftHand, String ammoKey) {}
 
   public record Part(String name, int index) {
     public static final Part DEFAULT = new Part("tool", -1);

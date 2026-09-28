@@ -1,6 +1,7 @@
 package slimeknights.tconstruct.library.client.book.elements;
 
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -45,15 +46,14 @@ public class TinkerItemElement extends ItemElement {
     super(x, y, scale, itemCycle, action);
   }
 
-  // TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed
-  //@Override
-  //public void drawOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {
-  //  if (this.noTooltip) {
-  //    return;
-  //  }
-  //  if (this.tooltip == null) {
-  //    fontRenderer = mc.font;
-  //  }
-  //  super.drawOverlay(graphics, mouseX, mouseY, partialTicks, fontRenderer);
-  //}
+  @Override
+  public void drawOverlay(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {
+    if (this.noTooltip) {
+      return;
+    }
+    if (this.tooltip == null) {
+      fontRenderer = mc.font;
+    }
+    super.drawOverlay(graphics, mouseX, mouseY, partialTicks, fontRenderer);
+  }
 }

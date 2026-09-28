@@ -1,6 +1,7 @@
 package slimeknights.tconstruct.library.client.book.elements;
 
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -27,13 +28,12 @@ public class FluidItemElement extends ItemElement {
     this(x, y, scale, createItemList(fluids), fluids);
   }
 
-  // TODO: Rewrite for NeoForge 1.21.4 - GuiGraphics was removed
-  //@Override
-  //public void drawOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {
-  //  if (this.isHovered(mouseX, mouseY) && this.currentItem < this.fluids.size()) {
-  //    this.drawTooltip(graphics, FluidTooltipHandler.getFluidTooltip(this.fluids.get(this.currentItem)), mouseX, mouseY, fontRenderer);
-  //  }
-  //}
+  @Override
+  public void drawOverlay(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks, Font fontRenderer) {
+    if (this.isHovered(mouseX, mouseY) && this.currentItem < this.fluids.size()) {
+      this.drawTooltip(graphics, FluidTooltipHandler.getFluidTooltip(this.fluids.get(this.currentItem)), mouseX, mouseY, fontRenderer);
+    }
+  }
 
   /** Creates a list of items for display */
   public static List<ItemStack> createItemList(List<FluidStack> fluids) {

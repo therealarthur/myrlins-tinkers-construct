@@ -1,70 +1,70 @@
-﻿{
+{
     "variants":  {
                      "in_structure=false,facing=north":  {
                                                              "model":  "tconstruct:block/smeltery/controller/melter_inactive",
-                                                             "type":  "mantle:retextured_block"
+                                                             "type":  "tconstruct:tank"
                                                          },
                      "in_structure=false,facing=south":  {
                                                              "model":  "tconstruct:block/smeltery/controller/melter_inactive",
                                                              "uvlock":  true,
                                                              "y":  180,
-                                                             "type":  "mantle:retextured_block"
+                                                             "type":  "tconstruct:tank"
                                                          },
                      "in_structure=false,facing=west":  {
                                                             "model":  "tconstruct:block/smeltery/controller/melter_inactive",
                                                             "uvlock":  true,
                                                             "y":  270,
-                                                            "type":  "mantle:retextured_block"
+                                                            "type":  "tconstruct:tank"
                                                         },
                      "in_structure=false,facing=east":  {
                                                             "model":  "tconstruct:block/smeltery/controller/melter_inactive",
                                                             "uvlock":  true,
                                                             "y":  90,
-                                                            "type":  "mantle:retextured_block"
+                                                            "type":  "tconstruct:tank"
                                                         },
                      "in_structure=true,active=false,facing=north":  {
                                                                          "model":  "tconstruct:block/smeltery/controller/melter_inactive",
-                                                                         "type":  "mantle:retextured_block"
+                                                                         "type":  "tconstruct:tank"
                                                                      },
                      "in_structure=true,active=false,facing=south":  {
                                                                          "model":  "tconstruct:block/smeltery/controller/melter_inactive",
                                                                          "uvlock":  true,
                                                                          "y":  180,
-                                                                         "type":  "mantle:retextured_block"
+                                                                         "type":  "tconstruct:tank"
                                                                      },
                      "in_structure=true,active=false,facing=west":  {
                                                                         "model":  "tconstruct:block/smeltery/controller/melter_inactive",
                                                                         "uvlock":  true,
                                                                         "y":  270,
-                                                                        "type":  "mantle:retextured_block"
+                                                                        "type":  "tconstruct:tank"
                                                                     },
                      "in_structure=true,active=false,facing=east":  {
                                                                         "model":  "tconstruct:block/smeltery/controller/melter_inactive",
                                                                         "uvlock":  true,
                                                                         "y":  90,
-                                                                        "type":  "mantle:retextured_block"
+                                                                        "type":  "tconstruct:tank"
                                                                     },
                      "in_structure=true,active=true,facing=north":  {
                                                                         "model":  "tconstruct:block/smeltery/controller/melter_active",
-                                                                        "type":  "mantle:retextured_block"
+                                                                        "type":  "tconstruct:tank"
                                                                     },
                      "in_structure=true,active=true,facing=south":  {
                                                                         "model":  "tconstruct:block/smeltery/controller/melter_active",
                                                                         "uvlock":  true,
                                                                         "y":  180,
-                                                                        "type":  "mantle:retextured_block"
+                                                                        "type":  "tconstruct:tank"
                                                                     },
                      "in_structure=true,active=true,facing=west":  {
                                                                        "model":  "tconstruct:block/smeltery/controller/melter_active",
                                                                        "uvlock":  true,
                                                                        "y":  270,
-                                                                       "type":  "mantle:retextured_block"
+                                                                       "type":  "tconstruct:tank"
                                                                    },
                      "in_structure=true,active=true,facing=east":  {
                                                                        "model":  "tconstruct:block/smeltery/controller/melter_active",
                                                                        "uvlock":  true,
                                                                        "y":  90,
-                                                                       "type":  "mantle:retextured_block"
+                                                                       "type":  "tconstruct:tank"
                                                                    }
                  }
 }

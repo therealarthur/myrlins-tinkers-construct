@@ -17,10 +17,12 @@ import slimeknights.tconstruct.library.fluid.FluidStackNbt;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.model.data.ModelData;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import slimeknights.mantle.block.entity.NameableBlockEntity;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
 import slimeknights.tconstruct.library.utils.NBTTags;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
@@ -78,6 +80,13 @@ public class AlloyerBlockEntity extends NameableBlockEntity implements ITankBloc
 
   public IFluidHandler getFluidHandler(@Nullable Direction facing) {
     return tank;
+  }
+
+  @Override
+  public ModelData getModelData() {
+    return ModelData.builder()
+      .with(ModelProperties.FLUID_STACK, tank.getFluid().copy())
+      .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();
   }
 
 

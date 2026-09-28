@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.model.data.ModelData;
 import slimeknights.tconstruct.library.fluid.FluidStackNbt;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
@@ -23,7 +24,7 @@ import slimeknights.mantle.block.entity.NameableBlockEntity;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.config.Config;
-//import slimeknights.tconstruct.library.client.model.ModelProperties;
+import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
 import slimeknights.tconstruct.library.recipe.FluidValues;
 import slimeknights.tconstruct.library.utils.NBTTags;
@@ -94,13 +95,12 @@ public class MelterBlockEntity extends NameableBlockEntity implements ITankInven
    * Tank methods
    */
 
-  // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed
-  //@Override
-  //public @NotNull ModelData getModelData() {
-  //  return ModelData.builder()
-  //                  .with(ModelProperties.FLUID_STACK, tank.getFluid())
-  //                  .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();
-  //}
+  @Override
+  public ModelData getModelData() {
+    return ModelData.builder()
+      .with(ModelProperties.FLUID_STACK, tank.getFluid().copy())
+      .with(ModelProperties.TANK_CAPACITY, tank.getCapacity()).build();
+  }
 
   public IFluidHandler getFluidHandler(@Nullable Direction facing) {
     return tank;
