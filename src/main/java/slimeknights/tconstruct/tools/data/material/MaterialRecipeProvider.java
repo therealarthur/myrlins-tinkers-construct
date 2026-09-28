@@ -408,7 +408,13 @@ public class MaterialRecipeProvider extends BaseRecipeProvider implements IMater
     materialMeltingCasting(consumer, MaterialIds.magma,      TinkerFluids.magma,      FluidValues.SLIMEBALL, folder);
     // slimesuit - pseudoslime
     materialMeltingCasting(consumer, MaterialIds.clay,       TinkerFluids.moltenClay,  FluidValues.BRICK,    folder);
-    materialMeltingCasting(consumer, MaterialIds.venom, TinkerFluids.venom, FluidValues.SLIMEBALL, folder);
+    // Keep the original local venom tag while accepting the registered source fluid directly.
+    MaterialFluidRecipeBuilder.material(MaterialIds.venom)
+      .setFluid(FluidIngredient.of(FluidIngredient.of(TinkerFluids.venom.get(), FluidValues.SLIMEBALL),
+        FluidIngredient.of(TagKey.create(net.minecraft.core.registries.Registries.FLUID, TinkerFluids.venom.getId()), FluidValues.SLIMEBALL)))
+      .setTemperature(slimeknights.tconstruct.library.recipe.melting.IMeltingRecipe.getTemperature(TinkerFluids.venom))
+      .save(consumer, location(folder + "casting/venom"));
+    materialMelting(consumer, MaterialIds.venom, TinkerFluids.venom, FluidValues.SLIMEBALL, folder);
     materialMeltingCasting(consumer, MaterialIds.honey,      TinkerFluids.honey,       FluidValues.BOTTLE,   folder);
     materialMeltingCasting(consumer, MaterialIds.enderPearl, TinkerFluids.moltenEnder, FluidValues.SLIMEBALL, folder);
     // slimesuit - repair kits
