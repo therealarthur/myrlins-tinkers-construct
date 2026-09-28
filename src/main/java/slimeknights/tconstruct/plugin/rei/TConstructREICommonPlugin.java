@@ -1,6 +1,7 @@
 package slimeknights.tconstruct.plugin.rei;
 
 import me.shedaniel.rei.api.common.display.DisplaySerializerRegistry;
+import me.shedaniel.rei.api.common.entry.type.EntryTypeRegistry;
 import me.shedaniel.rei.api.common.entry.comparison.ItemComparatorRegistry;
 import me.shedaniel.rei.api.common.entry.comparison.FluidComparatorRegistry;
 import me.shedaniel.rei.api.common.plugins.REICommonPlugin;
@@ -13,6 +14,11 @@ import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 /** Discovered only by REI. TConstruct's normal initialization never references optional viewer classes. */
 @REIPluginCommon
 public class TConstructREICommonPlugin implements REICommonPlugin {
+  @Override
+  public void registerEntryTypes(EntryTypeRegistry registry) {
+    TinkerEntryTypes.register(registry);
+  }
+
   @Override
   public void registerDisplaySerializer(DisplaySerializerRegistry registry) {
     registry.register(TConstruct.getResource("smeltery_display"), SmelteryDisplay.SERIALIZER);

@@ -20,6 +20,7 @@ import slimeknights.mantle.recipe.helper.ItemOutput;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
+import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import slimeknights.tconstruct.library.recipe.partbuilder.DisplayPartRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.IPartBuilderContainer;
 import slimeknights.tconstruct.library.recipe.partbuilder.IPartBuilderRecipe;
@@ -100,7 +101,8 @@ public class PartBuilderRecycle implements IPartBuilderRecipe, IMultiRecipe<Disp
   @Override
   public boolean matches(IPartBuilderContainer inv, Level level) {
     ItemStack stack = inv.getStack();
-    return partialMatch(inv) && getAmount(stack, resultCount) > 0 && stack.is(TinkerTags.Items.MODIFIABLE) ? !ModifierUtil.hasUpgrades(stack) : !stack.isEnchanted();
+    return partialMatch(inv) && getAmount(stack, resultCount) > 0
+      && (stack.is(TinkerTags.Items.MODIFIABLE) ? !ModifierUtil.hasUpgrades(stack) : !stack.isEnchanted());
   }
 
   @Override
@@ -124,13 +126,23 @@ public class PartBuilderRecycle implements IPartBuilderRecipe, IMultiRecipe<Disp
     }
     // if we have remaining items after removing the main choice, randomly choose a second
     if (maxCount > 0 && results.size() > 1) {
-      List<ItemOutput> alternatives = results.entrySet().stream().filter(p -> p.getKey() != pattern).map(Entry::getValue).toList();
+      List<ItemOutput> alternatives = results.entrySet().stream().filter(p -> !p.getKey().equals(pattern)).map(Entry::getValue).toList();
       if (!alternatives.isEmpty()) {
         ItemOutput chosen = alternatives.get(TConstruct.RANDOM.nextInt(alternatives.size()));
         return chosen.get().copyWithCount(Math.min(maxCount, chosen.getCount()));
       }
     }
     return ItemStack.EMPTY;
+  }
+
+  /** All possible extra results, without consuming RNG while a recipe viewer builds its pages. */
+  public List<ItemStack> getDisplayLeftovers(IPartBuilderContainer inv, Pattern pattern) {
+    ItemOutput selected = results.get(pattern);
+    int remaining = getAmount(inv.getStack(), resultCount) - (selected == null ? 0 : selected.getCount());
+    if (remaining <= 0 || results.size() <= 1) return List.of();
+    return results.entrySet().stream().filter(entry -> !entry.getKey().equals(pattern))
+      .map(entry -> entry.getValue().get().copyWithCount(Math.min(remaining, entry.getValue().getCount())))
+      .filter(stack -> !stack.isEmpty()).toList();
   }
 
   @Override
@@ -174,12 +186,17 @@ public class PartBuilderRecycle implements IPartBuilderRecipe, IMultiRecipe<Disp
 
   /* JEI */
   private List<DisplayPartRecipe> displayRecipes;
+  private long displayRevision = -1;
 
   @Override
   public List<DisplayPartRecipe> getRecipes(RegistryAccess access) {
+    if (displayRevision != MaterialRecipeCache.getDisplayRevision()) {
+      displayRevision = MaterialRecipeCache.getDisplayRevision();
+      displayRecipes = null;
+    }
     if (displayRecipes == null) {
-      List<ItemStack> patternItems = pattern.items().map(ItemStack::new).toList();
-      List<ItemStack> toolItems = tool.items().map(ItemStack::new).toList();
+      List<ItemStack> patternItems = MaterialRecipeCache.getDisplayItems(pattern);
+      List<ItemStack> toolItems = MaterialRecipeCache.getDisplayItems(tool);
       displayRecipes = results.entrySet().stream()
         .map(entry -> new DisplayPartRecipe(id, MaterialVariant.UNKNOWN, entry.getKey(), patternItems, 0, toolItems, List.of(entry.getValue().get()))).toList();
     }

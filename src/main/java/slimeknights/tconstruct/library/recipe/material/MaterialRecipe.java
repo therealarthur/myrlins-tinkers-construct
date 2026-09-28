@@ -143,9 +143,14 @@ public class MaterialRecipe implements ICustomOutputRecipe<ISingleStackContainer
 
   /** Cache of the display items list */
   private List<ItemStack> displayItems = null;
+  private long displayRevision = -1;
 
   /** Gets a list of stacks for display in the recipe */
   public List<ItemStack> getDisplayItems() {
+    if (displayRevision != MaterialRecipeCache.getDisplayRevision()) {
+      displayRevision = MaterialRecipeCache.getDisplayRevision();
+      displayItems = null;
+    }
     if (displayItems == null) {
       displayItems = MaterialRecipeCache.getDisplayItems(ingredient).stream()
         .map(stack -> needed > 1 ? stack.copyWithCount(needed) : stack)

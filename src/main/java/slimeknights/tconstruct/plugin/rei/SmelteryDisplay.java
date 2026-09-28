@@ -26,7 +26,8 @@ import java.util.stream.Stream;
 /** A complete, bookmarkable display. No server-side REI recipe or transfer implementation is required. */
 public record SmelteryDisplay(Identifier category, Identifier source, Identifier displayId,
                               List<EntryIngredient> inputs, List<EntryIngredient> outputs,
-                              List<EntryIngredient> catalysts, List<Component> notes) implements Display {
+                              List<EntryIngredient> catalysts, List<Component> notes,
+                              List<EntryIngredient> lookupInputs) implements Display {
   public static final MapCodec<SmelteryDisplay> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
     Identifier.CODEC.fieldOf("category").forGetter(SmelteryDisplay::category),
     Identifier.CODEC.fieldOf("source").forGetter(SmelteryDisplay::source),
@@ -34,7 +35,8 @@ public record SmelteryDisplay(Identifier category, Identifier source, Identifier
     EntryIngredient.codec().listOf().fieldOf("inputs").forGetter(SmelteryDisplay::inputs),
     EntryIngredient.codec().listOf().fieldOf("outputs").forGetter(SmelteryDisplay::outputs),
     EntryIngredient.codec().listOf().fieldOf("catalysts").forGetter(SmelteryDisplay::catalysts),
-    ComponentSerialization.CODEC.listOf().fieldOf("notes").forGetter(SmelteryDisplay::notes)
+    ComponentSerialization.CODEC.listOf().fieldOf("notes").forGetter(SmelteryDisplay::notes),
+    EntryIngredient.codec().listOf().optionalFieldOf("lookup_inputs", List.of()).forGetter(SmelteryDisplay::lookupInputs)
   ).apply(instance, SmelteryDisplay::new));
 
   public static final DisplaySerializer<SmelteryDisplay> SERIALIZER = DisplaySerializer.of(
@@ -45,17 +47,24 @@ public record SmelteryDisplay(Identifier category, Identifier source, Identifier
     outputs = List.copyOf(outputs);
     catalysts = List.copyOf(catalysts);
     notes = List.copyOf(notes);
+    lookupInputs = List.copyOf(lookupInputs);
   }
 
   /** Uses the canonical holder ID plus content identity, so material expansion order cannot change bookmarks. */
   public static SmelteryDisplay create(RegistryAccess access, Identifier category, Identifier source,
                                        List<EntryIngredient> inputs, List<EntryIngredient> outputs,
                                        List<EntryIngredient> catalysts, List<Component> notes) {
-    SmelteryDisplay provisional = new SmelteryDisplay(category, source, source, inputs, outputs, catalysts, notes);
+    return create(access, category, source, inputs, outputs, catalysts, notes, List.of());
+  }
+
+  public static SmelteryDisplay create(RegistryAccess access, Identifier category, Identifier source,
+                                       List<EntryIngredient> inputs, List<EntryIngredient> outputs,
+                                       List<EntryIngredient> catalysts, List<Component> notes, List<EntryIngredient> lookupInputs) {
+    SmelteryDisplay provisional = new SmelteryDisplay(category, source, source, inputs, outputs, catalysts, notes, lookupInputs);
     JsonElement encoded = CODEC.codec().encodeStart(access.createSerializationContext(JsonOps.INSTANCE), provisional).getOrThrow();
     String hash = Hashing.sha256().hashString(canonicalize(encoded).toString(), StandardCharsets.UTF_8).toString();
     Identifier id = Identifier.fromNamespaceAndPath(source.getNamespace(), source.getPath() + "/rei/" + category.getPath() + "/" + hash);
-    return new SmelteryDisplay(category, source, id, inputs, outputs, catalysts, notes);
+    return new SmelteryDisplay(category, source, id, inputs, outputs, catalysts, notes, lookupInputs);
   }
 
   private static JsonElement canonicalize(JsonElement element) {
@@ -75,7 +84,7 @@ public record SmelteryDisplay(Identifier category, Identifier source, Identifier
 
   @Override public List<EntryIngredient> getInputEntries() { return inputs; }
   @Override public List<EntryIngredient> getOutputEntries() { return outputs; }
-  @Override public List<EntryIngredient> getRequiredEntries() { return Stream.concat(inputs.stream(), catalysts.stream()).toList(); }
+  @Override public List<EntryIngredient> getRequiredEntries() { return Stream.of(inputs, catalysts, lookupInputs).flatMap(List::stream).toList(); }
   @Override public CategoryIdentifier<SmelteryDisplay> getCategoryIdentifier() { return CategoryIdentifier.of(category); }
   @Override public Optional<Identifier> getDisplayLocation() { return Optional.of(source); }
   @Override public Collection<Identifier> provideInternalDisplayIds() { return List.of(displayId); }

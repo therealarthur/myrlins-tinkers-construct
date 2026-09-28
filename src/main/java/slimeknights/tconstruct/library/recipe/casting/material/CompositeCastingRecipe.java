@@ -73,6 +73,7 @@ public class CompositeCastingRecipe extends MaterialCastingRecipe {
   /* JEI display */
   @Override
   public List<IDisplayableCastingRecipe> getRecipes(RegistryAccess access) {
+    checkDisplayCache();
     if (multiRecipes == null) {
       RecipeType<?> type = getType();
       ImmutableList.Builder<IDisplayableCastingRecipe> recipes = ImmutableList.builder();

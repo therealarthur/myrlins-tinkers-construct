@@ -168,9 +168,15 @@ public class PartRecipe implements IPartBuilderRecipe, IMultiRecipe<IDisplayPart
   /** Cache of recipes for display in JEI */
   @Nullable
   private List<IDisplayPartBuilderRecipe> multiRecipes;
+  private long displayRevision = -1;
 
   @Override
   public List<IDisplayPartBuilderRecipe> getRecipes(RegistryAccess access) {
+    long revision = MaterialRecipeCache.getDisplayRevision();
+    if (displayRevision != revision) {
+      multiRecipes = null;
+      displayRevision = revision;
+    }
     if (multiRecipes == null) {
       multiRecipes = MaterialRegistry
         .getMaterials().stream()

@@ -131,6 +131,7 @@ public class ItemPartRecipe implements IDisplayPartBuilderRecipe {
   /* JEI */
 
   private List<ItemStack> materialItems;
+  private long displayRevision = -1;
 
   @Override
   public List<ItemStack> getPatternItems() {
@@ -139,6 +140,10 @@ public class ItemPartRecipe implements IDisplayPartBuilderRecipe {
 
   @Override
   public List<ItemStack> getMaterialItems() {
+    if (displayRevision != MaterialRecipeCache.getDisplayRevision()) {
+      displayRevision = MaterialRecipeCache.getDisplayRevision();
+      materialItems = null;
+    }
     if (materialItems == null) {
       // if unknown, nothing to display. Used for no material input
       if (material.isUnknown()) {

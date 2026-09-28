@@ -9,8 +9,10 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
@@ -31,12 +33,11 @@ final class SmelteryCategory implements DisplayCategory<SmelteryDisplay> {
   @Override public CategoryIdentifier<SmelteryDisplay> getCategoryIdentifier() { return id; }
   @Override public Component getTitle() { return title; }
   @Override public Renderer getIcon() { return EntryStacks.of(icon); }
-  @Override public int getDisplayHeight() { return 158; }
+  @Override public int getDisplayHeight() { return 200; }
 
   @Override
   public int getDisplayWidth(SmelteryDisplay display) {
-    int slots = Math.max(display.inputs().size(), Math.max(display.outputs().size(), display.catalysts().size()));
-    return Math.max(230, 24 + slots * 22);
+    return Math.max(310, 24 + Math.max(rowWidth(display.inputs()), Math.max(rowWidth(display.outputs()), rowWidth(display.catalysts()))));
   }
 
   @Override
@@ -47,8 +48,10 @@ final class SmelteryCategory implements DisplayCategory<SmelteryDisplay> {
     addRow(widgets, bounds, 40, display.outputs(), Component.translatableWithFallback("rei.tconstruct.outputs", "Outputs"), 2);
     addRow(widgets, bounds, 73, display.catalysts(), Component.translatableWithFallback("rei.tconstruct.catalysts", "Required, not consumed"), 0);
     for (int i = 0; i < display.notes().size(); i++) {
-      widgets.add(Widgets.createLabel(new Point(bounds.x + 8, bounds.y + 108 + i * 11), display.notes().get(i))
-        .leftAligned().noShadow().color(0xFF404040, 0xFFB0B0B0));
+      Component note = display.notes().get(i);
+      String line = Minecraft.getInstance().font.plainSubstrByWidth(note.getString(), bounds.width - 16);
+      widgets.add(Widgets.createLabel(new Point(bounds.x + 8, bounds.y + 108 + i * 11), Component.literal(line))
+        .tooltip(note).focusable(true).leftAligned().noShadow().color(0xFF404040, 0xFFB0B0B0));
     }
     return widgets;
   }
@@ -58,8 +61,11 @@ final class SmelteryCategory implements DisplayCategory<SmelteryDisplay> {
       return;
     }
     widgets.add(Widgets.createLabel(new Point(bounds.x + 8, bounds.y + y), label).leftAligned().noShadow().color(0xFF404040, 0xFFB0B0B0));
+    int x = bounds.x + 9;
     for (int i = 0; i < ingredients.size(); i++) {
-      var slot = Widgets.createSlot(new Point(bounds.x + 9 + i * 22, bounds.y + y + 11));
+      int width = slotWidth(ingredients.get(i));
+      var slot = Widgets.createSlot(new Rectangle(x, bounds.y + y + 11, width - 4, 18));
+      x += width;
       // Settings are attached to copies so laying out a page cannot change cached/serialized display data.
       for (EntryStack<?> entry : ingredients.get(i)) {
         var copy = entry.copy().setting(EntryStack.Settings.FLUID_AMOUNT_VISIBLE, true);
@@ -72,5 +78,14 @@ final class SmelteryCategory implements DisplayCategory<SmelteryDisplay> {
       if (role == 2) slot.markOutput();
       widgets.add(slot);
     }
+  }
+
+  private static int rowWidth(List<EntryIngredient> ingredients) {
+    return ingredients.stream().mapToInt(SmelteryCategory::slotWidth).sum();
+  }
+
+  private static int slotWidth(EntryIngredient ingredient) {
+    return ingredient.stream().allMatch(entry -> entry.getType().equals(VanillaEntryTypes.ITEM) || entry.getType().equals(VanillaEntryTypes.FLUID)
+      || entry.getType().equals(TinkerEntryTypes.PATTERN)) ? 22 : 118;
   }
 }

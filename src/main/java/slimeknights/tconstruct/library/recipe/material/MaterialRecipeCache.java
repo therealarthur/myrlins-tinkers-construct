@@ -41,9 +41,16 @@ import java.util.stream.Stream;
 public class MaterialRecipeCache {
   /** Registry access used only to expand tag ingredients for client recipe displays. */
   private static volatile RegistryAccess DISPLAY_REGISTRY_ACCESS;
+  private static long displayRevision;
+
+  /** Changes whenever display data is rebuilt, including late material sync with the same recipe objects. */
+  public static long getDisplayRevision() {
+    return displayRevision;
+  }
 
   public static void setDisplayRegistryAccess(RegistryAccess access) {
     DISPLAY_REGISTRY_ACCESS = access;
+    displayRevision++;
     ITEMS_BY_MATERIAL.clear();
   }
   /** Full list of recipes in the cache */
@@ -205,7 +212,7 @@ public class MaterialRecipeCache {
     RegistryAccess access = DISPLAY_REGISTRY_ACCESS;
     Optional<TagKey<Item>> tag = ingredient.getValues().unwrapKey();
     if (access != null && tag.isPresent()) {
-      return access.lookupOrThrow(Registries.ITEM).get(tag.get())
+      return access.lookup(Registries.ITEM).flatMap(registry -> registry.get(tag.get()))
         .map(holders -> holders.stream().map(ItemStack::new).toList())
         .orElseGet(List::of);
     }

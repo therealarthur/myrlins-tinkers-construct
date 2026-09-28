@@ -23,6 +23,11 @@ public class AgeableSeveringRecipe extends SeveringRecipe {
     AgeableSeveringRecipe::new);
 
   private final ItemOutput childOutput;
+
+  /** Baby-specific output for recipe displays, without spawning an entity. */
+  public ItemStack getChildDisplayOutput() {
+    return childOutput.copy();
+  }
   public AgeableSeveringRecipe(Identifier id, EntityIngredient ingredient, ItemOutput adultOutput, ItemOutput childOutput, float baseChance, float lootingBonus) {
     super(id, ingredient, adultOutput, baseChance, lootingBonus);
     this.childOutput = childOutput;

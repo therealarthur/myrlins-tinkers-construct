@@ -80,9 +80,19 @@ public class MaterialCastingRecipe extends AbstractMaterialCastingRecipe impleme
 
   /* JEI display */
   protected List<IDisplayableCastingRecipe> multiRecipes;
+  private long displayRevision = -1;
+
+  protected void checkDisplayCache() {
+    long revision = MaterialRecipeCache.getDisplayRevision();
+    if (displayRevision != revision) {
+      multiRecipes = null;
+      displayRevision = revision;
+    }
+  }
 
   @Override
   public List<IDisplayableCastingRecipe> getRecipes(RegistryAccess access) {
+    checkDisplayCache();
     if (multiRecipes == null) {
       RecipeType<?> type = getType();
       List<ItemStack> castItems = MaterialRecipeCache.getDisplayItems(getCast());

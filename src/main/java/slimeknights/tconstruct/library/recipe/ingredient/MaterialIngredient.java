@@ -39,6 +39,7 @@ public class MaterialIngredient extends NestedIngredient {
   private final IJsonPredicate<MaterialVariantId> material;
   @Nullable
   private ItemStack[] materialStacks;
+  private long displayRevision = -1;
   protected MaterialIngredient(Ingredient nested, IJsonPredicate<MaterialVariantId> material) {
     super(nested);
     this.material = material;
@@ -152,6 +153,11 @@ public class MaterialIngredient extends NestedIngredient {
   }
 
   public ItemStack[] getItems() {
+    long revision = MaterialRecipeCache.getDisplayRevision();
+    if (displayRevision != revision) {
+      materialStacks = null;
+      displayRevision = revision;
+    }
     if (materialStacks == null) {
       if (!MaterialRegistry.isFullyLoaded()) {
         return MaterialRecipeCache.getDisplayItems(nested).toArray(ItemStack[]::new);

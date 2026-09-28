@@ -106,9 +106,15 @@ public class MaterialMeltingRecipe implements IMeltingRecipe, IMultiRecipe<Melti
 
   /* JEI display */
   private List<MeltingRecipe> multiRecipes = null;
+  private long displayRevision = -1;
 
   @Override
   public List<MeltingRecipe> getRecipes(RegistryAccess access) {
+    long revision = slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache.getDisplayRevision();
+    if (displayRevision != revision) {
+      multiRecipes = null;
+      displayRevision = revision;
+    }
     if (multiRecipes == null) {
       if (input.get().isHidden()) {
         multiRecipes = Collections.emptyList();

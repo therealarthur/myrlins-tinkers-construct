@@ -166,6 +166,7 @@ public class ToolCastingRecipe extends PartSwapCastingRecipe implements IMultiRe
 
   @Override
   public List<IDisplayableCastingRecipe> getRecipes(RegistryAccess access) {
+    checkDisplayCache();
     if (multiRecipes == null) {
       List<MaterialStatsId> requirements = ToolMaterialHook.stats(result.getToolDefinition());
       if (requirements.isEmpty()) {

@@ -14,6 +14,7 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.recipe.ITinkerableContainer;
 import slimeknights.tconstruct.library.recipe.modifiers.ModifierRecipeLookup;
+import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipe;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.LazyToolStack;
@@ -39,6 +40,7 @@ public abstract class AbstractWorktableRecipe implements IModifierWorktableRecip
   /* JEI */
   @Nullable
   protected List<ItemStack> tools;
+  private long displayRevision = -1;
 
   public AbstractWorktableRecipe(Identifier id, List<SizedIngredient> inputs) {
     this(id, slimeknights.tconstruct.library.recipe.ingredient.LegacyIngredientType.ofTag(TinkerTags.Items.MODIFIABLE), inputs);
@@ -71,9 +73,14 @@ public abstract class AbstractWorktableRecipe implements IModifierWorktableRecip
   /** Gets a list of tools to display */
   @Override
   public List<ItemStack> getInputTools() {
+    if (displayRevision != MaterialRecipeCache.getDisplayRevision()) {
+      displayRevision = MaterialRecipeCache.getDisplayRevision();
+      tools = null;
+    }
     if (tools == null) {
       try {
-        tools = toolRequirement.items().map(ItemStack::new).map(stack -> IModifiableDisplay.getDisplayStack(stack.getItem())).toList();
+        tools = MaterialRecipeCache.getDisplayItems(toolRequirement).stream()
+          .map(stack -> stack.getComponentsPatch().isEmpty() ? IModifiableDisplay.getDisplayStack(stack.getItem()) : stack).toList();
       } catch (UnsupportedOperationException exception) {
         // JEI may construct layouts before tag holders are resolved. Do not cache a partial list;
         // the normal lookup will run again once tags are available.
@@ -88,7 +95,9 @@ public abstract class AbstractWorktableRecipe implements IModifierWorktableRecip
     if (slot < 0 || slot >= inputs.size()) {
       return Collections.emptyList();
     }
-    return inputs.get(slot).getMatchingStacks();
+    SizedIngredient input = inputs.get(slot);
+    return MaterialRecipeCache.getDisplayItems(input.getIngredient()).stream()
+      .map(stack -> stack.copyWithCount(input.getAmountNeeded())).toList();
   }
 
   @Override

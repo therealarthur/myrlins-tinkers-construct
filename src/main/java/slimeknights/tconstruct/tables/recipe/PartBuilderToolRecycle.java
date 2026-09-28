@@ -28,6 +28,7 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.json.TinkerLoadables;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariant;
+import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
 import slimeknights.tconstruct.library.recipe.partbuilder.DisplayPartRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.IPartBuilderContainer;
@@ -42,6 +43,7 @@ import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.item.IModifiableDisplay;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import slimeknights.tconstruct.library.tools.nbt.MaterialNBT;
 import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import slimeknights.tconstruct.library.tools.part.IMaterialItem;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
@@ -146,7 +148,7 @@ public class PartBuilderToolRecycle implements IPartBuilderRecipe, IMultiRecipe<
     int matchIndex = -1;
     for (int i = 0; i < materials; i++) {
       IMaterialItem part = parts.get(i);
-      if (pattern.equals(BuiltInRegistries.ITEM.getKey(part.asItem()))) {
+      if (pattern.getId().equals(BuiltInRegistries.ITEM.getKey(part.asItem()))) {
         matchIndex = i;
         match = part;
         break;
@@ -191,7 +193,7 @@ public class PartBuilderToolRecycle implements IPartBuilderRecipe, IMultiRecipe<
     List<IMaterialItem> parts = new ArrayList<>();
     for (int i = 0; i < materials; i++) {
       IMaterialItem part = requirements.get(i);
-      if (found || !pattern.equals(BuiltInRegistries.ITEM.getKey(part.asItem()))) {
+      if (found || !pattern.getId().equals(BuiltInRegistries.ITEM.getKey(part.asItem()))) {
         parts.add(part);
         indices.add(i);
       } else {
@@ -203,6 +205,38 @@ public class PartBuilderToolRecycle implements IPartBuilderRecipe, IMultiRecipe<
     }
     int index = TConstruct.RANDOM.nextInt(parts.size());
     return parts.get(index).withMaterial(tool.getMaterial(indices.getInt(index)).getVariant());
+  }
+
+  /** Enumerates the random extra-part alternatives without consuming gameplay RNG. */
+  public List<ItemStack> getDisplayLeftovers(IPartBuilderContainer inv, Pattern pattern) {
+    ToolStack tool = ToolStack.from(inv.getStack());
+    List<? extends IMaterialItem> requirements = parts.isEmpty() ? ToolPartsHook.parts(tool.getDefinition()) : parts;
+    int count = Math.min(ToolMaterialHook.stats(tool.getDefinition()).size(), requirements.size());
+    List<ItemStack> results = new ArrayList<>();
+    boolean selected = false;
+    for (int index = 0; index < count; index++) {
+      IMaterialItem part = requirements.get(index);
+      if (!selected && pattern.getId().equals(BuiltInRegistries.ITEM.getKey(part.asItem()))) {
+        selected = true;
+      } else {
+        results.add(part.withMaterial(tool.getMaterial(index).getVariant()));
+      }
+    }
+    return results;
+  }
+
+  /** Representative, valid tool stacks. Render-only materials cannot be used by real recycling recipes. */
+  public List<ItemStack> getDisplayTools() {
+    return MaterialRecipeCache.getDisplayItems(toolRequirement.getIngredient()).stream().map(stack -> {
+      if (!(stack.getItem() instanceof IModifiable modifiable)) return ItemStack.EMPTY;
+      ToolDefinition definition = modifiable.getToolDefinition();
+      List<MaterialVariant> materials = ToolMaterialHook.stats(definition).stream()
+        .map(MaterialRegistry::firstWithStatType).map(MaterialVariant::of).toList();
+      if (materials.isEmpty() || materials.stream().anyMatch(material -> material.isUnknown())) return ItemStack.EMPTY;
+      ToolStack tool = ToolStack.createTool(stack.getItem(), definition, new MaterialNBT(materials));
+      ItemStack result = tool.updateStack(stack.copyWithCount(toolRequirement.getAmountNeeded()));
+      return toolRequirement.test(result) ? result : ItemStack.EMPTY;
+    }).filter(stack -> !stack.isEmpty()).toList();
   }
 
 
@@ -225,6 +259,7 @@ public class PartBuilderToolRecycle implements IPartBuilderRecipe, IMultiRecipe<
 
   /* JEI */
   private List<DisplayPartRecipe> displayRecipes;
+  private long displayRevision = -1;
 
   private record PartIndex(IMaterialItem part, int index) {};
 
@@ -240,17 +275,21 @@ public class PartBuilderToolRecycle implements IPartBuilderRecipe, IMultiRecipe<
 
   @Override
   public List<DisplayPartRecipe> getRecipes(RegistryAccess access) {
+    if (displayRevision != MaterialRecipeCache.getDisplayRevision()) {
+      displayRevision = MaterialRecipeCache.getDisplayRevision();
+      displayRecipes = null;
+    }
     if (displayRecipes == null) {
       List<ItemStack> patternItems = MaterialRecipeCache.getDisplayItems(this.pattern);
+      List<ItemStack> tools = getDisplayTools();
       // if we have parts, will be using the same list for all tools, so make just 1 recipe per part
       if (!parts.isEmpty()) {
-        List<ItemStack> tools = MaterialRecipeCache.getDisplayItems(toolRequirement.getIngredient()).stream().map(IModifiableDisplay::getDisplayStack).toList();
         displayRecipes = makeRecipes(parts, patternItems, tools).toList();
       } else {
         // no parts? make a recipe per tool per part
-        displayRecipes = MaterialRecipeCache.getDisplayItems(toolRequirement.getIngredient()).stream().flatMap(stack -> {
+        displayRecipes = tools.stream().flatMap(stack -> {
           if (stack.getItem() instanceof IModifiable modifiable) {
-            return makeRecipes(ToolPartsHook.parts(modifiable.getToolDefinition()), patternItems, List.of(IModifiableDisplay.getDisplayStack(stack)));
+            return makeRecipes(ToolPartsHook.parts(modifiable.getToolDefinition()), patternItems, List.of(stack));
           }
           return Stream.empty();
         }).toList();

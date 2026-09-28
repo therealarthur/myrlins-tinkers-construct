@@ -5,6 +5,7 @@ import me.shedaniel.rei.api.client.view.ViewSearchBuilder;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.Minecraft;
@@ -23,6 +24,8 @@ import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.client.recipe.ClientRecipeCache;
+import slimeknights.tconstruct.library.client.recipe.RecipeDisplayData;
+import slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.alloying.AlloyRecipe;
@@ -30,6 +33,7 @@ import slimeknights.tconstruct.library.recipe.casting.IDisplayableCastingRecipe;
 import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
 import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipe;
+import slimeknights.tconstruct.library.recipe.tinkerstation.IDisplayToolTinkering;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 import java.util.ArrayList;
@@ -54,12 +58,12 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
 
   @Override
   public Optional<List<SmelteryDisplay>> getRecipeFor(EntryStack<?> entry) {
-    return Optional.of(recipes.get(category).stream().filter(display -> matches(display.outputs(), entry)).toList());
+    return Optional.of(recipes.focused(category, entry, true).stream().filter(display -> matches(display.outputs(), entry)).toList());
   }
 
   @Override
   public Optional<List<SmelteryDisplay>> getUsageFor(EntryStack<?> entry) {
-    return Optional.of(recipes.get(category).stream().filter(display -> matches(display.getRequiredEntries(), entry)).toList());
+    return Optional.of(recipes.focused(category, entry, false).stream().filter(display -> matches(display.getRequiredEntries(), entry)).toList());
   }
 
   @Override
@@ -75,10 +79,38 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
     return ingredients.stream().anyMatch(ingredient -> EntryIngredients.testFuzzy(ingredient, entry));
   }
 
-  /** One expansion per snapshot, shared by all six category generators. No level or recipe objects are retained. */
+  /** One expansion per snapshot, shared by all category generators. No level or recipe objects are retained. */
   static final class Recipes {
     private long revision = -1;
     private Map<Identifier,List<SmelteryDisplay>> displays = Map.of();
+
+    synchronized List<SmelteryDisplay> all() {
+      get(TConstructREIClientPlugin.CASTING_TABLE);
+      return displays.values().stream().flatMap(List::stream).toList();
+    }
+
+    synchronized List<SmelteryDisplay> focused(CategoryIdentifier<SmelteryDisplay> category, EntryStack<?> focus, boolean output) {
+      if (!category.equals(TConstructREIClientPlugin.TOOL_TINKERING) || !focus.getType().equals(VanillaEntryTypes.ITEM)) return get(category);
+      var snapshot = ClientRecipeCache.getSnapshot();
+      if (snapshot.recipes() == RecipeMap.EMPTY || Minecraft.getInstance().level == null || !MaterialRegistry.isFullyLoaded()) return List.of();
+      ItemStack item = focus.castValue();
+      var expanded = new LinkedHashMap<Identifier,SmelteryDisplay>();
+      Builder builder = new Builder(snapshot.registryAccess(), expanded);
+      for (RecipeHolder<?> holder : holders(snapshot, TinkerRecipeTypes.TINKER_STATION.get())) {
+        for (var recipe : RecipeHelper.getJEIRecipes(snapshot.registryAccess(), Stream.of(holder), IDisplayToolTinkering.class)) {
+          // Focus-only recipes must pass their visibility guard before any focus-dependent getters run.
+          if (recipe.isFiltered() && !recipe.isVisibleFromItem(item, output)) continue;
+          if (!recipe.isTool(item) && !recipe.matchesItem(stack -> EntryIngredients.testFuzzy(EntryIngredients.of(stack), focus), output)) continue;
+          if (output && recipe.isToolCatalyst()) continue;
+          try {
+            RecipeDisplayMapper.tinkering(holder.id().identifier(), recipe, item, output).forEach(builder::mapped);
+          } catch (RuntimeException exception) {
+            TConstruct.LOG.warn("Could not map focused REI tinkering display for {}", holder.id().identifier(), exception);
+          }
+        }
+      }
+      return List.copyOf(expanded.values());
+    }
 
     synchronized List<SmelteryDisplay> get(CategoryIdentifier<SmelteryDisplay> category) {
       ClientRecipeCache.Snapshot snapshot = ClientRecipeCache.getSnapshot();
@@ -97,6 +129,19 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
         expand(snapshot, TinkerRecipeTypes.MELTING.get(), MeltingRecipe.class, builder::melting);
         expand(snapshot, TinkerRecipeTypes.ALLOYING.get(), AlloyRecipe.class, builder::alloy);
         expand(snapshot, TinkerRecipeTypes.FUEL.get(), MeltingFuel.class, builder::fuel);
+        for (var type : List.of(TinkerRecipeTypes.PART_BUILDER.get(), TinkerRecipeTypes.MATERIAL.get(), TinkerRecipeTypes.TINKER_STATION.get(),
+            TinkerRecipeTypes.MODIFIER_WORKTABLE.get(), TinkerRecipeTypes.MOLDING_TABLE.get(), TinkerRecipeTypes.MOLDING_BASIN.get(),
+            TinkerRecipeTypes.ENTITY_MELTING.get(), TinkerRecipeTypes.SEVERING.get(), TinkerRecipeTypes.DATA.get())) {
+          for (RecipeHolder<?> holder : holders(snapshot, type)) {
+            try {
+              RecipeDisplayMapper.map(holder, snapshot.registryAccess(), Minecraft.getInstance().level).forEach(builder::mapped);
+            } catch (RuntimeException exception) {
+              TConstruct.LOG.warn("Could not map REI display for {}", holder.id().identifier(), exception);
+            }
+          }
+        }
+        RecipeDisplayMapper.defaultEntityMelting(snapshot.recipes().byType(TinkerRecipeTypes.ENTITY_MELTING.get()).stream()
+          .map(RecipeHolder::value).toList()).forEach(builder::mapped);
         Map<Identifier,List<SmelteryDisplay>> grouped = new LinkedHashMap<>();
         for (SmelteryDisplay display : expanded.values()) {
           grouped.computeIfAbsent(display.category(), ignored -> new ArrayList<>()).add(display);
@@ -104,10 +149,15 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
         grouped.replaceAll((id, values) -> List.copyOf(values));
         displays = Map.copyOf(grouped);
         revision = snapshot.revision();
-        TConstruct.LOG.info("Prepared {} REI smeltery displays from received recipe snapshot {}", expanded.size(), revision);
+        TConstruct.LOG.info("Prepared {} REI displays across {} categories from received recipe snapshot {}", expanded.size(), grouped.size(), revision);
       }
       return displays.getOrDefault(category.getIdentifier(), List.of());
     }
+  }
+
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  private static Collection<RecipeHolder<?>> holders(ClientRecipeCache.Snapshot snapshot, RecipeType<?> type) {
+    return (Collection)snapshot.recipes().byType((RecipeType)type);
   }
 
   @SuppressWarnings({"rawtypes", "unchecked"})
@@ -125,6 +175,15 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
   }
 
   private record Builder(RegistryAccess access, Map<Identifier,SmelteryDisplay> displays) {
+    void mapped(RecipeDisplayData data) {
+      SmelteryDisplay display = SmelteryDisplay.create(access, data.category(), data.source(),
+        data.inputs().stream().map(SmelteryDisplayGenerator::ingredient).toList(),
+        data.outputs().stream().map(SmelteryDisplayGenerator::ingredient).toList(),
+        data.catalysts().stream().map(SmelteryDisplayGenerator::ingredient).toList(), data.notes(),
+        data.lookupInputs().isEmpty() ? List.of() : List.of(ingredient(data.lookupInputs())));
+      displays.putIfAbsent(display.displayId(), display);
+    }
+
     private void add(CategoryIdentifier<SmelteryDisplay> category, Identifier source, List<EntryIngredient> inputs,
                      List<EntryIngredient> outputs, List<EntryIngredient> catalysts, List<Component> notes) {
       if (Stream.of(inputs, outputs, catalysts).flatMap(List::stream).anyMatch(List::isEmpty)) {
@@ -199,7 +258,8 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
         int duration = (hookTime > 0 ? hookTime : burnTime) / 4;
         if (duration > 0) {
           var remainder = stack.getCraftingRemainder();
-          List<EntryIngredient> outputs = remainder == null ? List.of() : List.of(EntryIngredients.of(remainder.create()));
+          ItemStack container = remainder == null ? ItemStack.EMPTY : remainder.create();
+          List<EntryIngredient> outputs = container.isEmpty() ? List.of() : List.of(EntryIngredients.of(container));
           addFuel(source, recipe, EntryIngredients.of(stack), duration, List.of(EntryIngredients.of(TinkerSmeltery.searedHeater)), outputs);
         }
       }
@@ -216,6 +276,15 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
 
   private static Component temperature(int temperature) {
     return Component.translatable("jei.tconstruct.temperature", temperature);
+  }
+
+  private static EntryIngredient ingredient(List<RecipeDisplayData.Value> values) {
+    return values.stream().map(value -> switch (value) {
+      case RecipeDisplayData.ItemValue item -> EntryStacks.of(item.stack());
+      case RecipeDisplayData.FluidValue fluid -> EntryStacks.of(dev.architectury.fluid.FluidStack.create(
+        fluid.stack().getFluid(), fluid.stack().getAmount(), fluid.stack().getComponentsPatch()));
+      default -> TinkerEntryTypes.entry(value);
+    }).collect(EntryIngredient.collector());
   }
 
   private static EntryIngredient fluids(List<FluidStack> fluids) {

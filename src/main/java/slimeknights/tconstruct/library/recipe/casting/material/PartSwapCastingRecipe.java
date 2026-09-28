@@ -189,6 +189,15 @@ public class PartSwapCastingRecipe extends AbstractMaterialCastingRecipe impleme
 
   /* JEI display */
   protected List<IDisplayableCastingRecipe> multiRecipes;
+  private long displayRevision = -1;
+
+  protected void checkDisplayCache() {
+    long revision = slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache.getDisplayRevision();
+    if (displayRevision != revision) {
+      multiRecipes = null;
+      displayRevision = revision;
+    }
+  }
 
   /** Gets the max fluid amount from a list of fluids */
   protected static int getFluidAmount(List<FluidStack> fluids) {
@@ -217,8 +226,9 @@ public class PartSwapCastingRecipe extends AbstractMaterialCastingRecipe impleme
 
   @Override
   public List<IDisplayableCastingRecipe> getRecipes(RegistryAccess access) {
+    checkDisplayCache();
     if (multiRecipes == null) {
-      List<ItemStack> casts = getCast().items().map(ItemStack::new).toList();
+      List<ItemStack> casts = slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache.getDisplayItems(getCast());
       Predicate<MaterialFluidRecipe> validRecipe = recipe -> recipe.isVisible() && materials.matches(recipe.getOutput().getVariant());
       multiRecipes = Stream.concat(
           // show recipes for creating the tool from all castable fluids
@@ -247,7 +257,7 @@ public class PartSwapCastingRecipe extends AbstractMaterialCastingRecipe impleme
               }
               List<FluidStack> fluids = resizeFluids(recipe.getFluids());
               return Stream.of(new DisplayCastingRecipe(getId(), getType(), List.copyOf(inputs), fluids, List.copyOf(results),
-                ICastingRecipe.calcCoolingTime(recipe.getTemperature(), itemCost * getFluidAmount(fluids)), isConsumed()));
+                ICastingRecipe.calcCoolingTime(recipe.getTemperature(), getFluidAmount(fluids)), isConsumed()));
             }),
           // all composite fluids become special composite swapping recipes
           MaterialCastingLookup.getAllCompositeFluids().stream()
@@ -280,7 +290,7 @@ public class PartSwapCastingRecipe extends AbstractMaterialCastingRecipe impleme
               // build the recipe
               List<FluidStack> fluids = resizeFluids(recipe.getFluids());
               return Stream.of(new DisplayCastingRecipe(getId(), getType(), List.copyOf(inputs), fluids, List.copyOf(outputs),
-                ICastingRecipe.calcCoolingTime(recipe.getTemperature(), itemCost * getFluidAmount(fluids)), isConsumed()));
+                ICastingRecipe.calcCoolingTime(recipe.getTemperature(), getFluidAmount(fluids)), isConsumed()));
             })
         )
         .collect(Collectors.toList());
