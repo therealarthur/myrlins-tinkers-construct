@@ -66,8 +66,6 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
   protected static final EntityDataAccessor<ItemStack> STACK = SynchedEntityData.defineId(ThrownTool.class, EntityDataSerializers.ITEM_STACK);
   /** Movement speed in water */
   protected static final EntityDataAccessor<Float> WATER_INERTIA = SynchedEntityData.defineId(ThrownTool.class, EntityDataSerializers.FLOAT);
-  /** Loyalty level, replacing the private vanilla trident data accessor. */
-  private static final EntityDataAccessor<Byte> LOYALTY_DATA = SynchedEntityData.defineId(ThrownTool.class, EntityDataSerializers.BYTE);
   /** Foil state, replacing the private vanilla trident data accessor. */
   private static final EntityDataAccessor<Boolean> FOIL_DATA = SynchedEntityData.defineId(ThrownTool.class, EntityDataSerializers.BOOLEAN);
   /** Volatile integer key for the loyalty level */
@@ -84,7 +82,6 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
   @Setter
   private int originalSlot = -1;
   private boolean hitBlock = false;
-  private boolean dealtDamage = false;
   private int customLife = 0;
   /** Tasks queued by modifiers */
   private Schedule tasks = Schedule.EMPTY;
@@ -117,7 +114,8 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
   /** Sets any relevant properties from the stack */
   private void updateFromStack() {
     this.entityData.set(STACK, getThrownStack());
-    this.entityData.set(LOYALTY_DATA, (byte) ModifierUtil.getVolatileInt(getThrownStack(), LOYALTY));
+    // Vanilla's return movement reads this inherited accessor, not a separate tool-only value.
+    this.entityData.set(ID_LOYALTY, (byte) ModifierUtil.getVolatileInt(getThrownStack(), LOYALTY));
     this.entityData.set(FOIL_DATA, ModifierUtil.checkVolatileFlag(getThrownStack(), ModifiableItem.SHINY));
     this.noDespawn = ModifierUtil.checkVolatileFlag(getThrownStack(), IndestructibleItemEntity.INDESTRUCTIBLE_ENTITY);
     if (!level().isClientSide()) {
@@ -164,7 +162,7 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
         this.discard();
       }
       // if its worldbound or loyalty, don't despawn
-    } else if (!noDespawn && this.entityData.get(LOYALTY_DATA) == 0) {
+    } else if (!noDespawn && this.entityData.get(ID_LOYALTY) == 0) {
       // otherwise despawn in 5 minutes like a normal item. Like seriously mojang, why does your rare enchanted trident despawn in 1 minute?
       this.customLife += 1;
       if (this.customLife >= 6000) {
@@ -176,7 +174,7 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
   @Override
   protected void onBelowWorld() {
     // don't discard tools below world if they have loyalty
-    if (pickup == Pickup.ALLOWED && this.entityData.get(LOYALTY_DATA) != 0) {
+    if (pickup == Pickup.ALLOWED && this.entityData.get(ID_LOYALTY) != 0) {
       // ensure it returns
       dealtDamage = true;
       // we don't damage the tool on throw, so instead damage it when it hits a block or an entity
@@ -395,7 +393,6 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
     super.defineSynchedData(builder);
     builder.define(STACK, ItemStack.EMPTY);
     builder.define(WATER_INERTIA, 0.6f);
-    builder.define(LOYALTY_DATA, (byte)0);
     builder.define(FOIL_DATA, false);
   }
 
@@ -445,7 +442,8 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
     this.multiplier = input.getFloatOr(KEY_MULTIPLIER, 1);
     this.entityData.set(WATER_INERTIA, input.getFloatOr(KEY_WATER_INERTIA, 0.6f));
     this.hitBlock = input.getBooleanOr(KEY_HIT_BLOCK, false);
-    this.dealtDamage = input.getBooleanOr("TConDealtDamage", false);
+    // Older Continuum saves kept tool impacts separate from vanilla's DealtDamage field.
+    this.dealtDamage |= input.getBooleanOr("TConDealtDamage", false);
     this.customLife = input.getIntOr("TConLife", 0);
     this.originalSlot = input.getIntOr(KEY_ORIGINAL_SLOT, -1);
     input.read(KEY_TASKS, CompoundTag.CODEC).map(tag -> tag.getListOrEmpty(KEY_TASKS)).ifPresent(list -> this.tasks = Schedule.deserialize(list));

@@ -1,6 +1,8 @@
 # Side inventory regression fixture
 
-`slimeknights.tconstruct.tables.menu.module.CraftingSideInventoryRegression` is a plain Java entry point. Compile it against the built Continuum source, pinned Continuum Core 1.12.0, and the Minecraft 26.1.2 / NeoForge 26.1.2.109 development runtime. It needs no JUnit or Mockito dependency. Run headlessly with the same development runtime and Java 25; the integration coordinator owns runner configuration and resource scheduling.
+`slimeknights.tconstruct.tables.menu.module.CraftingSideInventoryRegression` is exercised by the small JUnit wrapper in `local-tests/unit` after ModDev initializes FML. Run `tools/Build-Local.ps1 -Tasks craftingRegression` from a granted compiler slot. A plain Java launch fails because 26.1.2's SharedConstants requires an active FML loader; that failed attempt is retained in build evidence. The test uses pinned Continuum Core 1.12.0 and Minecraft 26.1.2 / NeoForge 26.1.2.109 with Java 25. It creates no world or graphical client.
+
+Observed September 28: one JUnit test passes all **105 assertions** in `build/local-evidence/build-20260928-024510.log`, with the XML report in `build/test-results/test/TEST-aebm.continuumtests.SideInventoryTest.xml`. FML loaded Continuum/Core and the upstream build's optional JEI/Jade runtime dependencies; this is not a BMC6 combined-pack test.
 
 The fixture uses the actual `SideInventoryContainer.createSlot`, its private `TransferItemHandler` bridge (through reflection), Core's `MultiModuleContainerMenu.refillContainer` / `BaseContainerMenu.mergeItemStackRefill`, Core's `WrapperSlot`, and NeoForge's `ItemStacksResourceHandler`. The harness subclasses only expose protected entry points; they do not duplicate transfer logic. Minecraft bootstrap initializes vanilla items; no world or graphical client is created.
 

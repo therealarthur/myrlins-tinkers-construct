@@ -1,0 +1,23 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="aebmcontinuumtests"
+version="0.0.1"
+displayName="AEBM Continuum Returning fixture"
+description="Development-only server command fixture. Exclude from release packs."
+
+[[dependencies.aebmcontinuumtests]]
+modId="neoforge"
+type="required"
+versionRange="[26.1.2.109,26.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.aebmcontinuumtests]]
+modId="tconstruct"
+type="required"
+versionRange="[3.12,3.13)"
+ordering="AFTER"
+side="BOTH"

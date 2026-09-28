@@ -1,0 +1,21 @@
+# Returning server fixture
+
+This development-only mod exercises the actual Continuum `ThrownTool`, loaded modifier/material data, target vanilla `ThrownTrident.tick()`, inventory pickup and entity serialization. It uses no graphical client. Exclude its JAR from release packs.
+
+The coordinator builds `returningFixtureJar` and installs it alongside the selected Continuum/Core artifacts in a disposable dedicated-server profile. Once startup and data loading complete, run `aebmreturningtest` in the server console (or as a game-master command). Save console output and the exact tested artifact hashes. Success requires all nine `AEBM_RETURNING_PASS` records and `AEBM_RETURNING_SUMMARY passed=9 failed=0`; a command return code alone is insufficient evidence.
+
+Cases cover fresh loyalty with no premature return, return after grounded delay, a Returning-zero control, entity-impact state and collision suppression, the below-world hook, damage/modifier/component and offhand-slot serialization, both directions of legacy/vanilla impact-state migration, and pickup with an occupied original slot. Each case reports independently so the released 3.12.2 artifact can serve as a failing baseline.
+
+Fixtures create fresh NeoForge fake players and actual unregistered projectile/entity objects. They run synchronously on the server command thread above the world's build height, without adding players/entities or modifying blocks. Reflection seeds `inGroundTime` or calls the real protected impact/void hook; assertions then invoke the real entity tick and pickup/serialization methods. No replacement return algorithm is modeled by the test.
+
+Limits: this is a controlled server hook/tick test, not natural collision or complete throw-and-flight gameplay. The entity-impact target is invulnerable, so it verifies state handling rather than melee damage. Synthetic owners are explicitly reattached after deserialization; UUID resolution after a real reconnect/restart is not covered. Successful harvesting, actual void flight, full inventory behavior, real world/chunk persistence, client synchronization/rendering and multiplayer remain separate acceptance checks. No run is claimed merely because these sources exist or compile.
+
+## Tool and casting persistence
+
+`aebmpersistencetest` runs seven independent cases from `PersistenceServerFixture`. Require seven `AEBM_PERSISTENCE_PASS` records and `AEBM_PERSISTENCE_SUMMARY passed=7 failed=0`.
+
+Tool cases encode/decode actual ItemStacks through registry-aware codecs and binary NBT bytes in memory. They compare material order/variants, installed upgrades, material traits and combined modifiers, damage/broken state, all stored tool stats, persistent modifier data/slots, Returning's derived loyalty and item components. They also rebuild the decoded tool's stats and cover a broken tool. A fixture-only namespaced persistent value makes omitted persistent data observable; no modifier mechanics or recipes are changed.
+
+Casting cases use actual seared table/basin block entities, their real tank fill method, loaded iron recipes and `SERVER_TICKER`. They cover partial fill plus fluid-filter preservation, a mid-cooling reusable cast, a consumed sand cast and an iron-block basin. Each reloaded cast completes only after its remaining cooling ticks, consumes its fluid, produces exactly one expected output, preserves or consumes the cast as specified, and roundtrips finished output without restoring consumed fluid. Both immediate recipe resolution during load and deferred resolution during `setLevel` are exercised. Serialization collectors must report no errors.
+
+Casting objects remain unregistered at Y = build-height maximum + 32. They are never placed into chunks. Their ordinary dirty/comparator/network notifications still run against the disposable level; block-state update attempts are rejected outside build height. This is intentionally a real implementation fixture, not a replacement model of casting. Run it only in the coordinator's disposable test profile. It does not cover faucets, player interaction, comparator correctness, chunk unload, disk persistence, a full process restart or client recipe/rendering behavior. Passing binary roundtrips must not be reported as full-restart acceptance.

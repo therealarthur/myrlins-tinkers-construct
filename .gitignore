@@ -59,3 +59,4 @@ src/generated/resources/.cache/*
 
 #local-only art assets
 /art/
+/local-audit/upstream/

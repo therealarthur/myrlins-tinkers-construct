@@ -1,5 +1,8 @@
 {
-    "variants": {
-        "": { "model": "tconstruct:block/smeltery/tank/ingot_gauge"}
+  "variants": {
+    "": {
+      "type": "tconstruct:tank",
+      "model": "tconstruct:block/smeltery/tank/ingot_gauge"
     }
+  }
 }

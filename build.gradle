@@ -10,7 +10,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.142'
+    id 'net.neoforged.moddev' version '2.0.147'
     id 'io.freefair.lombok' version '8.11'
 }
 //apply plugin: 'maven'
@@ -60,6 +60,9 @@ base {
     archivesName = 'ContinuumConstruct'
 }
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+tasks.withType(net.neoforged.nfrtgradle.NeoFormRuntimeTask).configureEach {
+    javaExecutable.set(javaToolchains.launcherFor(java.toolchain).map { it.executablePath.asFile.absolutePath })
+}
 
 // sets version to the slimeKnights version format
 task buildInfo {
@@ -188,6 +191,10 @@ neoForge {
             sourceSet project.sourceSets.main
         }
     }
+    unitTest {
+        enable()
+        testedMod = mods.tconstruct
+    }
 }
 
 configurations {
@@ -200,7 +207,8 @@ lombok {
 
 dependencies {
     // would ideally use API for this, but that does not work well with fg.deobf in my understanding
-    implementation files("../Mantle/build/libs/ContinuumCore-${minecraft_version}-${mantle_version}.jar")
+    // Use the pinned companion release already selected by the integration workspace.
+    implementation files("../../downloads/ContinuumCore-${minecraft_version}-${mantle_version}.jar")
 
     
 
@@ -232,10 +240,9 @@ dependencies {
 
     deployerJars 'org.apache.maven.wagon:wagon-ssh:2.2'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation 'org.mockito:mockito-inline:4.2.0'
-    testImplementation 'org.assertj:assertj-core:3.21.0'
+    testImplementation platform('org.junit:junit-bom:5.13.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
@@ -264,6 +271,7 @@ tasks.named('processResources', ProcessResources).configure {
 }
 
 tasks.named('jar', Jar).configure {
+    from('LICENSE') { into 'META-INF/licenses/continuum' }
     manifest {
         attributes([
                 "Specification-Title"     : "Continuum Construct",
@@ -272,7 +280,9 @@ tasks.named('jar', Jar).configure {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : "${version}",
                 "Implementation-Vendor"   : "Slime Knights",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "Source-Revision"         : project.buildInfo.revision,
+                "Upstream-Revision"       : '72602856c8403c51f9f488ab1580f1216fa42fda'
         ])
     }
 }
@@ -370,5 +380,51 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
     options.compilerArgs.addAll(['-nowarn', '-Xlint:none', '-Xlint:-deprecation', '-Xlint:-removal', '-Xlint:-unchecked'])
     options.fork = true
+    options.forkOptions.memoryMaximumSize = '1G'
     options.forkOptions.jvmArgs.add('--sun-misc-unsafe-memory-access=allow')
+}
+
+// Focused regressions remain independent of the unported upstream test suite.
+sourceSets {
+    craftingRegression {
+        java.srcDirs = ['local-tests/crafting']
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+    returningFixture {
+        java.srcDirs = ['local-tests/returning/java']
+        resources.srcDirs = ['local-tests/returning/resources']
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+    // Keep unported upstream tests on disk; compile only this target-version fixture.
+    test {
+        java.srcDirs = ['local-tests/unit']
+        resources.srcDirs = []
+        compileClasspath += sourceSets.craftingRegression.output
+        runtimeClasspath += sourceSets.craftingRegression.output
+    }
+}
+configurations {
+    craftingRegressionImplementation.extendsFrom implementation
+    returningFixtureImplementation.extendsFrom implementation
+}
+neoForge.addModdingDependenciesTo(sourceSets.craftingRegression)
+neoForge.addModdingDependenciesTo(sourceSets.returningFixture)
+neoForge.mods.tconstruct.sourceSet(sourceSets.craftingRegression)
+tasks.named('test', Test) {
+    dependsOn tasks.named('craftingRegressionClasses')
+    maxHeapSize = '512m'
+    testLogging { events 'passed', 'skipped', 'failed'; showStandardStreams = true }
+    systemProperty 'java.io.tmpdir', System.getenv('TEMP')
+}
+tasks.register('craftingRegression') {
+    dependsOn tasks.named('test')
+}
+tasks.register('returningFixtureJar', Jar) {
+    dependsOn tasks.named('returningFixtureClasses')
+    archiveBaseName = 'aebm-continuum-returning-fixture'
+    archiveVersion = '0.0.1'
+    from sourceSets.returningFixture.output
+    from('LICENSE') { into 'META-INF/licenses/continuum' }
 }
