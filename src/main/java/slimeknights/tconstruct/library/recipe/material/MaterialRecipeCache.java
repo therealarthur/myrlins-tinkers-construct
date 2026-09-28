@@ -24,6 +24,7 @@ import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.materials.definition.IMaterial;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+import slimeknights.tconstruct.library.recipe.ingredient.InstrumentIngredient;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -55,8 +56,8 @@ public class MaterialRecipeCache {
   }
   /** Full list of recipes in the cache */
   private static final List<MaterialRecipe> RECIPES = new ArrayList<>();
-  /** Lookup from item ID to recipe */
-  private static final Map<Item, MaterialRecipe> RECIPE_BY_ITEM = new ConcurrentHashMap<>();
+  /** Item-only candidate lists; the full component-sensitive predicate is still tested for every stack. */
+  private static final Map<Item, List<MaterialRecipe>> RECIPES_BY_ITEM = new ConcurrentHashMap<>();
   /** Lookup from material variant ID to recipe */
   private static final Multimap<MaterialVariantId, MaterialRecipe> RECIPES_BY_MATERIAL = HashMultimap.create();
   /** Map from material variant ID to item stack list for display */
@@ -74,7 +75,7 @@ public class MaterialRecipeCache {
   /** Listener for clearing the cache */
   private static final DuelSidedListener LISTENER = RecipeCacheInvalidator.addDuelSidedListener(() -> {
     RECIPES.clear();
-    RECIPE_BY_ITEM.clear();
+    RECIPES_BY_ITEM.clear();
     RECIPES_BY_MATERIAL.clear();
     ITEMS_BY_MATERIAL.clear();
     KNOWN_VARIANTS.clear();
@@ -89,6 +90,7 @@ public class MaterialRecipeCache {
       LISTENER.checkClear();
       // add recipe for item lookup; too early to resolve ingredient
       RECIPES.add(recipe);
+      RECIPES_BY_ITEM.clear();
       // mark the variant as known
       MaterialVariantId variant = recipe.getMaterial().getVariant();
       addKnownVariant(variant);
@@ -114,14 +116,15 @@ public class MaterialRecipeCache {
     if (stack.isEmpty()) {
       return MaterialRecipe.EMPTY;
     }
-    return RECIPE_BY_ITEM.computeIfAbsent(stack.getItem(), item -> {
-      for (MaterialRecipe recipe : RECIPES) {
-        if (recipe.getIngredient().test(stack)) {
-          return recipe;
-        }
-      }
-      return MaterialRecipe.EMPTY;
+    List<MaterialRecipe> candidates = RECIPES_BY_ITEM.computeIfAbsent(stack.getItem(), item -> {
+      ItemStack identity = new ItemStack(item);
+      // Custom ingredients may inspect arbitrary components and need not expose an exhaustive item list.
+      return RECIPES.stream().filter(recipe -> recipe.getIngredient().isCustom() || recipe.getIngredient().test(identity)).toList();
     });
+    for (MaterialRecipe recipe : candidates) {
+      if (recipe.getIngredient().test(stack)) return recipe;
+    }
+    return MaterialRecipe.EMPTY;
   }
 
   /** Gets a list of all material recipes */
@@ -149,6 +152,10 @@ public class MaterialRecipeCache {
   public static List<ItemStack> getDisplayItems(Ingredient ingredient) {
     if (ingredient.isCustom()) {
       var custom = ingredient.getCustomIngredient();
+      if (custom instanceof InstrumentIngredient instrument) {
+        RegistryAccess access = DISPLAY_REGISTRY_ACCESS;
+        return instrument.getDisplayStacks(access == null ? RegistryAccess.EMPTY : access);
+      }
       if (custom instanceof DifferenceIngredient difference) {
         return resolveDisplayItems(difference.base()).stream()
           .filter(stack -> !matchesDisplayIngredient(difference.subtracted(), stack))
