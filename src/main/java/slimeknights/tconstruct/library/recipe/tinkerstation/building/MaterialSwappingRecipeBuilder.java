@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import slimeknights.mantle.data.loadable.Loadables;
+import slimeknights.mantle.data.predicate.IJsonPredicate;
 import slimeknights.mantle.recipe.data.AbstractRecipeBuilder;
 import slimeknights.mantle.recipe.ingredient.SizedIngredient;
 import slimeknights.tconstruct.library.materials.definition.IMaterial;
@@ -43,6 +44,8 @@ public class MaterialSwappingRecipeBuilder extends AbstractRecipeBuilder<Materia
   private SizedIngredient ingredient = SizedIngredient.EMPTY;
   /** Material to swap to, used by fixed */
   private MaterialVariantId material = IMaterial.UNKNOWN_ID;
+  private IJsonPredicate<MaterialVariantId> materialPredicate;
+  private int materialCost;
   /** Repair value on swapping, used by fixed */
   @Setter
   private int repairValue = 0;
@@ -75,6 +78,14 @@ public class MaterialSwappingRecipeBuilder extends AbstractRecipeBuilder<Materia
     return material(material, SizedIngredient.fromItems(item));
   }
 
+  /** Swaps using the material value supplied by ordinary material recipes. */
+  public MaterialSwappingRecipeBuilder material(IJsonPredicate<MaterialVariantId> predicate, int cost) {
+    if (cost < 1) throw new IllegalArgumentException("Material cost must be positive");
+    this.materialPredicate = predicate;
+    this.materialCost = cost;
+    return this;
+  }
+
   /** Adds an extra ingredient requirement */
   public MaterialSwappingRecipeBuilder addExtraRequirement(SizedIngredient ingredient) {
     extraRequirements.add(ingredient);
@@ -102,7 +113,12 @@ public class MaterialSwappingRecipeBuilder extends AbstractRecipeBuilder<Materia
     if (indices.length == 0) {
       throw new IllegalStateException("Must set index");
     }
-    if (part != null) {
+    if (materialPredicate != null) {
+      if (part != null || ingredient != SizedIngredient.EMPTY) {
+        throw new IllegalStateException("Cannot combine material value with a fixed part or ingredient");
+      }
+      consumer.accept(recipeKey(id), new MaterialValueSwappingRecipe(id, tools, maxStackSize, materialPredicate, materialCost, indices, extraRequirements), null);
+    } else if (part != null) {
       if (ingredient != SizedIngredient.EMPTY) {
         throw new IllegalStateException("Cannot set both part and ingredient");
       }

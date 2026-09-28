@@ -76,6 +76,9 @@ public class MaterialRenderInfoProvider extends AbstractMaterialRenderInfoProvid
     buildRenderInfo(MaterialIds.bloodshroom);
     buildRenderInfo(MaterialIds.enderbark);
     buildRenderInfo(MaterialIds.slimeskin);
+    buildRenderInfo(MaterialIds.skyslimeskin);
+    buildRenderInfo(MaterialIds.enderslimeskin);
+    buildRenderInfo(MaterialIds.venom);
     // slimeball
     redirect(MaterialIds.slimeball, MaterialIds.earthslime);
     redirect(MaterialVariantId.create(MaterialIds.slimeball, "sky"),   MaterialIds.skyslime);

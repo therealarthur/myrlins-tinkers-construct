@@ -12,7 +12,7 @@
   ],
   "hide_in_book": true,
   "id": "tconstruct:tools/materials/slimeskin/composite/sky_cleaning",
-  "input": "tconstruct:skyslime_vine#slimeskin",
+  "input": "tconstruct:skyslimeskin",
   "output": "tconstruct:leather",
   "temperature": 10
 }

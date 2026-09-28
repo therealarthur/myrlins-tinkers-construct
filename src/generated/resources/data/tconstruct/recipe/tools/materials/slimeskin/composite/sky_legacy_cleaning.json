@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:material_fluid",
+  "fluid": [
+    {
+      "amount": 50,
+      "fluid": "tconstruct:venom"
+    },
+    {
+      "amount": 50,
+      "fluid": "tconstruct:venom"
+    }
+  ],
+  "hide_in_book": true,
+  "id": "tconstruct:tools/materials/slimeskin/composite/sky_legacy_cleaning",
+  "input": "tconstruct:skyslime_vine#slimeskin",
+  "output": "tconstruct:leather",
+  "temperature": 10
+}

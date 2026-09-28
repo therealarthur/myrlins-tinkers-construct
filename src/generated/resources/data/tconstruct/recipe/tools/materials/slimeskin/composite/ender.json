@@ -12,6 +12,6 @@
   ],
   "id": "tconstruct:tools/materials/slimeskin/composite/ender",
   "input": "tconstruct:leather",
-  "output": "tconstruct:enderslime_vine#slimeskin",
+  "output": "tconstruct:enderslimeskin",
   "temperature": 70
 }

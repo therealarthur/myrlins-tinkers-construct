@@ -2,7 +2,7 @@
   "modules": [
     {
       "type": "tconstruct:material_stats",
-      "primary_part": 0,
+      "primary_part": 1,
       "stat_types": [
         "tconstruct:skull",
         {
@@ -12,8 +12,8 @@
       ]
     },
     {
-      "type": "tconstruct:default_materials",
-      "materials": [
+      "type": "tconstruct:remapping_materials",
+      "missing": [
         {
           "type": "tconstruct:random",
           "allow_hidden": true
@@ -21,6 +21,13 @@
         {
           "type": "tconstruct:fixed",
           "material": "tconstruct:blood"
+        }
+      ],
+      "remap": [
+        {
+          "tconstruct:glass": "tconstruct:gunpowder",
+          "tconstruct:venombone": "tconstruct:ice",
+          "tconstruct:blazing_bone": "tconstruct:blaze"
         }
       ]
     },
@@ -36,8 +43,8 @@
       "hooks": [
         "tconstruct:trim_trait"
       ],
-      "material_index": 1,
-      "stat_type": "tconstruct:slime"
+      "material_index": 0,
+      "stat_type": "tconstruct:skull"
     },
     {
       "type": "tconstruct:unique_material_name",

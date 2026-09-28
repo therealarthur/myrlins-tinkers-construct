@@ -12,7 +12,7 @@
   ],
   "hide_in_book": true,
   "id": "tconstruct:tools/materials/slimeskin/composite/ender_cleaning",
-  "input": "tconstruct:enderslime_vine#slimeskin",
+  "input": "tconstruct:enderslimeskin",
   "output": "tconstruct:leather",
   "temperature": 10
 }

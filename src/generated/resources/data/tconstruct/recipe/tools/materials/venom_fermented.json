@@ -1,0 +1,8 @@
+{
+  "type": "tconstruct:material",
+  "id": "tconstruct:tools/materials/venom_fermented",
+  "ingredient": "minecraft:fermented_spider_eye",
+  "material": "tconstruct:venom",
+  "needed": 1,
+  "value": 2
+}

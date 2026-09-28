@@ -36,6 +36,7 @@ import slimeknights.tconstruct.library.recipe.partbuilder.ItemPartRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.PartRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.recycle.PartBuilderRecycle;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.FixedMaterialSwappingRecipe;
+import slimeknights.tconstruct.library.recipe.tinkerstation.building.MaterialValueSwappingRecipe;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.PartSwappingOverrideRecipe;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.ToolBuildingRecipe;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.ToolMaterialSwappingRecipe;
@@ -154,6 +155,7 @@ public final class TinkerTables extends TinkerModule {
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ToolBuildingRecipe>> toolBuildingRecipeSerializer = RECIPE_SERIALIZERS.register("tool_building", () -> LoadableRecipeSerializer.of(ToolBuildingRecipe.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<TinkerStationPartSwapping>> tinkerStationPartSwappingSerializer = RECIPE_SERIALIZERS.register("tinker_station_part_swapping", () -> LoadableRecipeSerializer.of(TinkerStationPartSwapping.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<TinkerStationDamagingRecipe>> tinkerStationDamagingSerializer = RECIPE_SERIALIZERS.register("tinker_station_damaging", () -> LoadableRecipeSerializer.of(TinkerStationDamagingRecipe.LOADER));
+  public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MaterialValueSwappingRecipe>> materialValueSwapping = RECIPE_SERIALIZERS.register("material_value_swapping", () -> LoadableRecipeSerializer.of(MaterialValueSwappingRecipe.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FixedMaterialSwappingRecipe>> fixedMaterialSwapping = RECIPE_SERIALIZERS.register("fixed_material_swapping", () -> LoadableRecipeSerializer.of(FixedMaterialSwappingRecipe.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PartSwappingOverrideRecipe>> partSwappingOverride = RECIPE_SERIALIZERS.register("part_swapping_override", () -> LoadableRecipeSerializer.of(PartSwappingOverrideRecipe.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ToolMaterialSwappingRecipe>> toolMaterialSwapping = RECIPE_SERIALIZERS.register("tool_material_swapping", () -> LoadableRecipeSerializer.of(ToolMaterialSwappingRecipe.LOADER));

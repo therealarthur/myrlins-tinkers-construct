@@ -523,6 +523,8 @@ public class TinkerMaterialSpriteProvider extends AbstractMaterialSpriteProvider
     IColorMapping enderslime = GreyToColorMapping.builderFromBlack().addARGB(63, 0xFF6300B0).addARGB(102, 0xFF790DC6).addARGB(127, 0xFF8819D3).addARGB(140, 0xFF9727DD).addARGB(178, 0xFFA936ED).addARGB(193, 0xFFBF58F7).addARGB(216, 0xFFD37CFF).addARGB(255, 0xFFEEBFFF).build();
     buildMaterial(MaterialIds.earthslime).slime().arrowHead().fletching().colorMapper(earthslime);
     buildMaterial(MaterialIds.slimeskin).fallbacks("cloth").statType(StatlessMaterialStats.BOWSTRING).cuirass().maille().colorMapper(earthslime);
+    buildMaterial(MaterialIds.skyslimeskin).fallbacks("cloth").cuirass().maille().colorMapper(skyslime);
+    buildMaterial(MaterialIds.enderslimeskin).fallbacks("cloth").cuirass().maille().colorMapper(enderslime);
     buildMaterial(MaterialIds.skyslime).slime().arrowHead().fletching().colorMapper(skyslime);
     buildMaterial(MaterialIds.skyslimeVine).statType(StatlessMaterialStats.BINDING, StatlessMaterialStats.BOWSTRING).cuirass().maille().laces().fallbacks("primitive", "cloth").colorMapper(skyslime);
     buildMaterial(MaterialIds.ichor).slime().arrowHead().fletching().colorMapper(ichor);
@@ -533,6 +535,9 @@ public class TinkerMaterialSpriteProvider extends AbstractMaterialSpriteProvider
       .fallbacks("contrast").slime().fletching()
       .colorMapper(GreyToColorMapping.builderFromBlack().addARGB(63, 0xFFCA4E06).addARGB(102, 0xFFE66410).addARGB(126, 0xFFF48522).addARGB(127, 0xFF411616).addARGB(170, 0xFF501B1B).addARGB(216, 0xFF652828).addARGB(255, 0xFF723232).build());
     // pseudoslime
+    buildMaterial(MaterialIds.venom)
+      .slime()
+      .colorMapper(GreyToColorMapping.builder().addARGB(0, 0xE07F7F7F).addARGB(63, 0xE59B9B9B).addARGB(102, 0xE6A1A1A1).addARGB(140, 0xE9A7A7A7).addARGB(178, 0xEDBBBBBB).addARGB(216, 0xF3D4D4D4).addARGB(255, 0xF8EFEFEF).build());
     buildMaterial(MaterialIds.blood)
       .slime()
       .colorMapper(GreyToColorMapping.builderFromBlack().addARGB(63, 0xFF5D0000).addARGB(102, 0xFF750000).addARGB(127, 0xFF820000).addARGB(140, 0xFF930000).addARGB(178, 0xFFA00000).addARGB(193, 0xFFAB0000).addARGB(216, 0xFFB80000).addARGB(255, 0xFFE82323).build());

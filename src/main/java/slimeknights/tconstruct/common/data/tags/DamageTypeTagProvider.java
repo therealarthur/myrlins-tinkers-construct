@@ -88,6 +88,13 @@ public class DamageTypeTagProvider extends DamageTypeTagsProvider {
     // whole reason these are a pair is so we can tag one as projectile
     tag(IS_PROJECTILE).add(THROWN_TOOL, FISHING_HOOK, FLUID_IMPACT.ranged(), FLUID_FIRE.ranged(), FLUID_COLD.ranged(), FLUID_MAGIC.ranged(), WATER.ranged(), FLUID_SPIKE.ranged(), EXPLOSION.ranged(), MOB_EXPLOSION.ranged());
 
+    tag(slimeknights.tconstruct.common.TinkerTags.DamageTypes.RUGGED_TERRAIN)
+      .add(net.minecraft.world.damagesource.DamageTypes.HOT_FLOOR, net.minecraft.world.damagesource.DamageTypes.CACTUS,
+        net.minecraft.world.damagesource.DamageTypes.SWEET_BERRY_BUSH, net.minecraft.world.damagesource.DamageTypes.STALAGMITE,
+        slimeknights.tconstruct.common.TinkerDamageTypes.KNIGHTMETAL);
+    tag(slimeknights.tconstruct.common.TinkerTags.DamageTypes.RUGGED_ATTACKS)
+      .add(CRAMMING, STING, net.minecraft.world.damagesource.DamageTypes.THORNS);
+
     // modifiers
     tag(MODIFIER_WHITELIST).add(MOB_ATTACK, MOB_ATTACK_NO_AGGRO);
     tag(IS_MELEE).add(PLAYER_ATTACK, MOB_ATTACK, MOB_ATTACK_NO_AGGRO, STING, FLUID_IMPACT.melee(), FLUID_SPIKE.melee());
@@ -103,6 +110,8 @@ public class DamageTypeTagProvider extends DamageTypeTagsProvider {
 
     // TF support
     String tf = "twilightforest";
+    addOptional(slimeknights.tconstruct.common.TinkerTags.DamageTypes.RUGGED_TERRAIN, tf, "knightmetal", "fiery");
+    addOptional(slimeknights.tconstruct.common.TinkerTags.DamageTypes.RUGGED_ATTACKS, tf, "thorns");
     addOptional(MODIFIER_WHITELIST, tf, "axing", "slam", "ant");
     addOptional(IS_MELEE, tf, "ghast_tear", "hydra_bite", "squish", "axing", "slam", "yeeted", "ant", "clamped", "spiked");
     addOptional(MELEE_PROTECTION, tf, "ghast_tear", "hydra_bite", "squish", "axing", "slam", "yeeted", "ant", "clamped", "spiked");

@@ -102,6 +102,7 @@ import slimeknights.tconstruct.library.tools.definition.module.interaction.DualO
 import slimeknights.tconstruct.library.tools.definition.module.interaction.PreferenceSetInteraction;
 import slimeknights.tconstruct.library.tools.definition.module.interaction.ToggleableSetInteraction;
 import slimeknights.tconstruct.library.tools.definition.module.material.DefaultMaterialsModule;
+import slimeknights.tconstruct.library.tools.definition.module.material.RemappingMaterialsModule;
 import slimeknights.tconstruct.library.tools.definition.module.material.MaterialRepairModule;
 import slimeknights.tconstruct.library.tools.definition.module.material.MaterialStatsModule;
 import slimeknights.tconstruct.library.tools.definition.module.material.MaterialTraitsModule;
@@ -385,6 +386,7 @@ public final class TinkerTools extends TinkerModule {
       ToolModule.LOADER.register(getResource("tool_parts"), PartsModule.LOADER);
       ToolModule.LOADER.register(getResource("material_repair"), MaterialRepairModule.LOADER);
       ToolModule.LOADER.register(getResource("default_materials"), DefaultMaterialsModule.LOADER);
+      ToolModule.LOADER.register(getResource("remapping_materials"), RemappingMaterialsModule.LOADER);
       ToolModule.LOADER.register(getResource("statless_part_repair"), StatlessPartRepairModule.LOADER);
       // aoe
       AreaOfEffectIterator.LOADER.register(getResource("empty"), AreaOfEffectIterator.EMPTY.getLoader());

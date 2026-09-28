@@ -12,6 +12,6 @@
   ],
   "id": "tconstruct:tools/materials/slimeskin/composite/sky",
   "input": "tconstruct:leather",
-  "output": "tconstruct:skyslime_vine#slimeskin",
+  "output": "tconstruct:skyslimeskin",
   "temperature": 10
 }

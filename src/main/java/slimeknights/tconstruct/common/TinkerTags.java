@@ -915,6 +915,9 @@ public class TinkerTags {
   public static class DamageTypes {
     private static void init() {}
     /** Damage types reduced by the melee protection modifier */
+    public static final TagKey<DamageType> RUGGED_TERRAIN = local("rugged/terrain");
+    public static final TagKey<DamageType> RUGGED_ATTACKS = local("rugged/attacks");
+
     public static final TagKey<DamageType> MELEE_PROTECTION = local("protection/melee");
     /** Damage types reduced by the projectile protection modifier */
     public static final TagKey<DamageType> PROJECTILE_PROTECTION = local("protection/projectile");

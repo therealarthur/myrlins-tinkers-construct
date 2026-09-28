@@ -81,6 +81,7 @@ import slimeknights.tconstruct.shared.TinkerEffects;
 import slimeknights.tconstruct.tools.client.CrystalshotRenderer;
 import slimeknights.tconstruct.tools.client.ClientInteractionHandler;
 import slimeknights.tconstruct.tools.client.FluidEffectProjectileRenderer;
+import slimeknights.tconstruct.tools.client.ModifierClientEvents;
 import slimeknights.tconstruct.tools.client.OverslimeModifierModel;
 import slimeknights.tconstruct.tools.client.ShieldBannerModifierSpriteSource;
 import slimeknights.tconstruct.tools.client.SlimeskullArmorModel;
@@ -189,6 +190,7 @@ public class ToolClientEvents extends ClientEventBase {
     NeoForge.EVENT_BUS.addListener(ToolClientEvents::handleInput);
     NeoForge.EVENT_BUS.register(ClientInteractionHandler.class);
     NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
+    NeoForge.EVENT_BUS.register(ModifierClientEvents.class);
     AbstractArmorModel.init();
 
     // keybinds
@@ -342,7 +344,10 @@ public class ToolClientEvents extends ClientEventBase {
       }
       // next, add in deprecated key bonus
       speed = Mth.clamp(speed + ArmorStatModule.getStat(player, TinkerDataKeys.USE_ITEM_SPEED), 0, 1);
-      // TODO NeoForge 26.1: ClientInput now stores movement in a protected Vec2; restore scaling via the supported input API.
+      // LocalPlayer applies USE_EFFECTS after this event. Preserve the original correction
+      // relative to vanilla's 20% default, while retaining custom item use-effect multipliers.
+      ClientInput input = event.getInput();
+      input.moveVector = input.getMoveVector().scale((float) (speed * 5));
     }
   }
 }

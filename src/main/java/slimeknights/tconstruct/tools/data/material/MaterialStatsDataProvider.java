@@ -709,6 +709,14 @@ public class MaterialStatsDataProvider extends AbstractMaterialStatsDataProvider
   }
 
   private void addSlimesuit() {
+    addMaterialStats(MaterialIds.skyslimeskin, StatlessMaterialStats.CUIRASS, StatlessMaterialStats.MAILLE);
+    addMaterialStats(MaterialIds.enderslimeskin, StatlessMaterialStats.CUIRASS, StatlessMaterialStats.MAILLE);
+    addMaterialStats(MaterialIds.wool, StatlessMaterialStats.CUIRASS);
+    // Retain old maille uses for saved Continuum items while restoring cuirass uses.
+    addMaterialStats(MaterialIds.vine, StatlessMaterialStats.CUIRASS);
+    addMaterialStats(MaterialIds.weepingVine, StatlessMaterialStats.CUIRASS);
+    addMaterialStats(MaterialIds.twistingVine, StatlessMaterialStats.CUIRASS);
+    addMaterialStats(MaterialIds.venom, new SlimeStats(225, 0));
     // slime
     addMaterialStats(MaterialIds.earthslime, new SlimeStats( 50, 100)); // 150
     addMaterialStats(MaterialIds.skyslime,   new SlimeStats( 75, 150)); // 225
