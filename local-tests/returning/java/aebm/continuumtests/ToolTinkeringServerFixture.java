@@ -101,17 +101,20 @@ public final class ToolTinkeringServerFixture {
       test("focus_pairs_components_and_noop_filter", () -> {
         var recipe = recipe("goggles_cuirass");
         var display = only(recipe);
-        ToolStack tool = tool(TinkerTools.travelersGear.get(ArmorType.HELMET), MaterialIds.copper, MaterialIds.wool);
+        MaterialVariantId whiteWool = MaterialVariantId.create(MaterialIds.wool, "white");
+        ToolStack tool = tool(TinkerTools.travelersGear.get(ArmorType.HELMET), MaterialIds.copper, whiteWool);
         tool.addModifier(ModifierIds.reinforced, 1);
         tool.setDamage(17);
         ItemStack focus = tool.createStack();
         focus.set(DataComponents.CUSTOM_NAME, Component.literal("Material focus probe"));
         ItemStack original = focus.copy();
+        require(display.getDisplayItems(1).stream().anyMatch(stack -> stack.is(Items.WHITE_WOOL)), "negative control needs the unchanged white-wool alternative");
         checkPairs(recipe, display, 1, focus, false);
+        require(display.getDisplayItems(1, focus, false).stream().noneMatch(stack -> stack.is(Items.WHITE_WOOL)), "focused inputs must exclude the unchanged material");
         require(!display.getToolWithModifier(focus, false).isEmpty(), "focus must exercise replacements");
         for (ItemStack output : display.getToolWithModifier(focus, false)) {
           ToolStack changed = ToolStack.from(output);
-          require(!changed.getMaterial(1).sameVariant(MaterialIds.wool), "same-material no-op was displayed");
+          require(!changed.getMaterial(1).sameVariant(whiteWool), "same-material no-op was displayed");
           require(changed.getMaterial(0).sameVariant(MaterialIds.copper), "unrelated material changed");
           require(changed.getDamage() == 17 && changed.getUpgrades().getLevel(ModifierIds.reinforced) == 1, "focus tool state lost");
           require(focus.get(DataComponents.CUSTOM_NAME).equals(output.get(DataComponents.CUSTOM_NAME)), "focus component lost");

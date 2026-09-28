@@ -125,10 +125,10 @@ final class ModifierTooltipParityTest {
   @Test
   void realToolTooltipAndBuilderFilterByTheRequestedContext() {
     List<ModifierEntry> entries = List.of(
-      new ModifierEntry(named("always", ShowInTooltips.ALWAYS), 1),
-      new ModifierEntry(named("parts", ShowInTooltips.PARTS_ONLY), 1),
-      new ModifierEntry(named("advanced", ShowInTooltips.ADVANCED), 1),
-      new ModifierEntry(named("never", ShowInTooltips.NEVER), 1));
+      named("always", ShowInTooltips.ALWAYS),
+      named("parts", ShowInTooltips.PARTS_ONLY),
+      named("advanced", ShowInTooltips.ADVANCED),
+      named("never", ShowInTooltips.NEVER));
     IToolStackView tool = (IToolStackView)Proxy.newProxyInstance(IToolStackView.class.getClassLoader(), new Class<?>[] {IToolStackView.class},
       (proxy, method, arguments) -> {
         if (method.getName().equals("getModifierList")) return entries;
@@ -161,11 +161,16 @@ final class ModifierTooltipParityTest {
     }
   }
 
-  private static Modifier named(String name, ShowInTooltips policy) {
-    return new BasicModifier(ModuleHookMap.builder().build(), ModifierLevelDisplay.DEFAULT, policy, 100) {
+  private static ModifierEntry named(String name, ShowInTooltips policy) {
+    Modifier modifier = new BasicModifier(ModuleHookMap.builder().build(), ModifierLevelDisplay.DEFAULT, policy, 100) {
       @Override public ModifierId getId() { return new ModifierId("aebm_test:" + name); }
       @Override public Component getDisplayName(IToolStackView tool, ModifierEntry entry, RegistryAccess access) { return Component.literal(name); }
     };
+    // Supply the test object directly without pretending that datapack modifiers were loaded.
+    var supplied = new slimeknights.tconstruct.library.modifiers.util.LazyModifier(modifier) {
+      @Override public Modifier get() { return modifier; }
+    };
+    return new ModifierEntry(supplied, 1);
   }
   private static List<String> names(List<Component> components) { return components.stream().map(Component::getString).toList(); }
   private static JsonElement json(String text) { return JsonParser.parseString(text); }
