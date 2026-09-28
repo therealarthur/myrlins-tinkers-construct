@@ -5,6 +5,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,6 +15,8 @@ import net.neoforged.neoforge.items.ItemHandlerCopySlot;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import slimeknights.mantle.inventory.EmptyItemHandler;
 import slimeknights.mantle.inventory.MultiModuleContainerMenu;
 import slimeknights.mantle.inventory.SmartItemHandlerSlot;
@@ -31,6 +34,7 @@ public final class CraftingSideInventoryRegression {
     Bootstrap.bootStrap();
 
     demonstratesReleasedSlotFailure();
+    vanillaContainerCapability();
     matchingStackRefill();
     partialRefill();
     fullAndDifferentStacks();
@@ -39,6 +43,12 @@ public final class CraftingSideInventoryRegression {
     slotLimits();
     repeatedReadsAndWrites();
     extractionDoesNotRestoreCachedItems();
+    insertionOnlyStorage();
+    insertionDeniedStorage();
+    limitedInsertionStorage();
+    limitedExtractionStorage();
+    differentItemSwaps();
+    rejectedSwapsRollback();
     nativeSlotSelection();
 
     System.out.println("CRAFTING_SIDE_INVENTORY_REGRESSION PASS assertions=" + assertions);
@@ -64,6 +74,26 @@ public final class CraftingSideInventoryRegression {
     count(output, 0, "matching refill consumes exactly output");
     amount(fixture.storage, 24, "matching refill stores output");
     conserved(fixture, output, 24, "matching refill conservation");
+  }
+
+  private static void vanillaContainerCapability() throws Exception {
+    SimpleContainer inventory = new SimpleContainer(1);
+    inventory.setItem(0, cobble(16));
+    SideHarness side = new SideHarness();
+    Slot slot = side.factory(bridge(VanillaContainerWrapper.of(inventory)));
+    side.include(slot);
+    ParentHarness menu = new ParentHarness(side);
+    ItemStack output = cobble(8);
+    check(menu.refill(output), "vanilla container capability accepts refill");
+    count(output, 0, "vanilla container consumes exact output");
+    count(inventory.getItem(0), 24, "vanilla container backing inventory receives refill");
+    check(slot.mayPickup(null), "ordinary vanilla storage allows pickup");
+    ItemStack dirt = new ItemStack(Items.DIRT, 12);
+    check(slot.mayPlace(dirt), "vanilla container capability allows ordinary item swap");
+    slot.set(dirt);
+    slot.setChanged();
+    check(inventory.getItem(0).is(Items.DIRT), "vanilla container swap changes item");
+    count(inventory.getItem(0), 12, "vanilla container swap keeps exact count");
   }
 
   private static void partialRefill() throws Exception {
@@ -172,6 +202,118 @@ public final class CraftingSideInventoryRegression {
     SideHarness side = new SideHarness();
     Slot slot = side.factory(EmptyItemHandler.INSTANCE);
     check(slot.getClass() == SmartItemHandlerSlot.class, "native legacy handler keeps existing slot type");
+  }
+
+  private static void insertionOnlyStorage() throws Exception {
+    ItemStacksResourceHandler storage = restricted(0, Integer.MAX_VALUE, false);
+    Fixture fixture = fixture(storage);
+    check(!fixture.slot.mayPickup(null), "insertion-only storage rejects pickup");
+    check(fixture.slot.mayPlace(cobble(8)), "insertion-only storage permits matching refill");
+    ItemStack output = cobble(8);
+    check(fixture.menu.refill(output), "insertion-only refill transfers");
+    amount(storage, 24, "insertion-only refill adds only delta");
+    count(output, 0, "insertion-only refill consumes correct source");
+    conserved(fixture, output, 24, "insertion-only refill cannot duplicate original contents");
+    fixture.slot.set(ItemStack.EMPTY);
+    amount(storage, 24, "refused direct extraction cannot commit a partial change");
+  }
+
+  private static void insertionDeniedStorage() throws Exception {
+    ItemStacksResourceHandler storage = restricted(Integer.MAX_VALUE, 0, false);
+    Fixture fixture = fixture(storage);
+    ItemStack output = cobble(8);
+    check(!fixture.slot.mayPlace(output), "insert-denied storage rejects placement");
+    check(fixture.slot.getMaxStackSize(output) == 16, "insert-denied limit includes existing stack only");
+    check(!fixture.menu.refill(output), "insert-denied refill declines");
+    amount(storage, 16, "insert-denied refill preserves destination");
+    count(output, 8, "insert-denied refill preserves output");
+    storage.set(0, ItemResource.EMPTY, 0);
+    check(!fixture.slot.mayPlace(output), "empty insert-denied storage rejects placement");
+    check(!fixture.menu.move(output), "empty insert-denied storage cannot report zero-size success");
+    count(output, 8, "empty insert-denied storage preserves output");
+    amount(storage, 0, "empty insert-denied storage stays empty");
+  }
+
+  private static void limitedInsertionStorage() throws Exception {
+    ItemStacksResourceHandler storage = restricted(Integer.MAX_VALUE, 2, false);
+    Fixture fixture = fixture(storage);
+    ItemStack output = cobble(8);
+    check(fixture.slot.getMaxStackSize(output) == 18, "insertion limit adds accepted delta to current count");
+    check(fixture.menu.refill(output), "bounded insertion accepts partial output");
+    amount(storage, 18, "bounded insertion stores exactly accepted amount");
+    count(output, 6, "bounded insertion retains unaccepted output");
+    conserved(fixture, output, 24, "bounded insertion conservation");
+    storage.set(0, ItemResource.EMPTY, 0);
+    output = cobble(8);
+    check(fixture.menu.move(output), "bounded insertion accepts into empty target");
+    amount(storage, 2, "empty bounded target stores exactly accepted amount");
+    count(output, 6, "empty bounded target retains remainder");
+  }
+
+  private static void limitedExtractionStorage() throws Exception {
+    ItemStacksResourceHandler storage = restricted(4, Integer.MAX_VALUE, false);
+    Fixture fixture = fixture(storage);
+    check(!fixture.slot.mayPickup(null), "limited extraction rejects unsafe legacy whole-stack quick-move");
+    ItemStack output = cobble(8);
+    check(fixture.menu.refill(output), "limited extraction does not obstruct insertion");
+    amount(storage, 24, "refill does not duplicate unextracted contents");
+    fixture.slot.getItem();
+    ItemStack extracted = fixture.slot.remove(7);
+    count(extracted, 4, "direct removal returns actually extracted count");
+    amount(storage, 20, "direct removal decrements only extracted count");
+    fixture.slot.setChanged();
+    amount(storage, 20, "dirty notification after bounded extraction cannot restore cache");
+    fixture.slot.set(new ItemStack(Items.DIRT, 8));
+    amount(storage, 20, "incomplete swap extraction is rolled back");
+    check(storage.getResource(0).matches(cobble(1)), "failed swap retains original resource");
+  }
+
+  private static void differentItemSwaps() throws Exception {
+    Fixture fixture = fixture(storage(16));
+    ItemStack dirt = new ItemStack(Items.DIRT, 24);
+    check(fixture.slot.mayPlace(dirt), "ordinary different-item swap remains permitted");
+    check(fixture.slot.getMaxStackSize(dirt) == 64, "swap capacity simulates removal before insertion");
+    amount(fixture.storage, 16, "swap simulation preserves current contents");
+    check(fixture.storage.getResource(0).matches(cobble(1)), "swap simulation rolls back original item");
+    fixture.slot.set(dirt);
+    fixture.slot.setChanged();
+    amount(fixture.storage, 24, "swap sets exact replacement count");
+    check(fixture.storage.getResource(0).matches(dirt), "swap installs different item");
+  }
+
+  private static void rejectedSwapsRollback() throws Exception {
+    ItemStacksResourceHandler storage = restricted(0, Integer.MAX_VALUE, false);
+    Fixture fixture = fixture(storage);
+    ItemStack dirt = new ItemStack(Items.DIRT, 24);
+    check(!fixture.slot.mayPlace(dirt), "extract-denied storage rejects item swap");
+    check(fixture.slot.getMaxStackSize(dirt) == 0, "extract-denied swap capacity is zero");
+    fixture.slot.set(dirt);
+    amount(storage, 16, "extract-denied direct swap preserves count");
+    check(storage.getResource(0).matches(cobble(1)), "extract-denied direct swap preserves item");
+    storage = restricted(Integer.MAX_VALUE, Integer.MAX_VALUE, true);
+    fixture = fixture(storage);
+    check(!fixture.slot.mayPlace(dirt), "insert-denied replacement rejects swap");
+    check(fixture.slot.getMaxStackSize(dirt) == 0, "insert-denied replacement capacity is zero");
+    fixture.slot.set(dirt);
+    amount(storage, 16, "failed replacement restores extracted count");
+    check(storage.getResource(0).matches(cobble(1)), "failed replacement restores extracted resource");
+  }
+
+  private static ItemStacksResourceHandler restricted(int extractionLimit, int insertionLimit, boolean denyDirt) {
+    ItemStacksResourceHandler storage = new ItemStacksResourceHandler(1) {
+      @Override
+      public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
+        return super.extract(index, resource, Math.min(amount, extractionLimit), transaction);
+      }
+
+      @Override
+      public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
+        return denyDirt && resource.matches(new ItemStack(Items.DIRT))
+          ? 0 : super.insert(index, resource, Math.min(amount, insertionLimit), transaction);
+      }
+    };
+    storage.set(0, ItemResource.of(cobble(1)), 16);
+    return storage;
   }
 
   private static Fixture fixture(ItemStacksResourceHandler storage) throws Exception {

@@ -3,6 +3,7 @@ package slimeknights.tconstruct.tables.menu.module;
 import lombok.Getter;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -82,10 +83,53 @@ public class SideInventoryContainer<TILE extends BlockEntity> extends BaseContai
    * @return  Inventory slot
    */
   protected Slot createSlot(IItemHandler itemHandler, int index, int x, int y) {
-    SmartItemHandlerSlot slot = new SmartItemHandlerSlot(itemHandler, index, x, y);
     // Transfer views return detached stacks. Menu refill code mutates getItem() then
     // calls setChanged(), so those slots need NeoForge's copy-aware writeback.
-    return itemHandler instanceof TransferItemHandler ? new ItemHandlerCopySlot(slot) : slot;
+    return itemHandler instanceof TransferItemHandler transfer
+      ? new TransferItemHandlerSlot(transfer, index, x, y)
+      : new SmartItemHandlerSlot(itemHandler, index, x, y);
+  }
+
+  /** Keeps legacy menu operations within the transfer handler's actual accepted amounts. */
+  private static class TransferItemHandlerSlot extends ItemHandlerCopySlot {
+    private final TransferItemHandler handler;
+    private final int handlerSlot;
+
+    private TransferItemHandlerSlot(TransferItemHandler handler, int index, int x, int y) {
+      super(new SmartItemHandlerSlot(handler, index, x, y));
+      this.handler = handler;
+      this.handlerSlot = index;
+    }
+
+    @Override
+    public boolean mayPlace(ItemStack stack) {
+      if (stack.isEmpty() || !handler.isItemValid(handlerSlot, stack)) {
+        return false;
+      }
+      ItemStack current = handler.getStackInSlot(handlerSlot);
+      int existing = ItemStack.isSameItemSameComponents(current, stack) ? current.getCount() : 0;
+      return handler.getInsertLimit(handlerSlot, stack) > existing;
+    }
+
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
+      return handler.getInsertLimit(handlerSlot, stack);
+    }
+
+    @Override
+    public boolean mayPickup(Player player) {
+      ItemStack current = handler.getStackInSlot(handlerSlot);
+      // Legacy quick-move assumes any decrement of the displayed stack can be committed.
+      // Handlers that only allow extracting part of it cannot safely satisfy that contract.
+      return current.isEmpty() || handler.extractItem(handlerSlot, current.getCount(), true).getCount() == current.getCount();
+    }
+
+    @Override
+    public ItemStack remove(int amount) {
+      ItemStack extracted = handler.extractItem(handlerSlot, amount, false);
+      clearCachedReturnStack();
+      return extracted;
+    }
   }
   /** Modifiable bridge for NeoForge transfer handlers, needed because SlotItemHandler#set requires IItemHandlerModifiable. */
   private static class TransferItemHandler implements IItemHandlerModifiable {
@@ -127,16 +171,60 @@ public class SideInventoryContainer<TILE extends BlockEntity> extends BaseContai
       return view.isItemValid(slot, stack);
     }
 
+    /** Simulates the largest resulting stack, including removal for an ordinary item swap. */
+    private int getInsertLimit(int slot, ItemStack stack) {
+      if (stack.isEmpty()) {
+        return 0;
+      }
+      ItemResource incoming = ItemResource.of(stack);
+      ItemResource current = handler.getResource(slot);
+      int currentAmount = handler.getAmountAsInt(slot);
+      boolean sameResource = incoming.equals(current);
+      int capacity = Math.min(stack.getMaxStackSize(), handler.getCapacityAsInt(slot, incoming));
+      if (!isItemValid(slot, stack)) {
+        return sameResource ? Math.min(currentAmount, capacity) : 0;
+      }
+      try (Transaction transaction = Transaction.open(null)) {
+        if (sameResource) {
+          int room = Math.max(0, capacity - currentAmount);
+          int inserted = room == 0 ? 0 : handler.insert(slot, incoming, room, transaction);
+          return Math.min(capacity, currentAmount + inserted);
+        }
+        // Menu swaps replace the old item. Test extraction and insertion in one aborted
+        // transaction so ordinary chest swaps work without assuming either will succeed.
+        if (!current.isEmpty() && currentAmount > 0
+          && handler.extract(slot, current, currentAmount, transaction) != currentAmount) {
+          return 0;
+        }
+        return capacity <= 0 ? 0 : handler.insert(slot, incoming, capacity, transaction);
+      }
+    }
+
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
       try (Transaction transaction = Transaction.open(null)) {
         ItemResource current = handler.getResource(slot);
         int currentAmount = handler.getAmountAsInt(slot);
+        ItemResource replacement = ItemResource.of(stack);
+        if (current.equals(replacement)) {
+          int change = stack.getCount() - currentAmount;
+          // Refilling a stack must not extract and reinsert its existing contents.
+          if (change > 0 && handler.insert(slot, replacement, change, transaction) != change) {
+            return;
+          }
+          if (change < 0 && handler.extract(slot, current, -change, transaction) != -change) {
+            return;
+          }
+          transaction.commit();
+          return;
+        }
         if (!current.isEmpty() && currentAmount > 0) {
-          handler.extract(slot, current, currentAmount, transaction);
+          if (handler.extract(slot, current, currentAmount, transaction) != currentAmount) {
+            return;
+          }
         }
         if (!stack.isEmpty()) {
-          int inserted = handler.insert(slot, ItemResource.of(stack), stack.getCount(), transaction);
+          int inserted = handler.insert(slot, replacement, stack.getCount(), transaction);
           if (inserted != stack.getCount()) {
             return;
           }
