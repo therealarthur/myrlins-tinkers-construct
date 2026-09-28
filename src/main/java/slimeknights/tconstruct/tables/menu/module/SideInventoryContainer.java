@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.ItemHandlerCopySlot;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -81,7 +82,10 @@ public class SideInventoryContainer<TILE extends BlockEntity> extends BaseContai
    * @return  Inventory slot
    */
   protected Slot createSlot(IItemHandler itemHandler, int index, int x, int y) {
-    return new SmartItemHandlerSlot(itemHandler, index, x, y);
+    SmartItemHandlerSlot slot = new SmartItemHandlerSlot(itemHandler, index, x, y);
+    // Transfer views return detached stacks. Menu refill code mutates getItem() then
+    // calls setChanged(), so those slots need NeoForge's copy-aware writeback.
+    return itemHandler instanceof TransferItemHandler ? new ItemHandlerCopySlot(slot) : slot;
   }
   /** Modifiable bridge for NeoForge transfer handlers, needed because SlotItemHandler#set requires IItemHandlerModifiable. */
   private static class TransferItemHandler implements IItemHandlerModifiable {

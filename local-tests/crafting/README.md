@@ -1,0 +1,9 @@
+# Side inventory regression fixture
+
+`slimeknights.tconstruct.tables.menu.module.CraftingSideInventoryRegression` is a plain Java entry point. Compile it against the built Continuum source, pinned Continuum Core 1.12.0, and the Minecraft 26.1.2 / NeoForge 26.1.2.109 development runtime. It needs no JUnit or Mockito dependency. Run headlessly with the same development runtime and Java 25; the integration coordinator owns runner configuration and resource scheduling.
+
+The fixture uses the actual `SideInventoryContainer.createSlot`, its private `TransferItemHandler` bridge (through reflection), Core's `MultiModuleContainerMenu.refillContainer` / `BaseContainerMenu.mergeItemStackRefill`, Core's `WrapperSlot`, and NeoForge's `ItemStacksResourceHandler`. The harness subclasses only expose protected entry points; they do not duplicate transfer logic. Minecraft bootstrap initializes vanilla items; no world or graphical client is created.
+
+The negative control installs the released `SmartItemHandlerSlot` directly: refilling 8 cobblestone into a storage stack of 16 consumes all 8 while storage remains 16. Production slot selection must instead persist 24. Additional checks cover partial/full/empty targets, item and component mismatch, a lower slot limit, repeated dirty notifications, explicit setting, observing externally changed storage after a fresh read, and extraction cache invalidation. Non-transfer handlers must retain `SmartItemHandlerSlot`.
+
+This is a focused executable test of the diagnosed lost-write path. It does not reproduce the reporter's complete mod list, recipe, NeoForge .112 session, packet/client behavior, actual crafting ingredient consumption, world save/reload, or a restricted modded handler that rejects the bridge's extraction/reinsertion. Those are separate acceptance checks. The pinned released 3.12.2 and Core 1.12.0 JAR bytecode contains the diagnosed slot factory, bridge, and refill path.
