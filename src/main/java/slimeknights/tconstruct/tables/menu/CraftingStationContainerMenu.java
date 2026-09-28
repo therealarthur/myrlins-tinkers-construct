@@ -68,8 +68,8 @@ public class CraftingStationContainerMenu extends TabbedContainerMenu<CraftingSt
         // but add the true result into the inventory
         ItemStack result = tile.getResultForPlayer(player);
         if (!result.isEmpty()) {
-          // consume the crafting grid using the same path as normal clicking
-          resultSlot.onTake(player, result.copy());
+          // Keep the crafted count for recipe hooks after the destination accepts output.
+          ItemStack crafted = result.copy();
           boolean nothingDone = true;
           if (!subContainers.isEmpty()) { // the sub container check does not do well with 0 sub containers
             nothingDone = this.refillAnyContainer(result, this.subContainers);
@@ -80,6 +80,8 @@ public class CraftingStationContainerMenu extends TabbedContainerMenu<CraftingSt
           }
           // if successfully added to an inventory, update
           if (!nothingDone) {
+            // A full inventory must not consume ingredients without delivering a result.
+            resultSlot.onTake(player, crafted);
             if (!result.isEmpty()) {
               player.drop(result, false);
             }
