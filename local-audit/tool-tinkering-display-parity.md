@@ -28,4 +28,4 @@ Client acceptance remains required for REI categories, both search directions, f
 
 ## Independent observation
 
-The existing `PartSwappingOverrideRecipe#getSerializer()` returns the fixed-material serializer. That predates this display restoration and was left unchanged because station serializer mechanics are outside this patch. It needs a separate traced serialization test before changing it.
+The existing `PartSwappingOverrideRecipe#getSerializer()` returned the fixed-material serializer. This exact defect is also present in the official released source archive. A separate follow-up switches it to the already registered `partSwappingOverride` serializer. `PartSwappingOverrideCodecTest` uses the registered `Recipe.CODEC` dispatch to encode/decode the actual recipe, checks its class, part, two indices, stack size and two sized extra requirements, then compares the entire re-encoded payload. A negative control restores the original accessor and must fail dispatch. This test still requires coordinator execution; no successful result is implied by its source.

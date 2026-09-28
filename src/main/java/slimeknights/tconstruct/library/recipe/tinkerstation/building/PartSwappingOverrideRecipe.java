@@ -145,7 +145,7 @@ public class PartSwappingOverrideRecipe extends MaterialSwappingRecipe implement
 
   @Override
   public RecipeSerializer<? extends Recipe<ITinkerStationContainer>> getSerializer() {
-    return TinkerTables.fixedMaterialSwapping.get();
+    return TinkerTables.partSwappingOverride.get();
   }
 
   /* JEI */
