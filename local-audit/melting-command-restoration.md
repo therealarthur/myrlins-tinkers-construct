@@ -2,7 +2,7 @@
 
 The disabled `GenerateMeltingRecipesCommand` is restored as `/tconstruct generate melting_recipes <recipe_type>`. It reads the original `tconstruct:command/generate_melting_recipes.json` resource, applies melt/input/ignore predicates and skipped recipe IDs, infers conservative fluid amounts, intersects duplicate recipe results, builds melting recipes including byproducts and damage scaling, and writes a generated datapack. The original source is official Tinkers' Construct `v3.12.1.231`, already hashed and matched to its tag in `PARITY-AUDIT.md`.
 
-This follow-up does not amend the immutable baseline audit. Compilation and headless tests are coordinated by the parent task. No command, game client, server, or build was launched by this subtask. At authoring time the first two parent compile attempts identified legacy bucket/capability API use and an ItemAccess package mismatch; those have been corrected against the cached target sources. A clean compile and test pass are still pending.
+This follow-up does not amend the immutable baseline audit. Compilation and headless tests are coordinated by the parent task. No command, game client, server, or build was launched by this subtask. The parent confirmed clean main compilation in `build-20260928-032903.log`. Its first FML run executed all 11 generator tests: 10 passed, and the remaining assertion exposed Core's documented legacy ID fallback rather than a changed recipe payload. The corrected assertion described below awaits a rerun.
 
 ## Target contract
 
@@ -23,6 +23,8 @@ The command only queries that resource handler. It rejects multiple nonempty flu
 `FluidStack.isSameFluidSameComponents` prevents components from being conflated during intersection. Tagged outputs retain their tag and custom data where representable. Current Core `FluidOutput` JSON supports `CUSTOM_DATA` only; additional or removed component patches are rejected explicitly. Fixing that general Core serialization limit is outside this change.
 
 Builders feed modern `RecipeOutput.accept(ResourceKey<Recipe<?>>, Recipe<?>, AdvancementHolder, ICondition...)`. Recipes are encoded by the actual registered `Recipe.CODEC` using level registry serialization context, before any files are written. No advancement is required for these generated recipes.
+
+Core 1.12.0 `LoadableRecipeSerializer.fallbackIdContext` supplies `mantle:loadable_recipe` to legacy recipe constructors during JSON decode; Minecraft's `RecipeHolder` owns the actual resource key. This was verified in both the companion source and released JAR bytecode. The codec test now checks the exact fallback, the generated holder key, and equality of every remaining recipe JSON field after re-encoding. No Core serializer was changed. Code elsewhere that relies on a decoded recipe's legacy `getId()` instead of its holder remains a separate compatibility risk; actual datapack reload identity is not proven by this unit test.
 
 Generated JSON uses `data/tinkers_generated/recipe/melting/<item namespace>/<item path>.json`, with singular `recipe`. The normalized path must stay inside its namespace recipe directory. Core's existing pack helper writes only `pack_format`, which the target rejects for modern data formats above 81 without `min_format`/`max_format`. This command therefore encodes `PackMetadataSection.SERVER_TYPE` with the current exact pack version; Core itself remains unchanged. The default config's `forge:books` and `forge:dyes` tags migrate to `c:books` and `c:dyes`.
 

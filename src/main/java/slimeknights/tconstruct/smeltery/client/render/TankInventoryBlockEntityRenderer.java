@@ -8,9 +8,7 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -56,9 +54,10 @@ public class TankInventoryBlockEntityRenderer<T extends BlockEntity & ITankInven
       state.renderOffset = 0;
     }
     state.items.clear();
-    for (int i = 0; i < melter.getItemHandler().getSlots(); i++) {
+    List<RenderItem> renderItems = RenderItem.STATE_REGISTRY.get(state.blockState, List.of());
+    for (int i = 0; i < Math.min(melter.getItemHandler().getSlots(), renderItems.size()); i++) {
       TankInventoryRenderState.ItemEntry entry = new TankInventoryRenderState.ItemEntry();
-      this.itemModelResolver.updateForTopItem(entry.itemState, melter.getItemHandler().getStackInSlot(i), ItemDisplayContext.NONE, melter.getLevel(), null, 0);
+      this.itemModelResolver.updateForTopItem(entry.itemState, melter.getItemHandler().getStackInSlot(i), renderItems.get(i).getTransform(), melter.getLevel(), null, (int)(melter.getBlockPos().asLong() + i));
       state.items.add(entry);
     }
   }
@@ -87,7 +86,9 @@ public class TankInventoryBlockEntityRenderer<T extends BlockEntity & ITankInven
         });
       }
 
-      for (int i = 0; i < Math.min(renderItems.size(), state.items.size()); i++) {      }
+      for (int i = 0; i < Math.min(renderItems.size(), state.items.size()); i++) {
+        RenderingHelper.renderItem(poseStack, submitNodeCollector, state.items.get(i).itemState, renderItems.get(i), state.lightCoords);
+      }
 
       if (isRotated) {
         poseStack.popPose();

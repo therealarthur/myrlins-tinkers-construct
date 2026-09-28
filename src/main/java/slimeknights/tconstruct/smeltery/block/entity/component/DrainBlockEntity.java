@@ -6,8 +6,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.model.data.ModelData;
 import slimeknights.mantle.util.RetexturedHelper;
-//import slimeknights.tconstruct.library.client.model.ModelProperties;
+import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.smeltery.block.entity.component.SmelteryInputOutputBlockEntity.SmelteryFluidIO;
 import slimeknights.tconstruct.smeltery.block.entity.tank.IDisplayFluidListener;
@@ -29,12 +30,11 @@ public class DrainBlockEntity extends SmelteryFluidIO implements IDisplayFluidLi
     super(type, pos, state);
   }
 
-  // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed
-  //@Nonnull
-  //@Override
-  //public ModelData getModelData() {
-  //  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, displayFluid).build();
-  //}
+  @Nonnull
+  @Override
+  public ModelData getModelData() {
+    return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, displayFluid.copy()).build();
+  }
 
   @Override
   public void notifyDisplayFluidUpdated(FluidStack fluid) {

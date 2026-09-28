@@ -13,8 +13,10 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.model.data.ModelData;
+import slimeknights.mantle.util.RetexturedHelper;
 import slimeknights.tconstruct.TConstruct;
-//import slimeknights.tconstruct.library.client.model.ModelProperties;
+import slimeknights.tconstruct.library.client.model.ModelProperties;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.smeltery.block.entity.component.SmelteryInputOutputBlockEntity.SmelteryFluidIO;
 import slimeknights.tconstruct.smeltery.block.entity.inventory.DuctItemHandler;
@@ -74,12 +76,11 @@ public class DuctBlockEntity extends SmelteryFluidIO implements MenuProvider {
     }
   }
 
-  // TODO: Rewrite for NeoForge 1.21.4 - ModelData/ModelProperties removed
-  //@Nonnull
-  //@Override
-  //public ModelData getModelData() {
-  //  return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, itemHandler.getFluid().copy()).build();
-  //}
+  @Nonnull
+  @Override
+  public ModelData getModelData() {
+    return RetexturedHelper.getModelDataBuilder(getTexture()).with(ModelProperties.FLUID_STACK, itemHandler.getFluid().copy()).build();
+  }
 
   /** Updates the fluid in model data */
   public void updateFluid() {

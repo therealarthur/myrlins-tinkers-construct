@@ -1,5 +1,6 @@
 package slimeknights.tconstruct.shared.command.subcommand;
 
+import aebm.continuumtests.ComponentTestSetup;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
@@ -38,6 +40,7 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 import slimeknights.tconstruct.library.recipe.melting.DamageableMeltingRecipe;
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeLookup;
 import slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommand.MeltingResult;
@@ -47,6 +50,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Actual placement, component, recipe-codec and metadata regressions; run with the FML unit-test launcher. */
 final class GenerateMeltingRecipesCommandTest {
+  @BeforeAll
+  static void initializeComponents() {
+    ComponentTestSetup.initialize();
+  }
+
   private static MeltingResult fluid(Fluid fluid, int amount) {
     return MeltingResult.from(new FluidStack(fluid, amount), null, fluid == Fluids.LAVA ? 1000 : 100);
   }
@@ -194,6 +202,7 @@ final class GenerateMeltingRecipesCommandTest {
     var registryAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
     var ops = registryAccess.createSerializationContext(JsonOps.INSTANCE);
     List<JsonElement> encoded = new ArrayList<>();
+    List<ResourceKey<Recipe<?>>> recipeKeys = new ArrayList<>();
     RecipeOutput output = new RecipeOutput() {
       @Override
       public void accept(ResourceKey<Recipe<?>> key, Recipe<?> recipe, AdvancementHolder advancement, ICondition... conditions) {
@@ -201,6 +210,7 @@ final class GenerateMeltingRecipesCommandTest {
         assertInstanceOf(DamageableMeltingRecipe.class, recipe);
         assertNull(advancement);
         assertEquals(0, conditions.length);
+        recipeKeys.add(key);
         encoded.add(Recipe.CODEC.encodeStart(ops, recipe).getOrThrow());
       }
       @Override public Advancement.Builder advancement() { return Advancement.Builder.advancement(); }
@@ -214,7 +224,16 @@ final class GenerateMeltingRecipesCommandTest {
       assertEquals(10, json.getAsJsonObject("result").get("unit_size").getAsInt());
       assertEquals(90, json.getAsJsonArray("byproducts").get(0).getAsJsonObject().get("amount").getAsInt());
       var decoded = assertInstanceOf(DamageableMeltingRecipe.class, Recipe.CODEC.parse(ops, json).getOrThrow());
-      assertEquals(json, Recipe.CODEC.encodeStart(ops, decoded).getOrThrow());
+      // Core supplies a legacy constructor ID during JSON decode; the resource key belongs to the holder.
+      assertEquals(Identifier.parse("mantle:loadable_recipe"), decoded.getId());
+      var holder = new RecipeHolder<>(recipeKeys.getFirst(), decoded);
+      assertEquals(Identifier.parse("tinkers_generated:melting/minecraft/iron_pickaxe"), holder.id().identifier());
+      assertSame(decoded, holder.value());
+      var originalPayload = json.deepCopy();
+      var decodedPayload = Recipe.CODEC.encodeStart(ops, decoded).getOrThrow().getAsJsonObject();
+      assertEquals("tinkers_generated:melting/minecraft/iron_pickaxe", originalPayload.remove("id").getAsString());
+      assertEquals("mantle:loadable_recipe", decodedPayload.remove("id").getAsString());
+      assertEquals(originalPayload, decodedPayload, "all recipe behavior fields must survive the codec roundtrip");
     });
   }
 
