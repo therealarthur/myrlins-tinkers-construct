@@ -15,6 +15,5 @@
       "type": "tconstruct:headlight",
       "default_light": 10
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

@@ -35,6 +35,5 @@
       }
     }
   ],
-  "priority": 50,
-  "tooltip_display": "always"
+  "priority": 50
 }

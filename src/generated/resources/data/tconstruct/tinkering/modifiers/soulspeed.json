@@ -33,6 +33,5 @@
       "min_level": 4,
       "name": "minecraft:soul_speed"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

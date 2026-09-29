@@ -60,6 +60,5 @@
       "min_level": 6,
       "name": "minecraft:efficiency"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

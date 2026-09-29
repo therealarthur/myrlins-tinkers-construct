@@ -18,6 +18,5 @@
       "damage": 1.0,
       "damage_type": "tconstruct:entangled"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

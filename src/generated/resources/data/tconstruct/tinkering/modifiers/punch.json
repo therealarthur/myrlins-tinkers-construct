@@ -33,6 +33,5 @@
       "min_level": 4,
       "name": "minecraft:punch"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

@@ -35,6 +35,5 @@
       "min_level": 4,
       "name": "minecraft:lure"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

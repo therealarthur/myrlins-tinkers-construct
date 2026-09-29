@@ -43,6 +43,5 @@
       "min_level": 4,
       "name": "minecraft:thorns"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

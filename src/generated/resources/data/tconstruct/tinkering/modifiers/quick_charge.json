@@ -35,6 +35,5 @@
       "min_level": 5,
       "name": "minecraft:quick_charge"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

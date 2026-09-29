@@ -8,6 +8,5 @@
     {
       "type": "tconstruct:mossy_repair"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

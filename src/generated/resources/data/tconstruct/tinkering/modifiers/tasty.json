@@ -34,6 +34,5 @@
       "name": "tconstruct:edible_tooltip"
     }
   ],
-  "priority": 40,
-  "tooltip_display": "always"
+  "priority": 40
 }

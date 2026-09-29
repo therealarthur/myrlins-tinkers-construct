@@ -34,6 +34,5 @@
       "min_level": 4,
       "name": "minecraft:respiration"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

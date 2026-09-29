@@ -103,6 +103,5 @@
       "min_level": 4,
       "name": "minecraft:knockback"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }
