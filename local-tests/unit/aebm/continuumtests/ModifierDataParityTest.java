@@ -370,6 +370,14 @@ final class ModifierDataParityTest {
   private static final Map<String, String> BALANCE_PENDING_MODULES = Map.of(
     "featherweight", "tconstruct:stat_boost,tconstruct:stat_boost,tconstruct:protection,tconstruct:attribute");
 
+  /**
+   * Official IDs that use a deprecated module, replaced here by the non-deprecated modules with the same behavior
+   * (arthur.9). The official list is still the reference; these accept only the documented replacement, and
+   * {@link #stickyReplacementCarriesTheLegacyValues()} checks that the values are the legacy module's values.
+   */
+  private static final Map<String, String> DEPRECATED_MODULE_REPLACEMENTS = Map.of(
+    "sticky", "tconstruct:weapon_mob_effect,tconstruct:counter_mob_effect");
+
   /** Continuum-only Apotheosis bridge modules, not part of official parity. */
   private static boolean isApotheosisBridge(JsonObject module) {
     String type = module.get("type").getAsString();
@@ -445,7 +453,7 @@ final class ModifierDataParityTest {
           }
         }
         String joined = String.join(",", types);
-        if (!joined.equals(officialModules) && !joined.equals(BALANCE_PENDING_MODULES.get(path))) {
+        if (!joined.equals(officialModules) && !joined.equals(BALANCE_PENDING_MODULES.get(path)) && !joined.equals(DEPRECATED_MODULE_REPLACEMENTS.get(path))) {
           failures.add(path + ": modules " + joined + " expected " + officialModules);
         }
       }
@@ -479,6 +487,60 @@ final class ModifierDataParityTest {
       assertEquals(row[3], edible.get("representative_item").getAsString(), path + " representative item");
       assertNotNull(ModifierJsonLoader.load(path), path + " must load");
     }
+  }
+
+  /**
+   * Official sticky uses the deprecated tconstruct:mob_effect module (MobEffectModule.Legacy): slowness, level 0.5 per
+   * level, 20 to 30 ticks, 25% per level on melee, monster melee and projectile hits, and the same on attacks against
+   * armor that has the modifier (1 durability per counter). arthur.9 expresses it with the weapon and counter modules.
+   * This loads sticky through the real parser and compares every value with the legacy module the old provider built.
+   */
+  @Test
+  void stickyReplacementCarriesTheLegacyValues() throws Exception {
+    JsonObject json = ModifierJsonLoader.readModifier("sticky");
+    Modifier modifier = ModifierJsonLoader.load("sticky", json);
+    assertInstanceOf(ComposableModifier.class, modifier, "sticky must load as a composable modifier");
+    List<?> loaded = modules((ComposableModifier) modifier);
+    assertEquals(2, loaded.size(), "sticky modules");
+    slimeknights.tconstruct.library.modifiers.modules.combat.MobEffectModule.Legacy legacy =
+      slimeknights.tconstruct.library.modifiers.modules.combat.MobEffectModule.builder(net.minecraft.world.effect.MobEffects.SLOWNESS.value())
+        .level(slimeknights.tconstruct.library.json.RandomLevelingValue.perLevel(0, 0.5f))
+        .time(slimeknights.tconstruct.library.json.RandomLevelingValue.random(20, 10))
+        .build();
+
+    var weapon = assertInstanceOf(slimeknights.tconstruct.library.modifiers.modules.combat.MobEffectModule.Weapon.class, unwrapHooks(loaded.get(0)), "first module");
+    assertEquals(legacy.effect(), weapon.effect(), "weapon effect");
+    assertEquals(legacy.chance(), weapon.chance(), "weapon chance");
+    assertEquals(legacy.applyBeforeMelee(), weapon.applyBeforeMelee(), "weapon timing");
+    assertEquals(legacy.holder(), weapon.holder(), "weapon holder");
+    assertEquals(legacy.condition(), weapon.condition(), "weapon condition");
+
+    var counter = assertInstanceOf(slimeknights.tconstruct.library.modifiers.modules.combat.MobEffectModule.ArmorCounter.class, unwrapHooks(loaded.get(1)), "second module");
+    assertEquals(legacy.effect(), counter.effect(), "counter effect");
+    assertEquals(legacy.chance(), counter.chance(), "counter chance");
+    assertEquals(legacy.durabilityUsage(), counter.durabilityUsage(), "counter durability");
+    assertEquals(legacy.directDamage(), counter.directDamage(), "counter direct damage");
+    assertEquals(legacy.damageSource(), counter.damageSource(), "counter damage source");
+    assertEquals(legacy.targetSelf(), counter.targetSelf(), "counter target");
+    assertEquals(legacy.holder(), counter.holder(), "counter holder");
+    // the legacy counter only ran for tools tagged armor (Legacy.onAttacked); the replacement carries that as its tool condition
+    JsonObject counterJson = json.getAsJsonArray("modules").get(1).getAsJsonObject();
+    assertEquals("{\"tag\":\"tconstruct:modifiable/armor\",\"type\":\"mantle:tag\"}", canonical(counterJson.get("tool")), "counter tool condition");
+    assertEquals(legacy.condition().modifierLevel(), counter.condition().modifierLevel(), "counter level range");
+    // together the two modules run on exactly the legacy module's hooks (melee, monster melee, projectile, on attacked)
+    java.util.Set<Object> hooks = new java.util.HashSet<>(weapon.getDefaultHooks());
+    hooks.addAll(counter.getDefaultHooks());
+    assertEquals(new java.util.HashSet<Object>(legacy.getDefaultHooks()), hooks, "hooks");
+    for (Object module : loaded) {
+      if (module instanceof slimeknights.tconstruct.library.module.WithHooks<?> withHooks) {
+        assertTrue(withHooks.hooks().isEmpty() || new java.util.HashSet<Object>(withHooks.hooks()).equals(new java.util.HashSet<Object>(withHooks.module().getDefaultHooks())), "sticky modules must use their default hooks");
+      }
+    }
+  }
+
+  /** Loaded modules are stored with their hooks (WithHooks); returns the module itself. */
+  private static Object unwrapHooks(Object loaded) {
+    return loaded instanceof slimeknights.tconstruct.library.module.WithHooks<?> withHooks ? withHooks.module() : loaded;
   }
 
   private static ModifierLevelDisplay levelDisplay(BasicModifier modifier) throws Exception {

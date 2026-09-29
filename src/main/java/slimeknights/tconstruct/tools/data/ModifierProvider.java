@@ -620,7 +620,14 @@ public class ModifierProvider extends AbstractModifierProvider {
     buildModifier(ModifierIds.sticky)
       // parity: official v3.12.1 uses the legacy tconstruct:mob_effect module: 25% chance per level, applied on melee, projectile and counterattack.
       // The port's buildWeapon() applied it on every weapon hit and never on counterattack.
-      .addModule(MobEffectModule.builder(MobEffects.SLOWNESS.value()).level(RandomLevelingValue.perLevel(0, 0.5f)).time(RandomLevelingValue.random(20, 10)).build());
+      // arthur.9: the legacy module logs "Using deprecated modifier module 'tconstruct:mob_effect'" on every load (official too).
+      // The same behavior as its two replacements: the weapon module covers melee, monster melee and projectile hits,
+      // the counter module covers attacks on the wearer, and the legacy module only countered from armor (tool tag check),
+      // with 1 durability per counter (the counter default). Both keep the legacy 25% per level chance.
+      // Legacy form, kept for reference:
+      //   .addModule(MobEffectModule.builder(MobEffects.SLOWNESS.value()).level(RandomLevelingValue.perLevel(0, 0.5f)).time(RandomLevelingValue.random(20, 10)).build());
+      .addModule(MobEffectModule.builder(MobEffects.SLOWNESS.value()).level(RandomLevelingValue.perLevel(0, 0.5f)).time(RandomLevelingValue.random(20, 10)).chance(LevelingValue.eachLevel(0.25f)).buildWeapon())
+      .addModule(MobEffectModule.builder(MobEffects.SLOWNESS.value()).level(RandomLevelingValue.perLevel(0, 0.5f)).time(RandomLevelingValue.random(20, 10)).chance(LevelingValue.eachLevel(0.25f)).toolTag(TinkerTags.Items.ARMOR).buildCounter());
 
     // damage boost
     // vanilla give +1, 1.5, 2, 2.5, 3, but that is low
