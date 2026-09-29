@@ -136,12 +136,14 @@ public class FluidEffectProvider extends AbstractFluidEffectProvider {
     addSlime(TinkerFluids.earthSlime)
       .addEntityEffects(FluidMobEffect.builder().effect(MobEffects.SLOWNESS, 20*5).buildEntity(TimeAction.ADD))
       .addEntityEffect(new PushEntityFluidEffect(0, -1))
-      .addBlockEffect(MoveBlocksFluidEffect.pull(SoundEvents.SLIME_BLOCK_FALL));
+      // parity: official v3.12.1 plays the tinkers slime sling sound, the port used SoundEvents.SLIME_BLOCK_FALL
+      .addBlockEffect(MoveBlocksFluidEffect.pull(Sounds.SLIME_SLING.getSound()));
     // sky - jump boost
     addSlime(TinkerFluids.skySlime)
       .addEntityEffects(FluidMobEffect.builder().effect(MobEffects.SLOWNESS, 20*5).buildEntity(TimeAction.ADD))
       .addEntityEffect(new PushEntityFluidEffect(0, 1))
-      .addBlockEffect(MoveBlocksFluidEffect.push(SoundEvents.SLIME_BLOCK_FALL));
+      // parity: official v3.12.1 plays the tinkers slime sling sound, the port used SoundEvents.SLIME_BLOCK_FALL
+      .addBlockEffect(MoveBlocksFluidEffect.push(Sounds.SLIME_SLING.getSound()));
     // ichor - levitation
     addSlime(TinkerFluids.ichor)
       .addEntityEffects(FluidMobEffect.builder().effect(MobEffects.SLOW_FALLING, 7*20).effect(MobEffects.SLOWNESS, 20*5).buildEntity(TimeAction.ADD))
@@ -331,6 +333,10 @@ public class FluidEffectProvider extends AbstractFluidEffectProvider {
       MobEffect stickyEffect = FakeRegistryEntry.effect(Identifier.parse(ie + ":sticky"));
       Holder<MobEffect> stickyHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(stickyEffect);
       compatFluid(ie, "phenolic_resin", 50).addEffect(FluidMobEffect.builder().effect(stickyHolder, 8 * 20, 2), TimeAction.ADD);
+      // parity: in 26.1 datagen FakeRegistryEntry.block cannot construct an unregistered block and returns air, so the
+      // committed concrete.json had been generated with minecraft:air (placing air when Immersive Engineering is loaded).
+      // The committed JSON is hand corrected to immersiveengineering:concrete_sprayed as in official v3.12.1.
+      // Check concrete.json after any datagen run until this provider can emit compat block IDs.
       Block concreteSprayed = FakeRegistryEntry.block(Identifier.parse(ie + ":concrete_sprayed"));
       MobEffect concreteFeetEffect = FakeRegistryEntry.effect(Identifier.parse(ie + ":concrete_feet"));
       Holder<MobEffect> concreteFeetHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(concreteFeetEffect);
