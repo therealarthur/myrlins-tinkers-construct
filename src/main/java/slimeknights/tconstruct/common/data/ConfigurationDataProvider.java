@@ -75,7 +75,12 @@ public class ConfigurationDataProvider extends GenericDataProvider {
         ItemPredicate.tag(ItemTags.SHOVELS),
         ItemPredicate.tag(ItemTags.SWORDS),
         ItemPredicate.tag(ItemTags.HOES),
-        ItemPredicate.tag(ItemTags.DURABILITY_ENCHANTABLE),
+        // parity/materials: official 3.12.1 lists shields, bows, crossbows and fishing rods here (NeoForge 26.1 names).
+        // The broader durability_enchantable tag also removed mace and carrot/fungus-on-a-stick crafting.
+        ItemPredicate.tag(Tags.Items.TOOLS_SHIELD),
+        ItemPredicate.tag(Tags.Items.TOOLS_BOW),
+        ItemPredicate.tag(Tags.Items.TOOLS_CROSSBOW),
+        ItemPredicate.tag(Tags.Items.TOOLS_FISHING_ROD),
         ItemPredicate.tag(Tags.Items.ARMORS),
         ItemPredicate.set(Items.FLINT_AND_STEEL, Items.SHEARS, Items.BRUSH)
       ),
