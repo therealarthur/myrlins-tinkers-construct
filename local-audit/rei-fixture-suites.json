@@ -1,0 +1,74 @@
+{
+  "_comment": "parity/rei suites for tools/run-fixture-server.ps1 -Manifest. Same schema as local-tests/returning/fixture-suites.json on parity/fixes; only the three rei-owned suites, with the cases added on parity/rei. The orchestrator folds these case lists into the shared manifest when merging.",
+  "schema": 1,
+  "forceload": {
+    "minX": 2048,
+    "minZ": 2048,
+    "maxX": 2111,
+    "maxZ": 2111
+  },
+  "suites": [
+    {
+      "command": "aebmrecipeviewertest",
+      "label": "AEBM_VIEWER",
+      "owner": "rei",
+      "position": null,
+      "cases": [
+        "material_ingredient_preserves_material_and_components",
+        "material_melting_display_matches_runtime",
+        "material_casting_amount_and_cooling",
+        "composite_casting_amount_cooling_and_fluid_filter",
+        "tool_casting_amount_and_cooling",
+        "tool_casting_retains_material_casts",
+        "missing_required_cast_differs_from_no_cast",
+        "rei_layout_casting_facts_match_recipes",
+        "rei_layout_melting_one_display_with_controller_amounts",
+        "rei_material_focus_is_an_exact_partition",
+        "rei_tool_workstations_follow_traits",
+        "rei_transfer_crafting_station_real_menu_conserves",
+        "rei_transfer_tinker_station_real_menu_conserves",
+        "rei_hidden_filled_containers_keep_empty_containers"
+      ]
+    },
+    {
+      "command": "aebmtooltinkeringtest",
+      "label": "AEBM_TOOL_TINKERING",
+      "owner": "rei",
+      "position": null,
+      "cases": [
+        "six_loaded_costs_and_indexed_holes",
+        "stat_filtered_pairs_reject_unfiltered_output_control",
+        "indexed_material_and_three_sized_extras",
+        "empty_required_tag_omits_recipe",
+        "focus_pairs_components_and_noop_filter",
+        "log_refund_matches_station_transaction",
+        "honey_container_matches_station_transaction",
+        "damage_focus_matches_station",
+        "modifier_repair_focus_matches_station",
+        "modifier_focus_lists_only_accepting_tools"
+      ]
+    },
+    {
+      "command": "aebmrecipemappertest",
+      "label": "AEBM_RECIPE_MAPPER",
+      "owner": "rei",
+      "position": null,
+      "cases": [
+        "loaded_category_molding",
+        "loaded_category_entity_melting",
+        "loaded_category_modifiers",
+        "loaded_category_severing",
+        "loaded_category_tool_recipes",
+        "loaded_category_tool_modification",
+        "loaded_category_materials",
+        "loaded_category_part_builder",
+        "loaded_category_worktable",
+        "material_recipe_actual_needed_and_value",
+        "part_builder_actual_cost_result_and_change",
+        "same_recipe_object_rebuilds_after_material_recipe_change",
+        "tool_recycling_real_pattern_assembly_and_display",
+        "default_entity_melting_uses_real_entities_and_fluid"
+      ]
+    }
+  ]
+}

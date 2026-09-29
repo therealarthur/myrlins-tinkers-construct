@@ -9,22 +9,27 @@ import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import slimeknights.mantle.recipe.helper.RecipeHelper;
 import slimeknights.mantle.recipe.ingredient.FluidIngredient;
 import slimeknights.tconstruct.TConstruct;
+import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.client.recipe.ClientRecipeCache;
 import slimeknights.tconstruct.library.client.recipe.RecipeDisplayData;
 import slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper;
+import slimeknights.tconstruct.library.client.recipe.RecipeFocus;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.alloying.AlloyRecipe;
@@ -75,20 +80,73 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
   }
 
   private static boolean matches(List<EntryIngredient> ingredients, EntryStack<?> entry) {
-    return ingredients.stream().anyMatch(ingredient -> EntryIngredients.testFuzzy(ingredient, entry));
+    // Tinkers entries follow official JEI identities: exact material variant, modifier ID at any level, amounts ignored
+    if (entry.getValue() instanceof RecipeDisplayData.Value focus) {
+      return ingredients.stream().flatMap(List::stream)
+        .anyMatch(candidate -> candidate.getValue() instanceof RecipeDisplayData.Value value && RecipeFocus.matches(focus, value));
+    }
+    if (ingredients.stream().anyMatch(ingredient -> EntryIngredients.testFuzzy(ingredient, entry))) {
+      return true;
+    }
+    // bucket, tank and can focus also finds the contained fluid, through REI's own item to fluid support
+    if (entry.getType().equals(VanillaEntryTypes.ITEM)) {
+      List<EntryStack<dev.architectury.fluid.FluidStack>> fluids = containedFluids(entry.cast());
+      return !fluids.isEmpty() && ingredients.stream().anyMatch(ingredient -> fluids.stream().anyMatch(fluid -> EntryIngredients.testFuzzy(ingredient, fluid)));
+    }
+    return false;
+  }
+
+  /** Fluids REI's fluid support finds in an item, or none; never throws into a lookup. */
+  private static List<EntryStack<dev.architectury.fluid.FluidStack>> containedFluids(EntryStack<ItemStack> item) {
+    try {
+      return me.shedaniel.rei.api.common.fluid.FluidSupportProvider.getInstance().itemToFluids(item)
+        .map(stream -> stream.toList()).orElse(List.of());
+    } catch (RuntimeException exception) {
+      return List.of();
+    }
+  }
+
+  /**
+   * Fuel facts the melting, alloy and entity melting layouts draw from the current snapshot, like official
+   * MeltingFuelHandler.
+   * @param fuels     every fuel recipe in the snapshot
+   * @param solid     the solid fuel recipe, or null when the server has none
+   * @param examples  solid fuel examples from {@code tconstruct:fuel_examples}
+   */
+  record FuelInfo(List<MeltingFuel> fuels, MeltingFuel solid, List<ItemStack> examples) {
+    static final FuelInfo EMPTY = new FuelInfo(List.of(), null, List.of());
+
+    /** Liquid fuels hot enough for the given temperature. */
+    List<FluidStack> usable(int temperature) {
+      return RecipeDisplayMapper.usableFuels(fuels, temperature);
+    }
   }
 
   /** One expansion per snapshot, shared by all category generators. No level or recipe objects are retained. */
   static final class Recipes {
     private long revision = -1;
+    /** Drop, rebuild or keep decisions, tested headlessly in SnapshotGateTest. */
+    private final SnapshotGate gate = new SnapshotGate();
     private Map<Identifier,List<SmelteryDisplay>> displays = Map.of();
+    /** Fuel facts for the current revision. Fuel recipes are small immutable objects owned by the snapshot. */
+    private volatile FuelInfo fuelInfo = FuelInfo.EMPTY;
+    /** Source ID of the solid fuel recipe, for focused solid fuel pages. */
+    private Identifier solidFuelSource = null;
 
     synchronized List<SmelteryDisplay> all() {
       get(TConstructREIClientPlugin.CASTING_TABLE);
       return displays.values().stream().flatMap(List::stream).toList();
     }
 
+    /** Fuel facts for layouts; empty until a synchronized snapshot has been expanded. */
+    FuelInfo fuelInfo() {
+      return fuelInfo;
+    }
+
     synchronized List<SmelteryDisplay> focused(CategoryIdentifier<SmelteryDisplay> category, EntryStack<?> focus, boolean output) {
+      if (category.equals(TConstructREIClientPlugin.FUEL) && !output && focus.getType().equals(VanillaEntryTypes.ITEM)) {
+        return solidFuelFocus(focus.castValue());
+      }
       if (!category.equals(TConstructREIClientPlugin.TOOL_TINKERING) || !focus.getType().equals(VanillaEntryTypes.ITEM)) return get(category);
       var snapshot = ClientRecipeCache.getSnapshot();
       if (snapshot.recipes() == RecipeMap.EMPTY || Minecraft.getInstance().level == null || !MaterialRegistry.isFullyLoaded()) return List.of();
@@ -111,23 +169,51 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
       return List.copyOf(expanded.values());
     }
 
+    /**
+     * Usage of a burnable item: the focused solid fuel page for that item, like official FuelCategory, plus any
+     * liquid fuel page that lists the item (none today, kept for completeness).
+     */
+    private List<SmelteryDisplay> solidFuelFocus(ItemStack stack) {
+      List<SmelteryDisplay> standard = get(TConstructREIClientPlugin.FUEL);
+      Level level = Minecraft.getInstance().level;
+      FuelInfo info = fuelInfo;
+      if (level == null || info.solid() == null || solidFuelSource == null || RecipeDisplayMapper.solidFuelDuration(stack, level) <= 0) {
+        return standard;
+      }
+      var snapshot = ClientRecipeCache.getSnapshot();
+      var expanded = new LinkedHashMap<Identifier,SmelteryDisplay>();
+      Builder builder = new Builder(snapshot.registryAccess(), expanded);
+      RecipeDisplayMapper.solidFuel(solidFuelSource, info.solid(), new ItemStack(TinkerSmeltery.searedHeater), info.examples(), stack, level)
+        .forEach(builder::mapped);
+      List<SmelteryDisplay> result = new ArrayList<>(expanded.values());
+      // keep liquid fuel pages that also match; the unfocused examples page is replaced by the focused one
+      standard.stream().filter(display -> !slimeknights.tconstruct.library.client.recipe.RecipeLayout.getBoolean(display.layout(),
+        slimeknights.tconstruct.library.client.recipe.RecipeLayout.SOLID)).forEach(result::add);
+      return List.copyOf(result);
+    }
+
     synchronized List<SmelteryDisplay> get(CategoryIdentifier<SmelteryDisplay> category) {
       ClientRecipeCache.Snapshot snapshot = ClientRecipeCache.getSnapshot();
-      if (snapshot.recipes() == RecipeMap.EMPTY || Minecraft.getInstance().level == null || !MaterialRegistry.isFullyLoaded()) {
+      boolean ready = snapshot.recipes() != RecipeMap.EMPTY && Minecraft.getInstance().level != null && MaterialRegistry.isFullyLoaded();
+      SnapshotGate.Action action = gate.next(ready, snapshot.revision());
+      if (action == SnapshotGate.Action.CLEAR) {
         displays = Map.of();
         revision = -1;
+        fuelInfo = FuelInfo.EMPTY;
+        solidFuelSource = null;
         return List.of();
       }
-      if (revision != snapshot.revision()) {
+      if (action == SnapshotGate.Action.REBUILD) {
         Map<Identifier,SmelteryDisplay> expanded = new LinkedHashMap<>();
         Builder builder = new Builder(snapshot.registryAccess(), expanded);
+        prepareFuels(snapshot);
         expand(snapshot, TinkerRecipeTypes.CASTING_BASIN.get(), IDisplayableCastingRecipe.class,
           (source, recipe) -> builder.casting(TConstructREIClientPlugin.CASTING_BASIN, source, recipe));
         expand(snapshot, TinkerRecipeTypes.CASTING_TABLE.get(), IDisplayableCastingRecipe.class,
           (source, recipe) -> builder.casting(TConstructREIClientPlugin.CASTING_TABLE, source, recipe));
         expand(snapshot, TinkerRecipeTypes.MELTING.get(), MeltingRecipe.class, builder::melting);
         expand(snapshot, TinkerRecipeTypes.ALLOYING.get(), AlloyRecipe.class, builder::alloy);
-        expand(snapshot, TinkerRecipeTypes.FUEL.get(), MeltingFuel.class, builder::fuel);
+        expand(snapshot, TinkerRecipeTypes.FUEL.get(), MeltingFuel.class, (source, fuel) -> builder.fuel(source, fuel, fuelInfo.examples()));
         for (var type : List.of(TinkerRecipeTypes.PART_BUILDER.get(), TinkerRecipeTypes.MATERIAL.get(), TinkerRecipeTypes.TINKER_STATION.get(),
             TinkerRecipeTypes.MODIFIER_WORKTABLE.get(), TinkerRecipeTypes.MOLDING_TABLE.get(), TinkerRecipeTypes.MOLDING_BASIN.get(),
             TinkerRecipeTypes.ENTITY_MELTING.get(), TinkerRecipeTypes.SEVERING.get(), TinkerRecipeTypes.DATA.get())) {
@@ -148,10 +234,48 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
         grouped.replaceAll((id, values) -> List.copyOf(values));
         displays = Map.copyOf(grouped);
         revision = snapshot.revision();
+        gate.built(revision);
         TConstruct.LOG.info("Prepared {} REI displays across {} categories from received recipe snapshot {}", expanded.size(), grouped.size(), revision);
       }
       return displays.getOrDefault(category.getIdentifier(), List.of());
     }
+
+    /** Collects fuel recipes, the solid fuel and its examples for this revision. */
+    private void prepareFuels(ClientRecipeCache.Snapshot snapshot) {
+      List<MeltingFuel> fuels = new ArrayList<>();
+      MeltingFuel solid = null;
+      Identifier solidSource = null;
+      for (RecipeHolder<?> holder : holders(snapshot, TinkerRecipeTypes.FUEL.get()).stream()
+          .sorted(Comparator.comparing(value -> value.id().identifier().toString())).toList()) {
+        if (holder.value() instanceof MeltingFuel fuel) {
+          fuels.add(fuel);
+          if (fuel.getInput() == FluidIngredient.EMPTY && solid == null && fuel.getRate() != 0) {
+            solid = fuel;
+            solidSource = holder.id().identifier();
+          }
+        }
+      }
+      fuelInfo = new FuelInfo(List.copyOf(fuels), solid, solidFuelExamples(Minecraft.getInstance().level));
+      solidFuelSource = solidSource;
+    }
+  }
+
+  /**
+   * Example solid fuels, from {@code tconstruct:fuel_examples} like official. If a server does not send that tag,
+   * falls back to every burnable default item so the page is never empty.
+   */
+  static List<ItemStack> solidFuelExamples(Level level) {
+    List<ItemStack> examples = new ArrayList<>();
+    for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(TinkerTags.Items.FUEL_EXAMPLES)) {
+      examples.add(new ItemStack(holder));
+    }
+    if (examples.isEmpty() && level != null) {
+      for (Item item : BuiltInRegistries.ITEM) {
+        ItemStack stack = new ItemStack(item);
+        if (RecipeDisplayMapper.solidFuelDuration(stack, level) > 0) examples.add(stack);
+      }
+    }
+    return List.copyOf(examples);
   }
 
   @SuppressWarnings({"rawtypes", "unchecked"})
@@ -179,7 +303,8 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
         data.inputs().stream().map(SmelteryDisplayGenerator::ingredient).toList(),
         data.outputs().stream().map(SmelteryDisplayGenerator::ingredient).toList(),
         data.catalysts().stream().map(SmelteryDisplayGenerator::ingredient).toList(), data.notes(),
-        data.lookupInputs().isEmpty() ? List.of() : List.of(ingredient(data.lookupInputs())));
+        data.lookupInputs().isEmpty() ? List.of() : List.of(ingredient(data.lookupInputs())),
+        data.layout(), data.renderOnly().stream().map(SmelteryDisplayGenerator::ingredient).toList());
       displays.putIfAbsent(display.displayId(), display);
     }
 
@@ -192,76 +317,32 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
       displays.putIfAbsent(display.displayId(), display);
     }
 
+    /** Casting facts come from the viewer-neutral mapper, so the layout and headless tests read the same data. */
     void casting(CategoryIdentifier<SmelteryDisplay> category, Identifier source, IDisplayableCastingRecipe recipe) {
-      List<ItemStack> outputs = recipe.getOutputs();
-      List<ItemStack> casts = recipe.getCastItems();
-      if (outputs.isEmpty() || recipe.getFluids().isEmpty() || recipe.hasCast() && casts.isEmpty()) return;
-      // These are paired variants, not independent alternatives. Split them instead of showing impossible combinations.
-      int variants = outputs.size() > 1 && casts.size() == outputs.size() ? outputs.size() : 1;
-      for (int i = 0; i < variants; i++) {
-        List<EntryIngredient> inputs = new ArrayList<>();
-        List<EntryIngredient> catalysts = new ArrayList<>();
-        inputs.add(fluids(recipe.getFluids()));
-        if (recipe.hasCast()) {
-          EntryIngredient cast = EntryIngredients.ofItemStacks(variants > 1 ? List.of(casts.get(i)) : casts);
-          (recipe.isConsumed() ? inputs : catalysts).add(cast);
-        }
-        List<Component> notes = new ArrayList<>();
-        notes.add(Component.translatableWithFallback("rei.tconstruct.cooling", "Cooling: %s s", recipe.getCoolingTime() / 20f));
-        if (recipe.hasCast()) notes.add(Component.translatable(recipe.isConsumed() ? "jei.tconstruct.casting.cast_consumed" : "jei.tconstruct.casting.cast_kept"));
-        add(category, source, inputs, List.of(EntryIngredients.ofItemStacks(variants > 1 ? List.of(outputs.get(i)) : outputs)), catalysts, notes);
-      }
+      RecipeDisplayMapper.casting(source, recipe, category.equals(TConstructREIClientPlugin.CASTING_BASIN)).forEach(this::mapped);
     }
 
+    /** One melting page with both controller amounts (as official), and the foundry page with byproducts. */
     void melting(Identifier source, MeltingRecipe recipe) {
-      List<EntryIngredient> inputs = List.of(EntryIngredients.ofItemStacks(MaterialRecipeCache.getDisplayItems(recipe.getInput())));
-      if (inputs.getFirst().isEmpty() || recipe.getOutput().isEmpty()) return;
-      var ore = recipe.getOreType();
-      FluidStack melter = ore == null ? recipe.getOutput() : Config.COMMON.melterOreRate.applyOreBoost(ore, recipe.getOutput(), true);
-      FluidStack smeltery = ore == null ? recipe.getOutput() : Config.COMMON.smelteryOreRate.applyOreBoost(ore, recipe.getOutput(), true);
-      List<Component> notes = List.of(temperature(recipe.getTemperature()),
-        Component.translatableWithFallback("rei.tconstruct.base_melting_time", "Base melting time: %s s (fuel speed varies)", recipe.getTime() / 5f));
-      add(TConstructREIClientPlugin.MELTING, source, inputs, List.of(fluids(List.of(melter))),
-        List.of(EntryIngredients.of(TinkerSmeltery.searedMelter)), notes);
-      add(TConstructREIClientPlugin.MELTING, source, inputs, List.of(fluids(List.of(smeltery))),
-        List.of(EntryIngredients.of(TinkerSmeltery.smelteryController)), notes);
-      add(TConstructREIClientPlugin.FOUNDRY, source, inputs, recipe.getOutputWithByproducts().stream().map(SmelteryDisplayGenerator::fluids).toList(),
-        List.of(EntryIngredients.of(TinkerSmeltery.foundryController)), notes);
+      RecipeDisplayMapper.melting(source, recipe).forEach(this::mapped);
     }
 
     void alloy(Identifier source, AlloyRecipe recipe) {
-      if (recipe.getOutput().isEmpty()) return;
-      List<EntryIngredient> inputs = new ArrayList<>();
-      List<EntryIngredient> catalysts = new ArrayList<>();
-      for (var ingredient : recipe.getInputs()) {
-        (ingredient.catalyst() ? catalysts : inputs).add(fluids(ingredient.fluid().getFluids()));
-      }
-      add(TConstructREIClientPlugin.ALLOY, source, inputs, List.of(fluids(List.of(recipe.getOutput()))), catalysts,
-        List.of(temperature(recipe.getTemperature())));
+      RecipeDisplayMapper.alloy(source, recipe).forEach(this::mapped);
     }
 
-    void fuel(Identifier source, MeltingFuel recipe) {
+    /** Liquid fuels map directly; the solid fuel becomes the example page, and item focus builds per-item pages. */
+    void fuel(Identifier source, MeltingFuel recipe, List<ItemStack> examples) {
       if (recipe.getInput() != FluidIngredient.EMPTY) {
-        if (!recipe.getInputs().isEmpty()) {
-          addFuel(source, recipe, fluids(recipe.getInputs()), recipe.getDuration(), List.of(), List.of());
-        }
+        RecipeDisplayMapper.liquidFuel(source, recipe).forEach(this::mapped);
         return;
       }
-      var level = Minecraft.getInstance().level;
-      if (level == null) return;
-      for (var item : BuiltInRegistries.ITEM) {
-        ItemStack stack = new ItemStack(item);
-        // Match SolidFuelModule's item override, event result and integer division.
-        int duration = stack.getBurnTime(TinkerRecipeTypes.FUEL.get(), level.fuelValues()) / 4;
-        if (duration > 0) {
-          var remainder = stack.getCraftingRemainder();
-          ItemStack container = remainder == null ? ItemStack.EMPTY : remainder.create();
-          List<EntryIngredient> outputs = container.isEmpty() ? List.of() : List.of(EntryIngredients.of(container));
-          addFuel(source, recipe, EntryIngredients.of(stack), duration, List.of(EntryIngredients.of(TinkerSmeltery.searedHeater)), outputs);
-        }
-      }
+      RecipeDisplayMapper.solidFuel(source, recipe, new ItemStack(TinkerSmeltery.searedHeater), examples, ItemStack.EMPTY,
+        Minecraft.getInstance().level).forEach(this::mapped);
     }
 
+    /** Original per-item solid fuel builder, kept for reference; the page is now built by the mapper. */
+    @SuppressWarnings("unused")
     private void addFuel(Identifier source, MeltingFuel fuel, EntryIngredient input, int duration, List<EntryIngredient> catalysts, List<EntryIngredient> outputs) {
       add(TConstructREIClientPlugin.FUEL, source, List.of(input), outputs, catalysts, List.of(
         temperature(fuel.getTemperature()),
@@ -275,7 +356,7 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
     return Component.translatable("jei.tconstruct.temperature", temperature);
   }
 
-  private static EntryIngredient ingredient(List<RecipeDisplayData.Value> values) {
+  static EntryIngredient ingredient(List<RecipeDisplayData.Value> values) {
     return values.stream().map(value -> switch (value) {
       case RecipeDisplayData.ItemValue item -> EntryStacks.of(item.stack());
       case RecipeDisplayData.FluidValue fluid -> EntryStacks.of(dev.architectury.fluid.FluidStack.create(
@@ -287,5 +368,18 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
   private static EntryIngredient fluids(List<FluidStack> fluids) {
     return EntryIngredients.from(fluids.stream().filter(stack -> !stack.isEmpty()).toList(), stack -> EntryStacks.of(
       dev.architectury.fluid.FluidStack.create(stack.getFluid(), stack.getAmount(), stack.getComponentsPatch())));
+  }
+
+  /** Unused since the mapper owns melting; kept so ore amount behavior stays documented beside the REI builder. */
+  @SuppressWarnings("unused")
+  private static FluidStack melterAmount(MeltingRecipe recipe) {
+    var ore = recipe.getOreType();
+    return ore == null ? recipe.getOutput() : Config.COMMON.melterOreRate.applyOreBoost(ore, recipe.getOutput(), true);
+  }
+
+  /** Unused helper kept with the original solid fuel item scan. */
+  @SuppressWarnings("unused")
+  private static List<ItemStack> materialDisplayItems(MeltingRecipe recipe) {
+    return MaterialRecipeCache.getDisplayItems(recipe.getInput());
   }
 }

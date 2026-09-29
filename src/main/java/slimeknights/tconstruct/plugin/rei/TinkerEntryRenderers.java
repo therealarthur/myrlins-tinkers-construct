@@ -42,6 +42,11 @@ final class TinkerEntryRenderers {
           graphics.drawString(Minecraft.getInstance().font, Integer.toString(slot.slots().count()), bounds.x + 17, bounds.y + 4, -1, true);
           return;
         }
+        if (value instanceof ModifierValue modifier && bounds.width <= 18) {
+          // official JEI's bookmark renderer draws the modifier icon in item-sized cells (sidebar, worktable)
+          slimeknights.tconstruct.library.client.modifiers.ModifierIconManager.renderIcon(graphics, modifier.modifier().getModifier(), bounds.x, bounds.y, 100, 16);
+          return;
+        }
         var font = Minecraft.getInstance().font;
         graphics.drawString(font, font.plainSubstrByWidth(TinkerEntryTypes.name(value).getString(), bounds.width), bounds.x, bounds.y + 4, -1, true);
       }
