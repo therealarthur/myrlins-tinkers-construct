@@ -84,6 +84,22 @@ public class InfoPanelScreen<P extends MultiModuleScreen<?>, C extends AbstractC
     this.text = Lists.newLinkedList();
   }
 
+  /**
+   * Official InfoPanelScreen kept its size in imageWidth and imageHeight, which the stations read to stack panels
+   * (the Modifiers panel sits under the stats panel) and to size the beam above it. 26.1 makes those fields final and
+   * the port keeps the size in realWidth and realHeight, so report those here; otherwise callers got the 176 by 166
+   * container default and the lower panel was drawn 83 GUI px too low.
+   */
+  @Override
+  public int getImageWidth() {
+    return this.realWidth > 0 ? this.realWidth : super.getImageWidth();
+  }
+
+  @Override
+  public int getImageHeight() {
+    return this.realHeight > 0 ? this.realHeight : super.getImageHeight();
+  }
+
   /** Gets the height to render fonts scaled by the text scale */
   public int getScaledFontHeight() {
     return (int)Math.ceil(this.font.lineHeight * textScale);
