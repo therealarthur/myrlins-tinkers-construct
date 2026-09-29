@@ -331,6 +331,9 @@ public final class RecipeDisplayMapper {
     var tools = recipe.getInputTools();
     var modifiers = recipe.getModifierOptions(null);
     if (modifiers.isEmpty()) return List.of();
+    if (recipe.linkToolsModifiers() && tools.size() == modifiers.size() && tools.size() > 1) {
+      return linkedWorktable(source, recipe, inputs, tools, modifiers);
+    }
     int variants = recipe.linkToolsModifiers() && tools.size() == modifiers.size() ? tools.size() : 1;
     List<RecipeDisplayData> result = new ArrayList<>();
     for (int i = 0; i < variants; i++) {
@@ -348,6 +351,37 @@ public final class RecipeDisplayMapper {
         List.of(recipe.getTitle(), recipe.getDescription(null)), List.of(), layout, List.of()));
     }
     return result;
+  }
+
+  /**
+   * One display for a worktable recipe whose tool and modifier options are linked (tool i goes with modifier i, such as
+   * extracting an ability). Official JEI shows one page per recipe and ties the two slots together with a focus link.
+   * REI has no focus links, but every slot advances one entry per second from the same start, so two equally long entry
+   * lists stay paired. The earlier mapping split every pair into its own display (worktable 250 displays against 25,
+   * with pages that look alike). Pairs with an empty tool are dropped from both lists so the pairing never shifts.
+   */
+  private static List<RecipeDisplayData> linkedWorktable(Identifier source, IModifierWorktableRecipe recipe, List<List<Value>> inputs,
+                                                         List<ItemStack> tools, List<ModifierEntry> modifiers) {
+    List<Value> toolValues = new ArrayList<>();
+    List<Value> modifierValues = new ArrayList<>();
+    for (int i = 0; i < tools.size(); i++) {
+      ItemStack tool = tools.get(i);
+      if (tool.isEmpty()) continue;
+      toolValues.add(new ItemValue(tool));
+      modifierValues.add(new ModifierValue(modifiers.get(i)));
+    }
+    if (toolValues.isEmpty()) return List.of();
+    var recipeInputs = new ArrayList<>(inputs);
+    var catalysts = new ArrayList<List<Value>>();
+    var outputs = new ArrayList<List<Value>>();
+    (recipe.isToolInput() ? recipeInputs : catalysts).add(toolValues);
+    (recipe.isModifierOutput() ? outputs : catalysts).add(modifierValues);
+    CompoundTag layout = new CompoundTag();
+    layout.putBoolean(RecipeLayout.TOOL_INPUT, recipe.isToolInput());
+    layout.putBoolean(RecipeLayout.MODIFIER_OUTPUT, recipe.isModifierOutput());
+    layout.putInt(RecipeLayout.ITEM_SLOTS, recipe.getInputCount());
+    return one("worktable", source, recipeInputs, outputs, catalysts,
+      List.of(recipe.getTitle(), recipe.getDescription(null)), List.of(), layout, List.of());
   }
 
   private static List<RecipeDisplayData> parts(Identifier source, RecipeHolder<?> holder, IPartBuilderRecipe original, RegistryAccess access, Level level) {
