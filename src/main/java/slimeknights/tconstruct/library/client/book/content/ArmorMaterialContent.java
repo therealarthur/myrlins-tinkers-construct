@@ -84,6 +84,12 @@ public class ArmorMaterialContent extends AbstractMaterialContent {
     };
   }
 
+  /** arthur.8: official category suffix, so material.ns.name.encyclopedia.armor is used when it exists. */
+  @Override
+  protected String translationSuffix() {
+    return "armor";
+  }
+
   @Override
   protected String getTextKey(MaterialId material) {
     if (detailed) {
@@ -91,9 +97,12 @@ public class ArmorMaterialContent extends AbstractMaterialContent {
       if (Util.canTranslate(primaryKey)) {
         return primaryKey;
       }
-      return String.format("material.%s.%s.encyclopedia", material.getNamespace(), material.getPath());
+      // arthur.8: fall back like official (encyclopedia.armor, then encyclopedia); was
+      // String.format("material.%s.%s.encyclopedia", ...), which never read the category key
+      return super.getTextKey(material);
     }
-    return String.format("material.%s.%s.flavor", material.getNamespace(), material.getPath());
+    // arthur.8: was String.format("material.%s.%s.flavor", ...); official also allows flavor.armor
+    return super.getTextKey(material);
   }
 
   @Override

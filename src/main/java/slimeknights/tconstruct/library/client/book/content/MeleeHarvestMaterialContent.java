@@ -47,9 +47,18 @@ public class MeleeHarvestMaterialContent extends AbstractMaterialContent {
     };
   }
 
+  /** arthur.8: official category suffix, so material.ns.name.encyclopedia.melee_harvest is used when it exists. */
+  @Override
+  protected String translationSuffix() {
+    return "melee_harvest";
+  }
+
   @Override
   protected String getTextKey(MaterialId material) {
-    return String.format(detailed ? "material.%s.%s.encyclopedia" : "material.%s.%s.flavor", material.getNamespace(), material.getPath());
+    // arthur.8: official has no override here and uses the suffix lookup in AbstractMaterialContent. The port returned
+    // String.format(detailed ? "material.%s.%s.encyclopedia" : "material.%s.%s.flavor", namespace, path) and never
+    // read the melee_harvest key.
+    return super.getTextKey(material);
   }
 
   @Override
