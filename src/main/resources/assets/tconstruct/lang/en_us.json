@@ -5077,7 +5077,7 @@
 
   "_comment": "JEI Strings",
   "jei.tconstruct.time": "%s s",
-  "jei.tconstruct.temperature": "%sÂ°C",
+  "jei.tconstruct.temperature": "%s°C",
   "jei.tconstruct.modifier_ingredient": "%s Modifier",
   "jei.tconstruct.modifier_slot.ingredient": "Modifier Slot: %s",
   "jei.tconstruct.modifier_slot.id": "Slot ID: %s",
