@@ -7,7 +7,7 @@ Every row is a pure number difference (value, level scaling, durability, tier, s
 
 1. modifiers (`ModifierProvider` and 8 modifier JSON files)
 2. fluid effects: no commit, there is no pure number difference (all 56 files are format migrations or semantic fixes)
-3. material stats (`PlatingMaterialStats` shield factor and 51 material stat JSON files)
+3. material stats (`PlatingMaterialStats` shield factor and 52 material stat JSON files: 31 official materials, 21 Continuum compat materials)
 4. material definitions (`MaterialDataProvider` tiers and sort order, 8 JSON files)
 5. tool definitions (`ToolDefinitionDataProvider`, 4 JSON files)
 6. mob equipment (`MobEquipmentProvider`, 5 JSON files plus the Twilight Forest minotaur file, which only loads with Twilight Forest; on `parity/modifiers` that file is renamed to the official `minotaur.json`)
