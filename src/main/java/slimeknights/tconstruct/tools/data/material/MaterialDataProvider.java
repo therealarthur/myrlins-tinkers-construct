@@ -77,8 +77,9 @@ public class MaterialDataProvider extends AbstractMaterialDataProvider {
     addMaterial(MaterialIds.prismarine, 2, ORDER_REPAIR, true);
     addMaterial(MaterialIds.earthslime, 2, ORDER_REPAIR, true);
     addMaterial(MaterialIds.skyslime,   2, ORDER_REPAIR, true);
-    addMaterial(MaterialIds.blaze,      2, ORDER_REPAIR, true);
-    addMaterial(MaterialIds.enderPearl, 2, ORDER_REPAIR, false);
+    // balance: official v3.12.1 puts blaze and ender pearl at tier 3 (Continuum 2)
+    addMaterial(MaterialIds.blaze,      3, ORDER_REPAIR, true);
+    addMaterial(MaterialIds.enderPearl, 3, ORDER_REPAIR, false);
     addMaterial(MaterialIds.glass,      2, ORDER_REPAIR, false);
     addMaterial(MaterialIds.slimeball,  2, ORDER_REPAIR, true);
     addMaterial(MaterialIds.gunpowder,  2, ORDER_REPAIR, true);
@@ -100,12 +101,13 @@ public class MaterialDataProvider extends AbstractMaterialDataProvider {
     addMaterial(MaterialIds.darkthread, 3, ORDER_BINDING, false);
     addMaterial(MaterialIds.ichorskin,  3, ORDER_BINDING, false);
     // tier 3 - ammo
-    addMaterial(MaterialIds.quartz,    3, ORDER_REPAIR, false);
-    addMaterial(MaterialIds.ichor,     3, ORDER_REPAIR, true);
-    addMaterial(MaterialIds.glowstone, 3, ORDER_REPAIR, true);
+    // balance: official v3.12.1 sorts quartz, ichor, glowstone, kobold and magma with the nether materials (ORDER_REPAIR + ORDER_NETHER)
+    addMaterial(MaterialIds.quartz,    3, ORDER_REPAIR + ORDER_NETHER, false);
+    addMaterial(MaterialIds.ichor,     3, ORDER_REPAIR + ORDER_NETHER, true);
+    addMaterial(MaterialIds.glowstone, 3, ORDER_REPAIR + ORDER_NETHER, true);
     addMaterial(MaterialIds.magnetite, 3, ORDER_REPAIR, true);
-    addMaterial(MaterialIds.kobold,    3, ORDER_REPAIR, true);
-    addMaterial(MaterialIds.magma,     3, ORDER_REPAIR, true);
+    addMaterial(MaterialIds.kobold,    3, ORDER_REPAIR + ORDER_NETHER, true);
+    addMaterial(MaterialIds.magma,     3, ORDER_REPAIR + ORDER_NETHER, true);
     // tier 3 - misc
     addMaterial(MaterialIds.ice,     3, ORDER_BINDING, true);
     addMaterial(MaterialIds.jadeite, 3, ORDER_BINDING, true);
@@ -182,7 +184,8 @@ public class MaterialDataProvider extends AbstractMaterialDataProvider {
     // slimesuit
     addMaterial(MaterialIds.clay,  2, ORDER_REPAIR + 5, true);
     addMaterial(MaterialIds.honey, 2, ORDER_REPAIR + 5, true);
-    addMaterial(MaterialIds.blood, 5, ORDER_REPAIR, false, true, null);
+    // balance: official v3.12.1 blood is tier 2 (Continuum 5)
+    addMaterial(MaterialIds.blood, 2, ORDER_REPAIR, false, true, null);
     addMaterial(MaterialIds.horn,  1, ORDER_REPAIR, true);
     addMaterial(MaterialIds.cheese, 2, ORDER_REPAIR, true);
     // slimesuit - repair
