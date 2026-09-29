@@ -347,8 +347,9 @@ final class ModifierDataParityTest {
   /** Official IDs with no JSON in Continuum because another implementation replaces them. */
   private static final Map<String, String> REPLACED = Map.of(
     "chrysophilite", "static Java modifier TinkerModifiers.chrysophilite (older official implementation)",
-    "gold_guard", "static Java modifier TinkerModifiers.goldGuard (older official implementation)",
-    "edible", "split into the tconstruct:edible module (library/modifiers/modules/behavior/EdibleModule) on each food modifier");
+    "gold_guard", "static Java modifier TinkerModifiers.goldGuard (older official implementation)");
+  // oracle fixes: edible is the official 3.12.1 JSON again (shared trait plus effect modules), so it is compared like any
+  // other official modifier. Former entry: "edible" split into the Continuum tconstruct:edible module on each food modifier.
 
   /**
    * Modifiers whose modules need the server's dynamic enchantment registry through Continuum Core's has_enchantment
@@ -357,8 +358,11 @@ final class ModifierDataParityTest {
    */
   private static final Set<String> SERVER_REGISTRY_ONLY = Set.of("hydraulic");
 
-  /** Official IDs whose module list is replaced by the single tconstruct:edible module; level display is still checked. */
-  private static final Set<String> EDIBLE_MODULES = Set.of("savory", "scrumptious", "tasty");
+  /**
+   * Official IDs whose module list was replaced by the single Continuum edible module. Empty since the oracle fixes restored
+   * the official 3.12.1 module lists (formerly savory, scrumptious and tasty).
+   */
+  private static final Set<String> EDIBLE_MODULES = Set.of();
 
   /**
    * Official IDs whose level display or module list is coupled to a number held for Arthur's approval on parity/balance.
@@ -464,19 +468,32 @@ final class ModifierDataParityTest {
     };
     for (Object[] row : expected) {
       String path = (String) row[0];
-      JsonObject edible = null;
+      // oracle fixes: official 3.12.1 layout, the shared tconstruct:edible trait plus one module per effect and the
+      // tconstruct:edible_counter_chance stat; eat duration is the tconstruct:eat_duration stat default of 16
+      JsonObject trait = null, usage = null, representative = null, counter = null;
       for (JsonElement element : ModifierJsonLoader.readModifier(path).getAsJsonArray("modules")) {
-        if (element.getAsJsonObject().get("type").getAsString().equals("tconstruct:edible")) {
-          edible = element.getAsJsonObject();
+        JsonObject module = element.getAsJsonObject();
+        switch (module.get("type").getAsString()) {
+          case "tconstruct:trait" -> trait = module;
+          case "tconstruct:edible_consume_durability" -> usage = module.getAsJsonObject("durability_usage");
+          case "tconstruct:edible_representative_item" -> representative = module;
+          case "tconstruct:stat_boost" -> {
+            if (module.get("stat").getAsString().equals("tconstruct:edible_counter_chance")) {
+              counter = module;
+            }
+          }
+          default -> {}
         }
       }
-      assertNotNull(edible, path + " must use the tconstruct:edible module");
-      JsonObject usage = edible.getAsJsonObject("durability_usage");
+      assertNotNull(trait, path + " must add the tconstruct:edible trait");
+      assertEquals("tconstruct:edible", trait.get("name").getAsString(), path + " edible trait");
+      assertNotNull(usage, path + " must use the edible_consume_durability module");
       assertEquals((int) row[1], usage.get("flat").getAsInt(), path + " durability flat");
       assertEquals((int) row[2], usage.get("each_level").getAsInt(), path + " durability per level");
-      assertEquals(0.15f, edible.getAsJsonObject("counter_chance").get("each_level").getAsFloat(), 1e-6, path + " counter chance");
-      assertEquals(16, edible.getAsJsonObject("duration").get("flat").getAsInt(), path + " eat duration");
-      assertEquals(row[3], edible.get("representative_item").getAsString(), path + " representative item");
+      assertNotNull(counter, path + " must boost tconstruct:edible_counter_chance");
+      assertEquals(0.15f, counter.get("each_level").getAsFloat(), 1e-6, path + " counter chance");
+      assertNotNull(representative, path + " must use the edible_representative_item module");
+      assertEquals(row[3], representative.get("representative_item").getAsString(), path + " representative item");
       assertNotNull(ModifierJsonLoader.load(path), path + " must load");
     }
   }
