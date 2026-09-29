@@ -79,6 +79,7 @@ public class MaterialDataProvider extends AbstractMaterialDataProvider {
     addMaterial(MaterialIds.skyslime,   2, ORDER_REPAIR, true);
     // parity/materials: official 3.12.1 defines blaze and ender pearl as tier 3 repair materials.
     // Continuum carried the older tier 2 value without a 26.1 reason, so the official tier is restored.
+    // balance: official v3.12.1 puts blaze and ender pearl at tier 3 (Continuum 2)
     addMaterial(MaterialIds.blaze,      3, ORDER_REPAIR, true);
     addMaterial(MaterialIds.enderPearl, 3, ORDER_REPAIR, false);
     addMaterial(MaterialIds.glass,      2, ORDER_REPAIR, false);
@@ -104,6 +105,7 @@ public class MaterialDataProvider extends AbstractMaterialDataProvider {
     // tier 3 - ammo
     // parity/materials: official 3.12.1 sorts the nether ammo materials after the other repair materials
     // (ORDER_REPAIR + ORDER_NETHER = 35). Continuum used plain ORDER_REPAIR (25) without a 26.1 reason.
+    // balance: official v3.12.1 sorts quartz, ichor, glowstone, kobold and magma with the nether materials (ORDER_REPAIR + ORDER_NETHER)
     addMaterial(MaterialIds.quartz,    3, ORDER_REPAIR + ORDER_NETHER, false);
     addMaterial(MaterialIds.ichor,     3, ORDER_REPAIR + ORDER_NETHER, true);
     addMaterial(MaterialIds.glowstone, 3, ORDER_REPAIR + ORDER_NETHER, true);
@@ -187,6 +189,7 @@ public class MaterialDataProvider extends AbstractMaterialDataProvider {
     addMaterial(MaterialIds.clay,  2, ORDER_REPAIR + 5, true);
     addMaterial(MaterialIds.honey, 2, ORDER_REPAIR + 5, true);
     // parity/materials: official 3.12.1 keeps hidden blood at tier 2 (common rarity); Continuum had tier 5 without a 26.1 reason.
+    // balance: official v3.12.1 blood is tier 2 (Continuum 5)
     addMaterial(MaterialIds.blood, 2, ORDER_REPAIR, false, true, null);
     addMaterial(MaterialIds.horn,  1, ORDER_REPAIR, true);
     addMaterial(MaterialIds.cheese, 2, ORDER_REPAIR, true);

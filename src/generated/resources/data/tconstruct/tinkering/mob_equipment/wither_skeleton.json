@@ -5,16 +5,13 @@
     "fluid": "tconstruct:swasher/wither_skeleton",
     "materials": [
       {
-        "type": "tconstruct:fixed",
-        "material": "tconstruct:flint"
+        "type": "tconstruct:ancient"
       },
       {
-        "type": "tconstruct:fixed",
-        "material": "tconstruct:wood"
+        "type": "tconstruct:ancient"
       },
       {
-        "type": "tconstruct:fixed",
-        "material": "tconstruct:iron"
+        "type": "tconstruct:ancient"
       }
     ],
     "priority": 100,

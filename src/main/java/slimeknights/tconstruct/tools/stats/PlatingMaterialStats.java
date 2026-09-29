@@ -104,7 +104,8 @@ public record PlatingMaterialStats(MaterialStatType<?> getType, int durability, 
         }
       }
       if (shieldDurability == 0) {
-        shieldDurability = (int)(maxDamageFactor * ArmorModuleBuilder.SHIELD_DAMAGE);
+        // balance: official v3.12.1 uses factor x 18 for plating shields; Continuum used ArmorModuleBuilder.SHIELD_DAMAGE (22)
+        shieldDurability = (int)(maxDamageFactor * 18);
       }
       return this;
     }

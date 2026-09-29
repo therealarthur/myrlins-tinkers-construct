@@ -46,7 +46,7 @@
       "toughness": 1.0
     },
     "tconstruct:plating_shield": {
-      "durability": 1100,
+      "durability": 900,
       "toughness": 1.0
     }
   }
