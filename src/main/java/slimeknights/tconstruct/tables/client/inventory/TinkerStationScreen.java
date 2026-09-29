@@ -298,7 +298,8 @@ public class TinkerStationScreen extends ToolTableScreen<TinkerStationBlockEntit
 
   @Override
   protected void drawContainerName(GuiGraphicsExtractor graphics) {
-    graphics.text(this.font, this.getTitle(), 8, 8, 4210752, false);
+    // 26.1 skips text whose color has no alpha byte; official 4210752 (0x404040) drew opaque
+    graphics.text(this.font, this.getTitle(), 8, 8, 0xFF404040, false);
   }
 
   public static void renderIcon(GuiGraphicsExtractor graphics, LayoutIcon icon, int x, int y) {

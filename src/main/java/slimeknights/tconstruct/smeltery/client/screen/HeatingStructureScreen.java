@@ -98,7 +98,8 @@ public class HeatingStructureScreen extends MultiModuleScreen<HeatingStructureCo
 
   @Override
   protected void drawPlayerInventoryName(GuiGraphicsExtractor graphics) {
-    graphics.text(this.font, this.playerInventoryTitle, 8, this.realHeight - 96 + 2, 0x404040, false);
+    // 26.1 skips text whose color has no alpha byte; official 0x404040 drew opaque
+    graphics.text(this.font, this.playerInventoryTitle, 8, this.realHeight - 96 + 2, 0xFF404040, false);
   }
 
   @Override

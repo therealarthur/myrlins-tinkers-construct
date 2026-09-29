@@ -271,7 +271,8 @@ public class SideInventoryScreen<P extends MultiModuleScreen<?>, C extends Abstr
   @Override
   public void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
     if (this.shouldDrawName()) {
-      graphics.text(this.font, this.getTitle(), this.border.w, this.border.h - 1, 0x404040, false);
+      // 26.1 skips text whose color has no alpha byte; official 0x404040 drew opaque
+      graphics.text(this.font, this.getTitle(), this.border.w, this.border.h - 1, 0xFF404040, false);
     }
   }
 

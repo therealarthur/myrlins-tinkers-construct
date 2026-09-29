@@ -77,7 +77,8 @@ public class ModifierWorktableCategory implements IRecipeCategory<IModifierWorkt
         slotIcons[i].draw(graphics, 43 + i * 18, 16);
       }
     }
-    graphics.text(Minecraft.getInstance().font, recipe.getTitle(), 3, 2, 0x404040, false);
+    // 26.1 skips text whose color has no alpha byte; official 0x404040 drew opaque
+    graphics.text(Minecraft.getInstance().font, recipe.getTitle(), 3, 2, 0xFF404040, false);
   }
 
   @Override
