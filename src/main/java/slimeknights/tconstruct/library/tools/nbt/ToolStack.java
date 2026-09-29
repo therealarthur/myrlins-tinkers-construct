@@ -925,4 +925,104 @@ public class ToolStack implements IToolStackView {
       ToolStack.from(item, definition, tag).rebuildStats();
     }
   }
+
+
+  /* 26.1 load verification (arthur.8) */
+
+  /** Outcome of {@link #verifyStackAfterLoad(ItemStack)}. */
+  public enum LoadVerifyResult {
+    /** Not a modifiable item, empty, a display tool or not yet initialized; nothing to verify */
+    SKIPPED,
+    /** Datapack data (tool definitions, materials, modifiers or tags) is not loaded yet; try again later */
+    NOT_READY,
+    /** Derived data was already current; the stack was not touched */
+    UNCHANGED,
+    /** Derived data was recomputed and written back to the stack */
+    UPDATED,
+    /** Recomputing would have changed data that must be preserved; the stack was not touched */
+    REFUSED
+  }
+
+  /** Keys that describe what the player built or did to the tool. Verification must never change them. */
+  private static final List<String> LOAD_VERIFY_PRESERVED = List.of(TAG_UPGRADES, TAG_DAMAGE, TAG_BROKEN, TAG_UNBREAKABLE);
+
+  /**
+   * 26.1 replacement for official {@code Item#verifyTagAfterLoad}. Official 1.20.1 re-ran {@link #verifyTag(Item, CompoundTag, ToolDefinition)}
+   * every time a tool was read from NBT, so balance and data changes reached saved tools. NeoForge 26.1 decodes stacks
+   * through the plain ItemStack constructor and has no item hook after load, so {@code slimeknights.tconstruct.tools.logic.ToolLoadVerification}
+   * calls this once per loaded stack instead.
+   * <p>
+   * The work is the same as verifyTag: material redirects are resolved and derived data (modifier list from upgrades
+   * and traits, volatile data, stats, multipliers, modifier raw data) is rebuilt. Safety rules on top of official:
+   * <ul>
+   *   <li>Runs on a copy; the stack is only written when the rebuilt data differs and passes every check below.</li>
+   *   <li>Upgrades, damage, broken and unbreakable flags must be identical afterwards.</li>
+   *   <li>Persistent modifier data must be identical (an absent tag counts as empty).</li>
+   *   <li>The material list must keep its length, and each entry may only change to its registered redirect.</li>
+   *   <li>Nothing runs before tool definitions, materials, dynamic modifiers and tags are loaded.</li>
+   * </ul>
+   * If a check fails the stack keeps its old data and {@link LoadVerifyResult#REFUSED} is returned.
+   * @param stack  Stack to verify, updated in place when derived data changed
+   * @return  What happened
+   */
+  public static LoadVerifyResult verifyStackAfterLoad(ItemStack stack) {
+    if (stack.isEmpty() || !(stack.getItem() instanceof IModifiable modifiable)) {
+      return LoadVerifyResult.SKIPPED;
+    }
+    CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+    if (customData == null) {
+      return LoadVerifyResult.SKIPPED;
+    }
+    CompoundTag original = customData.copyTag();
+    // uninitialized tools are handled by ensureHasData (which may also fill missing materials); display tools are fake
+    if (!isInitialized(original) || original.getBoolean(TooltipUtil.KEY_DISPLAY).orElse(false)) {
+      return LoadVerifyResult.SKIPPED;
+    }
+    ToolDefinition definition = modifiable.getToolDefinition();
+    if (!definition.isDataLoaded() || !MaterialRegistry.isFullyLoaded() || !ModifierManager.INSTANCE.isDynamicModifiersLoaded() || !TinkerTags.isTagsLoaded()) {
+      return LoadVerifyResult.NOT_READY;
+    }
+
+    CompoundTag verified = original.copy();
+    verifyTag(stack.getItem(), verified, definition);
+    // rebuildStats creates an empty persistent data tag when none existed; that is not a change worth writing
+    if (!original.contains(TAG_PERSISTENT_MOD_DATA) && verified.getCompound(TAG_PERSISTENT_MOD_DATA).map(CompoundTag::isEmpty).orElse(false)) {
+      verified.remove(TAG_PERSISTENT_MOD_DATA);
+    }
+    if (verified.equals(original)) {
+      return LoadVerifyResult.UNCHANGED;
+    }
+
+    // safety: everything the player made must survive unchanged
+    for (String key : LOAD_VERIFY_PRESERVED) {
+      if (!Objects.equals(original.get(key), verified.get(key))) {
+        return refuseLoadVerify(stack, "changed " + key);
+      }
+    }
+    CompoundTag persistentBefore = original.getCompound(TAG_PERSISTENT_MOD_DATA).orElseGet(CompoundTag::new);
+    CompoundTag persistentAfter = verified.getCompound(TAG_PERSISTENT_MOD_DATA).orElseGet(CompoundTag::new);
+    if (!persistentBefore.equals(persistentAfter)) {
+      return refuseLoadVerify(stack, "changed persistent modifier data");
+    }
+    if (!Objects.equals(original.get(TAG_MATERIALS), verified.get(TAG_MATERIALS))) {
+      ListTag before = original.getList(TAG_MATERIALS).orElseGet(ListTag::new);
+      ListTag after = verified.getList(TAG_MATERIALS).orElseGet(ListTag::new);
+      MaterialIdNBT expected = MaterialIdNBT.readFromNBT(before).resolveRedirects();
+      // readFromNBT drops entries it cannot parse, so compare against the raw list length as well
+      if (before.size() != after.size() || expected.getMaterials().size() != before.size() || !expected.equals(MaterialIdNBT.readFromNBT(after))) {
+        return refuseLoadVerify(stack, "changed materials beyond redirects");
+      }
+    }
+
+    // write the verified data, then let the tool refresh the vanilla components that mirror it (durability, tool, glider, rarity)
+    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(verified));
+    ToolStack.from(stack).updateStack(stack, false);
+    return LoadVerifyResult.UPDATED;
+  }
+
+  /** Logs a refused load verification once per call and leaves the stack alone. */
+  private static LoadVerifyResult refuseLoadVerify(ItemStack stack, String reason) {
+    TConstruct.LOG.warn("Not updating saved tool {} after load: recomputing its stats {}. The tool keeps its previous data.", BuiltInRegistries.ITEM.getKey(stack.getItem()), reason);
+    return LoadVerifyResult.REFUSED;
+  }
 }

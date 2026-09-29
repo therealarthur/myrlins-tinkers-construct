@@ -45,6 +45,7 @@ public final class ReturningServerFixture {
     NeoForge.EVENT_BUS.addListener(BlockWalkerPlacementServerFixture::registerCommands);
     NeoForge.EVENT_BUS.addListener(MaterialsParityServerFixture::registerCommands);
     NeoForge.EVENT_BUS.addListener(ModifierParityServerFixture::registerCommands);
+    NeoForge.EVENT_BUS.addListener(ToolLoadVerifyServerFixture::registerCommands);
   }
 
   private static void registerCommands(RegisterCommandsEvent event) {

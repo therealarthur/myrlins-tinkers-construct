@@ -376,6 +376,8 @@ public class ModifiableArmorItem extends Item implements IModifiableDisplay {
   /* Ticking */
   @Override
   public void inventoryTick(ItemStack stack, ServerLevel levelIn, Entity entityIn, @Nullable EquipmentSlot slot) {
+    // arthur.8: 26.1 replacement for verifyTagAfterLoad, rebuilds stale derived stats once per loaded stack
+    slimeknights.tconstruct.tools.logic.ToolLoadVerification.verifyOnce(stack);
     TinkerCommons.TOOL_INVENTORY_CHANGED_TRIGGER.trigger(entityIn, stack);
     // don't care about non-living, they skip most tool context
     if (entityIn instanceof LivingEntity living) {

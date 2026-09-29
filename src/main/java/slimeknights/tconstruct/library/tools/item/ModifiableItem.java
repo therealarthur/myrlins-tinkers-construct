@@ -293,6 +293,8 @@ public class ModifiableItem extends Item implements IModifiableDisplay {
   /* Modifier interactions */
   @Override
   public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn, @Nullable EquipmentSlot slot) {
+    // arthur.8: 26.1 replacement for verifyTagAfterLoad, rebuilds stale derived stats once per loaded stack
+    slimeknights.tconstruct.tools.logic.ToolLoadVerification.verifyOnce(stack);
     TinkerCommons.TOOL_INVENTORY_CHANGED_TRIGGER.trigger(entityIn, stack);
     if (stack.has(DataComponents.CUSTOM_DATA) && stack.is(TinkerTags.Items.HARVEST) && !stack.has(DataComponents.TOOL)) {
       ToolStack.from(stack).updateStack(stack, false);

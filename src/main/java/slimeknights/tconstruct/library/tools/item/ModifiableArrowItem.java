@@ -149,6 +149,8 @@ public class ModifiableArrowItem extends ArrowItem implements IModifiableDisplay
   /* Modifier interactions */
   @Override
   public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn, @Nullable EquipmentSlot slot) {
+    // arthur.8: 26.1 replacement for verifyTagAfterLoad, rebuilds stale derived stats once per loaded stack
+    slimeknights.tconstruct.tools.logic.ToolLoadVerification.verifyOnce(stack);
     if (entityIn instanceof ServerPlayer player) {
       TinkerCommons.TOOL_INVENTORY_CHANGED_TRIGGER.trigger(player, stack);
     }
