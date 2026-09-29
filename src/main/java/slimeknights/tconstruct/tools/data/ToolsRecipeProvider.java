@@ -337,38 +337,42 @@ public class ToolsRecipeProvider extends BaseRecipeProvider implements IMaterial
       .setCast(Items.ELYTRA, CastPurpose.CONSUMED)
       .setItemCost(8)
       .save(consumer, location(armorFolder + "slimelytra"));
-    MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimeWings.get())
-      .setCast(Items.ELYTRA, CastPurpose.CONSUMED)
-      .setItemCost(8)
-      .save(consumer, location(armorFolder + "table/slimelytra"));
+    // parity (oracle): Continuum-only casting table copy; official builds this only in the casting basin.
+    // MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimeWings.get())
+    // .setCast(Items.ELYTRA, CastPurpose.CONSUMED)
+    // .setItemCost(8)
+    // .save(consumer, location(armorFolder + "table/slimelytra"));
 
     // slimecage
     MaterialCastingRecipeBuilder.basinRecipe(TinkerTools.slimesuit.get(ArmorType.CHESTPLATE))
       .setPart(TinkerToolParts.ribcage, true)
       .setItemCost(8)
       .save(consumer, location(folder + "slimecage"));
-    MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.CHESTPLATE))
-      .setPart(TinkerToolParts.ribcage, true)
-      .setItemCost(8)
-      .save(consumer, location(folder + "table/slimecage"));
+    // parity (oracle): Continuum-only casting table copy; official builds this only in the casting basin.
+    // MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.CHESTPLATE))
+    // .setPart(TinkerToolParts.ribcage, true)
+    // .setItemCost(8)
+    // .save(consumer, location(folder + "table/slimecage"));
     // slimeshell
     MaterialCastingRecipeBuilder.basinRecipe(TinkerTools.slimesuit.get(ArmorType.LEGGINGS))
       .setPart(TinkerToolParts.shell, true)
       .setItemCost(7)
       .save(consumer, location(folder + "slimeshell"));
-    MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.LEGGINGS))
-      .setPart(TinkerToolParts.shell, true)
-      .setItemCost(7)
-      .save(consumer, location(folder + "table/slimeshell"));
+    // parity (oracle): Continuum-only casting table copy; official builds this only in the casting basin.
+    // MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.LEGGINGS))
+    // .setPart(TinkerToolParts.shell, true)
+    // .setItemCost(7)
+    // .save(consumer, location(folder + "table/slimeshell"));
     // slime boots
     MaterialCastingRecipeBuilder.basinRecipe(TinkerTools.slimesuit.get(ArmorType.BOOTS))
       .setPart(TinkerToolParts.laces, true)
       .setItemCost(4)
       .save(consumer, location(folder + "slime_boots"));
-    MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.BOOTS))
-      .setPart(TinkerToolParts.laces, true)
-      .setItemCost(4)
-      .save(consumer, location(folder + "table/slime_boots"));
+    // parity (oracle): Continuum-only casting table copy; official builds this only in the casting basin.
+    // MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.BOOTS))
+    // .setPart(TinkerToolParts.laces, true)
+    // .setItemCost(4)
+    // .save(consumer, location(folder + "table/slime_boots"));
   }
 
   private void addRecycleRecipes(RecipeOutput consumer) {
@@ -523,9 +527,11 @@ public class ToolsRecipeProvider extends BaseRecipeProvider implements IMaterial
     uncastablePart(consumer, TinkerToolParts.bowstring.get(), 1, null, partFolder);
     uncastablePart(consumer, TinkerToolParts.shieldCore.get(), 4, PlatingMaterialStats.SHIELD.getStatsId(), partFolder);
     // slimesuit - not castable
-    uncastablePart(consumer, TinkerToolParts.ribcage.get(), 2, PlatingMaterialStats.SHIELD.getStatsId(), partFolder);
-    uncastablePart(consumer, TinkerToolParts.shell.get(), 2, PlatingMaterialStats.SHIELD.getStatsId(), partFolder);
-    uncastablePart(consumer, TinkerToolParts.laces.get(), 2, PlatingMaterialStats.SHIELD.getStatsId(), partFolder);
+    // parity (oracle): official ribcage and shell cost 4 and none of the slimesuit parts has a casting stat conflict.
+    // Continuum used cost 2 with a plating_shield conflict: ribcage 2, shell 2, laces 2, each PlatingMaterialStats.SHIELD.
+    uncastablePart(consumer, TinkerToolParts.ribcage.get(), 4, null, partFolder);
+    uncastablePart(consumer, TinkerToolParts.shell.get(), 4, null, partFolder);
+    uncastablePart(consumer, TinkerToolParts.laces.get(), 2, null, partFolder);
     // arrow parts are just part builder, no composite currently
     Ingredient arrowPattern = CompoundIngredient.of(LegacyIngredientType.ofTag(TinkerTags.Items.DEFAULT_PATTERNS), Ingredient.of(TinkerSmeltery.arrowCast));
     PartRecipeBuilder.partRecipe(TinkerToolParts.arrowHead.get())
@@ -562,12 +568,14 @@ public class ToolsRecipeProvider extends BaseRecipeProvider implements IMaterial
       .setCast(skull, CastPurpose.CONSUMED_OFFSET)
       .addExtraMaterial(material)
       .setItemCost(5)
+      .setFluidSwapping(false) // parity (oracle): official handles the slime swap in the single slime_skull/swapping/slime recipe
       .save(consumer, location(folder + "slime_skull/" + material.getPath()));
-    MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.HELMET))
-      .setCast(skull, CastPurpose.CONSUMED_OFFSET)
-      .addExtraMaterial(material)
-      .setItemCost(5)
-      .save(consumer, location(folder + "slime_skull/table/" + material.getPath()));
+    // parity (oracle): Continuum-only casting table copy; official builds this only in the casting basin.
+    // MaterialCastingRecipeBuilder.tableRecipe(TinkerTools.slimesuit.get(ArmorType.HELMET))
+    // .setCast(skull, CastPurpose.CONSUMED_OFFSET)
+    // .addExtraMaterial(material)
+    // .setItemCost(5)
+    // .save(consumer, location(folder + "slime_skull/table/" + material.getPath()));
     MaterialSwappingRecipeBuilder.tools(TinkerTags.Items.SWAPPABLE_SKULLS)
       .index(0).material(material, skull).repairValue((int) (MaterialRecipe.INGOTS_PER_REPAIR * 2))
       .save(consumer, location(folder + "slime_skull/swapping/" + material.getPath()));

@@ -312,6 +312,20 @@ public final class TinkerTools extends TinkerModule {
    * Events
    */
 
+  /**
+   * parity (oracle): official registers the minotaur axe only with Twilight Forest. The port keeps the item registered so
+   * copies in existing worlds survive, and loads its tool tags from a built-in data pack only when Twilight Forest is
+   * present. Without it the axe is in no tool, harvest or modifier tag, has no recipes and is hidden from viewers.
+   */
+  @SubscribeEvent
+  void addMinotaurAxePack(net.neoforged.neoforge.event.AddPackFindersEvent event) {
+    if (ModList.get().isLoaded("twilightforest")) {
+      event.addPackFinders(getResource("compat/twilightforest_minotaur_axe"), net.minecraft.server.packs.PackType.SERVER_DATA,
+        net.minecraft.network.chat.Component.literal("Tinkers' Construct minotaur axe"), net.minecraft.server.packs.repository.PackSource.BUILT_IN,
+        true, net.minecraft.server.packs.repository.Pack.Position.TOP);
+    }
+  }
+
   @SubscribeEvent
   void commonSetup(FMLCommonSetupEvent event) {
     EquipmentChangeWatcher.register();

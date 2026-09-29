@@ -128,14 +128,29 @@ public abstract class AbstractModifierRecipe implements ITinkerStationRecipe, ID
   /** Gets or builds the list of tool inputs */
   protected List<ItemStack> getToolInputs() {
     if (toolInputs == null) {
-      toolInputs = getToolInputStacks(this.toolRequirement).stream().map(MAP_TOOL_STACK_FOR_RENDERING).collect(Collectors.toList());
+      toolInputs = getToolInputStacks(this.toolRequirement).stream().filter(this::canEverApply).map(MAP_TOOL_STACK_FOR_RENDERING).collect(Collectors.toList());
     }
     return toolInputs;
   }
 
   /** Gets tool inputs using a display context, needed for tag based recipe displays in the book. */
   protected List<ItemStack> getToolInputs(ContextMap displayContext) {
-    return getToolInputStacks(this.toolRequirement, displayContext).stream().map(MAP_TOOL_STACK_FOR_RENDERING).collect(Collectors.toList());
+    return getToolInputStacks(this.toolRequirement, displayContext).stream().filter(this::canEverApply).map(MAP_TOOL_STACK_FOR_RENDERING).collect(Collectors.toList());
+  }
+
+  /**
+   * parity (oracle): official 3.12.1 drops tools that could never use a {@code check_trait_level} recipe because their
+   * traits already reach the max level (kama, mattock and scythe till, axes strip, javelins throw, slime boots bounce).
+   * Continuum listed them, so viewers offered recipes the station would always refuse.
+   */
+  private boolean canEverApply(ItemStack stack) {
+    if (!checkTraitLevel) {
+      return true;
+    }
+    if (stack.getItem() instanceof slimeknights.tconstruct.library.tools.item.IModifiable modifiable) {
+      return slimeknights.tconstruct.library.tools.definition.module.build.ToolTraitHook.getTraits(modifiable.getToolDefinition(), slimeknights.tconstruct.library.tools.nbt.MaterialNBT.EMPTY).getLevel(this.result.getId()) < this.level.max();
+    }
+    return false;
   }
 
   /** Cache of display tool inputs */

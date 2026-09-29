@@ -43,6 +43,8 @@ public class MaterialCastingRecipeBuilder extends AbstractRecipeBuilder<Material
   private int itemCost = 0;
   private CastPurpose castPurpose = CastPurpose.CATALYST;
   private boolean switchSlots = false;
+  /** If false, a tool casting recipe does not also act as a fluid part swap, official 3.12.1 {@code fluid_swapping} */
+  private boolean fluidSwapping = true;
   @Setter
   private IJsonPredicate<MaterialVariantId> allowedMaterials = MaterialPredicate.ANY;
   /** Extra materials for tool casting. Has no impact on part casting. */
@@ -151,6 +153,12 @@ public class MaterialCastingRecipeBuilder extends AbstractRecipeBuilder<Material
    * Set output of recipe to be put into the input slot.
    * Mostly used for cast creation
    */
+  /** Sets whether a tool casting recipe also swaps the fluid material on an existing tool (official 3.12.1) */
+  public MaterialCastingRecipeBuilder setFluidSwapping(boolean fluidSwapping) {
+    this.fluidSwapping = fluidSwapping;
+    return this;
+  }
+
   public MaterialCastingRecipeBuilder setSwitchSlots() {
     this.switchSlots = true;
     return this;
@@ -177,7 +185,7 @@ public class MaterialCastingRecipeBuilder extends AbstractRecipeBuilder<Material
     if (result != null) {
       consumer.accept(key, new MaterialCastingRecipe(recipeSerializer, id, group, cast, itemCost, result, allowedMaterials, castPurpose != CastPurpose.CATALYST, switchSlots), advancement);
     } else if (resultTool != null) {
-      consumer.accept(key, new ToolCastingRecipe(recipeSerializer, id, group, cast, itemCost, castPurpose, resultTool, allowedMaterials, extraMaterials), advancement);
+      consumer.accept(key, new ToolCastingRecipe(recipeSerializer, id, group, cast, itemCost, castPurpose, resultTool, allowedMaterials, extraMaterials, fluidSwapping), advancement);
     } else {
       throw new IllegalArgumentException("Must have either result or result tool");
     }
