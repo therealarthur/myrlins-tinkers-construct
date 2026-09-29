@@ -74,15 +74,23 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
       TinkerModifiers.embellishment.getId(), TinkerModifiers.dyed.getId(), TinkerModifiers.trim.getId(),
       TinkerModifiers.creativeSlot.getId(), TinkerModifiers.statOverride.getId(),
       ModifierIds.shiny, TinkerModifiers.golden.getId()
-    );
+    )
+      // parity: official v3.12.1 also lists the banner modifier (entry added by parity/modifiers)
+      .add(TinkerModifiers.banner.getId());
     tag(REMOVE_MODIFIER_BLACKLIST).add(TinkerModifiers.creativeSlot.getId(), TinkerModifiers.statOverride.getId());
     tag(EXTRACT_MODIFIER_BLACKLIST).add(
       TinkerModifiers.embellishment.getId(), TinkerModifiers.dyed.getId(), TinkerModifiers.trim.getId(),
       ModifierIds.rebalanced, TinkerModifiers.overslime.getId()
-    ).addTag(REMOVE_MODIFIER_BLACKLIST);
+    ).addTag(REMOVE_MODIFIER_BLACKLIST)
+      // parity: official v3.12.1 also blocks extracting the banner modifier (entry added by parity/modifiers)
+      .add(TinkerModifiers.banner.getId());
     // blacklist modifiers that are not really slotless, they just have a slotless recipe
-    tag(EXTRACT_SLOTLESS_BLACKLIST).add(ModifierIds.luck, ModifierIds.toolBelt);
-    tag(EXTRACT_UPGRADE_BLACKLIST);
+    tag(EXTRACT_SLOTLESS_BLACKLIST).add(ModifierIds.luck, ModifierIds.toolBelt)
+      // parity: official v3.12.1 also lists feather fall (entry added by parity/modifiers)
+      .add(ModifierIds.featherFall);
+    // modifiers with different slot types per level
+    // parity: official v3.12.1 lists these three; the port left the tag empty (entries added by parity/modifiers)
+    tag(EXTRACT_UPGRADE_BLACKLIST).add(ModifierIds.leaping, ModifierIds.reflecting, ModifierIds.returning);
 
     // modifiers in this tag support both left click and right click interaction
     tag(DUAL_INTERACTION).add(

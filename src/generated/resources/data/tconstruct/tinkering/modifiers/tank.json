@@ -12,10 +12,6 @@
       "fixed_level": true,
       "level": 1,
       "name": "tconstruct:tank_handler"
-    },
-    {
-      "type": "tconstruct:inventory_menu",
-      "on_key": "shift"
     }
   ],
   "tooltip_display": "always"

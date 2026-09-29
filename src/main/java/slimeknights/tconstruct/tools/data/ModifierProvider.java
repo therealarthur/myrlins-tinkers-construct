@@ -386,7 +386,8 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(new VolatileFlagModule(AdvancementIds.NETHERITE));
 
     // general
-    buildModifier(ModifierIds.worldbound).addModule(new VolatileFlagModule(IndestructibleItemEntity.INDESTRUCTIBLE_ENTITY)).addModule(new RarityModule(Rarity.UNCOMMON)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
+    // parity: official v3.12.1 worldbound sets rare rarity (the port used uncommon)
+    buildModifier(ModifierIds.worldbound).addModule(new VolatileFlagModule(IndestructibleItemEntity.INDESTRUCTIBLE_ENTITY)).addModule(new RarityModule(Rarity.RARE)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
     buildModifier(ModifierIds.shiny).addModule(new VolatileFlagModule(IModifiable.SHINY)).addModule(new RarityModule(Rarity.EPIC)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
     buildModifier(ModifierIds.offhanded)
       .addModule(new VolatileFlagModule(IModifiable.DEFER_OFFHAND))
@@ -462,10 +463,10 @@ public class ModifierProvider extends AbstractModifierProvider {
       .tooltipDisplay(TooltipDisplay.NEVER).levelDisplay(ModifierLevelDisplay.NO_LEVELS).priority(126)
       .addModule(new DurabilityBarColorModule(0xEEDB74))
       .addModule(FullAllthemodiumSetModule.INSTANCE);
+    // parity: official v3.12.1 tank has no inventory menu. The port added InventoryMenuModule.SHIFT as a third module.
     buildModifier(ModifierIds.tank).addModules(
       StatBoostModule.add(ToolTankHelper.CAPACITY_STAT).eachLevel(FluidType.BUCKET_VOLUME),
-      ToolTankHelper.TANK_HANDLER,
-      InventoryMenuModule.SHIFT);
+      ToolTankHelper.TANK_HANDLER);
     buildModifier(ModifierIds.overforced).addModule(StatBoostModule.add(OverslimeModule.OVERSLIME_STAT).eachLevel(75));
     buildModifier(ModifierIds.soulbound).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(new VolatileFlagModule(ModifierEvents.SOULBOUND));
     // zooming
@@ -477,7 +478,8 @@ public class ModifierProvider extends AbstractModifierProvider {
     buildModifier(ModifierIds.theOneProbe, new ModLoadedCondition("theoneprobe")).levelDisplay(ModifierLevelDisplay.NO_LEVELS).addModule(TheOneProbeModule.INSTANCE);
     buildModifier(ModifierIds.headlight, new ModLoadedCondition("headlight"))
       .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
-      .addModule(new ModifierVariantNameModule(VariantFormatter.PARAMETER))
+      // parity: official formatter ID tconstruct:parameter (the port registered a misspelled ID)
+      .addModule(new ModifierVariantNameModule(VariantFormatter.PARAMETER_OFFICIAL))
       .addModule(new HeadlightModule(10));
 
     // harvest
@@ -532,7 +534,9 @@ public class ModifierProvider extends AbstractModifierProvider {
     IJsonPredicate<Item> harvest = ItemPredicate.tag(HARVEST);
     IJsonPredicate<Item> armor = ItemPredicate.tag(WORN_ARMOR);
     buildModifier(ModifierIds.silky).levelDisplay(ModifierLevelDisplay.NO_LEVELS)
-      .addModule(EnchantmentModule.builder(enchantment(Enchantments.SILK_TOUCH)).toolItem(harvest).mainHandHarvest(TConstruct.getResource("silky_harvest")))
+      // parity: official v3.12.1 applies silk touch constantly on harvest tools. The port used a main hand harvest flag instead:
+      //   EnchantmentModule.builder(enchantment(Enchantments.SILK_TOUCH)).toolItem(harvest).mainHandHarvest(TConstruct.getResource("silky_harvest"))
+      .addModule(EnchantmentModule.builder(enchantment(Enchantments.SILK_TOUCH)).toolItem(harvest).constant())
       .addModule(EnchantmentModule.builder(enchantment(Enchantments.SILK_TOUCH)).toolItem(armor).armorHarvest(ARMOR_SLOTS));
     buildModifier(TinkerModifiers.severing.getId()).addModule(SeveringModule.INSTANCE);
     buildModifier(ModifierIds.experienced)
@@ -551,7 +555,9 @@ public class ModifierProvider extends AbstractModifierProvider {
     LootingModule ARMOR_LOOTING = LootingModule.builder().toolItem(armor).armor(ARMOR_SLOTS);
     buildModifier(ModifierIds.luck)
       .levelDisplay(new UniqueForLevels(3))
-      .addModules(CONSTANT_FORTUNE, ARMOR_FORTUNE, LUCK_WEAPON_LOOTING, ARMOR_LOOTING, SEA_LUCK, ARMOR_LUCK)
+      // parity: official v3.12.1 luck uses the same weapon looting as the looting modifier (any melee tool, plus projectiles via air).
+      // The port's LUCK_WEAPON_LOOTING (melee weapons and launchers only) is kept defined above but no longer used here.
+      .addModules(CONSTANT_FORTUNE, ARMOR_FORTUNE, WEAPON_LOOTING, ARMOR_LOOTING, SEA_LUCK, ARMOR_LUCK)
       .addModule(apotheosisRequirement(4, 5))
       .addModule(luckApothicCap(4, 5));
     buildModifier(ModifierIds.fortune).addModules(CONSTANT_FORTUNE, ARMOR_FORTUNE, SEA_LUCK, ARMOR_LUCK);
@@ -612,7 +618,9 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(apotheosisRequirement(4, 5))
       .addModule(apothicCap(4, 5, enchantment(Enchantments.SWEEPING_EDGE), false));
     buildModifier(ModifierIds.sticky)
-      .addModule(MobEffectModule.builder(MobEffects.SLOWNESS.value()).level(RandomLevelingValue.perLevel(0, 0.5f)).time(RandomLevelingValue.random(20, 10)).buildWeapon());
+      // parity: official v3.12.1 uses the legacy tconstruct:mob_effect module: 25% chance per level, applied on melee, projectile and counterattack.
+      // The port's buildWeapon() applied it on every weapon hit and never on counterattack.
+      .addModule(MobEffectModule.builder(MobEffects.SLOWNESS.value()).level(RandomLevelingValue.perLevel(0, 0.5f)).time(RandomLevelingValue.random(20, 10)).build());
 
     // damage boost
     // vanilla give +1, 1.5, 2, 2.5, 3, but that is low
@@ -709,24 +717,23 @@ public class ModifierProvider extends AbstractModifierProvider {
     buildModifier(ModifierIds.slimeball).levelDisplay(ModifierLevelDisplay.NO_LEVELS)
       .addModule(FireballModule.builder()
         .damageType(TinkerDamageTypes.FLUID_IMPACT)
-        .sound(SoundEvents.SLIME_BLOCK_FALL)
+        // parity: official v3.12.1 uses the tinkers slimy bounce sound and slimeball tags, so other mods' slimeballs work too.
+        // The port used SoundEvents.SLIME_BLOCK_FALL and TinkerCommons.slimeball.get(type) items. FireballModule still
+        // matches the tinkers slimeballs by item if a tag ingredient has no bound holders.
+        .sound(Sounds.SLIMY_BOUNCE.getSound())
         .modifier(ModifierIds.bounce).damageMultiplier(1.5f)
-        .fireball(TinkerCommons.slimeball.get(SlimeType.EARTH)).modifier(new ModifierEntry(ModifierIds.drawback, 2)).damageMultiplier(0.67f).end()
-        .fireball(TinkerCommons.slimeball.get(SlimeType.SKY)).damageType(TinkerDamageTypes.FLUID_COLD).modifier(ModifierIds.freezing).end()
-        .fireball(TinkerCommons.slimeball.get(SlimeType.ICHOR)).damageType(TinkerDamageTypes.FLUID_FIRE).modifier(ModifierIds.fiery).end()
-        .fireball(TinkerCommons.slimeball.get(SlimeType.ENDER)).damageType(TinkerDamageTypes.FLUID_MAGIC).modifier(ModifierIds.enderclearance).end()
+        .fireball(SlimeType.EARTH.getSlimeballTag()).modifier(new ModifierEntry(ModifierIds.drawback, 2)).damageMultiplier(0.67f).end()
+        .fireball(SlimeType.SKY.getSlimeballTag()  ).damageType(TinkerDamageTypes.FLUID_COLD).modifier(ModifierIds.freezing).end()
+        .fireball(SlimeType.ICHOR.getSlimeballTag()).damageType(TinkerDamageTypes.FLUID_FIRE).modifier(ModifierIds.fiery).end()
+        .fireball(SlimeType.ENDER.getSlimeballTag()).damageType(TinkerDamageTypes.FLUID_MAGIC).modifier(ModifierIds.enderclearance).end()
         .fireball(Items.MAGMA_CREAM).damageType(TinkerDamageTypes.MOB_EXPLOSION).modifier(ModifierIds.explosive).end()
         .build());
     buildModifier(ModifierIds.sliver).priority(70) // after slimeball
-      .addModule(InventoryModule.builder().pattern(pattern("slimeball")).filter(ItemPredicate.set(
-        TinkerCommons.slimeball.get(SlimeType.EARTH),
-        TinkerCommons.slimeball.get(SlimeType.SKY),
-        TinkerCommons.slimeball.get(SlimeType.ICHOR),
-        TinkerCommons.slimeball.get(SlimeType.ENDER),
-        Items.MAGMA_CREAM
-      )).flatLimit(32).slotsPerLevel(3))
+      // parity: official v3.12.1 filters by the slimeball_ammo item tag (which also lists these items) and opens the menu on any key.
+      // The port used ItemPredicate.set(earth, sky, ichor, ender slimeballs, magma cream) and InventoryMenuModule.SHIFT.
+      .addModule(InventoryModule.builder().pattern(pattern("slimeball")).filter(ItemPredicate.tag(TinkerTags.Items.SLIMEBALL_AMMO)).flatLimit(32).slotsPerLevel(3))
       .addModule(TrickQuiverModule.INSTANCE)
-      .addModule(InventoryMenuModule.SHIFT)
+      .addModule(InventoryMenuModule.ANY)
       .addModule(ModifierRequirementsModule.builder().requireModifier(ModifierIds.slimeball, 1).modifierKey(ModifierIds.sliver).build());
 
     // combat
@@ -766,7 +773,10 @@ public class ModifierProvider extends AbstractModifierProvider {
     // armor
     buildModifier(TinkerModifiers.golden).addModule(new VolatileFlagModule(ModifiableArmorItem.PIGLIN_NEUTRAL)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
     buildModifier(ModifierIds.wings).addModule(new VolatileFlagModule(ModifiableArmorItem.ELYTRA)).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
-    buildModifier(ModifierIds.knockbackResistance).addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.1f));
+    // parity: official v3.12.1 shows a single level and colors the name from wool
+    buildModifier(ModifierIds.knockbackResistance).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
+      .addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).eachLevel(0.1f))
+      .addModule(new MaterialVariantColorModule(MaterialIds.wool));
     buildModifier(ModifierIds.ricochet).addModule(AttributeModule.builder(TinkerAttributes.KNOCKBACK_MULTIPLIER, Operation.ADD_MULTIPLIED_BASE).eachLevel(0.2f));
 
     // defense
@@ -1143,7 +1153,8 @@ public class ModifierProvider extends AbstractModifierProvider {
     buildModifier(ModifierIds.overgrowth).addModule(new OvergrowthModule(LevelingValue.eachLevel(0.05f)));
     buildModifier(ModifierIds.searing).addModule(ConditionalMiningSpeedModule.builder().blocks(TinkerPredicate.CAN_MELT_BLOCK).eachLevel(6f));
     buildModifier(ModifierIds.scorching).addModule(ConditionalMeleeDamageModule.builder().target(LivingEntityPredicate.ON_FIRE).eachLevel(2f));
-    buildModifier(ModifierIds.airborne)
+    // parity: official v3.12.1 hides the level of airborne since it has no per level scaling
+    buildModifier(ModifierIds.airborne).levelDisplay(ModifierLevelDisplay.NO_LEVELS)
       // 400% boost means 5x mining speed
       .addModule(ConditionalMiningSpeedModule.builder().holder(LivingEntityPredicate.ON_GROUND.inverted()).percent().allowIneffective().flat(4), ModifierHooks.BREAK_SPEED)
       // velocity gets a 0.1 boost under the stricter version of in air (no boost just for being on a ladder)
@@ -1161,10 +1172,11 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(AttributeModule.builder(TinkerAttributes.SAFE_FALL_DISTANCE, Operation.ADD_VALUE).eachLevel(1));
     buildModifier(ModifierIds.godspeed)
       .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      // goes from +5% to +7.5%
-      .addModule(AttributeModule.builder(Attributes.MOVEMENT_SPEED.value(), Operation.ADD_MULTIPLIED_TOTAL).tooltipStyle(TooltipStyle.PERCENT).amount(0.025f, 0.025f))
+      // parity: official v3.12.1 sorts the attributes numerically (attack speed first), same values
       // goes from +2.5% to +4%
       .addModule(AttributeModule.builder(Attributes.ATTACK_SPEED.value(), Operation.ADD_MULTIPLIED_TOTAL).tooltipStyle(TooltipStyle.PERCENT).amount(0.01f, 0.015f))
+      // goes from +5% to +7.5%
+      .addModule(AttributeModule.builder(Attributes.MOVEMENT_SPEED.value(), Operation.ADD_MULTIPLIED_TOTAL).tooltipStyle(TooltipStyle.PERCENT).amount(0.025f, 0.025f))
       // goes from +7.5% to +12.5%
       .addModule(AttributeModule.builder(TinkerAttributes.MINING_SPEED_MULTIPLIER, Operation.ADD_MULTIPLIED_TOTAL).tooltipStyle(TooltipStyle.PERCENT).amount(0.025f, 0.05f));
     IJsonPredicate<DamageSource> isProjectile = DamageSourcePredicate.tag(DamageTypeTags.IS_PROJECTILE);
@@ -1208,13 +1220,15 @@ public class ModifierProvider extends AbstractModifierProvider {
       .levelDisplay(ModifierLevelDisplay.NO_LEVELS)
       // harvest: +6 is a bit better than haste
       .addModule(StatBoostModule.add(ToolStats.MINING_SPEED).flat(6))
-      // armor: +15% knockback resistance, making it stronger than anvil
-      .addModule(StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).flat(0.10f))
+      // parity: official v3.12.1 has no armor knockback resistance here (armor made of twisting vine gets entwined instead),
+      // and uses a single 1 damage unequip penalty. The port's armor-only modules are kept below as a comment for reference:
+      //   StatBoostModule.add(ToolStats.KNOCKBACK_RESISTANCE).flat(0.10f)
+      //   new DamageOnUnequipModule(1, ModifierCondition.ANY_TOOL.with(ToolStackPredicate.tag(TinkerTags.Items.WORN_ARMOR).inverted()))
+      //   new DamageOnUnequipModule(2, ModifierCondition.ANY_TOOL.with(ToolStackPredicate.tag(TinkerTags.Items.WORN_ARMOR)))
       // ranged: +10% drawspeed is on par with netherite, hard to get elsewhere
       .addModule(StatBoostModule.add(ToolStats.DRAW_SPEED).flat(0.15f))
-      // downside: don't take it off, damage more for armor
-      .addModule(new DamageOnUnequipModule(1, ModifierCondition.ANY_TOOL.with(ToolStackPredicate.tag(TinkerTags.Items.WORN_ARMOR).inverted())))
-      .addModule(new DamageOnUnequipModule(2, ModifierCondition.ANY_TOOL.with(ToolStackPredicate.tag(TinkerTags.Items.WORN_ARMOR))));
+      // downside: don't take it off
+      .addModule(new DamageOnUnequipModule(1, ModifierCondition.ANY_TOOL));
     buildModifier(ModifierIds.entwined)
       .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       // boots: +15% movement speed
@@ -1371,6 +1385,8 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(StatBoostModule.add(ToolStats.VELOCITY).eachLevel(0.03f));
     buildModifier(ModifierIds.cobalamin).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(AttributeModule.builder(Attributes.ATTACK_SPEED.value(), Operation.ADD_MULTIPLIED_TOTAL).tooltipStyle(TooltipStyle.PERCENT).eachLevel(0.05f))
+      // parity: official v3.12.1 also grants +10% use item speed per level, the port had dropped this module
+      .addModule(AttributeModule.builder(TinkerAttributes.USE_ITEM_SPEED, Operation.ADD_VALUE).tooltipStyle(TooltipStyle.PERCENT).eachLevel(0.10f))
       .addModule(AttributeModule.builder(TinkerAttributes.MINING_SPEED_MULTIPLIER, Operation.ADD_MULTIPLIED_TOTAL).tooltipStyle(TooltipStyle.PERCENT).eachLevel(0.15f));
     buildModifier(ModifierIds.ductile)
       .addModule(StatBoostModule.multiplyBase(ToolStats.DURABILITY).eachLevel(0.1f))
@@ -1684,8 +1700,10 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(AttributeModule.builder(TinkerAttributes.GOOD_EFFECT_DURATION, Operation.ADD_MULTIPLIED_BASE).eachLevel(0.25f))
       // reduce time of effects on removal. 20% reduction should cancel out the 25% addition
       .addModule(new ReduceEffectOnUnequipModule(MobEffectCategory.BENEFICIAL, LevelingValue.eachLevel(0.2f), ModifierCondition.ANY_TOOL));
+    // parity: the port used +20% per level, which made negative effects last longer and contradicted the description.
+    // Official v3.12.1 is 10%, +10% per level shorter negative effects.
     buildModifier(ModifierIds.balmOfSssss).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      .addModule(AttributeModule.builder(TinkerAttributes.BAD_EFFECT_DURATION, Operation.ADD_MULTIPLIED_BASE).tooltipStyle(TooltipStyle.PERCENT).eachLevel(0.2f));
+      .addModule(AttributeModule.builder(TinkerAttributes.BAD_EFFECT_DURATION, Operation.ADD_MULTIPLIED_BASE).tooltipStyle(TooltipStyle.PERCENT).amount(-0.1f, -0.1f));
     buildModifier(ModifierIds.revenge).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(MobEffectModule.builder(MobEffects.STRENGTH.value()).time(RandomLevelingValue.perLevel(0, 200)).chance(LevelingValue.ONE).counterDurabilityUsage(0).targetSelf(true).directDamage(BooleanPredicate.ALWAYS).damageSource(SourceAttackerPredicate.causing(LivingEntityPredicate.ANY)).buildCounter())
       .addModule(new ClearEffectOnUnequipModule(MobEffects.STRENGTH.value(), ModifierCondition.ANY_TOOL));
@@ -1718,24 +1736,30 @@ public class ModifierProvider extends AbstractModifierProvider {
     traitTwoPlusOne(ModifierIds.consecratedSkull, ModifierIds.consecrated);
     traitTwoPlusOne(ModifierIds.respirationSkull, ModifierIds.respiration);
     traitTwoPlusOne(ModifierIds.vitalProtectionSkull, ModifierIds.vitalProtection);
+    // parity: official v3.12.1 fireborn is 7 levels of fire protection that do not count as protection
+    // (in 26.1 the burning_time attribute from fire protection 7 drops fire ticks to 0) plus conductive immunity.
+    // The port used the older fireborn design (block on_fire damage, attacks set targets on fire), kept for reference:
+    //   new BlockDamageSourceModule(new DamageTypePredicate(DamageTypes.ON_FIRE), ModifierCondition.ANY_TOOL)
+    //   new FieryArmorAttackModule(LevelingInt.eachLevel(5), DamageSourcePredicate.ANY)
     buildModifier(ModifierIds.fireborn).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      // immune to being on fire specifically
-      .addModule(new BlockDamageSourceModule(new DamageTypePredicate(DamageTypes.ON_FIRE), ModifierCondition.ANY_TOOL))
-      // all attacks now cause fire. Bit niche
-      .addModule(new FieryArmorAttackModule(LevelingInt.eachLevel(5), DamageSourcePredicate.ANY));
+      // make immune to fire by forcing fire time to 0 (that is, -105% fire tick time)
+      .addModule(EnchantmentModule.builder(enchantment(Enchantments.FIRE_PROTECTION)).lootingLevel(LevelingInt.flat(7)).protection())
+      // also immune to conductive, this one is purely defensive
+      .addModule(new EffectImmunityModule(TinkerEffects.conductive, LevelingInt.LEVEL));
 
     // ribcages
     buildModifier(ModifierIds.floaty).addModule(MobEffectModule.builder(MobEffects.LEVITATION.value()).time(RandomLevelingValue.random(20*2, 20*5)).buildWeapon());
     buildModifier(ModifierIds.ramAttack).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(ConditionalMeleeDamageModule.builder().attacker(LivingEntityPredicate.SPRINTING).eachLevel(4))
-      .addModule(MeleeInstrumentModule.tag(InstrumentTags.REGULAR_GOAT_HORNS).material(MaterialIds.horn).attacker(LivingEntityPredicate.SPRINTING).build());
+      // parity: official v3.12.1 limits the horn to melee hits, the default hooks would also play it on armor damage dealt
+      .addModule(MeleeInstrumentModule.tag(InstrumentTags.REGULAR_GOAT_HORNS).material(MaterialIds.horn).attacker(LivingEntityPredicate.SPRINTING).build(), ModifierHooks.MELEE_HIT, ModifierHooks.MONSTER_MELEE_HIT);
     buildModifier(ModifierIds.shellGut).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(new EffectImmunityModule(MobEffects.POISON.value(), LevelingInt.LEVEL))
       .addModule(new EffectImmunityModule(MobEffects.HUNGER.value(), new LevelingInt(1, 1)))
       .addModule(new EffectImmunityModule(MobEffects.NAUSEA.value(), LevelingInt.LEVEL));
-    buildModifier(ModifierIds.thornsShell).tooltipDisplay(TooltipDisplay.NEVER)
-      .addModule(new ModifierTraitModule(ModifierIds.thorns, 1, false))
-      .addModule(new ModifierTraitModule(ModifierIds.thorns, 1, true));
+    // parity: official v3.12.1 builds thorns shell with traitTwoPlusOne, which also sets the map level display and the thorns name.
+    // The port's builder was: buildModifier(thornsShell).tooltipDisplay(NEVER) with the same two thorns trait modules.
+    traitTwoPlusOne(ModifierIds.thornsShell, ModifierIds.thorns);
 
     // internal modifier to restore older slots to slimesuit
     IJsonPredicate<IToolContext> notSlimelytra = ToolContextPredicate.set(TinkerTools.slimeWings.get()).inverted();

@@ -2074,7 +2074,8 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     RecipeOutput headlightConsumer = withCondition(consumer, new ModLoadedCondition("headlight"));
     BiConsumer<Ingredient,String> headlight = (ingredient, light) -> {
       SwappableModifierRecipeBuilder builder = SwappableModifierRecipeBuilder.modifier(ModifierIds.headlight, light);
-      builder.variantFormatter(VariantFormatter.PARAMETER)
+      // parity: official formatter ID tconstruct:parameter (the port registered a misspelled ID)
+      builder.variantFormatter(VariantFormatter.PARAMETER_OFFICIAL)
              .setTools(TinkerTags.Items.HELMETS)
              .addInput(Items.LEATHER)
              .addInput(ingredient)
@@ -2097,6 +2098,8 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     String folder = "tools/modifiers/slotless/";
 
     // slime staff
+    // parity: official v3.12.1 lets sticks embellish wood tools with the plain wood texture, the port had dropped this recipe
+    woodTexture(consumer, MaterialIds.wood, Items.STICK, folder);
     // nether
     woodTexture(consumer, MaterialIds.crimson, Blocks.CRIMSON_PLANKS, folder);
     woodTexture(consumer, MaterialIds.warped, Blocks.WARPED_PLANKS, folder);

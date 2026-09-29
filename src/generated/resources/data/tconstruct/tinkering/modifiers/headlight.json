@@ -9,7 +9,7 @@
   "modules": [
     {
       "type": "tconstruct:variant_name",
-      "formatter": "tconstruct:paraoeter"
+      "formatter": "tconstruct:parameter"
     },
     {
       "type": "tconstruct:headlight",

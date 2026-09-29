@@ -2,8 +2,7 @@
   "level_display": "tconstruct:no_levels",
   "modules": [
     {
-      "type": "tconstruct:main_hand_harvest_enchantment",
-      "condition_flag": "tconstruct:silky_harvest",
+      "type": "tconstruct:constant_enchantment",
       "level": 1,
       "name": "minecraft:silk_touch",
       "tool": {

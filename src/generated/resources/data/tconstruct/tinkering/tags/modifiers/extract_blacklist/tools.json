@@ -5,6 +5,7 @@
     "tconstruct:trim",
     "tconstruct:rebalanced",
     "tconstruct:overslime",
-    "#tconstruct:remove_blacklist"
+    "#tconstruct:remove_blacklist",
+    "tconstruct:banner"
   ]
 }
