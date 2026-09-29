@@ -73,7 +73,11 @@ public class TinkerStationDamagingRecipe implements ITinkerStationRecipe, IDispl
     tool = tool.copy();
     int maxDamage = IncrementalModifierRecipe.getAvailableAmount(inv, ingredient, damageAmount);
     ItemStack tinkerable = inv.getTinkerableStack();
-    ToolDamageUtil.directDamage(tool, maxDamage, null, tinkerable);
+    // arthur.8: official passes the stack to directDamage only for advancement criteria. Continuum's
+    // ToolDamageUtil.syncToolStack also writes the damaged tool back into that stack, so passing the live station
+    // slot damaged the real tool while the preview was built, and updateInputs then measured zero damage taken.
+    // Damage a throwaway copy instead; only the crafted result carries the damage.
+    ToolDamageUtil.directDamage(tool, maxDamage, null, tinkerable.copy());
     return LazyToolStack.successCopy(tool, 1, tinkerable);
   }
 
@@ -180,7 +184,8 @@ public class TinkerStationDamagingRecipe implements ITinkerStationRecipe, IDispl
   @Override
   public RecipeResult<ItemStack> onFocused(ItemStack focus) {
     ToolStack tool = ToolStack.copyFrom(focus);
-    ToolDamageUtil.directDamage(tool, damageAmount, null, focus);
+    // arthur.8: same as getValidatedResult, never let the display damage write back into the caller's focus stack
+    ToolDamageUtil.directDamage(tool, damageAmount, null, focus.copy());
     return RecipeResult.success(tool.copyStack(focus));
   }
 }

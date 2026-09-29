@@ -169,6 +169,42 @@ public final class ToolTinkeringServerFixture {
           + station.getResult().getStack() + " " + station.getResult().getStack().getComponentsPatch() + " display " + displayed.getResult() + " " + displayed.getResult().getComponentsPatch());
         require(ItemStack.matches(focus, before), "damage display mutated focus");
       });
+      // release/arthur.8: building the station preview must leave the tool in the station slot untouched, and the
+      // inputs consumed must match the damage the crafted result really took (official TinkerStationDamagingRecipe)
+      test("damage_preview_leaves_station_tool_intact", () -> {
+        var recipe = new TinkerStationDamagingRecipe(id("damage_preview"), Ingredient.of(Items.FLINT), 15);
+        ToolStack fresh = tool(TinkerTools.travelersGear.get(ArmorType.HELMET), MaterialIds.copper, MaterialIds.leather);
+        int durability = fresh.getStats().getInt(slimeknights.tconstruct.library.tools.stat.ToolStats.DURABILITY);
+        require(durability > 45, "probe tool needs more than 45 durability, has " + durability);
+        // uncapped: three flint give 45 damage, all three are used
+        ItemStack slot = fresh.createStack();
+        ItemStack slotBefore = slot.copy();
+        var inv = new Inventory(slot, new ItemStack(Items.FLINT, 3));
+        require(recipe.matches(inv, source.getLevel()), "damage preview fixture must really match");
+        var preview = recipe.getValidatedResult(inv, source.getLevel().registryAccess());
+        require(preview.isSuccess(), "damage preview must succeed");
+        require(ItemStack.matches(slot, slotBefore), "building the preview changed the station tool: " + slot.getComponentsPatch());
+        require(ToolStack.from(slot).getDamage() == 0, "station tool took damage from the preview");
+        // a second preview (the station rebuilds it on every slot change) must still leave the slot alone
+        recipe.getValidatedResult(inv, source.getLevel().registryAccess());
+        require(ItemStack.matches(slot, slotBefore), "a repeated preview changed the station tool");
+        int resultDamage = ToolStack.from(preview.getResult().getStack()).getDamage();
+        require(resultDamage == 45, "crafted result must carry 45 damage, has " + resultDamage);
+        recipe.updateInputs(preview.getResult(), inv, true);
+        require(inv.getInput(0).isEmpty(), "45 damage at 15 per flint must consume all 3 flint, left " + inv.getInput(0));
+        // capped: only 20 durability left, so 20 damage is taken and 2 of 3 flint are used
+        ToolStack worn = fresh.copy();
+        worn.setDamage(durability - 20);
+        ItemStack wornSlot = worn.createStack();
+        ItemStack wornBefore = wornSlot.copy();
+        var wornInv = new Inventory(wornSlot, new ItemStack(Items.FLINT, 3));
+        var wornPreview = recipe.getValidatedResult(wornInv, source.getLevel().registryAccess());
+        require(wornPreview.isSuccess(), "capped damage preview must succeed");
+        require(ItemStack.matches(wornSlot, wornBefore), "capped preview changed the station tool");
+        require(ToolStack.from(wornPreview.getResult().getStack()).getDamage() == durability, "capped result must be fully damaged");
+        recipe.updateInputs(wornPreview.getResult(), wornInv, true);
+        require(wornInv.getInput(0).getCount() == 1, "20 damage at 15 per flint must consume 2 flint, left " + wornInv.getInput(0));
+      });
       test("modifier_repair_focus_matches_station", () -> {
         var recipe = new ModifierRepairTinkerStationRecipe(id("repair"), ModifierIds.tasty, Ingredient.of(Items.APPLE), 25);
         ToolStack tool = tool(TinkerTools.travelersGear.get(ArmorType.HELMET), MaterialIds.copper, MaterialIds.leather);
