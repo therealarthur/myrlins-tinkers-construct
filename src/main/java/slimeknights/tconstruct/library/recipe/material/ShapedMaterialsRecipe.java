@@ -129,8 +129,20 @@ public class ShapedMaterialsRecipe extends ShapedRecipe implements MaterialsCraf
       MaterialNBT.Builder builder = MaterialNBT.builder();
       builder.add(material);
       builder.add(extraMaterials);
-      ToolStack.from(stack).setMaterials(builder.build());
+      setToolMaterials(stack, builder.build());
     }
+  }
+
+  /**
+   * parity/materials: sets the materials on a tool stack and writes them back.
+   * On 1.20.1 {@code ToolStack.from(stack)} shared the stack's tag, so setting materials on it changed the stack.
+   * On 26.1 it works on a copy of the custom data component, so the result must be written back explicitly,
+   * otherwise the crafted tool has no materials and later initializes with its default materials.
+   */
+  private static void setToolMaterials(ItemStack stack, MaterialNBT materials) {
+    ToolStack tool = ToolStack.from(stack);
+    tool.setMaterials(materials);
+    tool.updateStack(stack, false);
   }
 
   @Override
@@ -149,7 +161,7 @@ public class ShapedMaterialsRecipe extends ShapedRecipe implements MaterialsCraf
         builder.add(material);
       }
       builder.add(extraMaterials);
-      ToolStack.from(stack).setMaterials(builder.build());
+      setToolMaterials(stack, builder.build());
     }
     return stack;
   }
