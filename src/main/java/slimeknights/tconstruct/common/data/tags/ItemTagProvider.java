@@ -255,6 +255,11 @@ public class ItemTagProvider extends TagsProvider<Item> {
     copy(TagKey.create(Registries.BLOCK, Identifier.parse("c:glass_panes/colorless")), ItemTags.create(Identifier.parse("c:glass_panes/colorless")));
     copy(TagKey.create(Registries.BLOCK, Identifier.parse("c:glass/stained")), ItemTags.create(Identifier.parse("c:glass/stained")));
     copy(TagKey.create(Registries.BLOCK, Identifier.parse("c:glass_panes/stained")), ItemTags.create(Identifier.parse("c:glass_panes/stained")));
+    // parity/materials: NeoForge 26.1 names for the official forge:glass family (see BlockTagProvider)
+    copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS);
+    copy(Tags.Blocks.GLASS_BLOCKS_COLORLESS, Tags.Items.GLASS_BLOCKS_COLORLESS);
+    copy(Tags.Blocks.GLASS_BLOCKS_TINTED, Tags.Items.GLASS_BLOCKS_TINTED);
+    copy(Tags.Blocks.GLASS_PANES, Tags.Items.GLASS_PANES);
     for (DyeColor color : DyeColor.values()) {
       Identifier name = commonResource("glass/" + color.getSerializedName());
       copy(TagKey.create(Registries.BLOCK, name), TagKey.create(Registries.ITEM, name));

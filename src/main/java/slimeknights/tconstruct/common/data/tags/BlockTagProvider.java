@@ -120,6 +120,14 @@ public class BlockTagProvider extends TagsProvider<Block> {
     TinkerCommons.clearStainedGlass.values().forEach(b -> impermeable.add(key(b)));
     TinkerCommons.clearStainedGlass.values().forEach(b -> silicaGlass.add(key(b)));
     tag(BlockTags.create(Identifier.parse("c:glass/tinted"))).add(key(TinkerCommons.clearTintedGlass.get()));
+    // parity/materials: official 3.12.1 put soul glass in forge:glass, clear stained glass in forge:stained_glass
+    // and clear/tinted glass in forge:glass/colorless and forge:glass/tinted, all of which rolled up into forge:glass.
+    // NeoForge 26.1 renamed that family to c:glass_blocks and c:glass_panes, so the port's c:glass/* tags above are
+    // no longer part of it. Add the same blocks to the NeoForge names so daggers and other mods treat them as glass.
+    tag(Tags.Blocks.GLASS_BLOCKS).add(key(TinkerCommons.soulGlass.get())).addTag(BlockTags.create(Identifier.parse("c:glass/stained")));
+    tag(Tags.Blocks.GLASS_BLOCKS_COLORLESS).add(key(TinkerCommons.clearGlass.get()));
+    tag(Tags.Blocks.GLASS_BLOCKS_TINTED).add(key(TinkerCommons.clearTintedGlass.get()));
+    tag(Tags.Blocks.GLASS_PANES).add(key(TinkerCommons.soulGlassPane.get())).addTag(BlockTags.create(Identifier.parse("c:glass_panes/stained")));
 
     // soul speed on glass
     this.tag(BlockTags.SOUL_SPEED_BLOCKS).add(key(TinkerCommons.soulGlass.get()), key(TinkerCommons.soulGlassPane.get()),
