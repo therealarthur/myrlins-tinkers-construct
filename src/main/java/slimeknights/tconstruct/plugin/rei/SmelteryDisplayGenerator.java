@@ -145,12 +145,13 @@ final class SmelteryDisplayGenerator implements DynamicDisplayGenerator<Smeltery
 
     synchronized List<SmelteryDisplay> focused(CategoryIdentifier<SmelteryDisplay> category, EntryStack<?> focus, boolean output) {
       if (category.equals(TConstructREIClientPlugin.FUEL) && !output && focus.getType().equals(VanillaEntryTypes.ITEM)) {
-        return solidFuelFocus(focus.castValue());
+        return solidFuelFocus(focus.<ItemStack>castValue().copy());
       }
       if (!category.equals(TConstructREIClientPlugin.TOOL_TINKERING) || !focus.getType().equals(VanillaEntryTypes.ITEM)) return get(category);
       var snapshot = ClientRecipeCache.getSnapshot();
       if (snapshot.recipes() == RecipeMap.EMPTY || Minecraft.getInstance().level == null || !MaterialRegistry.isFullyLoaded()) return List.of();
-      ItemStack item = focus.castValue();
+      // a copy: focus-dependent producers may write into their argument, and this is REI's own entry stack
+      ItemStack item = focus.<ItemStack>castValue().copy();
       var expanded = new LinkedHashMap<Identifier,SmelteryDisplay>();
       Builder builder = new Builder(snapshot.registryAccess(), expanded);
       for (RecipeHolder<?> holder : holders(snapshot, TinkerRecipeTypes.TINKER_STATION.get())) {

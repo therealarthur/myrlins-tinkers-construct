@@ -85,7 +85,10 @@ public final class RecipeViewerServerFixture {
         var displayed = MaterialRecipeCache.getDisplayItems(ingredient);
         require(!displayed.isEmpty(), "iron pick head must have a display");
         for (ItemStack stack : displayed) {
-          require(IMaterialItem.getMaterialFromStack(stack).equals(MaterialIds.iron), "requested material was lost");
+          // A plain material ID accepts every variant of that material (iron#oxidized is still iron), so compare material
+          // IDs; the ingredient.test check below confirms the real ingredient accepts each shown variant.
+          require(IMaterialItem.getMaterialFromStack(stack).getMaterialId().equals(MaterialIds.iron), "requested material was lost: got "
+            + IMaterialItem.getMaterialFromStack(stack) + " (" + IMaterialItem.getMaterialFromStack(stack).getClass().getSimpleName() + ") on " + stack + " components " + stack.getComponentsPatch());
           require(name.equals(stack.get(DataComponents.CUSTOM_NAME)), "nested component was lost");
           require(ingredient.test(stack), "material display must satisfy the real ingredient");
         }
@@ -231,9 +234,11 @@ public final class RecipeViewerServerFixture {
         if (uses && display.category().getPath().equals("part_builder")) {
           // cross-check against the material recipes: the page's material item really is this variant
           ItemStack item = ((slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.ItemValue) display.inputs().getFirst().getFirst()).stack();
-          var owner = MaterialRecipeCache.getAllRecipes().stream().filter(recipe -> IngredientHelper.test(recipe.getIngredient(), item)).findFirst();
-          if (owner.isPresent()) {
-            require(owner.get().getMaterial().getVariant().equals(variant), display.source() + " material item belongs to another material");
+          // the page's material must be the one the part builder really reads from this item (first matching recipe)
+          var runtime = MaterialRecipeCache.findRecipe(item);
+          if (runtime != slimeknights.tconstruct.library.recipe.material.MaterialRecipe.EMPTY) {
+            require(runtime.getMaterial().getVariant().equals(variant),
+              display.source() + " material item " + item + " is read as " + runtime.getMaterial().getVariant() + ", page says " + variant);
           }
         }
       }
@@ -299,7 +304,9 @@ public final class RecipeViewerServerFixture {
       require(station.getItem(8).isEmpty(), "cobblestone cleared from the grid");
       require(menu.getCarried().isEmpty(), "cursor empty");
       require(slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.sameCensus(before, menuCensus(menu)), "item totals conserved");
-      require(station.getResultForPlayer(player).is(Items.WOODEN_PICKAXE), "the transferred grid crafts a wooden pickaxe");
+      // the station computes its result lazily when the result slot is read; refresh it as the menu does on open
+      station.refreshResult(player);
+      require(station.getResultForPlayer(player).is(Items.WOODEN_PICKAXE), "the transferred grid crafts a wooden pickaxe, got " + station.getResultForPlayer(player));
     }
 
     /** A real modifier recipe's inputs move into the real tinker station input slots without loss. */

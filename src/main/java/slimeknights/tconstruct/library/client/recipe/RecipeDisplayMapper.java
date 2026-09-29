@@ -84,11 +84,15 @@ public final class RecipeDisplayMapper {
 
   /** Keeps linked tool/material/refund alternatives together instead of cycling impossible combinations. */
   public static List<RecipeDisplayData> tinkering(Identifier source, IDisplayToolTinkering recipe, ItemStack focus, boolean focusOutput) {
+    // Some producers write into the focus stack (the damaging recipe's onFocused syncs the damaged tool back into it).
+    // The focus is the viewer's own entry, so work on a copy and never change what the viewer lists.
+    focus = focus.copy();
     if (focus.isEmpty() ? !recipe.showUnfocused() : recipe.isFiltered() && !recipe.isVisibleFromItem(focus, focusOutput)) return List.of();
     List<ItemStack> before = recipe.getToolWithoutModifier(focus, focusOutput);
     List<ItemStack> after = recipe.getToolWithModifier(focus, focusOutput);
     if (!focus.isEmpty() && !focusOutput && recipe.isTool(focus)) {
-      var focused = recipe.onFocused(focus);
+      // its own copy, so the "before" tool below keeps the focus state even if onFocused writes into its argument
+      var focused = recipe.onFocused(focus.copy());
       if (focused.hasError()) return List.of();
       if (focused.isSuccess()) {
         int count = Math.min(focus.getCount(), recipe.getMaxToolSize(focus));
@@ -386,10 +390,12 @@ public final class RecipeDisplayMapper {
           }
           // Official shows the material name as an input slot, which also drives material focus. It is appended last so
           // the material item stays the first input and the pattern item keeps its position.
-          var displayMaterial = display.getMaterial();
-          boolean namedMaterial = displayMaterial != null && !displayMaterial.isUnknown() && !IMaterial.UNKNOWN_ID.matchesVariant(displayMaterial.getVariant());
+          // Use the material the station really reads from this input item (the same lookup assembly used above), not the
+          // page's own material: a base-material page can list variant items, such as crimson stems on a wood page.
+          var runtimeMaterial = value == null ? null : value.getMaterial();
+          boolean namedMaterial = runtimeMaterial != null && !runtimeMaterial.isUnknown() && !IMaterial.UNKNOWN_ID.matchesVariant(runtimeMaterial.getVariant());
           if (namedMaterial) {
-            inputs.add(List.of(new MaterialValue(displayMaterial.getVariant(), Math.max(1, display.getCost()))));
+            inputs.add(List.of(new MaterialValue(runtimeMaterial.getVariant(), Math.max(1, display.getCost()))));
           }
           CompoundTag layout = new CompoundTag();
           layout.putInt(RecipeLayout.COST, display.getCost());

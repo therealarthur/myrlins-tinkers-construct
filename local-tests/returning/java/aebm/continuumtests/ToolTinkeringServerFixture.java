@@ -165,7 +165,8 @@ public final class ToolTinkeringServerFixture {
         var station = recipe.getValidatedResult(inv, source.getLevel().registryAccess());
         var displayed = recipe.onFocused(focus);
         require(station.isSuccess() && displayed.isSuccess(), "damage results must succeed");
-        require(ItemStack.matches(station.getResult().getStack(), displayed.getResult()), "focused damage differs from station");
+        require(ItemStack.matches(station.getResult().getStack(), displayed.getResult()), "focused damage differs from station: station "
+          + station.getResult().getStack() + " " + station.getResult().getStack().getComponentsPatch() + " display " + displayed.getResult() + " " + displayed.getResult().getComponentsPatch());
         require(ItemStack.matches(focus, before), "damage display mutated focus");
       });
       test("modifier_repair_focus_matches_station", () -> {
@@ -271,7 +272,8 @@ public final class ToolTinkeringServerFixture {
       for (int i = 0; i < inputs.size(); i++) {
         MaterialRecipe material = MaterialRecipeCache.findRecipe(inputs.get(i));
         require(material != MaterialRecipe.EMPTY, "displayed input has no loaded material recipe");
-        require(inputs.get(i).getCount() == material.getItemsUsed(recipe.getCost()), "displayed cost is wrong");
+        require(inputs.get(i).getCount() == material.getItemsUsed(recipe.getCost()), "displayed cost is wrong: " + inputs.get(i) + " shows "
+          + inputs.get(i).getCount() + ", first material recipe " + material.getId() + " (" + material.getMaterial().getVariant() + ") uses " + material.getItemsUsed(recipe.getCost()) + " for cost " + recipe.getCost());
         require(ToolStack.from(outputs.get(i)).getMaterial(slot).sameVariant(material.getMaterial().getVariant()), "input/output alternatives became unpaired");
         require(ItemStack.matches(refunds.get(i), material.getLeftover(recipe.getCost())), "material refund became unpaired");
       }
