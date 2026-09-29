@@ -3,6 +3,7 @@ package slimeknights.tconstruct.common.data;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.PackOutput.Target;
 import net.minecraft.resources.Identifier;
@@ -21,6 +22,7 @@ import slimeknights.tconstruct.library.json.predicate.TinkerPredicate;
 import slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommand;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,11 @@ import java.util.concurrent.CompletableFuture;
 /** Data generator for someone-off JSON files used for command configuration */
 public class ConfigurationDataProvider extends GenericDataProvider {
   private final Map<Identifier, JsonObject> configuration = new LinkedHashMap<>();
+  /** Pack output used to resolve each configuration file path, see {@link #saveConfig(CachedOutput, Identifier, JsonObject)} */
+  private final PackOutput packOutput;
   public ConfigurationDataProvider(PackOutput output) {
     super(output, Target.DATA_PACK, "");
+    this.packOutput = output;
   }
 
   @Override
@@ -99,7 +104,29 @@ public class ConfigurationDataProvider extends GenericDataProvider {
     recipeType(removeNetheriteSmithing, RecipeType.SMITHING);
 
     // save all JSON
-    return allOf(configuration.entrySet().stream().map(entry -> saveJson(output, entry.getKey(), entry.getValue())));
+    // arthur.8: GenericDataProvider was given an empty folder, and 26.1 PackOutput.PathProvider builds kind + "/" + path,
+    // so every file got an absolute "/command/..." or "/mantle/..." path that resolved against the drive root
+    // (D:\command, D:\mantle) instead of the pack output, and runData then deleted the committed presets as stale.
+    // Previous line, kept for reference:
+    // return allOf(configuration.entrySet().stream().map(entry -> saveJson(output, entry.getKey(), entry.getValue())));
+    return allOf(configuration.entrySet().stream().map(entry -> saveConfig(output, entry.getKey(), entry.getValue())));
+  }
+
+  /**
+   * Saves one configuration file under data/namespace/path.json of this pack output. The first path segment is used
+   * as the path provider kind so the kind is never empty (see the note in {@link #run(CachedOutput)}).
+   * @param output    Cached output
+   * @param location  Location without extension, for example tconstruct:mantle/remove_recipes/ingot_smelting
+   * @param json      File contents
+   * @return  Save task
+   */
+  private CompletableFuture<?> saveConfig(CachedOutput output, Identifier location, JsonObject json) {
+    String path = location.getPath();
+    int slash = path.indexOf('/');
+    Path target = slash > 0
+      ? packOutput.createPathProvider(Target.DATA_PACK, path.substring(0, slash)).json(location.withPath(path.substring(slash + 1)))
+      : packOutput.getOutputFolder(Target.DATA_PACK).resolve(location.getNamespace()).resolve(path + ".json");
+    return DataProvider.saveStable(output, json, target);
   }
 
   @Override

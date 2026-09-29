@@ -41,6 +41,11 @@ public class FakeRegistryEntry {
     try {
       return getOrCreate(BuiltInRegistries.BLOCK, id, () -> new Block(BlockBehaviour.Properties.of()));
     } catch (Exception e) {
+      // arthur.8: in 26.1 datagen this always lands here. The Block constructor asks the already frozen block registry
+      // for an intrusive holder ("Registry is already frozen"), even with Properties#setId, so a fake block cannot be
+      // built and the caller writes minecraft:air. Warn instead of failing silently; the only user is the Immersive
+      // Engineering concrete fluid effect, whose committed JSON is hand corrected (see FluidEffectProvider).
+      slimeknights.tconstruct.TConstruct.LOG.warn("Datagen could not create fake block {}, falling back to air", id, e);
       return Blocks.AIR;
     }
   }
