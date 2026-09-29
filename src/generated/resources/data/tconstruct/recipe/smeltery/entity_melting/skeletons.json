@@ -8,14 +8,9 @@
   ],
   "type": "tconstruct:entity_melting",
   "damage": 2,
-  "entity": [
-    {
-      "tag": "minecraft:skeletons"
-    },
-    {
-      "type": "minecraft:skeleton_horse"
-    }
-  ],
+  "entity": {
+    "tag": "tconstruct:meltable/skeleton"
+  },
   "id": "tconstruct:smeltery/entity_melting/skeletons",
   "result": {
     "amount": 100,

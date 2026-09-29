@@ -698,6 +698,26 @@ public class TinkerTags {
     public static final TagKey<EntityType<?>> MELTING_SHOW = local("melting/show_in_default");
     /** Entities in this tag are hidden from JEI and blacklisted from melting in the smeltery */
     public static final TagKey<EntityType<?>> MELTING_HIDE = local("melting/hide_in_default");
+    // Restored from official 3.12.1.231 (parity/fixes): the smeltery skips only this tag, and
+    // hide_in_default includes it; the meltable tags let packs extend the entity melting recipes.
+    /** Entities in this tag blacklisted from melting in the smeltery, notably in the default recipe */
+    public static final TagKey<EntityType<?>> MELTING_BLACKLIST = local("melting/blacklist");
+    // specialized melting tags
+    /** Farm animals that melt into meat soup. */
+    public static final TagKey<EntityType<?>> MELTABLE_FARM_ANIMALS = local("meltable/farm_animals");
+    // hostile
+    /** Zombie-like mobs expected to melt into iron. */
+    public static final TagKey<EntityType<?>> MELTABLE_ZOMBIE = local("meltable/zombie");
+    /** Drowned-like mobs expected to melt into copper. */
+    public static final TagKey<EntityType<?>> MELTABLE_DROWNED = local("meltable/drowned");
+    /** Skeleton-like mobs expected to melt into milk. */
+    public static final TagKey<EntityType<?>> MELTABLE_SKELETON = local("meltable/skeleton");
+    /** Ender-based mobs expected to melt into molten ender. */
+    public static final TagKey<EntityType<?>> MELTABLE_ENDER = local("meltable/ender");
+    /** Vanilla slime-like mobs expected to melt into earthslime. */
+    public static final TagKey<EntityType<?>> MELTABLE_SLIME = local("meltable/slime");
+    /** Magmacube like mobs expected to melt into magma (cream). */
+    public static final TagKey<EntityType<?>> MELTABLE_MAGMA = local("meltable/magma");
 
     // collecting
     /** Things that can be collected using {@link net.minecraft.world.entity.Entity#playerTouch(Player)} using a fishing rod. */
