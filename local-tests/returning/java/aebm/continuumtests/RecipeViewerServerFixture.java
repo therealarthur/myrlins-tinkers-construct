@@ -85,7 +85,10 @@ public final class RecipeViewerServerFixture {
         var displayed = MaterialRecipeCache.getDisplayItems(ingredient);
         require(!displayed.isEmpty(), "iron pick head must have a display");
         for (ItemStack stack : displayed) {
-          require(IMaterialItem.getMaterialFromStack(stack).equals(MaterialIds.iron), "requested material was lost");
+          // A plain material ID accepts every variant of that material (iron#oxidized is still iron), so compare material
+          // IDs; the ingredient.test check below confirms the real ingredient accepts each shown variant.
+          require(IMaterialItem.getMaterialFromStack(stack).getMaterialId().equals(MaterialIds.iron), "requested material was lost: got "
+            + IMaterialItem.getMaterialFromStack(stack) + " (" + IMaterialItem.getMaterialFromStack(stack).getClass().getSimpleName() + ") on " + stack + " components " + stack.getComponentsPatch());
           require(name.equals(stack.get(DataComponents.CUSTOM_NAME)), "nested component was lost");
           require(ingredient.test(stack), "material display must satisfy the real ingredient");
         }
@@ -122,8 +125,252 @@ public final class RecipeViewerServerFixture {
         require(!absent.hasCast(), "intentionally absent cast must remain absent");
         require(IngredientHelper.test(absent.getCast(), ItemStack.EMPTY), "runtime must accept intentionally absent cast");
       });
+      // parity/rei: layout facts, focus sets, workstations and transfer conservation on real data and real menus
+      test("rei_layout_casting_facts_match_recipes", this::castingFacts);
+      test("rei_layout_melting_one_display_with_controller_amounts", this::meltingFacts);
+      test("rei_material_focus_is_an_exact_partition", this::materialFocus);
+      test("rei_tool_workstations_follow_traits", this::toolWorkstations);
+      test("rei_transfer_crafting_station_real_menu_conserves", this::craftingTransfer);
+      test("rei_transfer_tinker_station_real_menu_conserves", this::stationTransfer);
+      test("rei_hidden_filled_containers_keep_empty_containers", () -> {
+        var hidden = slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.filledContainers();
+        require(!hidden.isEmpty(), "loaded fluids must produce filled container entries to hide");
+        for (ItemStack stack : hidden) {
+          require(!ItemStack.matches(stack, new ItemStack(stack.getItem())), "an empty container " + stack.getItem() + " would be hidden");
+          require(stack.is(TinkerSmeltery.copperCan.get()) || stack.getItem() instanceof slimeknights.tconstruct.smeltery.item.TankItem,
+            "only fluid containers are hidden, got " + stack.getItem());
+        }
+      });
       source.sendSuccess(() -> Component.literal("AEBM_VIEWER_SUMMARY passed=" + passed + " failed=" + failed), false);
       return failed == 0 ? 1 : 0;
+    }
+
+    /* parity/rei */
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>> holders(RecipeType<?> type) {
+      return (java.util.Collection) recipes.byType((RecipeType) type);
+    }
+
+    /** Cooling, cast role and fluid amounts in the casting layout facts equal the recipe's own values. */
+    private void castingFacts() {
+      int consumed = 0;
+      int kept = 0;
+      for (RecipeType<?> type : List.of(TinkerRecipeTypes.CASTING_TABLE.get(), TinkerRecipeTypes.CASTING_BASIN.get())) {
+        boolean basin = type == TinkerRecipeTypes.CASTING_BASIN.get();
+        for (var holder : holders(type)) {
+          for (var display : slimeknights.mantle.recipe.helper.RecipeHelper.getJEIRecipes(level.registryAccess(), Stream.of(holder), IDisplayableCastingRecipe.class)) {
+            for (var data : slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper.casting(holder.id().identifier(), display, basin)) {
+              var layout = data.layout();
+              require(slimeknights.tconstruct.library.client.recipe.RecipeLayout.getInt(layout, "cooling", -1) == display.getCoolingTime(),
+                holder.id().identifier() + " cooling differs from the recipe");
+              int role = slimeknights.tconstruct.library.client.recipe.RecipeLayout.getInt(layout, "cast", -1);
+              int expected = !display.hasCast() ? 0 : display.isConsumed() ? 1 : 2;
+              require(role == expected, holder.id().identifier() + " cast role " + role + " expected " + expected);
+              require(data.category().getPath().equals(basin ? "casting_basin" : "casting_table"), "casting category follows the recipe type");
+              if (role == 1) consumed++;
+              if (role == 2) kept++;
+            }
+          }
+        }
+      }
+      require(consumed > 0 && kept > 0, "fixture needs consumed and reusable casts, got " + consumed + " and " + kept);
+    }
+
+    /** Each melting recipe gives one melting display whose melter and smeltery amounts use the configured ore rates. */
+    private void meltingFacts() {
+      int ores = 0;
+      for (var holder : holders(TinkerRecipeTypes.MELTING.get())) {
+        if (!(holder.value() instanceof slimeknights.tconstruct.library.recipe.melting.MeltingRecipe recipe)) continue;
+        var displays = slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper.melting(holder.id().identifier(), recipe);
+        if (displays.isEmpty()) continue; // absent compatibility inputs
+        var melting = displays.stream().filter(display -> display.category().getPath().equals("melting")).toList();
+        require(melting.size() == 1, holder.id().identifier() + " must have exactly one melting display");
+        var layout = melting.getFirst().layout();
+        var ore = recipe.getOreType();
+        int amount = recipe.getOutput().getAmount();
+        boolean boosted = ore == slimeknights.tconstruct.library.recipe.melting.IMeltingContainer.OreRateType.METAL
+          || ore == slimeknights.tconstruct.library.recipe.melting.IMeltingContainer.OreRateType.GEM;
+        int melter = boosted ? slimeknights.tconstruct.common.config.Config.COMMON.melterOreRate.applyOreBoost(ore, amount) : amount;
+        int smeltery = boosted ? slimeknights.tconstruct.common.config.Config.COMMON.smelteryOreRate.applyOreBoost(ore, amount) : amount;
+        require(slimeknights.tconstruct.library.client.recipe.RecipeLayout.getInt(layout, "melter_amount", -1) == melter, holder.id().identifier() + " melter amount");
+        require(slimeknights.tconstruct.library.client.recipe.RecipeLayout.getInt(layout, "smeltery_amount", -1) == smeltery, holder.id().identifier() + " smeltery amount");
+        require(slimeknights.tconstruct.library.client.recipe.RecipeLayout.getInt(layout, "temperature", -1) == recipe.getTemperature(), "temperature fact");
+        if (boosted) ores++;
+      }
+      require(ores > 0, "fixture needs ore melting recipes");
+    }
+
+    /** A material focus opens exactly the displays that produce or use that variant, nothing more and nothing less. */
+    private void materialFocus() {
+      List<slimeknights.tconstruct.library.client.recipe.RecipeDisplayData> all = new java.util.ArrayList<>();
+      for (RecipeType<?> type : List.of(TinkerRecipeTypes.PART_BUILDER.get(), TinkerRecipeTypes.MATERIAL.get(), TinkerRecipeTypes.DATA.get())) {
+        for (var holder : holders(type)) {
+          all.addAll(slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper.map(holder, level.registryAccess(), level));
+        }
+      }
+      // the variant with the most part builder pages exercises the partition best
+      java.util.Map<slimeknights.tconstruct.library.materials.definition.MaterialVariantId, Integer> counts = new java.util.HashMap<>();
+      for (var display : all) {
+        if (!display.category().getPath().equals("part_builder")) continue;
+        display.inputs().stream().flatMap(List::stream)
+          .filter(slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.MaterialValue.class::isInstance)
+          .map(value -> ((slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.MaterialValue) value).material())
+          .forEach(material -> counts.merge(material, 1, Integer::sum));
+      }
+      require(!counts.isEmpty(), "part builder displays must carry their material for focus");
+      var variant = counts.entrySet().stream().max(java.util.Map.Entry.comparingByValue()).orElseThrow().getKey();
+      var focus = new slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.MaterialValue(variant, 7);
+      var recipesFor = slimeknights.tconstruct.library.client.recipe.RecipeFocus.recipesFor(all, focus);
+      var usesOf = slimeknights.tconstruct.library.client.recipe.RecipeFocus.usesOf(all, focus);
+      require(!usesOf.isEmpty(), "material " + variant + " must have uses");
+      for (var display : all) {
+        boolean produces = display.outputs().stream().flatMap(List::stream).anyMatch(value ->
+          value instanceof slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.MaterialValue material && material.material().equals(variant));
+        boolean uses = java.util.stream.Stream.concat(display.inputs().stream(), display.catalysts().stream()).flatMap(List::stream).anyMatch(value ->
+          value instanceof slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.MaterialValue material && material.material().equals(variant));
+        require(recipesFor.contains(display) == produces, "recipes-for set is not exact for " + display.source());
+        require(usesOf.contains(display) == uses, "uses-of set is not exact for " + display.source());
+        if (uses && display.category().getPath().equals("part_builder")) {
+          // cross-check against the material recipes: the page's material item really is this variant
+          ItemStack item = ((slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.ItemValue) display.inputs().getFirst().getFirst()).stack();
+          // the page's material must be the one the part builder really reads from this item (first matching recipe)
+          var runtime = MaterialRecipeCache.findRecipe(item);
+          if (runtime != slimeknights.tconstruct.library.recipe.material.MaterialRecipe.EMPTY) {
+            require(runtime.getMaterial().getVariant().equals(variant),
+              display.source() + " material item " + item + " is read as " + runtime.getMaterial().getVariant() + ", page says " + variant);
+          }
+        }
+      }
+    }
+
+    /** Workstation stations equal the official rule applied to each tool's own traits. */
+    private void toolWorkstations() {
+      var stations = slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.all();
+      int tools = 0;
+      for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(slimeknights.tconstruct.common.TinkerTags.Items.MODIFIABLE)) {
+        if (!(holder.value() instanceof slimeknights.tconstruct.library.tools.item.IModifiableDisplay modifiable)) continue;
+        tools++;
+        var traits = slimeknights.tconstruct.library.tools.definition.module.build.ToolTraitHook.getTraits(modifiable.getToolDefinition(),
+          slimeknights.tconstruct.library.tools.nbt.MaterialNBT.EMPTY).getModifiers();
+        java.util.function.Predicate<net.minecraft.tags.TagKey<slimeknights.tconstruct.library.modifiers.Modifier>> has = tag ->
+          traits.stream().anyMatch(entry -> slimeknights.tconstruct.library.modifiers.ModifierManager.isInTag(entry.getId(), tag));
+        var actual = stations.getOrDefault(holder.value(), java.util.EnumSet.noneOf(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.class));
+        boolean melting = has.test(slimeknights.tconstruct.common.TinkerTags.Modifiers.MELTING);
+        boolean melee = holder.is(slimeknights.tconstruct.common.TinkerTags.Items.MELEE);
+        require(actual.contains(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.MELTING) == melting, holder.getRegisteredName() + " melting station");
+        require(actual.contains(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.ENTITY_MELTING) == (melting && melee), holder.getRegisteredName() + " entity melting station");
+        require(actual.contains(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.SEVERING) == has.test(slimeknights.tconstruct.common.TinkerTags.Modifiers.SEVERING), holder.getRegisteredName() + " severing station");
+        require(actual.contains(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.CRAFTING) == has.test(slimeknights.tconstruct.common.TinkerTags.Modifiers.CRAFTING), holder.getRegisteredName() + " crafting station");
+        require(actual.contains(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.SMELTING) == has.test(slimeknights.tconstruct.common.TinkerTags.Modifiers.SMELTING), holder.getRegisteredName() + " smelting station");
+      }
+      require(tools > 0, "fixture needs loaded modifiable tools");
+      require(!stations.containsKey(slimeknights.tconstruct.tools.TinkerTools.pickaxe.get())
+        || !stations.get(slimeknights.tconstruct.tools.TinkerTools.pickaxe.get()).contains(slimeknights.tconstruct.library.client.recipe.RecipeWorkstations.Station.MELTING),
+        "a plain pickaxe is no melting workstation");
+    }
+
+    /** A wooden pickaxe transfer through real crafting station clicks keeps every item. */
+    private void craftingTransfer() {
+      var player = new net.neoforged.neoforge.common.util.FakePlayer(level, new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "ReiTransferFixture"));
+      player.setPos(0, level.getMinY() + 96, 0);
+      var station = new slimeknights.tconstruct.tables.block.entity.table.CraftingStationBlockEntity(
+        new net.minecraft.core.BlockPos(0, level.getMinY() + 96, 0), slimeknights.tconstruct.tables.TinkerTables.craftingStation.get().defaultBlockState());
+      station.setLevel(level);
+      station.setItem(8, new ItemStack(Items.COBBLESTONE, 2));
+      var menu = new slimeknights.tconstruct.tables.menu.CraftingStationContainerMenu(1, player.getInventory(), station) {
+        @Override
+        protected void addChestSideInventory() {
+          // no adjacent blocks: storage behavior is covered by TransferConservationTest on the real slot class
+        }
+      };
+      player.containerMenu = menu;
+      player.getInventory().setItem(0, new ItemStack(Items.OAK_PLANKS, 5));
+      player.getInventory().setItem(1, new ItemStack(Items.STICK, 3));
+      List<List<ItemStack>> grid = new java.util.ArrayList<>();
+      for (int i = 0; i < 9; i++) grid.add(List.of());
+      for (int i : new int[] {0, 1, 2}) grid.set(i, List.of(new ItemStack(Items.OAK_PLANKS)));
+      for (int i : new int[] {4, 7}) grid.set(i, List.of(new ItemStack(Items.STICK)));
+      var request = slimeknights.tconstruct.library.client.recipe.transfer.MenuTransferSlots.craftingStation(menu, player, grid, false);
+      var before = menuCensus(menu);
+      var plan = slimeknights.tconstruct.library.client.recipe.transfer.MenuTransferSlots.plan(menu, player, request);
+      require(plan instanceof slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.Ready, "planned transfer, got " + plan);
+      var outcome = slimeknights.tconstruct.library.client.recipe.transfer.TransferExecutor.execute(menu, player,
+        ((slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.Ready) plan).clicks(), request.dump(),
+        (slot, button) -> menu.clicked(slot, button, net.minecraft.world.inventory.ContainerInput.PICKUP, player));
+      require(outcome.complete(), "server menu followed every planned click");
+      for (int i : new int[] {0, 1, 2}) require(station.getItem(i).is(Items.OAK_PLANKS) && station.getItem(i).getCount() == 1, "plank in grid " + i);
+      for (int i : new int[] {4, 7}) require(station.getItem(i).is(Items.STICK) && station.getItem(i).getCount() == 1, "stick in grid " + i);
+      require(station.getItem(8).isEmpty(), "cobblestone cleared from the grid");
+      require(menu.getCarried().isEmpty(), "cursor empty");
+      require(slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.sameCensus(before, menuCensus(menu)), "item totals conserved");
+      // the station computes its result lazily when the result slot is read; refresh it as the menu does on open
+      station.refreshResult(player);
+      require(station.getResultForPlayer(player).is(Items.WOODEN_PICKAXE), "the transferred grid crafts a wooden pickaxe, got " + station.getResultForPlayer(player));
+    }
+
+    /** A real modifier recipe's inputs move into the real tinker station input slots without loss. */
+    private void stationTransfer() {
+      var player = new net.neoforged.neoforge.common.util.FakePlayer(level, new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "ReiStationFixture"));
+      player.setPos(0, level.getMinY() + 96, 0);
+      var tile = new slimeknights.tconstruct.tables.block.entity.table.TinkerStationBlockEntity(
+        new net.minecraft.core.BlockPos(0, level.getMinY() + 96, 0), slimeknights.tconstruct.tables.TinkerTables.tinkerStation.get().defaultBlockState());
+      tile.setLevel(level);
+      var menu = new slimeknights.tconstruct.tables.menu.TinkerStationContainerMenu(1, player.getInventory(), tile);
+      player.containerMenu = menu;
+      int inputs = menu.getInputSlots().size();
+      // first real modifier page with item inputs that fit the default layout
+      List<List<ItemStack>> station = null;
+      for (var holder : holders(TinkerRecipeTypes.TINKER_STATION.get())) {
+        for (var data : slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper.map(holder, level.registryAccess(), level)) {
+          if (!data.category().getPath().equals("modifiers")) continue;
+          int[] slots = slimeknights.tconstruct.library.client.recipe.RecipeLayout.getIntArray(data.layout(), "station_slots");
+          if (slots.length == 0 || slots.length > inputs) continue;
+          List<List<ItemStack>> candidate = new java.util.ArrayList<>();
+          for (int i = 0; i < slots.length; i++) {
+            while (candidate.size() <= slots[i]) candidate.add(List.of());
+            ItemStack first = ((slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.ItemValue) data.inputs().get(i).getFirst()).stack();
+            candidate.set(slots[i], List.of(first.copy()));
+          }
+          if (slimeknights.tconstruct.library.client.recipe.transfer.MenuTransferSlots.tinkerStationProblem(menu, candidate) == null) {
+            station = candidate;
+            break;
+          }
+        }
+        if (station != null) break;
+      }
+      require(station != null, "fixture needs a modifier recipe that fits the tinker station");
+      int slot = 0;
+      for (List<ItemStack> alternatives : station) {
+        if (!alternatives.isEmpty()) player.getInventory().setItem(slot++, alternatives.getFirst().copyWithCount(alternatives.getFirst().getCount() + 1));
+      }
+      var request = slimeknights.tconstruct.library.client.recipe.transfer.MenuTransferSlots.tinkerStation(menu, player, station, false);
+      require(request != null, "station request");
+      var before = menuCensus(menu);
+      var plan = slimeknights.tconstruct.library.client.recipe.transfer.MenuTransferSlots.plan(menu, player, request);
+      require(plan instanceof slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.Ready, "planned station transfer, got " + plan);
+      var outcome = slimeknights.tconstruct.library.client.recipe.transfer.TransferExecutor.execute(menu, player,
+        ((slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.Ready) plan).clicks(), request.dump(),
+        (index, button) -> menu.clicked(index, button, net.minecraft.world.inventory.ContainerInput.PICKUP, player));
+      require(outcome.complete(), "server station followed every planned click");
+      for (int i = 0; i < station.size(); i++) {
+        if (station.get(i).isEmpty()) continue;
+        ItemStack expected = station.get(i).getFirst();
+        ItemStack actual = menu.getInputSlots().get(i).getItem();
+        require(ItemStack.isSameItemSameComponents(actual, expected) && actual.getCount() == expected.getCount(), "station input " + i + " holds " + actual);
+      }
+      require(menu.getCarried().isEmpty(), "cursor empty");
+      require(slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.sameCensus(before, menuCensus(menu)), "item totals conserved");
+    }
+
+    private List<ItemStack> menuCensus(net.minecraft.world.inventory.AbstractContainerMenu menu) {
+      List<ItemStack> stacks = new java.util.ArrayList<>();
+      // the result slot is a preview, not an item the player owns
+      for (var slot : menu.slots) {
+        if (!(slot instanceof net.minecraft.world.inventory.ResultSlot) && !slot.getClass().getSimpleName().contains("Result")) stacks.add(slot.getItem().copy());
+      }
+      stacks.add(menu.getCarried().copy());
+      return slimeknights.tconstruct.library.client.recipe.transfer.TransferPlanner.census(stacks);
     }
 
     private void materialMelting() {

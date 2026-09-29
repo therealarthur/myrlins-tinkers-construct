@@ -52,6 +52,8 @@ public class TinkerTags {
     DamageTypes.init();
     MenuTypes.init();
     Potions.init();
+    // parity/rei: official 3.12.1 registers the creative tab tags here as well
+    CreativeTabs.init();
     NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, TagsUpdatedEvent.class, event -> tagsLoaded = true);
   }
 
@@ -345,6 +347,8 @@ public class TinkerTags {
 
     /** Containers that can be used in the duct */
     public static final TagKey<Item> DUCT_CONTAINERS = local("duct_containers");
+    /** Example fuel items to show in recipe viewer fuel categories (parity/rei, official 3.12.1 tag) */
+    public static final TagKey<Item> FUEL_EXAMPLES = local("fuel_examples");
 
 
     /** Items that are seeds for kama harvest */
@@ -869,6 +873,15 @@ public class TinkerTags {
 
     // JEI
     public static final TagKey<Modifier> HIDDEN_FROM_RECIPE_VIEWERS = hiddenFromRecipeViewers(ModifierManager.REGISTRY_KEY);
+    // parity/rei: recipe viewer workstation tags, same IDs as official 3.12.1
+    /** Modifiers in this tag allow crafting and should be listed as a crafting table catalyst */
+    public static final TagKey<Modifier> CRAFTING = local("jei/crafting");
+    /** Modifiers in this tag allow smelting and should be listed as a furnace catalyst */
+    public static final TagKey<Modifier> SMELTING = local("jei/smelting");
+    /** Modifiers in this tag melt blocks or entities and should be listed as a melting catalyst */
+    public static final TagKey<Modifier> MELTING = local("jei/melting");
+    /** Modifiers in this tag sever heads and should be listed as a severing catalyst */
+    public static final TagKey<Modifier> SEVERING = local("jei/severing");
 
 
     private static TagKey<Modifier> local(String name) {
@@ -974,6 +987,14 @@ public class TinkerTags {
 
     /** Any potion variants in this tag will be hidden from the variants of the potion fluid shown in JEI. */
     public static final TagKey<Potion> HIDDEN_FLUID = TagKey.create(Registries.POTION, getResource("hide_in_fluid"));
+  }
+
+  /** parity/rei: creative tab tags from official 3.12.1. */
+  public static class CreativeTabs {
+    private static void init() {}
+
+    /** Any creative tabs in this tag will not include their items in recipe viewers. */
+    public static final TagKey<net.minecraft.world.item.CreativeModeTab> HIDDEN_IN_RECIPE_VIEWERS = hiddenFromRecipeViewers(Registries.CREATIVE_MODE_TAB);
   }
 
   public static class Instruments {

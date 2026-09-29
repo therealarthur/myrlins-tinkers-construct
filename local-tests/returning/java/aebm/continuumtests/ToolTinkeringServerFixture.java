@@ -165,7 +165,8 @@ public final class ToolTinkeringServerFixture {
         var station = recipe.getValidatedResult(inv, source.getLevel().registryAccess());
         var displayed = recipe.onFocused(focus);
         require(station.isSuccess() && displayed.isSuccess(), "damage results must succeed");
-        require(ItemStack.matches(station.getResult().getStack(), displayed.getResult()), "focused damage differs from station");
+        require(ItemStack.matches(station.getResult().getStack(), displayed.getResult()), "focused damage differs from station: station "
+          + station.getResult().getStack() + " " + station.getResult().getStack().getComponentsPatch() + " display " + displayed.getResult() + " " + displayed.getResult().getComponentsPatch());
         require(ItemStack.matches(focus, before), "damage display mutated focus");
       });
       test("modifier_repair_focus_matches_station", () -> {
@@ -186,8 +187,66 @@ public final class ToolTinkeringServerFixture {
         require(ToolStack.from(displayed.getResult()).getDamage() < 80, "repair comparison must exercise actual damage change");
         require(ItemStack.matches(focus, before), "repair display mutated focus");
       });
+      // parity/rei: a modifier focus lists exactly the tools its recipes accept
+      test("modifier_focus_lists_only_accepting_tools", this::modifierFocusTools);
       source.sendSuccess(() -> Component.literal("AEBM_TOOL_TINKERING_SUMMARY passed=" + passed + " failed=" + failed), false);
       return failed == 0 ? 1 : 0;
+    }
+
+    /**
+     * For real modifier recipes, the viewer's modifier focus returns only that modifier's pages, and each page's tool list
+     * is exactly the modifiable tools the recipe's tool requirement accepts.
+     */
+    private void modifierFocusTools() {
+      var level = source.getLevel();
+      var recipes = source.getServer().getRecipeManager().recipeMap();
+      java.lang.reflect.Field requirementField;
+      try {
+        requirementField = slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe.class.getDeclaredField("toolRequirement");
+        requirementField.setAccessible(true);
+      } catch (ReflectiveOperationException exception) {
+        throw new AssertionError("tool requirement field changed", exception);
+      }
+      List<slimeknights.tconstruct.library.client.recipe.RecipeDisplayData> all = new ArrayList<>();
+      java.util.Map<Identifier, Ingredient> requirements = new java.util.HashMap<>();
+      for (var holder : recipes.byType(slimeknights.tconstruct.library.recipe.TinkerRecipeTypes.TINKER_STATION.get())) {
+        if (holder.value() instanceof slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe modifierRecipe) {
+          try {
+            requirements.put(holder.id().identifier(), (Ingredient) requirementField.get(modifierRecipe));
+          } catch (IllegalAccessException exception) {
+            throw new AssertionError(exception);
+          }
+        }
+        all.addAll(slimeknights.tconstruct.library.client.recipe.RecipeDisplayMapper.map(holder, level.registryAccess(), level));
+      }
+      int checked = 0;
+      for (var display : all) {
+        if (!display.category().getPath().equals("modifiers") || display.catalysts().isEmpty()) continue;
+        Ingredient requirement = requirements.get(display.source());
+        if (requirement == null) continue; // multi-recipes and data-driven displays without a single requirement
+        var focus = display.outputs().getFirst().getFirst();
+        var pages = slimeknights.tconstruct.library.client.recipe.RecipeFocus.recipesFor(all, focus);
+        require(pages.contains(display), "the focus must include the recipe's own page");
+        var modifier = ((slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.ModifierValue) focus).modifier().getId();
+        for (var page : pages) {
+          require(page.outputs().stream().flatMap(List::stream).anyMatch(value ->
+            value instanceof slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.ModifierValue other && other.modifier().getId().equals(modifier)),
+            "a " + modifier + " focus opened a page for another modifier: " + page.source());
+        }
+        java.util.Set<Item> shown = new java.util.HashSet<>();
+        for (var value : display.catalysts().getFirst()) {
+          ItemStack tool = ((slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.ItemValue) value).stack();
+          require(requirement.test(new ItemStack(tool.getItem())), display.source() + " lists " + tool.getItem() + " which its requirement rejects");
+          shown.add(tool.getItem());
+        }
+        for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(slimeknights.tconstruct.common.TinkerTags.Items.MODIFIABLE)) {
+          if (requirement.test(new ItemStack(holder.value()))) {
+            require(shown.contains(holder.value()), display.source() + " omits accepted tool " + holder.getRegisteredName());
+          }
+        }
+        if (++checked >= 40) break;
+      }
+      require(checked > 0, "fixture needs modifier recipe pages with tools");
     }
 
     private void checkCost(String name, Item target, int cost, int index) {
@@ -213,7 +272,8 @@ public final class ToolTinkeringServerFixture {
       for (int i = 0; i < inputs.size(); i++) {
         MaterialRecipe material = MaterialRecipeCache.findRecipe(inputs.get(i));
         require(material != MaterialRecipe.EMPTY, "displayed input has no loaded material recipe");
-        require(inputs.get(i).getCount() == material.getItemsUsed(recipe.getCost()), "displayed cost is wrong");
+        require(inputs.get(i).getCount() == material.getItemsUsed(recipe.getCost()), "displayed cost is wrong: " + inputs.get(i) + " shows "
+          + inputs.get(i).getCount() + ", first material recipe " + material.getId() + " (" + material.getMaterial().getVariant() + ") uses " + material.getItemsUsed(recipe.getCost()) + " for cost " + recipe.getCost());
         require(ToolStack.from(outputs.get(i)).getMaterial(slot).sameVariant(material.getMaterial().getVariant()), "input/output alternatives became unpaired");
         require(ItemStack.matches(refunds.get(i), material.getLeftover(recipe.getCost())), "material refund became unpaired");
       }
