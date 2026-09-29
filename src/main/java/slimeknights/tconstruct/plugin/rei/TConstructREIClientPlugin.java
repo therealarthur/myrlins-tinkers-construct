@@ -6,7 +6,9 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import me.shedaniel.rei.api.common.plugins.PluginManager;
 import me.shedaniel.rei.forge.REIPluginClient;
+import me.shedaniel.rei.impl.common.plugins.ReloadManagerImpl;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.crafting.RecipeMap;
@@ -108,12 +110,16 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
 
   private static void clientTick(ClientTickEvent.Post event) {
     EntryRegistry registry = entries;
-    if (registry == null || registry.isReloading()) return;
+    if (registry == null) return;
+    // Match REI's own display tick boundary: the task counter covers the gaps
+    // between plugin phases, when manager flags alone are already false.
+    boolean reloadBusy = registry.isReloading() || PluginManager.areAnyReloading()
+      || ReloadManagerImpl.countRunningReloadTasks() > 0;
     var snapshot = ClientRecipeCache.getSnapshot();
     boolean ready = Minecraft.getInstance().level != null && snapshot.recipes() != RecipeMap.EMPTY && MaterialRegistry.isFullyLoaded();
     // REI's tag filters need a connected world. Never refilter from a title-screen
     // tick, incomplete synchronization, or logout. Only our custom entries change.
-    ENTRY_REFRESH.refresh(ready, snapshot.revision(), () -> registry.removeEntryIf(TinkerEntryTypes::isOwned), () -> {
+    ENTRY_REFRESH.refresh(reloadBusy, ready, snapshot.revision(), () -> registry.removeEntryIf(TinkerEntryTypes::isOwned), () -> {
       var unique = new LinkedHashSet<EntryStack<?>>();
       for (SmelteryDisplay display : RECIPES.all()) {
         java.util.stream.Stream.concat(display.getRequiredEntries().stream(), display.outputs().stream())

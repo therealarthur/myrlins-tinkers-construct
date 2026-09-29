@@ -10,7 +10,10 @@ public final class ClientEntryRefresh {
     installed = false;
   }
 
-  public synchronized void refresh(boolean ready, long nextRevision, Runnable removeEntries, Runnable addEntries, Runnable refilter) {
+  public synchronized void refresh(boolean reloadBusy, boolean ready, long nextRevision, Runnable removeEntries, Runnable addEntries, Runnable refilter) {
+    // REI's filter caches are incomplete across the entire asynchronous reload,
+    // including gaps where individual plugin managers no longer report busy.
+    if (reloadBusy) return;
     if (!ready) {
       if (installed) removeEntries.run();
       reset();
