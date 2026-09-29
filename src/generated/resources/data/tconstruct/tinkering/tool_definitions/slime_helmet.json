@@ -33,9 +33,9 @@
       ],
       "remap": [
         {
+          "tconstruct:blazing_bone": "tconstruct:blaze",
           "tconstruct:glass": "tconstruct:gunpowder",
-          "tconstruct:venombone": "tconstruct:ice",
-          "tconstruct:blazing_bone": "tconstruct:blaze"
+          "tconstruct:venombone": "tconstruct:ice"
         }
       ]
     },

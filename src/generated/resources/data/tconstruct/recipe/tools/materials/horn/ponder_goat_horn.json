@@ -1,12 +1,12 @@
 {
   "type": "tconstruct:material",
+  "id": "tconstruct:tools/materials/horn/ponder_goat_horn",
   "ingredient": {
+    "neoforge:ingredient_type": "tconstruct:instrument",
     "instrument": "minecraft:ponder_goat_horn",
-    "item": "minecraft:goat_horn",
-    "neoforge:ingredient_type": "tconstruct:instrument"
+    "item": "minecraft:goat_horn"
   },
   "material": "tconstruct:horn#minecraft.ponder_goat_horn",
   "needed": 1,
-  "value": 4,
-  "id": "tconstruct:tools/materials/horn/ponder_goat_horn"
+  "value": 4
 }

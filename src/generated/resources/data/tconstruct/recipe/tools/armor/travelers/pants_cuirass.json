@@ -1,12 +1,12 @@
 {
   "type": "tconstruct:material_value_swapping",
   "cost": 4,
+  "id": "tconstruct:tools/armor/travelers/pants_cuirass",
   "index": 1,
   "material": {
     "type": "tconstruct:stat_type",
     "stat_type": "tconstruct:cuirass"
   },
   "max_stack_size": 16,
-  "tools": "tconstruct:travelers_leggings",
-  "id": "tconstruct:tools/armor/travelers/pants_cuirass"
+  "tools": "tconstruct:travelers_leggings"
 }

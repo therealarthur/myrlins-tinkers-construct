@@ -43,5 +43,7 @@
       "match": "traits"
     }
   ],
-  "show_in_tooltips": ["tinker_station"]
+  "show_in_tooltips": [
+    "tinker_station"
+  ]
 }

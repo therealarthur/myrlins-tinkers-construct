@@ -13,12 +13,12 @@
     "m m"
   ],
   "result": {
-    "id": "tconstruct:tinkers_anvil",
     "components": {
       "minecraft:custom_name": {
         "translate": "block.tconstruct.tool_forge"
       }
-    }
+    },
+    "id": "tconstruct:tinkers_anvil"
   },
   "texture": "#tconstruct:anvil_metal"
 }

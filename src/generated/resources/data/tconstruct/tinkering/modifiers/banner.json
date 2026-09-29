@@ -6,5 +6,7 @@
     }
   ],
   "priority": 25,
-  "show_in_tooltips": ["tinker_station"]
+  "show_in_tooltips": [
+    "tinker_station"
+  ]
 }

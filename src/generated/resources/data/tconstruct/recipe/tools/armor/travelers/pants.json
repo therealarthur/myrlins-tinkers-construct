@@ -35,6 +35,7 @@
         }
       ]
     },
+    "f": "minecraft:flint",
     "l": {
       "neoforge:ingredient_type": "tconstruct:material_value",
       "material": {
@@ -42,8 +43,7 @@
         "stat_type": "tconstruct:cuirass"
       },
       "value": 1
-    },
-    "f": "minecraft:flint"
+    }
   },
   "parts": "cl",
   "pattern": [

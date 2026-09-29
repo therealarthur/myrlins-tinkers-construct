@@ -5,5 +5,7 @@
       "type": "tconstruct:embellishment"
     }
   ],
-  "show_in_tooltips": ["tinker_station"]
+  "show_in_tooltips": [
+    "tinker_station"
+  ]
 }
