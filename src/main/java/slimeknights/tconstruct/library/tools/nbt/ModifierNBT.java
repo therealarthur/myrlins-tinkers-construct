@@ -41,7 +41,11 @@ public class ModifierNBT implements Iterable<ModifierEntry> {
   /** Constructor */
   public ModifierNBT(List<ModifierEntry> modifiers) {
     this.modifiers = new ArrayList<>(modifiers);
-    this.modifiers.sort(Comparator.naturalOrder());
+    // arthur.9: official keeps the given order. The Builder already sorts by priority and then keeps the order modifiers
+    // were added, which is the order official shows in tooltips and the Modifiers panel; lists read from NBT keep their
+    // saved order; and the modifier sorting recipe relies on its new order being kept. Re-sorting here by priority and
+    // then ID path showed a different order than official ("Armor Pierce" before "Stringy") and undid modifier sorting.
+    // this.modifiers.sort(Comparator.naturalOrder());
   }
 
   /** Gets the modifier list */
