@@ -194,6 +194,51 @@ public final class ArmorParityServerFixture {
         player.setOnGround(false);
         require(hook.getProtectionModifier(helmet, airborn, context, EquipmentSlot.HEAD, this.level.damageSources().playerAttack(player), 0) == 2.5f, "airborne attacker must grant original protection");
       });
+      // parity/materials (2026-09-29): the four travelers cuirass pieces and the shield craft through the loaded shaped
+      // material recipes, and wool and vine cuirass traits reach the crafted tool.
+      test("travelers_shaped_crafting_each_piece", () -> {
+        ItemStack copper = new ItemStack(Items.COPPER_INGOT);
+        for (Item cuirass : List.of(Items.LEATHER, Items.WHITE_WOOL, Items.VINE)) {
+          MaterialVariantId cuirassMaterial = MaterialRecipeCache.findRecipe(new ItemStack(cuirass)).getMaterial().getVariant();
+          craft("goggles", TinkerTools.travelersGear.get(ArmorType.HELMET), List.of("l l", "glg", "c c"), 'c', copper, 'l', new ItemStack(cuirass), 'g', new ItemStack(Items.GLASS_PANE));
+          ToolStack vest = craft("chestplate", TinkerTools.travelersGear.get(ArmorType.CHESTPLATE), List.of("lsl", "lcl", "lcl"), 'c', copper, 'l', new ItemStack(cuirass), 's', new ItemStack(Items.STRING));
+          craft("pants", TinkerTools.travelersGear.get(ArmorType.LEGGINGS), List.of("lfl", "c c", "l l"), 'c', copper, 'l', new ItemStack(cuirass), 'f', new ItemStack(Items.FLINT));
+          craft("boots", TinkerTools.travelersGear.get(ArmorType.BOOTS), List.of("s s", "c c", "l l"), 'c', copper, 'l', new ItemStack(cuirass), 's', new ItemStack(Items.STRING));
+          ToolStack shield = craft("shield", TinkerTools.travelersShield.get(), List.of("scs", "lcl"), 'c', new ItemStack(Items.OAK_PLANKS), 'l', new ItemStack(cuirass), 's', new ItemStack(Items.STICK));
+          require(vest.getMaterial(0).sameVariant(MaterialIds.copper) && vest.getMaterial(1).sameVariant(cuirassMaterial), "vest must store [copper, cuirass]: " + vest.getMaterials());
+          require(shield.getMaterial(1).sameVariant(cuirassMaterial), "shield must store the cuirass at index 1");
+          // cuirass traits come from the material's armor traits (wool) or defaults (vine, leather)
+          String trait = cuirass == Items.WHITE_WOOL ? "tconstruct:knockback_resistance" : cuirass == Items.VINE ? "tconstruct:solar_powered" : "tconstruct:tanned";
+          require(vest.getModifiers().getLevel(new ModifierId(trait)) >= 1, cuirass + " cuirass must grant " + trait + ", modifiers " + vest.getModifiers());
+        }
+      });
+      test("index_swap_uses_matching_slot_and_conserves_items", () -> {
+        // Official MaterialIndexSwappingRecipe: the first configured index is used unless the material sits in a
+        // station slot that is itself one of the configured indices. Travelers shield: 0 = shield core, 1 = cuirass.
+        var recipe = new MaterialValueSwappingRecipe(Identifier.fromNamespaceAndPath("aebmcontinuumtests", "index_swap"), Ingredient.of(TinkerTools.travelersShield.get()), 16,
+          slimeknights.tconstruct.library.json.predicate.material.MaterialPredicate.or(new MaterialStatTypePredicate(StatlessMaterialStats.CUIRASS.getIdentifier()),
+            new MaterialStatTypePredicate(StatlessMaterialStats.SHIELD_CORE.getIdentifier())), 2, new int[] {1, 0}, List.of()) {};
+        ToolStack shield = tool(TinkerTools.travelersShield.get(), MaterialIds.bone, MaterialIds.leather);
+        var planks = station(shield, new ItemStack(Items.OAK_PLANKS, 5));
+        require(recipe.matches(planks, level), "planks must match");
+        var coreResult = recipe.getValidatedResult(planks, level.registryAccess());
+        require(coreResult.isSuccess(), "planks in slot 0 must swap the shield core");
+        var plankMaterial = MaterialRecipeCache.findRecipe(new ItemStack(Items.OAK_PLANKS)).getMaterial().getVariant();
+        require(coreResult.getResult().getTool().getMaterial(0).sameVariant(plankMaterial) && coreResult.getResult().getTool().getMaterial(1).sameVariant(MaterialIds.leather), "slot 0 must change index 0 only");
+        recipe.updateInputs(coreResult.getResult(), planks, true);
+        require(planks.getInput(0).getCount() == 3, "two planks must be consumed for cost 2");
+        var wool = station(shield, ItemStack.EMPTY, new ItemStack(Items.WHITE_WOOL, 5));
+        var cuirassResult = recipe.getValidatedResult(wool, level.registryAccess());
+        require(recipe.matches(wool, level) && cuirassResult.isSuccess(), "wool in slot 1 must swap the cuirass");
+        require(cuirassResult.getResult().getTool().getMaterial(1).sameVariant(MaterialRecipeCache.findRecipe(new ItemStack(Items.WHITE_WOOL)).getMaterial().getVariant())
+          && cuirassResult.getResult().getTool().getMaterial(0).sameVariant(MaterialIds.bone), "slot 1 must change index 1 only");
+        recipe.updateInputs(cuirassResult.getResult(), wool, true);
+        require(wool.getInput(1).getCount() == 3 && wool.getInput(0).isEmpty(), "two wool must be consumed for cost 2");
+        var leather = station(shield, new ItemStack(Items.LEATHER, 5));
+        require(recipe.matches(leather, level), "leather passes the recipe's material filter");
+        require(!recipe.getValidatedResult(leather, level.registryAccess()).isSuccess(), "leather in slot 0 targets the shield core and must be rejected");
+        require(leather.getInput(0).getCount() == 5, "a rejected swap must not consume anything");
+      });
       source.sendSuccess(() -> Component.literal("AEBM_ARMOR_SUMMARY passed=" + passed + " failed=" + failed), false);
       return failed == 0 ? 1 : 0;
     }
@@ -229,6 +274,25 @@ public final class ArmorParityServerFixture {
       require(original.getMaterials().serializeToNBT().equals(restored.getMaterials().serializeToNBT()), "complete old material array must be preserved");
       require(restored.getUpgrades().getLevel(ModifierIds.reinforced) == 1 && restored.getDamage() == 17 && restored.getPersistentData().getInt(PROBE) == 173, "save/rebuild must preserve upgrade, damage and persistent data");
       require(restored.getStats().getInt(ToolStats.DURABILITY) > 17, "preserved tool must still have valid durability");
+    }
+
+    /** Crafts a travelers piece through the loaded shaped material recipe and returns the assembled tool. */
+    private ToolStack craft(String name, Item expected, List<String> pattern, Object... keys) {
+      java.util.Map<Character,ItemStack> map = new java.util.HashMap<>();
+      for (int i = 0; i < keys.length; i += 2) map.put((Character) keys[i], (ItemStack) keys[i + 1]);
+      List<ItemStack> grid = new java.util.ArrayList<>();
+      for (String row : pattern) for (char c : row.toCharArray()) grid.add(c == ' ' ? ItemStack.EMPTY : map.get(c).copyWithCount(1));
+      var input = net.minecraft.world.item.crafting.CraftingInput.of(3, pattern.size(), grid);
+      var key = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath("tconstruct", "tools/armor/travelers/" + name));
+      var holder = level.getServer().getRecipeManager().byKey(key).orElseThrow(() -> new AssertionError("recipe not loaded: " + name));
+      @SuppressWarnings("unchecked")
+      var recipe = (net.minecraft.world.item.crafting.Recipe<net.minecraft.world.item.crafting.CraftingInput>) holder.value();
+      require(recipe.matches(input, level), name + " must match its official pattern with " + map);
+      ItemStack result = recipe.assemble(input);
+      require(result.is(expected), name + " must craft " + expected + ", got " + result);
+      ToolStack tool = ToolStack.from(result);
+      require(tool.getMaterials().size() == 2, name + " must store two materials");
+      return tool;
     }
 
     private MaterialValueSwappingRecipe recipe(String name) {
