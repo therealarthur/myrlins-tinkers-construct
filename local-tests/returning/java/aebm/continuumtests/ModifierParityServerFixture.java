@@ -52,6 +52,7 @@ import slimeknights.tconstruct.tools.data.material.MaterialIds;
  * Case {@code rugged_cancels_hurt_like_official} checks official v3.12.1 semantics (the hit is canceled: hurtServer
  * returns false and no hurt animation starts). Continuum's ToolEvents zeroes the amount instead of canceling, so this
  * case fails until the one line ToolEvents change in modifiers-REPORT.md is applied.
+ * release/arthur.8 applies that change (ToolEvents.livingAttack now cancels), so the case is expected to pass there.
  */
 public final class ModifierParityServerFixture {
   private static final Identifier PROBE = Identifier.fromNamespaceAndPath("aebmcontinuumtests", "modifier_probe");

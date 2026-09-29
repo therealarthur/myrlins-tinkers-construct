@@ -269,7 +269,10 @@ public class ToolEvents {
         if (toolStack != null && !toolStack.isBroken()) {
           for (ModifierEntry entry : toolStack.getModifierList()) {
             if (entry.getHook(ModifierHooks.DAMAGE_BLOCK).isDamageBlocked(toolStack, entry, context, slotType, source, amount)) {
-              event.setAmount(0);
+              // arthur.8: cancel like official v3.12.1 (LivingAttackEvent#setCanceled). The port used event.setAmount(0),
+              // which still ran vanilla hurtServer (hurt flash and sound, invulnerability frames, knockback) for rugged,
+              // frost walker and long fall blocks. Canceling LivingIncomingDamageEvent skips all of that.
+              event.setCanceled(true);
               return;
             }
           }
