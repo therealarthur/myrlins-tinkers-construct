@@ -33,6 +33,7 @@ import slimeknights.tconstruct.tools.stats.SlimeStats;
 import slimeknights.tconstruct.tools.stats.StatlessMaterialStats;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -50,7 +51,9 @@ public final class MaterialRegistry {
   static MaterialRegistry INSTANCE;
 
   /** Map of each stat type to its first material */
-  private static final Map<MaterialStatsId,IMaterial> FIRST_MATERIALS = new HashMap<>();
+  // REI collects creative entries in parallel. Serialize both cache population
+  // and reload invalidation, including the entire computeIfAbsent callback.
+  private static final Map<MaterialStatsId,IMaterial> FIRST_MATERIALS = Collections.synchronizedMap(new HashMap<>());
 
   private final MaterialManager materialManager;
   private final MaterialStatsManager materialStatsManager;
