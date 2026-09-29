@@ -325,6 +325,12 @@ public class ToolsRecipeProvider extends BaseRecipeProvider implements IMaterial
     slimeskull(consumer, MaterialIds.blazingBone, TinkerWorld.heads.get(TinkerHeadType.BLAZING_BONE),     armorFolder);
     slimeskull(consumer, MaterialIds.necronium,   TinkerWorld.heads.get(TinkerHeadType.NECRONIUM),        armorFolder);
     slimeskull(consumer, MaterialIds.knightmetal, TinkerSmeltery.endFluidCannon.get(),                    armorFolder);
+    // parity/materials: official 3.12.1 single swapping recipe for all skulls (slime material at index 1, cost 5).
+    // Continuum's per-skull tool casting recipes can also swap the slime because it has no fluid_swapping flag;
+    // both paths use index 1 and cost 5, so restoring this ID adds the official entry point without changing results.
+    PartSwapCastingRecipeBuilder.basinRecipe(Ingredient.of(TinkerTools.slimesuit.get(ArmorType.HELMET)), 5)
+      .index(1)
+      .save(consumer, location(armorFolder + "slime_skull/swapping/slime"));
 
     // slimelytra
     MaterialCastingRecipeBuilder.basinRecipe(TinkerTools.slimeWings.get())

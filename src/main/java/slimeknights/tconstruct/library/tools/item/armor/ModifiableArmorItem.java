@@ -263,7 +263,11 @@ public class ModifiableArmorItem extends Item implements IModifiableDisplay {
   }
   public void setDamage(ItemStack stack, int damage) {
     if (canBeDepleted()) {
-      ToolStack.from(stack).setDamage(damage);
+      // parity/materials: ToolStack.from works on a copy of the custom data on 26.1, so write the damage back
+      // the same way ModifiableItem does; without this, vanilla repairs such as mending never changed Tinkers armor.
+      ToolStack tool = ToolStack.from(stack);
+      tool.setDamage(damage);
+      tool.updateStack(stack, false);
     }
   }
   public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, @Nullable T damager, Consumer<Item> onBroken) {

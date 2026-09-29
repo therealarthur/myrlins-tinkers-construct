@@ -12,6 +12,15 @@
       ]
     },
     {
+      "type": "tconstruct:material_traits",
+      "hooks": [
+        "tconstruct:tool_traits",
+        "tconstruct:trim_trait"
+      ],
+      "material_index": 0,
+      "stat_type": "tconstruct:ribcage"
+    },
+    {
       "type": "tconstruct:default_materials",
       "materials": [
         {
@@ -51,15 +60,6 @@
           "name": "tconstruct:reach"
         }
       ]
-    },
-    {
-      "type": "tconstruct:material_traits",
-      "hooks": [
-        "tconstruct:tool_traits",
-        "tconstruct:trim_trait"
-      ],
-      "material_index": 0,
-      "stat_type": "tconstruct:ribcage"
     },
     {
       "type": "tconstruct:unique_material_name",

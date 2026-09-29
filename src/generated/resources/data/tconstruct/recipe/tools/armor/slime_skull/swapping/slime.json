@@ -1,0 +1,7 @@
+{
+  "type": "tconstruct:basin_casting_part_swapping",
+  "id": "tconstruct:tools/armor/slime_skull/swapping/slime",
+  "index": 1,
+  "item_cost": 5,
+  "tools": "tconstruct:slime_helmet"
+}

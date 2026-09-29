@@ -12,6 +12,14 @@
       ]
     },
     {
+      "type": "tconstruct:material_traits",
+      "hooks": [
+        "tconstruct:trim_trait"
+      ],
+      "material_index": 0,
+      "stat_type": "tconstruct:laces"
+    },
+    {
       "type": "tconstruct:default_materials",
       "materials": [
         {
@@ -45,14 +53,6 @@
           "name": "tconstruct:bouncy"
         }
       ]
-    },
-    {
-      "type": "tconstruct:material_traits",
-      "hooks": [
-        "tconstruct:trim_trait"
-      ],
-      "material_index": 0,
-      "stat_type": "tconstruct:laces"
     },
     {
       "type": "tconstruct:unique_material_name",
