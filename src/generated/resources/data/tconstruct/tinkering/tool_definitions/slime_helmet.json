@@ -12,6 +12,14 @@
       ]
     },
     {
+      "type": "tconstruct:material_traits",
+      "hooks": [
+        "tconstruct:trim_trait"
+      ],
+      "material_index": 0,
+      "stat_type": "tconstruct:skull"
+    },
+    {
       "type": "tconstruct:remapping_materials",
       "missing": [
         {
@@ -37,14 +45,6 @@
         "abilities": 2,
         "upgrades": 3
       }
-    },
-    {
-      "type": "tconstruct:material_traits",
-      "hooks": [
-        "tconstruct:trim_trait"
-      ],
-      "material_index": 0,
-      "stat_type": "tconstruct:skull"
     },
     {
       "type": "tconstruct:unique_material_name",
