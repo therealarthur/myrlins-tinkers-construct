@@ -184,6 +184,38 @@ public final class ModifierParityServerFixture {
         require(!bounces(zombie(20), 0.9, 1.0), "with +1 step height the threshold is 1.5 blocks");
         require(bounces(zombie(22), 1.8, 1.0), "1.8 block fall with +1 step height must bounce");
       });
+      // release/arthur.8: official v3.12.1 gold and rose gold skulls carry no golden trait. A lone skull is not piglin
+      // neutral, chrysophilite is flat 1 + 1 per golden armor piece and gold guard is +4 max health + 4 per golden piece.
+      // Equipment changes go through a real LivingEquipmentChangeEvent, so EquipmentChangeWatcher runs the hooks.
+      test("gold_skulls_count_gold_like_official", () -> {
+        ToolStack goldSkull = tool(TinkerTools.slimesuit.get(ArmorType.HELMET), MaterialIds.gold, MaterialIds.earthslime);
+        require(goldSkull.getModifiers().getLevel(slimeknights.tconstruct.tools.TinkerModifiers.chrysophilite.getId()) == 1, "gold skull must carry chrysophilite 1");
+        require(goldSkull.getModifiers().getLevel(slimeknights.tconstruct.tools.TinkerModifiers.golden.getId()) == 0, "official gold skull has no golden trait");
+        net.minecraft.world.item.ItemStack goldStack = goldSkull.createStack();
+        Zombie gilded = zombie(24);
+        require(!goldStack.makesPiglinsNeutral(gilded), "a lone gold skull must not make piglins neutral, as in official");
+        equip(gilded, EquipmentSlot.HEAD, goldStack);
+        int alone = slimeknights.tconstruct.tools.modifiers.traits.skull.ChrysophiliteModifier.getTotalGold(gilded);
+        require(alone == 1, "chrysophilite with only the skull must be the official flat 1, was " + alone);
+        equip(gilded, EquipmentSlot.FEET, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLDEN_BOOTS));
+        int withBoots = slimeknights.tconstruct.tools.modifiers.traits.skull.ChrysophiliteModifier.getTotalGold(gilded);
+        require(withBoots == 2, "chrysophilite with gold boots must be 1 + 1, was " + withBoots);
+
+        ToolStack roseSkull = tool(TinkerTools.slimesuit.get(ArmorType.HELMET), MaterialIds.roseGold, MaterialIds.earthslime);
+        require(roseSkull.getModifiers().getLevel(slimeknights.tconstruct.tools.TinkerModifiers.goldGuard.getId()) == 1, "rose gold skull must carry gold guard 1");
+        require(roseSkull.getModifiers().getLevel(slimeknights.tconstruct.tools.TinkerModifiers.golden.getId()) == 0, "official rose gold skull has no golden trait");
+        Zombie guarded = zombie(26);
+        float baseMax = guarded.getMaxHealth();
+        net.minecraft.world.item.ItemStack roseStack = roseSkull.createStack();
+        require(!roseStack.makesPiglinsNeutral(guarded), "a lone rose gold skull must not make piglins neutral, as in official");
+        equip(guarded, EquipmentSlot.HEAD, roseStack);
+        close(baseMax + 4, guarded.getMaxHealth(), "gold guard alone must add the official flat 4 max health");
+        equip(guarded, EquipmentSlot.FEET, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLDEN_BOOTS));
+        close(baseMax + 8, guarded.getMaxHealth(), "gold guard with gold boots must add 4 + 4 max health");
+        // negative control: taking the skull off removes the bonus
+        equip(guarded, EquipmentSlot.HEAD, net.minecraft.world.item.ItemStack.EMPTY);
+        close(baseMax, guarded.getMaxHealth(), "removing the rose gold skull must remove the gold guard health");
+      });
       source.sendSuccess(() -> Component.literal("AEBM_MODIFIER_SUMMARY passed=" + passed + " failed=" + failed), false);
       return failed == 0 ? 1 : 0;
     }
@@ -216,6 +248,13 @@ public final class ModifierParityServerFixture {
       Zombie wearer = zombie(x);
       wearer.setItemSlot(EquipmentSlot.FEET, boots.createStack());
       return wearer;
+    }
+
+    /** Puts a stack in a slot and posts the real equipment change event, as LivingEntity.detectEquipmentUpdates does. */
+    private static void equip(LivingEntity entity, EquipmentSlot slot, net.minecraft.world.item.ItemStack stack) {
+      net.minecraft.world.item.ItemStack previous = entity.getItemBySlot(slot).copy();
+      entity.setItemSlot(slot, stack);
+      NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent(entity, slot, previous, entity.getItemBySlot(slot)));
     }
 
     private Zombie zombie(int x) {

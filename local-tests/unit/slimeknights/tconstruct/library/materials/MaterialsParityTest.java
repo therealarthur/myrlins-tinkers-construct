@@ -95,10 +95,12 @@ final class MaterialsParityTest {
     "tconstruct:enderslime_vine", Set.of(MAILLE),
     "tconstruct:twisting_vine", Set.of(MAILLE),
     "tconstruct:weeping_vine", Set.of(MAILLE));
-  /** Continuum-only traits appended after the official list: golden on gold skulls, pending the modifiers stream's chrysophilite/gold guard restoration. */
-  private static final Map<String,List<String>> EXTRA_TRAITS = Map.of(
-    "tconstruct:gold/" + SKULL, List.of("tconstruct:golden@1"),
-    "tconstruct:rose_gold/" + SKULL, List.of("tconstruct:golden@1"));
+  /**
+   * Continuum-only traits appended after the official list. Empty since release/arthur.8: the golden trait that was
+   * appended to the gold and rose gold skulls (entries "tconstruct:gold/" + SKULL and "tconstruct:rose_gold/" + SKULL,
+   * both "tconstruct:golden@1") was removed to match official, so those skulls must now equal the official lists exactly.
+   */
+  private static final Map<String,List<String>> EXTRA_TRAITS = Map.of();
 
   private static final Map<Field,Object> SAVED = new HashMap<>();
   private static JsonObject official;

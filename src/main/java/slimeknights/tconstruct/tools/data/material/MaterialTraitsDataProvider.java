@@ -247,8 +247,15 @@ public class MaterialTraitsDataProvider extends AbstractMaterialTraitDataProvide
     material(MaterialIds.copper).addTraits(SkullStats.ID, ModifierIds.respirationSkull, ModifierIds.drownedDisguise);
     // nether
     material(MaterialIds.blaze).addTraits(SkullStats.ID, ModifierIds.fireborn, ModifierIds.blazeDisguise);
-    material(MaterialIds.gold).addTraits(SkullStats.ID, TinkerModifiers.chrysophilite.getId(), ModifierIds.piglinDisguise, TinkerModifiers.golden.getId());
-    material(MaterialIds.roseGold).addTraits(SkullStats.ID, TinkerModifiers.goldGuard.getId(), ModifierIds.piglinBruteDisguise, TinkerModifiers.golden.getId());
+    // arthur.8: official v3.12.1 gives the gold and rose gold skulls no golden trait. Continuum had appended
+    // TinkerModifiers.golden to both, which made a lone skull piglin neutral and made the Java chrysophilite and
+    // gold guard count the skull as a gold piece (1 + 1 + others instead of official flat 1 + 1 per golden piece).
+    // Without it the Java modifiers give the official numbers: chrysophilite 1 + other golden pieces, gold guard
+    // +4 max health + 4 per other golden piece. Previous lines, kept for reference:
+    // material(MaterialIds.gold).addTraits(SkullStats.ID, TinkerModifiers.chrysophilite.getId(), ModifierIds.piglinDisguise, TinkerModifiers.golden.getId());
+    // material(MaterialIds.roseGold).addTraits(SkullStats.ID, TinkerModifiers.goldGuard.getId(), ModifierIds.piglinBruteDisguise, TinkerModifiers.golden.getId());
+    material(MaterialIds.gold).addTraits(SkullStats.ID, TinkerModifiers.chrysophilite.getId(), ModifierIds.piglinDisguise);
+    material(MaterialIds.roseGold).addTraits(SkullStats.ID, TinkerModifiers.goldGuard.getId(), ModifierIds.piglinBruteDisguise);
     material(MaterialIds.pigIron).addTraits(SkullStats.ID, ModifierIds.vitalProtectionSkull, ModifierIds.zombifiedPiglinDisguise);
     // crafted
     material(MaterialIds.venombone).addTraits(SkullStats.ID, ModifierIds.magicBones, ModifierIds.skeletonDisguise);
