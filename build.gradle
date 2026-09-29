@@ -205,10 +205,15 @@ lombok {
     version = '1.18.46'
 }
 
+// Root that holds downloads/ and runtime/bmc6-client/mods/. Defaults to the historical
+// pack-folder layout (two levels up from ports/continuum). Parity worktrees under
+// D:/MC/tinkers-parity pass -PaebmDepsRoot=D:/MC/tinkers-parity/deps via tools/build-locked.ps1.
+def aebmDepsRoot = (findProperty('aebmDepsRoot') ?: '../..').toString().replace('\\', '/')
+
 dependencies {
     // would ideally use API for this, but that does not work well with fg.deobf in my understanding
     // Use the pinned companion release already selected by the integration workspace.
-    implementation files("../../downloads/ContinuumCore-${minecraft_version}-${mantle_version}.jar")
+    implementation files("${aebmDepsRoot}/downloads/ContinuumCore-${minecraft_version}-${mantle_version}.jar")
 
     
 
@@ -220,9 +225,9 @@ dependencies {
 
     // Optional REI adapter: compile against the exact BMC6 jars, without bundling or enabling them in runs.
     // Version/hash provenance is recorded in local-audit/recipe-viewer-parity-plan.md.
-    compileOnly files('../../runtime/bmc6-client/mods/RoughlyEnoughItems-26.1.819.jar',
-                      '../../runtime/bmc6-client/mods/architectury-neoforge-20.1.15.jar',
-                      '../../runtime/bmc6-client/mods/cloth-config-26.1.154.jar')
+    compileOnly files("${aebmDepsRoot}/runtime/bmc6-client/mods/RoughlyEnoughItems-26.1.819.jar",
+                      "${aebmDepsRoot}/runtime/bmc6-client/mods/architectury-neoforge-20.1.15.jar",
+                      "${aebmDepsRoot}/runtime/bmc6-client/mods/cloth-config-26.1.154.jar")
 
     // implementation "mcjty.theoneprobe:TheOneProbe-${minecraft_base_version}:${minecraft_base_version}-${probe_version}"
 
