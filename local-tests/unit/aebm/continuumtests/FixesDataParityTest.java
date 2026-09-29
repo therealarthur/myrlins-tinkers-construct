@@ -6,17 +6,26 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.registries.VanillaRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.junit.jupiter.api.Test;
 import slimeknights.tconstruct.gadgets.TinkerGadgets;
+import slimeknights.tconstruct.gadgets.entity.FrameType;
+import slimeknights.tconstruct.gadgets.item.FancyItemFrameItem;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -103,6 +112,23 @@ final class FixesDataParityTest {
       assertEquals(kiln[1], recipe.get("ingredient").getAsString(), kiln[0]);
       assertEquals(kiln[2], recipe.getAsJsonObject("result").get("id").getAsString(), kiln[0]);
     }
+  }
+
+  @Test
+  void itemFrameTooltipsUseTheRestoredOfficialKeys() throws Exception {
+    ComponentTestSetup.initialize();
+    JsonObject lang = resource("assets/tconstruct/lang/en_us.json");
+    for (FrameType type : FrameType.values()) {
+      FancyItemFrameItem item = TinkerGadgets.itemFrame.get(type);
+      List<Component> lines = new ArrayList<>();
+      item.appendHoverText(new ItemStack(item), Item.TooltipContext.EMPTY, TooltipDisplay.DEFAULT, lines::add, TooltipFlag.NORMAL);
+      String key = item.getDescriptionId() + ".tooltip";
+      assertEquals(List.of(Component.translatable(key).withStyle(ChatFormatting.GRAY)), lines, type.name());
+      assertTrue(lang.has(key), "missing lang key " + key);
+    }
+    // official en_us.json values
+    assertEquals("Slowly rotates clockwise", lang.get("item.tconstruct.gold_item_frame.tooltip").getAsString());
+    assertEquals("Immune to fire and explosions", lang.get("item.tconstruct.netherite_item_frame.tooltip").getAsString());
   }
 
   private static JsonObject resource(String path) throws Exception {
