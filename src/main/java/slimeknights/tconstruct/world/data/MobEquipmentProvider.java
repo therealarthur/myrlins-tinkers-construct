@@ -30,6 +30,9 @@ public class MobEquipmentProvider extends AbstractMobEquipmentProvider {
     RandomMaterial flint = RandomMaterial.fixed(MaterialIds.flint);
     RandomMaterial iron = RandomMaterial.fixed(MaterialIds.iron);
     RandomMaterial rock = RandomMaterial.fixed(MaterialIds.rock);
+    // balance: official v3.12.1 gives every mob tool random tier limited materials from the ancient pool.
+    // The fixed materials above stay defined for reference but are no longer used.
+    RandomMaterial random = RandomMaterial.ancient();
 
     // piglins spawn with battle signs
     equip(TinkerTags.EntityTypes.PIGLINS)
@@ -37,7 +40,7 @@ public class MobEquipmentProvider extends AbstractMobEquipmentProvider {
       // only replace golden weapons, never a crossbow
       .match(ItemPredicate.set(Items.GOLDEN_SWORD, Items.GOLDEN_AXE))
       .tool(TinkerTools.battlesign)
-      .material(wood, iron, wood);
+      .material(random, random);
     // want different fluid lists for wither skeletons vs drowned
     equip(EntityType.DROWNED)
       .slot(EquipmentSlot.MAINHAND)
@@ -45,28 +48,28 @@ public class MobEquipmentProvider extends AbstractMobEquipmentProvider {
       .match(ItemPredicate.set(Items.AIR))
       .tool(TinkerTools.swasher)
       .fluid(TinkerTags.Fluids.DROWNED_SWASHER)
-      .material(flint, wood, iron);
+      .material(random, random, random);
     equip(EntityType.WITHER_SKELETON)
       .slot(EquipmentSlot.MAINHAND)
       .tool(TinkerTools.swasher)
       .fluid(TinkerTags.Fluids.WITHER_SKELETON_SWASHER)
-      .material(flint, wood, iron);
+      .material(random, random, random);
     // zombies spawn with melting pans
     equip("melting_pan", List.of(EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.HUSK))
       .slot(EquipmentSlot.OFFHAND)
       .tool(TinkerTools.meltingPan)
-      .material(iron, wood);
+      .material(random, random);
     // evil villagers spawn with war picks
     equip("war_pick", List.of(EntityType.ZOMBIE_VILLAGER, EntityType.VINDICATOR))
       .slot(EquipmentSlot.MAINHAND)
       .tool(TinkerTools.warPick)
-      .material(rock, wood, iron);
+      .material(random, random, random);
     // twilight forest compat
     String tf = "twilightforest";
     equip("twilightforest_minotaur", Identifier.fromNamespaceAndPath(tf, "minotaur"), new ModLoadedCondition(tf))
       .slot(EquipmentSlot.MAINHAND)
       .tool(ItemNameOutput.fromName(TinkerTools.minotaurAxe.getId()))
-      .material(iron, wood, iron);
+      .material(random, random, random);
   }
 
   @Override
