@@ -813,7 +813,8 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(ProtectionModule.builder().entity(LivingEntityPredicate.CROUCHING).eachLevel(2.5f));
     buildModifier(ModifierIds.dragonborn)
       .addModule(MaxArmorAttributeModule.builder(TinkerAttributes.CRITICAL_DAMAGE, Operation.ADD_VALUE).heldTag(TinkerTags.Items.HELD).tooltipStyle(TooltipStyle.PERCENT).eachLevel(0.05f))
-      .addModule(ProtectionModule.builder().entity(TinkerPredicate.AIRBORNE).eachLevel(2.5f));
+      // balance: official v3.12.1 is 2 protection per level while airborne (Continuum was 2.5)
+      .addModule(ProtectionModule.builder().entity(TinkerPredicate.AIRBORNE).eachLevel(2f));
     buildModifier(ModifierIds.dragonfall).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(AttributeModule.builder(TinkerAttributes.CRITICAL_DAMAGE, Operation.ADD_VALUE).tooltipStyle(TooltipStyle.PERCENT).eachLevel(0.1f))
       .addModule(AttributeModule.builder(TinkerAttributes.SAFE_FALL_DISTANCE, Operation.ADD_VALUE).eachLevel(2));
@@ -1039,7 +1040,8 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(StatBoostModule.add(ToolStats.VELOCITY).toolTag(TinkerTags.Items.THROWN_AMMO).eachLevel(0.25f));
     buildModifier(ModifierIds.unburdened)
       .addModule(StatBoostModule.add(ToolStats.USE_ITEM_SPEED).eachLevel(0.1f))
-      .addModule(AttributeModule.builder(TinkerAttributes.USE_ITEM_SPEED, Operation.ADD_VALUE).slots(ARMOR_SLOTS).tooltipStyle(TooltipStyle.PERCENT).toolItem(ItemPredicate.tag(WORN_ARMOR)).eachLevel(0.05f));
+      // balance: official v3.12.1 armor use item speed is +0.10 per level (Continuum was +0.05)
+      .addModule(AttributeModule.builder(TinkerAttributes.USE_ITEM_SPEED, Operation.ADD_VALUE).slots(ARMOR_SLOTS).tooltipStyle(TooltipStyle.PERCENT).toolItem(ItemPredicate.tag(WORN_ARMOR)).eachLevel(0.1f));
     buildModifier(ModifierIds.spiny)
       .addModule(StatBoostModule.add(ToolStats.VELOCITY).eachLevel(0.1f))
       .addModule(StatBoostModule.add(ToolStats.PROJECTILE_DAMAGE).toolTag(TinkerTags.Items.THROWN_AMMO).eachLevel(0.5f))
@@ -1048,7 +1050,8 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(StatBoostModule.add(ToolStats.VELOCITY).eachLevel(0.1f))
       .addModule(StatBoostModule.add(ToolStats.VELOCITY).toolTag(TinkerTags.Items.THROWN_AMMO).eachLevel(0.1f));
     buildModifier(ModifierIds.depthProtection).addModule(DepthProtectionModule.builder().baselineHeight(64).neutralRange(32).eachLevel(1.25f));
-    buildModifier(ModifierIds.enderclearance).addModule(new EnderclearanceModule(LevelingValue.eachLevel(0.25f), new LevelingInt(8, 8), LevelingInt.flat(16)));
+    // balance: official v3.12.1 is a flat 25% chance with a single level display (Continuum was 25% per level)
+    buildModifier(ModifierIds.enderclearance).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL).addModule(new EnderclearanceModule(LevelingValue.flat(0.25f), new LevelingInt(8, 8), LevelingInt.flat(16)));
     buildModifier(ModifierIds.frostshield)
       .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .priority(175) // higher than overslime, to ensure this is removed first
@@ -1114,10 +1117,14 @@ public class ModifierProvider extends AbstractModifierProvider {
         .constant(1).add()
         // multiply into the final value
         .variable(VALUE).multiply().build());
+    // balance: official v3.12.1 formula (0.01 x level + 0.04) x light with a single level display (Continuum was 0.05 x light)
     buildModifier(ModifierIds.solarPowered).priority(185) // after tanned, before stoneshield
+      .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(ReduceToolDamageModule.builder().reinforcedTooltip().formula()
+        .constant(0.01f).variable(LEVEL).multiply() // 1% per level
+        .constant(0.04f).add() // 5% at level 1, 6% at level 2
         .customVariable("light", new EntityConditionalStatVariable(new EntityLightVariable(LightLayer.SKY), 15))
-        .constant(0.05f).multiply()
+        .multiply() // up to 75% at level 1, or 90% at level 2
         .build());
     buildModifier(ModifierIds.tipped).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL).addModule(TippedModule.INSTANCE);
     buildModifier(ModifierIds.soft)
@@ -1171,9 +1178,10 @@ public class ModifierProvider extends AbstractModifierProvider {
     buildModifier(ModifierIds.enderdodging).priority(50) // after recurrent
       .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       // projectiles: 20% chance per piece, 30% when rebalanced. 10 second cooldown
-      .addModule(TeleportDodgeModule.builder().damageSource(isProjectile).chance(new LevelingValue(0.1f, 0.1f)).flat(10 * 20))
+      // balance: official v3.12.1 chances are 15% and 7.5% per level (Continuum was 10% + 10% and 5% + 5% per level)
+      .addModule(TeleportDodgeModule.builder().damageSource(isProjectile).chance(LevelingValue.eachLevel(0.15f)).flat(10 * 20))
       // entity caused damage: 10% chance per piece, 15% when rebalanced. 10 second cooldown
-      .addModule(TeleportDodgeModule.builder().damageSource(DamageSourcePredicate.and(DamageSourcePredicate.HAS_ENTITY, isProjectile.inverted())).chance(new LevelingValue(0.05f, 0.05f)).flat(10 * 20));
+      .addModule(TeleportDodgeModule.builder().damageSource(DamageSourcePredicate.and(DamageSourcePredicate.HAS_ENTITY, isProjectile.inverted())).chance(LevelingValue.eachLevel(0.075f)).flat(10 * 20));
     buildModifier(ModifierIds.forming)
       .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(StatBoostModule.add(ToolStats.ARMOR).eachLevel(1))
@@ -1217,8 +1225,8 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(new DamageOnUnequipModule(2, ModifierCondition.ANY_TOOL.with(ToolStackPredicate.tag(TinkerTags.Items.WORN_ARMOR))));
     buildModifier(ModifierIds.entwined)
       .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      // boots: +15% movement speed
-      .addModule(AttributeModule.builder(Attributes.MOVEMENT_SPEED.value(), Operation.ADD_MULTIPLIED_TOTAL).slots(armorMainHand).eachLevel(0.15f))
+      // balance: official v3.12.1 is +10% movement speed per level (Continuum was +15%)
+      .addModule(AttributeModule.builder(Attributes.MOVEMENT_SPEED.value(), Operation.ADD_MULTIPLIED_TOTAL).slots(armorMainHand).eachLevel(0.1f))
       // downside: don't take it off
       .addModule(new DamageOnUnequipModule(2, ModifierCondition.ANY_TOOL));
 
@@ -1302,8 +1310,11 @@ public class ModifierProvider extends AbstractModifierProvider {
     buildModifier(ModifierIds.featherweight)
       .addModule(StatBoostModule.add(ToolStats.DRAW_SPEED).eachLevel(0.05f))
       .addModule(StatBoostModule.add(ToolStats.ACCURACY).eachLevel(0.05f))
-      .addModule(ProtectionModule.builder().toolTag(TinkerTags.Items.ARMOR).eachLevel(-1.25f))
-      .addModule(AttributeModule.builder(TinkerAttributes.USE_ITEM_SPEED, Operation.ADD_VALUE).tooltipStyle(TooltipStyle.PERCENT).toolItem(ItemPredicate.tag(ARMOR)).eachLevel(0.1f));
+      // balance: official v3.12.1 is -0.625 protection, +5% movement speed and +0.05 use item speed per level
+      // (Continuum was -1.25 protection and +0.10 use item speed with no movement speed)
+      .addModule(ProtectionModule.builder().toolTag(TinkerTags.Items.ARMOR).eachLevel(-0.625f))
+      .addModule(AttributeModule.builder(Attributes.MOVEMENT_SPEED.value(), Operation.ADD_MULTIPLIED_BASE).toolItem(ItemPredicate.tag(ARMOR)).eachLevel(0.05f))
+      .addModule(AttributeModule.builder(TinkerAttributes.USE_ITEM_SPEED, Operation.ADD_VALUE).tooltipStyle(TooltipStyle.PERCENT).toolItem(ItemPredicate.tag(ARMOR)).eachLevel(0.05f));
     buildModifier(ModifierIds.dense)
       // from 0 to 5, repair formula is FACTOR * (1 - 0.025 * LEVEL * (11 - LEVEL))
       .addModule(RepairModule.builder().maxLevel(5).formula()
@@ -1681,7 +1692,8 @@ public class ModifierProvider extends AbstractModifierProvider {
     // traits - slimeskull
     buildModifier(ModifierIds.mithridatism).addModule(new EffectImmunityModule(MobEffects.POISON.value())).levelDisplay(ModifierLevelDisplay.NO_LEVELS);
     buildModifier(ModifierIds.boonOfSssss).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      .addModule(AttributeModule.builder(TinkerAttributes.GOOD_EFFECT_DURATION, Operation.ADD_MULTIPLIED_BASE).eachLevel(0.25f))
+      // balance: official v3.12.1 is 15%, +10% per level (Continuum was +25% per level)
+      .addModule(AttributeModule.builder(TinkerAttributes.GOOD_EFFECT_DURATION, Operation.ADD_MULTIPLIED_BASE).amount(0.15f, 0.1f))
       // reduce time of effects on removal. 20% reduction should cancel out the 25% addition
       .addModule(new ReduceEffectOnUnequipModule(MobEffectCategory.BENEFICIAL, LevelingValue.eachLevel(0.2f), ModifierCondition.ANY_TOOL));
     buildModifier(ModifierIds.balmOfSssss).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
