@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "status": "expected-only-not-compiled-or-executed",
+  "sourceBase": "d3576350dcdfd2ab776cfc4043a39d8b1733f774",
+  "mainVersion": "3.12.2-arthur.5",
+  "fixtureVersion": "0.0.5",
+  "newCaseCount": 26,
+  "existingUnchangedCaseCount": 81,
+  "expectedCombinedCaseCount": 107,
+  "acceptance": "Run each command once in a separate loaded empty fixture area. Require exact PASS name sets and matching summaries. REFUSED/FAIL/missing/duplicate output is not a pass. Existing 81 server cases and 64 FML cases remain separate requirements.",
+  "suites": [
+    {
+      "command": "aebm_continuum_entity_melting",
+      "source": "local-tests/returning/java/aebm/continuumtests/EntityMeltingServerFixture.java",
+      "sourceSha256": "8925acacade227bd9fb6234dadca0ee8353695c1f537bac1c7b8f481bbfe98ee",
+      "passPrefix": "AEBM_ENTITY_MELTING_PASS ",
+      "summary": "AEBM_ENTITY_MELTING_SUMMARY passed=7 failed=0",
+      "cases": [
+        "armor_stand_rejection_never_creates_fluid",
+        "accepted_living_damage_matches_loaded_output",
+        "canceled_incoming_damage_never_creates_fluid",
+        "empty_fuel_prevents_damage_and_fluid",
+        "fire_resistance_prevents_damage_and_fluid",
+        "invulnerable_entity_prevents_damage_and_fluid",
+        "full_tank_still_takes_accepted_damage"
+      ]
+    },
+    {
+      "command": "aebm_continuum_fancy_stand",
+      "source": "local-tests/returning/java/aebm/continuumtests/FancyArmorStandServerFixture.java",
+      "sourceSha256": "10e15d320e9f40923d86ecbae10f1a03c320c70b89d30958266ddbadb9b9f536",
+      "passPrefix": "AEBM_FANCY_STAND_PASS ",
+      "summary": "AEBM_FANCY_STAND_SUMMARY passed=19 failed=0",
+      "cases": [
+        "transformed_parent_dispatch_contract",
+        "player_break_bamboo",
+        "player_break_bone",
+        "player_break_necrotic_bone",
+        "player_break_clear",
+        "explosion_bamboo",
+        "explosion_bone",
+        "bamboo_mob_drops_disabled",
+        "bamboo_block_drops_disabled",
+        "bone_block_drops_disabled",
+        "prevent_equipment_drop",
+        "creative_break_no_items",
+        "invulnerable_rejected",
+        "invisible_rejected",
+        "player_may_build_false_rejected",
+        "ineligible_damage_rejected",
+        "generic_kill_no_items",
+        "vanilla_stand_control",
+        "cleanup_restores_rules_and_removes_owned_entities"
+      ]
+    }
+  ]
+}

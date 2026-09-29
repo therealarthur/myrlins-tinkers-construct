@@ -135,14 +135,15 @@ public class FancyArmorStandEntity extends ArmorStand {
     return Component.translatable(getStandItem().getDescriptionId());
   }
 
+  /** Replaces the vanilla stand drop while retaining the parent equipment-drop path. */
   @Override
-  protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHit) {
+  protected void brokenByPlayer(ServerLevel level, DamageSource source) {
     ItemStack stack = new ItemStack(getStandItem());
     if (this.hasCustomName()) {
       stack.set(DataComponents.CUSTOM_NAME, this.getCustomName());
     }
     Block.popResource(this.level(), this.blockPosition(), stack);
-    super.dropCustomDeathLoot(level, source, recentlyHit);
+    this.brokenByAnything(level, source);
   }
 
 

@@ -423,6 +423,7 @@ tasks.named('test', Test) {
     maxHeapSize = '512m'
     testLogging { events 'passed', 'skipped', 'failed'; showStandardStreams = true }
     systemProperty 'java.io.tmpdir', System.getenv('TEMP')
+    systemProperty 'aebm.continuum.projectRoot', project.projectDir.absolutePath
 }
 tasks.register('craftingRegression') {
     dependsOn tasks.named('test')
@@ -430,7 +431,7 @@ tasks.register('craftingRegression') {
 tasks.register('returningFixtureJar', Jar) {
     dependsOn tasks.named('returningFixtureClasses')
     archiveBaseName = 'aebm-continuum-returning-fixture'
-    archiveVersion = '0.0.4'
+    archiveVersion = '0.0.5'
     from sourceSets.returningFixture.output
     from('LICENSE') { into 'META-INF/licenses/continuum' }
 }

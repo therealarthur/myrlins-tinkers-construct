@@ -178,10 +178,11 @@ public class EntityMeltingModule {
           }
 
           // if the entity is successfully damaged, fill the tank with fluid
-          entity.hurt(entity.fireImmune() ? smelteryMagic() : smelteryHeat(), damage);
-          // its fine if we don't fill it all, leftover fluid is just lost
-          tank.fill(fluid, EXECUTE);
-          melted = true;
+          if (getLevel() instanceof ServerLevel serverLevel && entity.hurtServer(serverLevel, entity.fireImmune() ? smelteryMagic() : smelteryHeat(), damage)) {
+            // its fine if we don't fill it all, leftover fluid is just lost
+            tank.fill(fluid, EXECUTE);
+            melted = true;
+          }
         }
       }
     }
