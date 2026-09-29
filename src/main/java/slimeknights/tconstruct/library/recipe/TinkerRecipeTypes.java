@@ -76,6 +76,11 @@ public class TinkerRecipeTypes {
       SEVERING.get(),
       DATA.get()
     );
+    // The Tinkers books show crafting table recipes by ID (Continuum Core "mantle:crafting" pages, 15 recipes in
+    // Materials and You, Puny Smelting and the others). Official clients had every recipe; since 26.1 only the
+    // requested types arrive. NeoForge merges requests, so packs where another mod already requests crafting
+    // (Patchouli in this pack requests every type) send nothing extra.
+    event.sendRecipes(RecipeType.CRAFTING);
   }
 
   /**

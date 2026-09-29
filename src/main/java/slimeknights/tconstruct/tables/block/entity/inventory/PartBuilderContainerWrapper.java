@@ -7,6 +7,7 @@ import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.materials.definition.IMaterial;
 import slimeknights.tconstruct.library.materials.definition.MaterialVariantId;
+import slimeknights.tconstruct.library.recipe.SidedRecipeLookup;
 import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingLookup;
 import slimeknights.tconstruct.library.recipe.material.IMaterialValue;
@@ -71,6 +72,10 @@ public class PartBuilderContainerWrapper implements IPartBuilderContainer {
         Level world = getWorld();
         if (world != null && !world.isClientSide() && world.recipeAccess() instanceof RecipeManager manager) {
           this.material = manager.getRecipeFor(TinkerRecipeTypes.MATERIAL.get(), this, world).map(RecipeHolder::value).orElse(null);
+        } else if (world != null && world.isClientSide()) {
+          // The info panel reads this on the client. Official looked it up in the client recipe manager;
+          // since 26.1 the client only has the material recipes the server synced (TinkerRecipeTypes.sendRecipesToClient).
+          this.material = SidedRecipeLookup.getRecipeFor(world, TinkerRecipeTypes.MATERIAL.get(), this).map(RecipeHolder::value).orElse(null);
         } else {
           this.material = null;
         }

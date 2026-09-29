@@ -162,12 +162,24 @@ public class ContentTool extends PageContent {
       IModifiableDisplay tool = getTool();
       List<IToolPart> required = ToolPartsHook.parts(tool.getToolDefinition());
 
-      ToolBuildingRecipe toolRecipe = Optional.ofNullable(Minecraft.getInstance().level)
-        .flatMap(level -> Optional.ofNullable(getRecipeManager(level))
-          .flatMap(manager -> RecipeHelper.getRecipes(manager, TinkerRecipeTypes.TINKER_STATION.get(), ToolBuildingRecipe.class).stream()
-              .filter(recipe -> recipe.getOutput().asItem() == tool.asItem())
-              .findFirst()))
+      // Multiplayer clients have no recipe manager since 26.1: search the tinker station recipes the server
+      // synced first (in the same ID order the manager used), then fall back to the singleplayer server's manager.
+      ToolBuildingRecipe toolRecipe = slimeknights.tconstruct.library.client.recipe.ClientRecipeCache.getSnapshot().recipes().values().stream()
+        .map(holder -> holder.value())
+        .filter(recipe -> recipe.getType() == TinkerRecipeTypes.TINKER_STATION.get())
+        .filter(ToolBuildingRecipe.class::isInstance)
+        .map(ToolBuildingRecipe.class::cast)
+        .filter(recipe -> recipe.getOutput().asItem() == tool.asItem())
+        .findFirst()
         .orElse(null);
+      if (toolRecipe == null) {
+        toolRecipe = Optional.ofNullable(Minecraft.getInstance().level)
+          .flatMap(level -> Optional.ofNullable(getRecipeManager(level))
+            .flatMap(manager -> RecipeHelper.getRecipes(manager, TinkerRecipeTypes.TINKER_STATION.get(), ToolBuildingRecipe.class).stream()
+                .filter(recipe -> recipe.getOutput().asItem() == tool.asItem())
+                .findFirst()))
+          .orElse(null);
+      }
 
       if (toolRecipe != null) {
         ImmutableList.Builder<ItemStackList> partBuilder = ImmutableList.builder();

@@ -352,10 +352,15 @@ FluidUpdatePacket.IFluidPacketReceiver {
             return null;
         }
         RecipeManager recipeManager = this.getRecipeManager(this.level);
-        if (recipeManager == null) {
+        Collection<?> recipes;
+        if (recipeManager != null) {
+            recipes = recipeManager.recipeMap().byType(this.castingType);
+        } else if (this.level.isClientSide()) {
+            // official matched casting recipes on the client too; since 26.1 the client has the synced casting types
+            recipes = slimeknights.tconstruct.library.recipe.SidedRecipeLookup.recipes(this.level).byType(this.castingType);
+        } else {
             return null;
         }
-        Collection<?> recipes = recipeManager.recipeMap().byType(this.castingType);
         for (Object rawHolder : recipes) {
             RecipeHolder<?> holder = (RecipeHolder<?>)rawHolder;
             ICastingRecipe recipe = (ICastingRecipe)holder.value();
@@ -493,6 +498,7 @@ FluidUpdatePacket.IFluidPacketReceiver {
             this.reset();
         } else if (syncedCapacity > 0) {
             this.tank.setCapacity(syncedCapacity);
+            this.resolveClientRecipe(fluid);
         } else {
             int capacity = this.initNewCasting(fluid, FluidActions.EXECUTE);
             if (capacity > 0) {
@@ -501,6 +507,36 @@ FluidUpdatePacket.IFluidPacketReceiver {
         }
         this.tank.setFluid(fluid);
         this.onContentsChanged();
+    }
+
+    /**
+     * Client only. Official clients found the casting recipe themselves when the fluid packet arrived
+     * (initNewCasting), which drives the cooling visuals: the client timer, the smoke particles and the
+     * output item fading in over the fluid. The port's packet carries the server's capacity instead, so
+     * this finds the same recipe from the synced casting recipes, using the same slot rules as
+     * initNewCasting, without moving items or changing the synced capacity. The server stays authoritative.
+     */
+    private void resolveClientRecipe(FluidStack fluid) {
+        if (this.level == null || !this.level.isClientSide() || this.currentRecipe != null || fluid.isEmpty()) {
+            return;
+        }
+        boolean hasInput = !this.getItem(0).isEmpty();
+        boolean hasOutput = !this.getItem(1).isEmpty();
+        // Casting onto a finished output moves that output into the cast slot on the server first; the
+        // client learns the new slots from the block update, so only the plain cast slot case is resolved here.
+        if (hasOutput || !hasInput && this.requireCast) {
+            return;
+        }
+        this.castingInventory.setFluid(fluid.copyWithAmount(Integer.MAX_VALUE));
+        this.castingInventory.useInput();
+        CastingRecipeMatch match = this.findCastingRecipeMatch();
+        if (match != null) {
+            this.currentRecipe = match.recipe();
+            this.recipeName = match.name();
+            this.lastOutput = null;
+        }
+        this.castingInventory.useInput();
+        this.castingInventory.setFluid(fluid);
     }
 
     @Nullable
@@ -514,7 +550,18 @@ FluidUpdatePacket.IFluidPacketReceiver {
                 return ItemStack.EMPTY;
             }
             this.castingInventory.setFluid(this.tank.getFluid());
-            this.lastOutput = this.currentRecipe.assemble((ICastingContainer)this.castingInventory);
+            if (this.level.isClientSide()) {
+                // Only the renderer asks on the client, every frame; a recipe that cannot assemble on the
+                // client must not take the render thread down, so show no output item instead.
+                try {
+                    this.lastOutput = this.currentRecipe.assemble((ICastingContainer)this.castingInventory);
+                } catch (RuntimeException e) {
+                    TConstruct.LOG.error("Casting recipe {} failed to assemble on the client, not rendering its output", this.recipeName, e);
+                    this.lastOutput = ItemStack.EMPTY;
+                }
+            } else {
+                this.lastOutput = this.currentRecipe.assemble((ICastingContainer)this.castingInventory);
+            }
         }
         return this.lastOutput;
     }
@@ -550,16 +597,27 @@ FluidUpdatePacket.IFluidPacketReceiver {
         FluidStack fluid = this.tank.getFluid();
         if (!fluid.isEmpty()) {
             RecipeManager recipeManager = this.getRecipeManager(level);
-            if (recipeManager == null) {
+            java.util.Optional<RecipeHolder<?>> found;
+            if (recipeManager != null) {
+                found = recipeManager.byKey(ResourceKey.create((ResourceKey)Registries.RECIPE, (Identifier)name));
+            } else if (level.isClientSide()) {
+                // The client reads the synced recipe name to cool the cast like official: timer, smoke and the
+                // output fading in. Since 26.1 the client only has the casting recipes the server synced.
+                found = java.util.Optional.ofNullable(slimeknights.tconstruct.library.recipe.SidedRecipeLookup.byId(level, name));
+            } else {
                 return;
             }
-            recipeManager.byKey(ResourceKey.create((ResourceKey)Registries.RECIPE, (Identifier)name)).ifPresent(rawHolder -> {
+            found.ifPresent(rawHolder -> {
                 RecipeHolder<?> holder = (RecipeHolder<?>)rawHolder;
                 Recipe patt0$temp = holder.value();
                 if (!(patt0$temp instanceof ICastingRecipe)) {
                     return;
                 }
                 ICastingRecipe recipe = (ICastingRecipe)patt0$temp;
+                if (recipe != this.currentRecipe) {
+                    // cached output belongs to the previous recipe (the client keeps this block entity between casts)
+                    this.lastOutput = null;
+                }
                 this.recipeName = holder.id().identifier();
                 this.currentRecipe = recipe;
                 this.castingInventory.setFluid(fluid);
@@ -617,6 +675,13 @@ FluidUpdatePacket.IFluidPacketReceiver {
         this.rebindUnregisteredInventoryItems();
         input.child(TAG_TANK).ifPresent(this.tank::readFromInput);
         this.timer = input.getIntOr(TAG_TIMER, 0);
+        if (this.level != null && this.level.isClientSide() && input.getString(TAG_RECIPE).isEmpty()) {
+            // the server finished or cleared the cast; drop the recipe the client loaded for cooling visuals
+            this.currentRecipe = null;
+            this.recipeName = null;
+            this.lastOutput = null;
+            this.coolingTime = -1;
+        }
         input.getString(TAG_RECIPE).ifPresent(recipe -> {
             Identifier name = Identifier.parse((String)recipe);
             if (this.level != null) {

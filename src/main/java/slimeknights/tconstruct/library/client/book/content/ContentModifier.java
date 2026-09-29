@@ -25,6 +25,7 @@ import slimeknights.mantle.client.screen.book.element.BookElement;
 import slimeknights.mantle.client.screen.book.element.ImageElement;
 import slimeknights.mantle.client.screen.book.element.TextElement;
 import slimeknights.mantle.recipe.helper.RecipeHelper;
+import slimeknights.tconstruct.library.client.recipe.ClientRecipeCache;
 import slimeknights.mantle.util.ItemStackList;
 import slimeknights.mantle.util.html.HtmlElement;
 import slimeknights.mantle.util.html.HtmlGroup;
@@ -141,10 +142,15 @@ public class ContentModifier extends PageContent {
         assert level != null;
         TagKey<Item> filter = getToolFilterTag();
         // TODO: feel we can speed this up by not fetching the whole recipes list for every page
-        RecipeManager manager = getRecipeManager(level);
-        if (manager != null) {
+        // Multiplayer clients have no recipe manager since 26.1; read the tinker station recipes the server
+        // synced (like AbstractMaterialContent), falling back to the singleplayer server's manager.
+        java.util.Collection<? extends net.minecraft.world.item.crafting.RecipeHolder<?>> synced = ClientRecipeCache.getSnapshot().recipes().byType(TinkerRecipeTypes.TINKER_STATION.get());
+        RecipeManager manager = synced.isEmpty() ? getRecipeManager(level) : null;
+        if (!synced.isEmpty() || manager != null) {
           this.displayContext = SlotDisplayContext.fromLevel(level);
-          this.recipes = RecipeHelper.getJEIRecipes(level.registryAccess(), manager, TinkerRecipeTypes.TINKER_STATION.get(), IDisplayModifierRecipe.class).stream()
+          this.recipes = (!synced.isEmpty()
+              ? RecipeHelper.getJEIRecipes(level.registryAccess(), synced.stream(), IDisplayModifierRecipe.class)
+              : RecipeHelper.getJEIRecipes(level.registryAccess(), manager, TinkerRecipeTypes.TINKER_STATION.get(), IDisplayModifierRecipe.class)).stream()
             // must output this modifier, and must have at least 1 tool that matches the filter
             .filter(recipe -> {
               try {

@@ -39,6 +39,8 @@ public class PartBuilderScreen extends BaseTabbedScreen<PartBuilderBlockEntity,P
   private static final MutableComponent UNCRAFTABLE_MATERIAL = TConstruct.makeTranslation("gui", "part_builder.uncraftable").withStyle(ChatFormatting.RED);
   private static final MutableComponent UNCRAFTABLE_MATERIAL_TOOLTIP = TConstruct.makeTranslation("gui", "part_builder.uncraftable.tooltip");
   private static final Identifier BACKGROUND = TConstruct.getResource("textures/gui/part_builder.png");
+  /** Comparator to order stats in the part builder display, as official (Identifier order: path, then namespace) */
+  private static final java.util.Comparator<IMaterialStats> STATS_COMPARATOR = java.util.Comparator.comparing(stat -> stat.getIdentifier().getId());
   // locations
   // slider
   /** Texture U for the handle texture */
@@ -277,7 +279,12 @@ public class PartBuilderScreen extends BaseTabbedScreen<PartBuilderBlockEntity,P
     }
 
     MaterialId id = materialVariant.getId();
-    for (IMaterialStats stat : MaterialRegistry.getInstance().getAllStats(id)) {
+    // official orders the stat types by ID (same order as the official panel) and skips the repair kit marker
+    List<IMaterialStats> materialStats = new java.util.ArrayList<>(MaterialRegistry.getInstance().getAllStats(id));
+    materialStats.sort(STATS_COMPARATOR);
+    for (IMaterialStats stat : materialStats) {
+      // skip repair kit, its just an internal marker and the traits are inaccurate
+      if (stat == slimeknights.tconstruct.tools.stats.StatlessMaterialStats.REPAIR_KIT) continue;
       List<Component> info = stat.getLocalizedInfo();
 
       if (!info.isEmpty()) {
