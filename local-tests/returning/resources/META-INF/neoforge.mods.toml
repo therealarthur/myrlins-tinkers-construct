@@ -4,7 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="aebmcontinuumtests"
-version="0.0.6"
+version="0.0.7"
 displayName="AEBM Continuum Returning fixture"
 description="Development-only server command fixture. Exclude from release packs."
 
