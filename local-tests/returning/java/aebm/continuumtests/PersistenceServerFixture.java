@@ -1,5 +1,6 @@
 package aebm.continuumtests;
 
+import com.mojang.logging.LogUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -60,7 +61,27 @@ public final class PersistenceServerFixture {
       this.source = source;
       this.level = source.getLevel();
       // Instances are never installed into chunks; any normal casting state-update attempt is out of bounds.
-      this.position = BlockPos.containing(source.getPosition().x, level.getMaxY() + 32, source.getPosition().z);
+      this.position = unloadedColumn(level, BlockPos.containing(source.getPosition().x, level.getMaxY() + 32, source.getPosition().z));
+    }
+
+    /**
+     * Casting notifications (sendBlockUpdated) reach ChunkHolder.blockChanged, which indexes the chunk
+     * section array without a height check when the column's chunk is ticking. Above build height that
+     * throws ArrayIndexOutOfBoundsException, a vanilla environment artifact that real casting tables inside
+     * build height never hit. The head2 console runs used an unloaded spawn column; a player-issued run or
+     * a forceloaded area does not. Step east in whole chunks until the column is not loaded, so the
+     * notifications stay no-ops as intended. This only inspects chunk state; it never loads a chunk.
+     */
+    private static BlockPos unloadedColumn(ServerLevel level, BlockPos start) {
+      // Negative control for the harness: keep the command's own column even when it is loaded.
+      if (Boolean.getBoolean("aebm.fixture.persistence.sourceColumn")) {
+        return start;
+      }
+      BlockPos candidate = start;
+      for (int step = 0; step < 256 && level.hasChunkAt(candidate); step++) {
+        candidate = candidate.east(16);
+      }
+      return candidate;
     }
 
     private int run() {
@@ -256,6 +277,8 @@ public final class PersistenceServerFixture {
           cause = cause.getCause();
         }
         source.sendFailure(Component.literal("AEBM_PERSISTENCE_FAIL " + name + " " + cause));
+        // Full stack for diagnosis; the FAIL line above stays the single machine-readable record.
+        LogUtils.getLogger().error("AEBM_PERSISTENCE_TRACE {}", name, failure);
       }
     }
   }

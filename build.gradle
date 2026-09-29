@@ -436,7 +436,8 @@ tasks.register('craftingRegression') {
 tasks.register('returningFixtureJar', Jar) {
     dependsOn tasks.named('returningFixtureClasses')
     archiveBaseName = 'aebm-continuum-returning-fixture'
-    archiveVersion = '0.0.5'
+    // 0.0.6 adds FixtureAutorun (unattended plan runner for tools/run-fixture-server.ps1); 0.0.5 was the arthur.5 fixture.
+    archiveVersion = '0.0.6'
     from sourceSets.returningFixture.output
     from('LICENSE') { into 'META-INF/licenses/continuum' }
 }
