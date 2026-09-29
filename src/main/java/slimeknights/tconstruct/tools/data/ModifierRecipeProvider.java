@@ -460,7 +460,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                                     .save(consumer, prefix(ModifierIds.blasting, upgradeFolder));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.hydraulic)
                                     .setTools(harvestTools)
-                                    .setInput(Tags.Items.GEMS_PRISMARINE, 1, 36) // stupid forge name
+                                    .setInput(Items.PRISMARINE_SHARD, 1, 36) // parity (oracle): official forge:dusts/prismarine is the shard; NeoForge c:gems/prismarine is crystals
                                     .setMaxLevel(5)
                                     .setSlots(SlotType.UPGRADE, 1)
                                     .saveSalvage(consumer, prefix(ModifierIds.hydraulic, upgradeSalvage))
@@ -1528,7 +1528,8 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     ModifierRecipeBuilder.modifier(ModifierIds.autosmelt)
                          .addInput(Tags.Items.RAW_MATERIALS)
                          .addInput(Blocks.BLAST_FURNACE)
-                         .addInput(Tags.Items.INGOTS)
+                         // parity (oracle): official forge:ingots also held brick and nether brick; NeoForge c:ingots does not
+                         .addInput(CompoundIngredient.of(tagIngredient(Tags.Items.INGOTS), Ingredient.of(Items.BRICK, Items.NETHER_BRICK)))
                          .addInput(Tags.Items.STORAGE_BLOCKS_COAL)
                          .addInput(Tags.Items.STORAGE_BLOCKS_COAL)
                          .setMaxLevel(1)

@@ -73,6 +73,40 @@ public final class TinkerMaterials extends TinkerModule {
   /*
    * Serializers
    */
+  /**
+   * parity (oracle): 26.1 links trim materials to items through the minecraft:provides_trim_material component instead of
+   * the trim material's ingredient field. Without it the armor trim modifier offered none of the 16 Tinkers trim materials
+   * official has (the ingots below and the four slime crystals). Resolved from the loaded registries, so a data pack that
+   * removes one of the trim materials simply leaves that item without the component.
+   */
+  @SubscribeEvent
+  void addTrimMaterialComponents(net.neoforged.neoforge.event.ModifyDefaultComponentsEvent event) {
+    trimMaterial(event, slimesteel.getIngot(), MaterialIds.slimesteel);
+    trimMaterial(event, amethystBronze.getIngot(), MaterialIds.amethystBronze);
+    trimMaterial(event, pigIron.getIngot(), MaterialIds.pigIron);
+    trimMaterial(event, roseGold.getIngot(), MaterialIds.roseGold);
+    trimMaterial(event, cobalt.getIngot(), MaterialIds.cobalt);
+    trimMaterial(event, steel.getIngot(), MaterialIds.steel);
+    trimMaterial(event, manyullyn.getIngot(), MaterialIds.manyullyn);
+    trimMaterial(event, hepatizon.getIngot(), MaterialIds.hepatizon);
+    trimMaterial(event, cinderslime.getIngot(), MaterialIds.cinderslime);
+    trimMaterial(event, queensSlime.getIngot(), MaterialIds.queensSlime);
+    trimMaterial(event, knightmetal.getIngot(), MaterialIds.knightmetal);
+    trimMaterial(event, knightslime.getIngot(), MaterialIds.knightslime);
+    trimMaterial(event, slimeknights.tconstruct.world.TinkerWorld.earthGeode.asItem(), MaterialIds.earthslime);
+    trimMaterial(event, slimeknights.tconstruct.world.TinkerWorld.skyGeode.asItem(), MaterialIds.skyslime);
+    trimMaterial(event, slimeknights.tconstruct.world.TinkerWorld.ichorGeode.asItem(), MaterialIds.ichor);
+    trimMaterial(event, slimeknights.tconstruct.world.TinkerWorld.enderGeode.asItem(), MaterialIds.enderslime);
+  }
+
+  /** Gives the item the trim material with the same ID as the Tinkers material, when that trim material is loaded */
+  private static void trimMaterial(net.neoforged.neoforge.event.ModifyDefaultComponentsEvent event, net.minecraft.world.level.ItemLike item, slimeknights.tconstruct.library.materials.definition.MaterialId material) {
+    net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.trim.TrimMaterial> key = net.minecraft.resources.ResourceKey.create(Registries.TRIM_MATERIAL, material.getId());
+    event.modify(item, (components, registries, itemKey) -> registries.lookup(Registries.TRIM_MATERIAL)
+      .flatMap(lookup -> lookup.get(key))
+      .ifPresent(holder -> components.set(net.minecraft.core.component.DataComponents.PROVIDES_TRIM_MATERIAL, holder)));
+  }
+
   @SubscribeEvent
   void registerSerializers(RegisterEvent event) {
     event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES, MaterialIngredient.ID, () -> MaterialIngredient.TYPE);

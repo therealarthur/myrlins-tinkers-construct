@@ -80,7 +80,9 @@ public class CompositeCastingRecipe extends MaterialCastingRecipe {
       for (MaterialFluidRecipe recipe : MaterialCastingLookup.getAllCompositeFluids()) {
         MaterialVariant output = recipe.getOutput();
         MaterialVariant input = recipe.getInput();
-        if (recipe.isVisible() && input != null
+        // parity (oracle): official lists hidden composite recipes too (hide_in_book only hides them from the book), so the
+        // loot-only ancient hide parts show their venom cleaning; Continuum filtered on recipe.isVisible()
+        if (input != null
             && result.canUseMaterial(output.getId()) && result.canUseMaterial(input.getId())
             && this.materials.matches(output.getVariant())) {
           List<FluidStack> fluids = recipe.getFluids();

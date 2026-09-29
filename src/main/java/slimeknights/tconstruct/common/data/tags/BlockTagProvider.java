@@ -479,7 +479,11 @@ public class BlockTagProvider extends TagsProvider<Block> {
       for (FoliageType grass : FoliageType.values()) {
         ToolMaterial dirtTier = dirt.getHarvestTier();
         ToolMaterial grassTier = grass.getHarvestTier();
-        ToolMaterial tier = tierRank(dirtTier) >= tierRank(grassTier) ? dirtTier : grassTier;
+        // parity (oracle): official compares mining levels (gold is level 0, like wood) and only breaks ties by tier order;
+        // Continuum ranked gold above stone, so earth and sky mixed grass lost minecraft:needs_stone_tool
+        int dirtLevel = officialMiningLevel(dirtTier);
+        int grassLevel = officialMiningLevel(grassTier);
+        ToolMaterial tier = dirtLevel == grassLevel ? (tierRank(dirtTier) >= tierRank(grassTier) ? dirtTier : grassTier) : (dirtLevel > grassLevel ? dirtTier : grassTier);
         TagKey<Block> tag = harvestTag(tier);
         if (tag != null) {
           this.tag(tag).add(TinkerWorld.slimeGrass.get(dirt).get(grass));
@@ -738,6 +742,15 @@ public class BlockTagProvider extends TagsProvider<Block> {
       return NEEDS_NETHERITE_TOOL;
     }
     return null;
+  }
+
+  /** Official 1.20.1 Tiers#getLevel: wood and gold 0, stone 1, iron 2, diamond 3, netherite 4 */
+  private static int officialMiningLevel(ToolMaterial material) {
+    if (material == ToolMaterial.NETHERITE) return 4;
+    if (material == ToolMaterial.DIAMOND) return 3;
+    if (material == ToolMaterial.IRON) return 2;
+    if (material == ToolMaterial.STONE) return 1;
+    return 0;
   }
 
   private static int tierRank(ToolMaterial material) {

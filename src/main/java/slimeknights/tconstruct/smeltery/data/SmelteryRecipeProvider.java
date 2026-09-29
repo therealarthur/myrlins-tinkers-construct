@@ -548,7 +548,10 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     searedCasting(consumer, TinkerSmeltery.searedCobble.getStairs(), Ingredient.of(Blocks.COBBLESTONE_STAIRS), castingFolder + "cobble/stairs");
     searedCasting(consumer, TinkerSmeltery.searedCobble.getWall(), Ingredient.of(Blocks.COBBLESTONE_WALL), castingFolder + "cobble/wall");
     // stone
-    searedCasting(consumer, TinkerSmeltery.searedStone, LegacyIngredientType.ofTag(Tags.Items.STONES), castingFolder + "stone/block_from_clay");
+    // parity (oracle): official forge:stone also held polished andesite, diorite, granite, deepslate and infested stone and deepslate
+    searedCasting(consumer, TinkerSmeltery.searedStone, CompoundIngredient.of(LegacyIngredientType.ofTag(Tags.Items.STONES), Ingredient.of(
+      Blocks.POLISHED_ANDESITE, Blocks.POLISHED_DIORITE, Blocks.POLISHED_GRANITE, Blocks.POLISHED_DEEPSLATE, Blocks.INFESTED_STONE, Blocks.INFESTED_DEEPSLATE)),
+      castingFolder + "stone/block_from_clay");
     searedSlabCasting(consumer, TinkerSmeltery.searedStone.getSlab(), Ingredient.of(Blocks.STONE_SLAB), castingFolder + "stone/slab");
     searedCasting(consumer, TinkerSmeltery.searedStone.getStairs(), Ingredient.of(Blocks.STONE_STAIRS), castingFolder + "stone/stairs");
     // stone bricks
@@ -1289,7 +1292,7 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
                             .save(consumer, recipeKey(location(folder + "blaze/cream")));
     ItemCastingRecipeBuilder.basinRecipe(Blocks.MAGMA_BLOCK)
                             .setFluidAndTime(TinkerFluids.blazingBlood, FluidType.BUCKET_VOLUME / 5)
-                            .setCast(TinkerTags.Items.CONGEALED_SLIME, true)
+                            .setCast(TinkerWorld.congealedSlime.get(SlimeType.EARTH), true) // parity (oracle): official casts on earth congealed slime only (was #tconstruct:congealed_slime)
                             .save(consumer, recipeKey(location(folder + "blaze/congealed")));
     ItemCastingRecipeBuilder.tableRecipe(TinkerMaterials.blazingBone)
                             .setFluidAndTime(TinkerFluids.blazingBlood, FluidType.BUCKET_VOLUME / 5)
@@ -1372,7 +1375,9 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
       // fake ingots are in the ingot tag, but you get the default "missing" ingot from that
       // so subtract it out and replace with the material version for nicer display
       DifferenceIngredient.of(LegacyIngredientType.ofTag(Tags.Items.INGOTS), Ingredient.of(TinkerToolParts.fakeIngot)),
-      MaterialIngredient.of(TinkerToolParts.fakeIngot).toVanilla()
+      MaterialIngredient.of(TinkerToolParts.fakeIngot).toVanilla(),
+      // parity (oracle): official forge:ingots also held brick and nether brick; NeoForge c:ingots does not
+      Ingredient.of(Items.BRICK, Items.NETHER_BRICK)
     ), TinkerSmeltery.ingotCast, castFolder, "ingots");
     this.castCreation(consumer, Tags.Items.NUGGETS, TinkerSmeltery.nuggetCast, castFolder);
     this.castCreation(consumer, Tags.Items.GEMS, TinkerSmeltery.gemCast, castFolder);
@@ -1493,7 +1498,13 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     // glass
     MeltingRecipeBuilder.melting(LegacyIngredientType.ofTag(ItemTags.SMELTS_TO_GLASS), TinkerFluids.moltenGlass, FluidValues.GLASS_BLOCK, 1.5f)
                         .save(consumer, recipeKey(location(folder + "glass/sand")));
-    MeltingRecipeBuilder.melting(LegacyIngredientType.ofTag(TinkerTags.Items.GLASS_SILICA), TinkerFluids.moltenGlass, FluidValues.GLASS_BLOCK, 1.0f)
+    // parity (oracle): official forge:glass/silica also held vanilla glass and all stained glass; NeoForge has no such tag,
+    // so those blocks are listed as direct inputs next to the Tinkers silica tag instead of editing a c: tag
+    MeltingRecipeBuilder.melting(CompoundIngredient.of(LegacyIngredientType.ofTag(TinkerTags.Items.GLASS_SILICA), Ingredient.of(
+        Blocks.GLASS, Blocks.WHITE_STAINED_GLASS, Blocks.ORANGE_STAINED_GLASS, Blocks.MAGENTA_STAINED_GLASS, Blocks.LIGHT_BLUE_STAINED_GLASS,
+        Blocks.YELLOW_STAINED_GLASS, Blocks.LIME_STAINED_GLASS, Blocks.PINK_STAINED_GLASS, Blocks.GRAY_STAINED_GLASS, Blocks.LIGHT_GRAY_STAINED_GLASS,
+        Blocks.CYAN_STAINED_GLASS, Blocks.PURPLE_STAINED_GLASS, Blocks.BLUE_STAINED_GLASS, Blocks.BROWN_STAINED_GLASS, Blocks.GREEN_STAINED_GLASS,
+        Blocks.RED_STAINED_GLASS, Blocks.BLACK_STAINED_GLASS)), TinkerFluids.moltenGlass, FluidValues.GLASS_BLOCK, 1.0f)
                         .save(consumer, recipeKey(location(folder + "glass/block")));
     MeltingRecipeBuilder.melting(LegacyIngredientType.ofTag(TinkerTags.Items.GLASS_PANES_SILICA), TinkerFluids.moltenGlass, FluidValues.GLASS_PANE, 0.5f)
                         .save(consumer, recipeKey(location(folder + "glass/pane")));
@@ -2342,7 +2353,7 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     molten(consumer, TinkerFluids.moltenDiamond).ore(Byproduct.DEBRIS ).largeGem().dust().gear().geore().minecraftTools("diamond", true).toolCostMelting(11, "tools_costing_11").common(HAMMER);
     molten(consumer, TinkerFluids.moltenEmerald).ore(Byproduct.DIAMOND).largeGem().dust().gear().geore();
     molten(consumer, TinkerFluids.moltenQuartz ).ore(Byproduct.IRON   ).smallGem().dust().gear().geore();
-    molten(consumer, TinkerFluids.moltenAmethyst).smallGem();
+    molten(consumer, TinkerFluids.moltenAmethyst).storageBlock(Items.AMETHYST_BLOCK).smallGem(); // parity (oracle): NeoForge lacks c:storage_blocks/amethyst
 
     // standard alloys
     metal(consumer, TinkerFluids.moltenNetherite).metal().dust().plate().gear().coin(); // handles tools elsewhere due to byproducts
