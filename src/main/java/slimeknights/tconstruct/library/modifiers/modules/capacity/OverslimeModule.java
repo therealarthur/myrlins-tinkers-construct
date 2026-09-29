@@ -27,7 +27,9 @@ public class OverslimeModule extends CapacityBarHook.PersistentDataCapacityBar {
   public static final OverslimeModule INSTANCE = new OverslimeModule();
 
   /** Stat for the overslime cap, copies the durability global multiplier on build */
-  public static final FloatToolStat OVERSLIME_STAT = new FloatToolStat(new ToolStatId(TConstruct.MOD_ID, "overslime"), 0xFF71DC85, 0, 0, Short.MAX_VALUE, TinkerTags.Items.DURABILITY) {
+  // arthur.9: official declares an IntegerToolStat (same stored float, shown as a whole number); the port's FloatToolStat
+  // printed "Overslime Capacity: 112.5". The field type stays FloatToolStat as in official.
+  public static final FloatToolStat OVERSLIME_STAT = new slimeknights.tconstruct.library.tools.stat.impl.IntegerToolStat(new ToolStatId(TConstruct.MOD_ID, "overslime"), 0xFF71DC85, 0, 0, Short.MAX_VALUE, TinkerTags.Items.DURABILITY) {
     @Override
     public Float build(ModifierStatsBuilder parent, Object builderObj) {
       return super.build(parent, builderObj) * parent.getMultiplier(ToolStats.DURABILITY);

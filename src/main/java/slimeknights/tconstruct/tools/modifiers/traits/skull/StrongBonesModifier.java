@@ -18,6 +18,7 @@ import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.fluid.FluidEffect;
 import slimeknights.tconstruct.library.modifiers.fluid.FluidEffectContext;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
+import slimeknights.tconstruct.library.modifiers.impl.SingleLevelModifier;
 import slimeknights.tconstruct.library.modifiers.modules.technical.ArmorLevelModule;
 import slimeknights.tconstruct.library.modifiers.modules.technical.CureOnRemovalModule;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
@@ -25,7 +26,9 @@ import slimeknights.tconstruct.library.tools.capability.TinkerDataCapability.Tin
 import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 
-public class StrongBonesModifier extends NoLevelsModifier {
+// arthur.9: official extends SingleLevelModifier (level 2 and up show "Strong Bones II") and scales the milk durations by
+// level; the port used NoLevelsModifier and fixed durations, which equal official at level 1 only.
+public class StrongBonesModifier extends SingleLevelModifier {
   /** Key for modifiers that are boosted by drinking milk */
   public static final TinkerDataKey<Integer> CALCIFIABLE = TConstruct.createKey("calcifable");
   /** Module to add to any calcifiable modifiers */
@@ -42,14 +45,22 @@ public class StrongBonesModifier extends NoLevelsModifier {
     hookBuilder.addModule(CureOnRemovalModule.HELMET);
   }
 
-  @SuppressWarnings("unchecked")
+  /** Single duration form used before arthur.9, kept for reference: the same as a flat duration with no per level part */
+  @SuppressWarnings("unused")
   private static boolean drinkMilk(LivingEntity living, int duration, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction action) {
+    return drinkMilk(living, duration, 0, action);
+  }
+
+  /** Official form: each effect lasts {@code flat + eachLevel * level} ticks for the level that grants it */
+  @SuppressWarnings("unchecked")
+  private static boolean drinkMilk(LivingEntity living, int flat, int eachLevel, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction action) {
     // strong bones has to be the helmet as we use it for curing
     // TODO 1.20: can use the new cure effects to make this work in any slot
     ItemStack helmet = living.getItemBySlot(EquipmentSlot.HEAD);
     boolean didSomething = false;
-    if (ModifierUtil.getModifierLevel(helmet, TinkerModifiers.strongBones.getId()) > 0) {
-      MobEffectInstance effect = new MobEffectInstance(MobEffects.RESISTANCE, duration);
+    int level = ModifierUtil.getModifierLevel(helmet, TinkerModifiers.strongBones.getId());
+    if (level > 0) {
+      MobEffectInstance effect = new MobEffectInstance(MobEffects.RESISTANCE, flat + eachLevel * level);
       // on simulate, don't apply the effect, just ask if we can apply
       didSomething = action.execute() ? living.addEffect(effect) : living.canBeAffected(effect);
       // quick exit on simulate: no more information needed
@@ -57,8 +68,9 @@ public class StrongBonesModifier extends NoLevelsModifier {
         return true;
       }
     }
-    if (ArmorLevelModule.getLevel(living, CALCIFIABLE) > 0) {
-      MobEffectInstance effect = new MobEffectInstance((Holder<MobEffect>)(Holder<?>) TinkerModifiers.calcifiedEffect, duration, 0);
+    level = ArmorLevelModule.getLevel(living, CALCIFIABLE);
+    if (level > 0) {
+      MobEffectInstance effect = new MobEffectInstance((Holder<MobEffect>)(Holder<?>) TinkerModifiers.calcifiedEffect, flat + eachLevel * level, 0);
       didSomething |= action.execute() ? living.addEffect(effect) : living.canBeAffected(effect);
     }
     return didSomething;
@@ -68,7 +80,8 @@ public class StrongBonesModifier extends NoLevelsModifier {
   private static void onItemFinishUse(LivingEntityUseItemEvent.Finish event) {
     LivingEntity living = (LivingEntity) event.getEntity();
     if (event.getItem().getItem() == Items.MILK_BUCKET) {
-      drinkMilk(living, 1200, EXECUTE);
+      // official: 30 seconds plus 30 seconds per level (60 seconds at level 1, as before)
+      drinkMilk(living, 600, 600, EXECUTE);
     }
   }
 
@@ -79,7 +92,8 @@ public class StrongBonesModifier extends NoLevelsModifier {
   public static final FluidEffect<FluidEffectContext.Entity> FLUID_EFFECT = FluidEffect.simple((fluid, scale, context, action) -> {
     LivingEntity target = context.getLivingTarget();
     // while we could scale, doing it flat ensures we don't charge extra
-    if (target != null && drinkMilk(target, (int)(20*10 * scale.value()), action)) {
+    // official: 10 seconds per level of the granting modifier, scaled by the fluid amount
+    if (target != null && drinkMilk(target, 0, (int)(20*10 * scale.value()), action)) {
       return scale.value();
     }
     return 0;

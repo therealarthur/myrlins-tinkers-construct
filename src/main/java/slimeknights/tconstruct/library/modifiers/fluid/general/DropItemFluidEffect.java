@@ -38,6 +38,8 @@ public record DropItemFluidEffect(ItemOutput item) implements FluidEffect<FluidE
 
   @Override
   public Component getDescription(RegistryAccess registryAccess) {
-    return FluidEffect.makeTranslation(getLoader(), item.get().getHoverName());
+    // Official used item.get(). In 26.1 the output caches a stack made while data loads, before item components are
+    // bound, so it has no name component and the page read "Drops ". copy() rebinds the stack to the registered item.
+    return FluidEffect.makeTranslation(getLoader(), item.copy().getHoverName());
   }
 }

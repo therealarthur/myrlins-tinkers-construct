@@ -17,13 +17,16 @@ import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.armor.EquipmentChangeModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.KeybindInteractModifierHook;
 import slimeknights.tconstruct.library.modifiers.impl.NoLevelsModifier;
+import slimeknights.tconstruct.library.modifiers.impl.SingleLevelModifier;
 import slimeknights.tconstruct.library.module.ModuleHookMap.Builder;
 import slimeknights.tconstruct.library.tools.context.EquipmentChangeContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.shared.TinkerEffects;
 import slimeknights.tconstruct.tools.modifiers.effect.NoMilkEffect;
 
-public class SelfDestructiveModifier extends NoLevelsModifier implements KeybindInteractModifierHook, EquipmentChangeModifierHook {
+// arthur.9: official extends SingleLevelModifier, so level 2 and up show their numeral ("Self Destructive II") and the
+// explosion grows with level; the port used NoLevelsModifier and a fixed amplifier of 2 (the level 1 value).
+public class SelfDestructiveModifier extends SingleLevelModifier implements KeybindInteractModifierHook, EquipmentChangeModifierHook {
   @Override
   protected void registerHooks(Builder hookBuilder) {
     super.registerHooks(hookBuilder);
@@ -33,7 +36,8 @@ public class SelfDestructiveModifier extends NoLevelsModifier implements Keybind
   @Override
   public boolean startInteract(IToolStackView tool, ModifierEntry modifier, Player player, EquipmentSlot slot, TooltipKey keyModifier) {
     if (player.isShiftKeyDown()) {
-      TinkerEffects.selfDestructing.get().apply(player, 30, 2, true);
+      // official: amplifier 2 per level (2 at level 1, as before)
+      TinkerEffects.selfDestructing.get().apply(player, 30, 2 * modifier.intEffectiveLevel(), true);
       player.playSound(SoundEvents.CREEPER_PRIMED, 1.0F, 0.5F);
       return true;
     }
