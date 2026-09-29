@@ -222,6 +222,12 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
       ModifierIds.shiny,
       TinkerModifiers.dyed.getId(), TinkerModifiers.embellishment.getId(), TinkerModifiers.banner.getId(),
       ModifierIds.farsighted, ModifierIds.nearsighted);
+
+    // parity/rei: recipe viewer workstations, same contents as official 3.12.1
+    this.tag(slimeknights.tconstruct.common.TinkerTags.Modifiers.CRAFTING).add(ModifierIds.workbench, ModifierIds.craftingTable);
+    this.tag(slimeknights.tconstruct.common.TinkerTags.Modifiers.SMELTING).add(ModifierIds.smelting, ModifierIds.autosmelt);
+    this.tag(slimeknights.tconstruct.common.TinkerTags.Modifiers.MELTING).add(TinkerModifiers.melting.getId());
+    this.tag(slimeknights.tconstruct.common.TinkerTags.Modifiers.SEVERING).add(TinkerModifiers.severing.getId());
   }
 
   @Override

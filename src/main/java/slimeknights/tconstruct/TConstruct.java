@@ -184,6 +184,8 @@ public class TConstruct {
     generator.addProvider(server, new BiomeTagProvider(packOutput, lookupProvider));
     generator.addProvider(server, new EnchantmentTagProvider(packOutput, lookupProvider));
     generator.addProvider(server, new MenuTypeTagProvider(packOutput, lookupProvider));
+    // parity/rei: official creative tab tag for recipe viewers
+    generator.addProvider(server, new slimeknights.tconstruct.common.data.tags.CreativeTabTagProvider(packOutput, lookupProvider));
     generator.addProvider(server, new PotionTagProvider(packOutput, lookupProvider));
     generator.addProvider(server, new slimeknights.tconstruct.common.data.tags.InstrumentTagProvider(packOutput, lookupProvider));
     generator.addProvider(server, new DamageTypeTagProvider(packOutput, datapackRegistryProvider.getRegistryProvider()));

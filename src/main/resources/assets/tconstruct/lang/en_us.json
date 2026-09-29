@@ -4672,9 +4672,13 @@
   "recipe.tconstruct.tool_build.missing_parts": "One or more required tool parts are missing.",
   "recipe.tconstruct.damaging.broken": "Tool is already broken",
   "recipe.tconstruct.overslime.at_capacity": "Tool has no more space for overslime",
+  "recipe.tconstruct.overslime.tooltip": "Restores %s overslime to the tool, provided it already has the overslime modifier.",
   "recipe.tconstruct.modifier.amount": "Amount: %s",
 
   "recipe.tconstruct.swappable.already_present": "Tool already contains %s with variant %s",
+  "recipe.tconstruct.banner.solid": "Solid",
+  "recipe.tconstruct.banner.clear": "Clear",
+  "recipe.tconstruct.banner.clear.no_patterns": "Must have at least one pattern to make the banner clear",
 
   "gui.tconstruct.modifier_worktable": "Modifier Worktable",
   "gui.tconstruct.modifier_worktable.title": "Modifier Tuning",
@@ -4738,6 +4742,22 @@
   "recipe.tconstruct.recycling.info": "Select which item to salvage. Based on the durability, may be able to salvage unselected items.",
   "recipe.tconstruct.recycling.not_enough_durability": "Item does not have enough durability to salvage anything.",
   "recipe.tconstruct.recycling.no_enchantments": "A tool cannot be recycled if it is enchanted, use the grindstone to remove them first.",
+  "recipe.tconstruct.sand_cast": "Sand Casts",
+  "recipe.tconstruct.sand_cast.info": "Select a pattern to create a sand cast with that shape. Sand casts can be used a single time in the casting table to create a tool part from molten materials.",
+
+  "recipe.tconstruct.tool_repair": "Tool Repair",
+  "recipe.tconstruct.tool_repair.tooltip": "Restores durability based on the material and item used. Can use repair kits with valid materials, or any items associated with the valid material.",
+  "recipe.tconstruct.tool_repair.crafting_table": "Restores durability based on the material and item used. Can use repair kits with valid materials.",
+  "recipe.tconstruct.tool_repair.modifier": "Repairs tools with the %s modifier. Repair amount scales with modifier level.",
+  "recipe.tconstruct.tool_damaging": "Tool Damaging",
+  "recipe.tconstruct.tool_damaging.tooltip": "Reduces the tool's durability by the given amount. Useful for maximizing modifier effects.",
+
+  "recipe.tconstruct.part_swapping": "Part Swapping",
+  "recipe.tconstruct.part_swapping.tooltip": "Swaps a material on the tool for the material of the part.",
+  "recipe.tconstruct.material_swapping": "Material Swapping",
+  "recipe.tconstruct.material_swapping.tooltip": "Swaps a material on the tool for a different material.",
+  "recipe.tconstruct.tool_material_swapping": "Tool Material Swapping",
+  "recipe.tconstruct.tool_material_swapping.tooltip": "Swaps a material on the tool for a material on the other tool based on the slot.\nSacrificed tool must have no modifiers.",
 
 
   "_comment": "GUIs Messages",
@@ -4901,11 +4921,13 @@
   "jei.tconstruct.modifier_ingredient": "%s Modifier",
   "jei.tconstruct.modifier_slot.ingredient": "Modifier Slot: %s",
   "jei.tconstruct.modifier_slot.id": "Slot ID: %s",
+  "jei.tconstruct.material_ingredient": "%s Material",
 
   "jei.tconstruct.casting.basin": "Casting Basin",
   "jei.tconstruct.casting.table": "Casting Table",
   "jei.tconstruct.casting.cast_kept": "Cast item can be reused in later recipes",
   "jei.tconstruct.casting.cast_consumed": "Cast item is consumed on casting",
+  "jei.tconstruct.casting.time": "Cooling time: %s s",
 
   "jei.tconstruct.molding.title": "Molding",
   "jei.tconstruct.molding.pattern_consumed": "Pattern is consumed on crafting",
@@ -4917,6 +4939,12 @@
   "jei.tconstruct.melting.smeltery": "In smeltery:",
   "jei.tconstruct.melting.melter": "In melter:",
   "jei.tconstruct.foundry.title": "Foundry",
+
+  "jei.tconstruct.fuel.title": "Smeltery Fuel",
+  "jei.tconstruct.fuel.solid": "Solid Fuel",
+  "jei.tconstruct.fuel.duration.lasts": "Lasts:",
+  "jei.tconstruct.fuel.duration.liquid": "%s s / %s mb",
+  "jei.tconstruct.fuel.duration.solid": "%s s / item",
 
   "jei.tconstruct.entity_melting.title": "Entity Melting",
   "jei.tconstruct.entity_melting.per_hearts": "Per %s Hearts Damage",
@@ -4935,13 +4963,27 @@
   "jei.tconstruct.modifiers.level.range": "Level range: %s-%s",
   "jei.tconstruct.modifiers.level.exact": "For level: %s",
 
+  "jei.tconstruct.materials.title": "Materials",
+  "jei.tconstruct.materials.value": "Value: %s",
+  "jei.tconstruct.materials.value.tooltip": "Number of units in the part builder and multiplier on repair value",
+  "jei.tconstruct.materials.amount": "Per unit: %s mb",
+  "jei.tconstruct.materials.amount.tooltip": "Amount of fluid needed per unit of material when casting",
+  "jei.tconstruct.materials.craftable": "Material can be used in the part builder.",
+  "jei.tconstruct.materials.uncraftable": "Material requires alternative crafting methods such as the casting table.",
+  "jei.tconstruct.materials.leftover": "Leftover for extra value",
+  "jei.tconstruct.materials.composite": "Composite base",
+
   "jei.tconstruct.severing.title": "Severing",
 
   "jei.tconstruct.tinkering.tool_building": "Tool Building",
   "jei.tconstruct.tinkering.tool_building.anvil": "Broad tools require the Tinker's Anvil to be created or swap parts",
 
+  "jei.tconstruct.tool_tinkering.title": "Tool Tinkering",
+
   "jei.tconstruct.part_builder.title": "Part Builder",
   "jei.tconstruct.part_builder.cost": "Cost: %s",
+  "jei.tconstruct.part_builder.reusable": "Reusable",
+  "jei.tconstruct.part_builder.consumed": "Consumed",
 
   "jei.tconstruct.modifier_worktable.title": "Modifier Worktable",
   "jei.tconstruct.tinker_station.too_large": "Recipe is too large to craft in this station.",
