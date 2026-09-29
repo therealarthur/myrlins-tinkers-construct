@@ -1,0 +1,521 @@
+{
+ "date": "2026-09-29",
+ "stream": "fixes",
+ "branch": "parity/fixes",
+ "sourceCommit": "e31cec62943a596bdac774a081a8a61ede0da5d2",
+ "targetVersion": "3.12.2-arthur.8-fixes",
+ "minecraft": "26.1.2",
+ "neoforge": "26.1.2.109",
+ "java": "Oracle JDK 25.0.1 (build-locked default)",
+ "build": {
+  "tasks": "jar craftingRegression returningFixtureJar",
+  "result": "BUILD SUCCESSFUL",
+  "exit": 0,
+  "seconds": 226,
+  "log": "D:\\MC\\tinkers-parity\\tools\\logs\\wt-fixes-20260929-140011.log",
+  "console": "D:/MC/tinkers-parity/tmp/wt-fixes/build-final-console.txt"
+ },
+ "fml": {
+  "totals": {
+   "tests": 75,
+   "passed": 70,
+   "skipped": 5,
+   "failures": 0,
+   "errors": 0
+  },
+  "skippedClientOnly": [
+   "aebm.continuumtests.MaterialBookContentTest.newSnapshotResetsBooksOnNextAccessButSameSnapshotKeepsTheirState()",
+   "aebm.continuumtests.MaterialBookContentTest.singleStatPagesShowTheirOwnTraitsAndDoNotAdvertiseSlimeParts()",
+   "aebm.continuumtests.MaterialBookContentTest.bothShippedSectionsLoadEveryGroupAndKeepSkullBookmarks()",
+   "slimeknights.tconstruct.library.client.model.tools.ToolModelGeometryTest.actualDyeAndConstantFluidModelKeysChangeWithPersistentData()",
+   "slimeknights.tconstruct.library.client.model.tools.ToolModelGeometryTest.normalModelKeepsAllDirectionsAndGuiKeepsOnlyFrontWithLayerOrder()"
+  ],
+  "suites": [
+   {
+    "suite": "aebm.continuumtests.BonusFormulaParityTest",
+    "tests": 3,
+    "passed": 3,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.BonusFormulaParityTest.xml",
+    "sha256": "3b9e7290e66cf23fa310c388d4ab3f8a2272a3101f25a042d38f76baf5e6523e"
+   },
+   {
+    "suite": "aebm.continuumtests.ClientEntryRefreshTest",
+    "tests": 4,
+    "passed": 4,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.ClientEntryRefreshTest.xml",
+    "sha256": "c6edeb24d05ebd13a36a39187303777b3a35bb8665964d984bd91028ecbf6c88"
+   },
+   {
+    "suite": "aebm.continuumtests.ClientRecipeCacheTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.ClientRecipeCacheTest.xml",
+    "sha256": "93ec507382499f46f20c190badaa982765012a71e9354aedcb641e658c459028"
+   },
+   {
+    "suite": "aebm.continuumtests.FixesDataParityTest",
+    "tests": 6,
+    "passed": 6,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.FixesDataParityTest.xml",
+    "sha256": "bc25ce5f7900a5fb75d77c31c28204972b3213785595b4338dab2cc009d8d987"
+   },
+   {
+    "suite": "aebm.continuumtests.FluidParticleCodecTest",
+    "tests": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.FluidParticleCodecTest.xml",
+    "sha256": "553f205530d93bc0e85b415b4ddb15a0cd955b03144eda9f9cfad68237f16efa"
+   },
+   {
+    "suite": "aebm.continuumtests.IngredientDisplayTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.IngredientDisplayTest.xml",
+    "sha256": "487923701d089ac3f75c2f43577182227fb3fc83613cb2b0a1f8b3568f3c16e0"
+   },
+   {
+    "suite": "aebm.continuumtests.InstrumentIngredientTest",
+    "tests": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.InstrumentIngredientTest.xml",
+    "sha256": "029ffcac9963fb44525d6aeddb8289990143c61fb1048f3a3e91d64a8aa0f43c"
+   },
+   {
+    "suite": "aebm.continuumtests.MaterialBookContentTest",
+    "tests": 3,
+    "passed": 0,
+    "skipped": 3,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.MaterialBookContentTest.xml",
+    "sha256": "9b7acc285fe027d567c9a3d6b4dbffa8b1cc3d4bf5ae50215f0c36fc632baf47"
+   },
+   {
+    "suite": "aebm.continuumtests.MaterialRecipeComponentCacheTest",
+    "tests": 3,
+    "passed": 3,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.MaterialRecipeComponentCacheTest.xml",
+    "sha256": "b48ac18d23ee42bc49192360a1bc5036f58adc769113f1d7dbdd58b64ccb3dda"
+   },
+   {
+    "suite": "aebm.continuumtests.ModifierConditionTest",
+    "tests": 7,
+    "passed": 7,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.ModifierConditionTest.xml",
+    "sha256": "a52da8843357307d73ccf3adcd53b9c15d6727a50f62fc9ab5ecd6df98da5130"
+   },
+   {
+    "suite": "aebm.continuumtests.ModifierTooltipParityTest",
+    "tests": 6,
+    "passed": 6,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.ModifierTooltipParityTest.xml",
+    "sha256": "603122bbb08fa6b1b0bc69d90b242262084ba261af0725bdf7be82bf8ef312a2"
+   },
+   {
+    "suite": "aebm.continuumtests.OptionalMeltingRecipeTest",
+    "tests": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.OptionalMeltingRecipeTest.xml",
+    "sha256": "9ab294c0f7e68382afa7c4e9f5f4f64b30b184e7cc8c97b152cb10bdbd890da9"
+   },
+   {
+    "suite": "aebm.continuumtests.PotionCastingParityTest",
+    "tests": 3,
+    "passed": 3,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.PotionCastingParityTest.xml",
+    "sha256": "1283089ecacefc73c403369d1b6aefd933a747c449749cf8c4d6fe7f63c28829"
+   },
+   {
+    "suite": "aebm.continuumtests.RecipeDisplayMapperTest",
+    "tests": 5,
+    "passed": 5,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.RecipeDisplayMapperTest.xml",
+    "sha256": "5d46a954590967ac5fb7a0c46ba676142fef6d211b109e11fe142062ec0d4f18"
+   },
+   {
+    "suite": "aebm.continuumtests.SideInventoryTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.SideInventoryTest.xml",
+    "sha256": "3a7da6b8e2d1b22059a4debc4c2dbe7e74debf57c4f3881fb4ff072621ba906a"
+   },
+   {
+    "suite": "aebm.continuumtests.TankModelDataTest",
+    "tests": 4,
+    "passed": 4,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.TankModelDataTest.xml",
+    "sha256": "49ddfd238ca6b009389662c640b601b162423adfab991c8fd8f6f10c4e0f525d"
+   },
+   {
+    "suite": "aebm.continuumtests.ToolApiParityTest",
+    "tests": 5,
+    "passed": 5,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-aebm.continuumtests.ToolApiParityTest.xml",
+    "sha256": "fa254e2cb7f500e1a25ebd8272e4405bc2353c4ef9bd37d2ca72a8a3b7295e8c"
+   },
+   {
+    "suite": "slimeknights.tconstruct.library.client.model.tools.ToolModelGeometryTest",
+    "tests": 2,
+    "passed": 0,
+    "skipped": 2,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-slimeknights.tconstruct.library.client.model.tools.ToolModelGeometryTest.xml",
+    "sha256": "4c5ecbc8758615228a163c59c97e9665bf650567c50e4aaf26d7aa6378feaf28"
+   },
+   {
+    "suite": "slimeknights.tconstruct.library.materials.FirstMaterialConcurrencyTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-slimeknights.tconstruct.library.materials.FirstMaterialConcurrencyTest.xml",
+    "sha256": "fecacdfabaa7ee45cd0b637aa0b6881475b42a5076501bec1f8239c8f7bb1d7a"
+   },
+   {
+    "suite": "slimeknights.tconstruct.library.materials.MaterialReloadTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-slimeknights.tconstruct.library.materials.MaterialReloadTest.xml",
+    "sha256": "ff519bddfe724c97a8d94018c1f281ab1c1e96605f5ee493fa79d1991c71d6a0"
+   },
+   {
+    "suite": "slimeknights.tconstruct.library.recipe.tinkerstation.building.PartSwappingOverrideCodecTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-slimeknights.tconstruct.library.recipe.tinkerstation.building.PartSwappingOverrideCodecTest.xml",
+    "sha256": "35e1e7562f6b722559cf2eaf719f6f2deb812809e4c0e387bad9a98c0a8b1450"
+   },
+   {
+    "suite": "slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommandTest",
+    "tests": 11,
+    "passed": 11,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-slimeknights.tconstruct.shared.command.subcommand.GenerateMeltingRecipesCommandTest.xml",
+    "sha256": "5e5d4af55188112700003853c92ea37388efb0ffb8d5d03ff2f577bc8b452eb2"
+   },
+   {
+    "suite": "slimeknights.tconstruct.tables.data.NamedForgeRecipeTest",
+    "tests": 1,
+    "passed": 1,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "xml": "D:/MC/tinkers-parity/wt-fixes/build/test-results/test/TEST-slimeknights.tconstruct.tables.data.NamedForgeRecipeTest.xml",
+    "sha256": "3c778dbd4f82e3e76c28958acc628276fb966d4d435992bcb5752146de26d897"
+   }
+  ]
+ },
+ "jars": {
+  "ContinuumConstruct-26.1.2-3.12.2-arthur.8-fixes.jar": {
+   "path": "D:/MC/tinkers-parity/wt-fixes/build/libs/ContinuumConstruct-26.1.2-3.12.2-arthur.8-fixes.jar",
+   "sha256": "c04837e03f432b346ceda3b2ef1bf972de505964487b4d65eea39b6d3be55fe2"
+  },
+  "aebm-continuum-returning-fixture-0.0.6.jar": {
+   "path": "D:/MC/tinkers-parity/wt-fixes/build/libs/aebm-continuum-returning-fixture-0.0.6.jar",
+   "sha256": "c9bfb9f8b3510c56e71ef4909c64311eaaad3b28d319515cbfe0bdd6f0daa170"
+  },
+  "ContinuumCore-26.1.2-1.12.0.jar": {
+   "path": "D:/MC/tinkers-parity/deps/downloads/ContinuumCore-26.1.2-1.12.0.jar",
+   "sha256": "fb011d7faaeca846665515734b6c931408095fcca2fa2586bb4dfe325bb5ee7c"
+  }
+ },
+ "serverFixtures": {
+  "harness": "D:/MC/tinkers-parity/tools/run-fixture-server.ps1 (NeoForge 26.1.2.109 official installer, -Xmx3g, nogui, fresh flat world per run, under build-locked.ps1)",
+  "ok": false,
+  "runDir": "D:\\MC\\tinkers-parity\\server-fixture\\runs\\wt-fixes-20260929-141256",
+  "resultJson": "D:/MC/tinkers-parity/server-fixture/runs/wt-fixes-20260929-141256/fixture-result.json",
+  "serverLog": "D:\\MC\\tinkers-parity\\server-fixture\\runs\\wt-fixes-20260929-141256\\logs\\latest.log",
+  "lockLog": "D:\\MC\\tinkers-parity\\tools\\logs\\wt-fixes-20260929-141257.log",
+  "seconds": 345,
+  "jarsTested": {
+   "ContinuumConstruct-26.1.2-3.12.2-arthur.8-fixes.jar": {
+    "source": "D:\\MC\\tinkers-parity\\wt-fixes\\build\\libs\\ContinuumConstruct-26.1.2-3.12.2-arthur.8-fixes.jar",
+    "sha256": "c04837e03f432b346ceda3b2ef1bf972de505964487b4d65eea39b6d3be55fe2"
+   },
+   "ContinuumCore-26.1.2-1.12.0.jar": {
+    "source": "D:\\MC\\tinkers-parity\\deps\\downloads\\ContinuumCore-26.1.2-1.12.0.jar",
+    "sha256": "fb011d7faaeca846665515734b6c931408095fcca2fa2586bb4dfe325bb5ee7c"
+   },
+   "aebm-continuum-returning-fixture-0.0.6.jar": {
+    "source": "D:\\MC\\tinkers-parity\\wt-fixes\\build\\libs\\aebm-continuum-returning-fixture-0.0.6.jar",
+    "sha256": "c9bfb9f8b3510c56e71ef4909c64311eaaad3b28d319515cbfe0bdd6f0daa170"
+   }
+  },
+  "totals": {
+   "suites": 13,
+   "suitesOk": 11,
+   "expectedCases": 115,
+   "passed": 112,
+   "failed": 3
+  },
+  "originalTwelveCommands": {
+   "expectedCases": 107,
+   "note": "aebmpersistencetest now has 9 cases (7 original + 2 ledger acceptance rows added by the fixes stream)",
+   "expectedFromManifest": 107,
+   "passedOfOriginal107": 104,
+   "notPassed": [
+    "aebmrecipeviewertest:material_ingredient_preserves_material_and_components (owner rei)",
+    "aebmtooltinkeringtest:six_loaded_costs_and_indexed_holes (owner rei)",
+    "aebmtooltinkeringtest:damage_focus_matches_station (owner rei)"
+   ]
+  },
+  "suites": [
+   {
+    "command": "aebmreturningtest",
+    "label": "AEBM_RETURNING",
+    "owner": "fixes",
+    "expected": 9,
+    "passed": 9,
+    "failed": 0,
+    "summary": "passed=9 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmcraftingtest",
+    "label": "AEBM_CRAFTING",
+    "owner": "fixes",
+    "expected": 4,
+    "passed": 4,
+    "failed": 0,
+    "summary": "passed=4 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmpersistencetest",
+    "label": "AEBM_PERSISTENCE",
+    "owner": "fixes",
+    "expected": 9,
+    "passed": 9,
+    "failed": 0,
+    "summary": "passed=9 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmarmortest",
+    "label": "AEBM_ARMOR",
+    "owner": "materials",
+    "expected": 10,
+    "passed": 10,
+    "failed": 0,
+    "summary": "passed=10 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmblockwalkertest",
+    "label": "AEBM_BLOCK_WALKER",
+    "owner": "fixes",
+    "expected": 5,
+    "passed": 5,
+    "failed": 0,
+    "summary": "passed=5 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmsolidfueltest",
+    "label": "AEBM_SOLID_FUEL",
+    "owner": "fixes",
+    "expected": 10,
+    "passed": 10,
+    "failed": 0,
+    "summary": "passed=10 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmcombattest",
+    "label": "AEBM_COMBAT",
+    "owner": "modifiers",
+    "expected": 6,
+    "passed": 6,
+    "failed": 0,
+    "summary": "passed=6 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebmrecipeviewertest",
+    "label": "AEBM_VIEWER",
+    "owner": "rei",
+    "expected": 7,
+    "passed": 6,
+    "failed": 1,
+    "summary": "passed=6 failed=1",
+    "ok": false
+   },
+   {
+    "command": "aebmtooltinkeringtest",
+    "label": "AEBM_TOOL_TINKERING",
+    "owner": "rei",
+    "expected": 9,
+    "passed": 7,
+    "failed": 2,
+    "summary": "passed=7 failed=2",
+    "ok": false
+   },
+   {
+    "command": "aebmrecipemappertest",
+    "label": "AEBM_RECIPE_MAPPER",
+    "owner": "rei",
+    "expected": 14,
+    "passed": 14,
+    "failed": 0,
+    "summary": "passed=14 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebm_continuum_entity_melting",
+    "label": "AEBM_ENTITY_MELTING",
+    "owner": "fixes",
+    "expected": 7,
+    "passed": 7,
+    "failed": 0,
+    "summary": "passed=7 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebm_continuum_fancy_stand",
+    "label": "AEBM_FANCY_STAND",
+    "owner": "fixes",
+    "expected": 19,
+    "passed": 19,
+    "failed": 0,
+    "summary": "passed=19 failed=0",
+    "ok": true
+   },
+   {
+    "command": "aebm_continuum_fixes_parity",
+    "label": "AEBM_FIXES_PARITY",
+    "owner": "fixes",
+    "expected": 6,
+    "passed": 6,
+    "failed": 0,
+    "summary": "passed=6 failed=0",
+    "ok": true
+   }
+  ],
+  "failures": [
+   {
+    "suite": "aebmrecipeviewertest",
+    "owner": "rei",
+    "problem": "FAIL material_ingredient_preserves_material_and_components java.lang.AssertionError: requested material was lost"
+   },
+   {
+    "suite": "aebmtooltinkeringtest",
+    "owner": "rei",
+    "problem": "FAIL six_loaded_costs_and_indexed_holes java.lang.AssertionError: displayed cost is wrong"
+   },
+   {
+    "suite": "aebmtooltinkeringtest",
+    "owner": "rei",
+    "problem": "FAIL damage_focus_matches_station java.lang.AssertionError: focused damage differs from station"
+   }
+  ]
+ },
+ "negativeControls": [
+  {
+   "control": "unknown command fails the run",
+   "expectedOk": false,
+   "ok": false,
+   "asExpected": true,
+   "plan": [
+    "# Fixture plan generated by run-fixture-server.ps1 at 20260929-141843 for wt-fixes",
+    "forceload add 2048 2048 2111 2111",
+    "!await_loaded 2048 2048 2111 2111 1200",
+    "!wait 20",
+    "aebmcraftingtest",
+    "aebm_no_such_command"
+   ],
+   "jvmProperties": [],
+   "problems": [
+    "unknown or unparsable commands: 1 5 aebm_no_such_command :: Unknown or incomplete command. (Minecraft parse error at position 0, marker text trimmed)"
+   ],
+   "resultJson": "D:/MC/tinkers-parity/server-fixture/runs/wt-fixes-20260929-141843/fixture-result.json"
+  },
+  {
+   "control": "persistence over a ticking spawn column reproduces the section-index artifact",
+   "expectedOk": false,
+   "ok": false,
+   "asExpected": true,
+   "plan": [
+    "# Fixture plan generated by run-fixture-server.ps1 at 20260929-141947 for wt-fixes",
+    "forceload add -64 -64 63 63",
+    "!await_loaded -64 -64 63 63 1200",
+    "!wait 20",
+    "aebmpersistencetest"
+   ],
+   "jvmProperties": [
+    "aebm.fixture.persistence.sourceColumn=true"
+   ],
+   "problems": [
+    "suite AEBM_PERSISTENCE (aebmpersistencetest, owner fixes) failed"
+   ],
+   "resultJson": "D:/MC/tinkers-parity/server-fixture/runs/wt-fixes-20260929-141947/fixture-result.json"
+  }
+ ],
+ "runnerSelfTest": {
+  "file": "D:/MC/tinkers-parity/server-fixture/runner-selftest-20260929.txt",
+  "lastLine": "RUNNER_SELFTEST cases=13 wrong=0"
+ },
+ "datagen": {
+  "status": "runData completes headlessly after DatagenComponentBootstrap",
+  "firstRunLog": "D:/MC/tinkers-parity/tools/logs/wt-fixes-20260929-131942.log",
+  "restorationRunLog": "D:/MC/tinkers-parity/tools/logs/wt-fixes-20260929-134153.log",
+  "drift": "local-audit/fixes-datagen-drift.json"
+ }
+}
