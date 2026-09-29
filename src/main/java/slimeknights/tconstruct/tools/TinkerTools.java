@@ -383,6 +383,9 @@ public final class TinkerTools extends TinkerModule {
       ToolStats.register(ToolEnergyCapability.MAX_STAT);
       ToolStats.register(EdibleModule.HUNGER);
       ToolStats.register(EdibleModule.SATURATION);
+      // parity (oracle): official 3.12.1 edible stats
+      ToolStats.register(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.EAT_DURATION);
+      ToolStats.register(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.COUNTER_CHANCE);
 
       ToolModule.LOADER.register(getResource("empty"), ToolModule.EMPTY.getLoader());
       // tool definition components

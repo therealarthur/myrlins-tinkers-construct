@@ -1358,21 +1358,50 @@ public class ModifierProvider extends AbstractModifierProvider {
       .addModule(StatBoostModule.multiplyBase(OverslimeModule.OVERSLIME_STAT).eachLevel(0.5f));
     buildModifier(ModifierIds.crumbling).addModule(ConditionalMiningSpeedModule.builder().blocks(BlockPredicate.REQUIRES_TOOL.inverted()).allowIneffective().eachLevel(1f));
     buildModifier(ModifierIds.enhanced).priority(60).addModule(UPGRADE);
-    buildModifier(ModifierIds.tasty).priority(40)
-      .addModule(EdibleModule.create(TinkerCommons.bacon, LevelingInt.flat(16), new LevelingInt(5, 5), LevelingValue.eachLevel(0.15f)))
+    // parity (oracle): official 3.12.1 edible system. The shared tconstruct:edible trait (priority 40) owns eating, and each
+    // food trait adds its representative item, durability cost, effect and the edible_counter_chance stat (priority 100).
+    // Continuum used one combined module per trait at priority 40; former definitions kept for reference:
+    // buildModifier(ModifierIds.tasty).priority(40)
+    // .addModule(EdibleModule.create(TinkerCommons.bacon, LevelingInt.flat(16), new LevelingInt(5, 5), LevelingValue.eachLevel(0.15f)))
+    // .addModule(StatBoostModule.add(EdibleModule.HUNGER).eachLevel(1))
+    // .addModule(StatBoostModule.add(EdibleModule.SATURATION).flat(0.6f))
+    // .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+    // buildModifier(ModifierIds.scrumptious).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
+    // .addModule(EdibleModule.create(Items.HONEY_BOTTLE, LevelingInt.flat(16), new LevelingInt(5, 3), LevelingValue.eachLevel(0.15f), false, MobEffects.POISON.value()))
+    // .addModule(StatBoostModule.add(EdibleModule.HUNGER).eachLevel(1))
+    // .addModule(StatBoostModule.add(EdibleModule.SATURATION).flat(0.1f))
+    // .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+    // buildModifier(ModifierIds.savory).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
+    // .addModule(EdibleModule.create(TinkerCommons.cheeseIngot, LevelingInt.flat(16), new LevelingInt(4, 4), LevelingValue.eachLevel(0.15f), true, null))
+    // .addModule(StatBoostModule.add(EdibleModule.HUNGER).eachLevel(1))
+    // .addModule(StatBoostModule.add(EdibleModule.SATURATION).flat(0.4f))
+    // .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+    buildModifier(TinkerModifiers.edible.getId()).priority(40).showInTooltips(ShowInTooltips.NEVER)
+      .addModule(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.INSTANCE)
+      .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+    buildModifier(ModifierIds.tasty)
+      .addModule(new ModifierTraitModule(TinkerModifiers.edible.getId(), 1, true))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleRepresentativeItemModule(TinkerCommons.bacon))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleConsumeDurabilityModule(new LevelingInt(5, 5)))
       .addModule(StatBoostModule.add(EdibleModule.HUNGER).eachLevel(1))
       .addModule(StatBoostModule.add(EdibleModule.SATURATION).flat(0.6f))
-      .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+      .addModule(StatBoostModule.add(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.COUNTER_CHANCE).eachLevel(0.15f));
     buildModifier(ModifierIds.scrumptious).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      .addModule(EdibleModule.create(Items.HONEY_BOTTLE, LevelingInt.flat(16), new LevelingInt(5, 3), LevelingValue.eachLevel(0.15f), false, MobEffects.POISON.value()))
+      .addModule(new ModifierTraitModule(TinkerModifiers.edible.getId(), 1, true))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleRepresentativeItemModule(Items.HONEY_BOTTLE))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleConsumeDurabilityModule(new LevelingInt(5, 3)))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleRemoveEffectModule(MobEffects.POISON.value()))
       .addModule(StatBoostModule.add(EdibleModule.HUNGER).eachLevel(1))
       .addModule(StatBoostModule.add(EdibleModule.SATURATION).flat(0.1f))
-      .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+      .addModule(StatBoostModule.add(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.COUNTER_CHANCE).eachLevel(0.15f));
     buildModifier(ModifierIds.savory).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
-      .addModule(EdibleModule.create(TinkerCommons.cheeseIngot, LevelingInt.flat(16), new LevelingInt(4, 4), LevelingValue.eachLevel(0.15f), true, null))
+      .addModule(new ModifierTraitModule(TinkerModifiers.edible.getId(), 1, true))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleRepresentativeItemModule(TinkerCommons.cheeseIngot))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleConsumeDurabilityModule(new LevelingInt(4, 4)))
+      .addModule(new slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleCureRandomEffectModule())
       .addModule(StatBoostModule.add(EdibleModule.HUNGER).eachLevel(1))
       .addModule(StatBoostModule.add(EdibleModule.SATURATION).flat(0.4f))
-      .addModule(new ModifierTraitModule(ModifierIds.edibleTooltip, 1, true));
+      .addModule(StatBoostModule.add(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.COUNTER_CHANCE).eachLevel(0.15f));
     buildModifier(ModifierIds.crystalbound)
       .addModule(RestrictAngleModule.INSTANCE)
       .addModule(StatBoostModule.add(ToolStats.VELOCITY).toolTag(TinkerTags.Items.RANGED).eachLevel(0.1f))

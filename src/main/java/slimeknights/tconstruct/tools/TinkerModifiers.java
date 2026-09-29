@@ -416,6 +416,8 @@ public final class TinkerModifiers extends TinkerModule {
   public static final StaticModifier<DwarvenModifier> dwarven = MODIFIERS.register("dwarven", DwarvenModifier::new);
   // traits - tier 2
   public static final DynamicModifier golden = MODIFIERS.registerDynamic("golden");
+  /** Official 3.12.1 edible trait shared by tasty, savory and scrumptious so food stats apply once (parity oracle fixes) */
+  public static final DynamicModifier edible = MODIFIERS.registerDynamic("edible");
   // traits - tier 3
   public static final StaticModifier<LaceratingModifier> lacerating = MODIFIERS.register("lacerating", LaceratingModifier::new);
   public static final StaticModifier<Modifier> overworked = MODIFIERS.register("overworked", Modifier::new);
@@ -876,7 +878,14 @@ public final class TinkerModifiers extends TinkerModule {
       ModifierModule.LOADER.register(getResource("luck_apothic_enchantment_cap"), LuckApothicEnchantmentCapModule.LOADER);
       ModifierModule.LOADER.register(getResource("tool_actions"), ToolActionsModule.LOADER);
       ModifierModule.LOADER.register(getResource("tool_action_transform"), ToolActionTransformModule.LOADER);
-      ModifierModule.LOADER.register(getResource("edible"), EdibleModule.LOADER);
+      // parity (oracle): official 3.12.1 edible system. tconstruct:edible is now the official core module; the former
+      // Continuum all in one module stays loadable as tconstruct:continuum_edible for any pack data that used it.
+      ModifierModule.LOADER.register(getResource("edible"), slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.LOADER);
+      ModifierModule.LOADER.register(getResource("continuum_edible"), EdibleModule.LOADER);
+      ModifierModule.LOADER.register(getResource("edible_consume_durability"), slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleConsumeDurabilityModule.LOADER);
+      ModifierModule.LOADER.register(getResource("edible_representative_item"), slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleRepresentativeItemModule.LOADER);
+      ModifierModule.LOADER.register(getResource("edible_cure_random_effect"), slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleCureRandomEffectModule.LOADER);
+      ModifierModule.LOADER.register(getResource("edible_remove_effect"), slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleRemoveEffectModule.LOADER);
       ModifierModule.LOADER.register(getResource("melee_instrument"), MeleeInstrumentModule.LOADER);
       // build
       ModifierModule.LOADER.register(getResource("conditional_stat"), ConditionalStatModule.LOADER);

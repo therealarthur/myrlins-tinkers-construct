@@ -402,6 +402,8 @@ public class ModifierHooks {
   public static final ModuleHook<GeneralInteractionModifierHook> GENERAL_INTERACT = register("general_interact", GeneralInteractionModifierHook.class, GeneralInteractionModifierHook.FirstMerger::new, ((tool, modifier, player, hand, source) -> InteractionResult.PASS));
   /** Called when the player is actively using this tool, regardless of active modifier. */
   public static final ModuleHook<UsingToolModifierHook> TOOL_USING = register("tool_using", UsingToolModifierHook.class, UsingToolModifierHook.AllMerger::new, new UsingToolModifierHook() {});
+  /** Hook called when an edible tool is eaten to perform effects other than restoring hunger and saturation, official 3.12.1 (parity oracle fixes) */
+  public static final ModuleHook<slimeknights.tconstruct.library.modifiers.hook.interaction.EdibleEffectHook> EDIBLE_EFFECT = register("edible_effect", slimeknights.tconstruct.library.modifiers.hook.interaction.EdibleEffectHook.class, slimeknights.tconstruct.library.modifiers.hook.interaction.EdibleEffectHook.AllMerger::new, (tool, modifier, player, eatenSlot, hunger, saturation, representativeItems) -> {});
   /** Hook for interacting with blocks */
   public static final ModuleHook<BlockInteractionModifierHook> BLOCK_INTERACT = register("block_interact", BlockInteractionModifierHook.class, BlockInteractionModifierHook.FirstMerger::new, new BlockInteractionModifierHook() {});
   /** Hook for interacting with entities */
