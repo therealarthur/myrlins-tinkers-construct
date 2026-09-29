@@ -485,16 +485,30 @@ public class TooltipUtil {
     Component name = Component.translatable(attribute.getDescriptionId());
     if (showEquals) {
       tooltip.add(Component.literal(" ")
-                           .append(Component.translatable("attribute.modifier.equals." + operation.id(), Util.BONUS_FORMAT.format(displayValue), name))
+                           .append(Component.translatable("attribute.modifier.equals." + operation.id(), net.minecraft.world.item.component.ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(displayValue), name))
                            .withStyle(ChatFormatting.DARK_GREEN));
     } else if (amount > 0.0D) {
-      tooltip.add((Component.translatable("attribute.modifier.plus." + operation.id(), Util.BONUS_FORMAT.format(displayValue), name))
+      // official formats with the vanilla attribute format (no sign); the plus and take templates add the sign.
+      // Util.BONUS_FORMAT prefixes its own "+", which printed "++1 Knockback Resistance" and "-+5%".
+      tooltip.add((Component.translatable("attribute.modifier.plus." + operation.id(), net.minecraft.world.item.component.ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(displayValue), name))
                     .withStyle(ChatFormatting.BLUE));
     } else if (amount < 0.0D) {
       displayValue *= -1;
-      tooltip.add((Component.translatable("attribute.modifier.take." + operation.id(), Util.BONUS_FORMAT.format(displayValue), name))
+      tooltip.add((Component.translatable("attribute.modifier.take." + operation.id(), net.minecraft.world.item.component.ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(displayValue), name))
                     .withStyle(ChatFormatting.RED));
     }
+  }
+
+  /**
+   * Official hid the vanilla attribute lines ("When in Main Hand: ...") of a tool while shift is held, and while control is
+   * held on a tool with materials, through the MODIFIERS hide flag (see the commented MODIFIER_HIDE_FLAGS). 26.1 has no hide
+   * flag hook; ModifierClientEvents skips the attribute tooltip when this returns true.
+   * @param definition  Tool definition
+   * @return  True if the attribute lines should be hidden for the current key combination
+   */
+  public static boolean hidesAttributeTooltip(ToolDefinition definition) {
+    TooltipKey key = SafeClientAccess.getTooltipKey();
+    return key == TooltipKey.SHIFT || (key == TooltipKey.CONTROL && definition.hasMaterials());
   }
 
   /** Gets the tooltip flags for the current ctrl+shift combination, used to hide enchantments and modifiers from the tooltip as needed */

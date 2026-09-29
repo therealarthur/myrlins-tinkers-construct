@@ -55,9 +55,13 @@ public interface AttributesModifierHook {
       // base melee stats - skip if not melee
       StatsNBT statsNBT = tool.getStats();
       if (slot == EquipmentSlot.MAINHAND && EntityInteractionModifierHook.isMeleeWeapon(tool)) {
-        builder.put(Attributes.ATTACK_DAMAGE.value(), new AttributeModifier(Identifier.parse("tconstruct:tool/attack_damage"), statsNBT.get(ToolStats.ATTACK_DAMAGE), AttributeModifier.Operation.ADD_VALUE));
+        // Official used Item.BASE_ATTACK_DAMAGE_UUID and BASE_ATTACK_SPEED_UUID, which the tooltip shows as the absolute
+        // value ("2 Attack Damage", "1.2 Attack Speed"). 26.1 keys that on the modifier ID, so use the vanilla base IDs;
+        // the port's own IDs (tconstruct:tool/attack_damage and /attack_speed) printed "+1" and "-2.8" instead.
+        // Equipment modifiers are transient, so nothing saved refers to the old IDs.
+        builder.put(Attributes.ATTACK_DAMAGE.value(), new AttributeModifier(net.minecraft.world.item.Item.BASE_ATTACK_DAMAGE_ID, statsNBT.get(ToolStats.ATTACK_DAMAGE), AttributeModifier.Operation.ADD_VALUE));
         // base attack speed is 4, but our numbers start from 4
-        builder.put(Attributes.ATTACK_SPEED.value(), new AttributeModifier(Identifier.parse("tconstruct:tool/attack_speed"), statsNBT.get(ToolStats.ATTACK_SPEED) - 4d, AttributeModifier.Operation.ADD_VALUE));
+        builder.put(Attributes.ATTACK_SPEED.value(), new AttributeModifier(net.minecraft.world.item.Item.BASE_ATTACK_SPEED_ID, statsNBT.get(ToolStats.ATTACK_SPEED) - 4d, AttributeModifier.Operation.ADD_VALUE));
       }
 
       if (slot.getType() == Type.HAND) {

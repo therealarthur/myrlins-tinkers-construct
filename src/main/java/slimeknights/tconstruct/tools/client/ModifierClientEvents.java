@@ -71,6 +71,19 @@ public class ModifierClientEvents {
     }
   }
 
+  /**
+   * Official hides a tool's vanilla attribute lines in the shift stats view (and the control view of material tools) through
+   * the item's tooltip hide flags; see {@link slimeknights.tconstruct.library.tools.helper.TooltipUtil#hidesAttributeTooltip}.
+   * NeoForge 26.1 has no hide flag hook, but skips every attribute line when this event asks it to.
+   */
+  @SubscribeEvent
+  static void hideToolAttributes(net.neoforged.neoforge.event.GatherSkippedAttributeTooltipsEvent event) {
+    if (event.getStack().getItem() instanceof slimeknights.tconstruct.library.tools.item.IModifiable modifiable
+        && slimeknights.tconstruct.library.tools.helper.TooltipUtil.hidesAttributeTooltip(modifiable.getToolDefinition())) {
+      event.setSkipAll(true);
+    }
+  }
+
   /** Determines whether to render the given hand based on modifiers */
   @SubscribeEvent
   static void renderHand(RenderHandEvent event) {
