@@ -245,10 +245,13 @@ public final class ToolTinkeringServerFixture {
       }
       List<slimeknights.tconstruct.library.client.recipe.RecipeDisplayData> all = new ArrayList<>();
       java.util.Map<Identifier, Ingredient> requirements = new java.util.HashMap<>();
+      // oracle fixes: official 3.12.1 leaves out tools whose traits already reach a check_trait_level recipe's max level
+      java.util.Map<Identifier, slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe> modifierRecipes = new java.util.HashMap<>();
       for (var holder : recipes.byType(slimeknights.tconstruct.library.recipe.TinkerRecipeTypes.TINKER_STATION.get())) {
         if (holder.value() instanceof slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe modifierRecipe) {
           try {
             requirements.put(holder.id().identifier(), (Ingredient) requirementField.get(modifierRecipe));
+            modifierRecipes.put(holder.id().identifier(), modifierRecipe);
           } catch (IllegalAccessException exception) {
             throw new AssertionError(exception);
           }
@@ -276,7 +279,7 @@ public final class ToolTinkeringServerFixture {
           shown.add(tool.getItem());
         }
         for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(slimeknights.tconstruct.common.TinkerTags.Items.MODIFIABLE)) {
-          if (requirement.test(new ItemStack(holder.value()))) {
+          if (requirement.test(new ItemStack(holder.value())) && !traitsAlreadyMax(modifierRecipes.get(display.source()), holder.value())) {
             require(shown.contains(holder.value()), display.source() + " omits accepted tool " + holder.getRegisteredName());
           }
         }
@@ -371,4 +374,27 @@ public final class ToolTinkeringServerFixture {
     throw new AssertionError("No displayed input for " + item);
   }
   private static void require(boolean condition, String message) { if (!condition) throw new AssertionError(message); }
+  /**
+   * True when a check_trait_level recipe can never apply to the tool because its traits already reach the recipe's max
+   * level; official 3.12.1 omits those tools from the display (for example bonking on the battlesign).
+   */
+  private static boolean traitsAlreadyMax(@org.jetbrains.annotations.Nullable slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe recipe, Item item) {
+    if (recipe == null || !(item instanceof slimeknights.tconstruct.library.tools.item.IModifiable modifiable)) {
+      return false;
+    }
+    try {
+      java.lang.reflect.Field check = slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe.class.getDeclaredField("checkTraitLevel");
+      check.setAccessible(true);
+      if (!check.getBoolean(recipe)) {
+        return false;
+      }
+      java.lang.reflect.Field level = slimeknights.tconstruct.library.recipe.modifiers.adding.AbstractModifierRecipe.class.getDeclaredField("level");
+      level.setAccessible(true);
+      int max = ((slimeknights.tconstruct.library.json.IntRange) level.get(recipe)).max();
+      var result = recipe.getDisplayResult().getId();
+      return slimeknights.tconstruct.library.tools.definition.module.build.ToolTraitHook.getTraits(modifiable.getToolDefinition(), slimeknights.tconstruct.library.tools.nbt.MaterialNBT.EMPTY).getLevel(result) >= max;
+    } catch (ReflectiveOperationException exception) {
+      throw new AssertionError("modifier recipe fields changed", exception);
+    }
+  }
 }
