@@ -1,5 +1,11 @@
 {
-  "level_display": "tconstruct:default",
+  "level_display": {
+    "type": "tconstruct:map_level",
+    "level": {
+      "each_level": 1,
+      "flat": 1
+    }
+  },
   "modules": [
     {
       "type": "tconstruct:trait",
@@ -14,5 +20,6 @@
       "name": "tconstruct:thorns"
     }
   ],
-  "tooltip_display": "never"
+  "tooltip_display": "never",
+  "translation_key": "modifier.tconstruct.thorns"
 }

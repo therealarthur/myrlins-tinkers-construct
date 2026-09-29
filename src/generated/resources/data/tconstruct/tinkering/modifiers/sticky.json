@@ -2,7 +2,7 @@
   "level_display": "tconstruct:default",
   "modules": [
     {
-      "type": "tconstruct:weapon_mob_effect",
+      "type": "tconstruct:mob_effect",
       "effect": "minecraft:slowness",
       "level": {
         "per_level": 0.5

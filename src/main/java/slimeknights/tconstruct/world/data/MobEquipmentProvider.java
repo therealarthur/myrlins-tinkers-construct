@@ -63,7 +63,8 @@ public class MobEquipmentProvider extends AbstractMobEquipmentProvider {
       .material(rock, wood, iron);
     // twilight forest compat
     String tf = "twilightforest";
-    equip("twilightforest_minotaur", Identifier.fromNamespaceAndPath(tf, "minotaur"), new ModLoadedCondition(tf))
+    // parity: official v3.12.1 names this entry tconstruct:minotaur, the port used tconstruct:twilightforest_minotaur
+    equip("minotaur", Identifier.fromNamespaceAndPath(tf, "minotaur"), new ModLoadedCondition(tf))
       .slot(EquipmentSlot.MAINHAND)
       .tool(ItemNameOutput.fromName(TinkerTools.minotaurAxe.getId()))
       .material(iron, wood, iron);

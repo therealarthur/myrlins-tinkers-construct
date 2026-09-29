@@ -282,7 +282,9 @@ public class ModifierEvents {
   @SubscribeEvent
   static void onPotionStart(MobEffectEvent.Added event) {
     MobEffectInstance newEffect = event.getEffectInstance();
-    if (!newEffect.isInfiniteDuration()) {
+    // parity: official v3.12.1 skips effects with no curative items, which are the tinkers no milk effects (cooldowns,
+    // bleeding, momentum and similar) and helmet charging. 26.1 has no per effect cure list, so match those classes.
+    if (!newEffect.isInfiniteDuration() && !hasNoCurativeItems(newEffect.getEffect().value())) {
       // use two different stats based on whether the effect is beneficial
       boolean beneficial = newEffect.getEffect().value().isBeneficial();
       LivingEntity entity = (LivingEntity) event.getEntity();
@@ -295,12 +297,39 @@ public class ModifierEvents {
     }
   }
 
+  /**
+   * Stand in for the 1.20 check {@code effect.getCurativeItems().isEmpty()}: true for the effects official v3.12.1 gives no
+   * curative items (tinkers no milk effects and helmet charging). Official code skips these in effect duration changes and
+   * when plague copies effects. 26.1 has no per effect cure list, so this matches the classes instead.
+   * Added by parity/modifiers.
+   */
+  public static boolean hasNoCurativeItems(MobEffect effect) {
+    return effect instanceof slimeknights.tconstruct.tools.modifiers.effect.NoMilkEffect
+        || effect instanceof slimeknights.tconstruct.tools.modifiers.effect.HelmetChargingEffect;
+  }
+
+  /**
+   * Step height gained from modifiers and effects, the 26.1 equivalent of Forge's old STEP_HEIGHT_ADDITION attribute value.
+   * Added by parity/modifiers for {@link #bounceOnFall(LivingFallEvent)}.
+   */
+  static double stepHeightBonus(LivingEntity living) {
+    var instance = living.getAttribute(Attributes.STEP_HEIGHT);
+    if (instance == null) {
+      return 0;
+    }
+    // Forge's addition attribute ranged from -512 to 512, so a negative bonus stays negative here too
+    return instance.getValue() - instance.getBaseValue();
+  }
+
   /** Called when an entity lands to handle bouncing */
   @SubscribeEvent
   static void bounceOnFall(LivingFallEvent event) {
     LivingEntity living = (LivingEntity) event.getEntity();
     // using fall distance as the event distance could be reduced by jump boost
-    if (living == null || (living.fallDistance < 3 && living.getDeltaMovement().y > -0.3) || living.fallDistance <= 0.5f + living.getAttributeValue(Attributes.STEP_HEIGHT)) {
+    // parity: official v3.12.1 adds Forge's STEP_HEIGHT_ADDITION (default 0) to 0.5. 26.1 only has the vanilla STEP_HEIGHT
+    // attribute (player base 0.6), so the port's 0.5 + STEP_HEIGHT raised the minimum bounce height to 1.1 blocks.
+    // Only the bonus above the entity's base step height matches the old addition attribute.
+    if (living == null || (living.fallDistance < 3 && living.getDeltaMovement().y > -0.3) || living.fallDistance <= 0.5f + stepHeightBonus(living)) {
       return;
     }
     // can the entity bounce?
@@ -338,7 +367,10 @@ public class ModifierEvents {
     // update airborn status
     event.setDistance(0.0F);
     if (!living.level().isClientSide()) {
-      living.setDeltaMovement(living.getDeltaMovement());
+      // parity: official v3.12.1 sets hasImpulse here so the server sends the bounce velocity to tracking clients right away.
+      // 26.1 renamed that field to needsSync. The port had replaced it with a no-op:
+      //   living.setDeltaMovement(living.getDeltaMovement());
+      living.needsSync = true;
       event.setCanceled(true);
       living.setOnGround(false); // need to be on ground for server to process this event
     }

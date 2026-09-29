@@ -43,11 +43,7 @@
           },
           {
             "type": "mantle:tag",
-            "tag": "tconstruct:modifiable/melee/weapon"
-          },
-          {
-            "type": "mantle:tag",
-            "tag": "tconstruct:modifiable/ranged/launcher"
+            "tag": "tconstruct:modifiable/melee"
           }
         ]
       }

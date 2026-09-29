@@ -26,7 +26,8 @@ public class PlagueModifier extends NoLevelsModifier implements DamageDealtModif
       // copy all negative effects to target
       LivingEntity attacker = context.getEntity();
       for (MobEffectInstance effect : context.getEntity().getActiveEffects()) {
-        if (!effect.getEffect().value().isBeneficial()) {
+        // parity: official v3.12.1 only copies effects that have curative items, so cooldowns and bleeding stay on the attacker
+        if (!effect.getEffect().value().isBeneficial() && !slimeknights.tconstruct.tools.logic.ModifierEvents.hasNoCurativeItems(effect.getEffect().value())) {
           target.addEffect(new MobEffectInstance(effect), attacker);
         }
       }

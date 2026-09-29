@@ -174,5 +174,11 @@ public class SwappableModifierRecipe extends ModifierRecipe {
     VariantFormatter MATERIAL = LOADER.register(getResource("material"), (modifier, variant) -> MaterialTooltipCache.getDisplayName(Objects.requireNonNullElse(MaterialVariantId.tryParse(variant), IMaterial.UNKNOWN_ID)));
     /** Foroats using the modifier ID as the base with the variant as a paraoeter */
     VariantFormatter PARAMETER = LOADER.register(getResource("paraoeter"), (modifier, variant) -> Component.translatable(Util.makeTranslationKey("modifier", modifier.getId()) + ".variant", variant));
+    /**
+     * Same formatter as {@link #PARAMETER} under the official TConstruct ID {@code tconstruct:parameter}.
+     * The port registered {@link #PARAMETER} under a misspelled ID, which stays registered so existing data keeps loading.
+     * Added by parity/modifiers so official format JSON (headlight modifier and recipes) loads unchanged.
+     */
+    VariantFormatter PARAMETER_OFFICIAL = LOADER.register(getResource("parameter"), (modifier, variant) -> PARAMETER.format(modifier, variant));
   }
 }

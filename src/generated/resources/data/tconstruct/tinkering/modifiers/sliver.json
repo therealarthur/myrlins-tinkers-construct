@@ -4,14 +4,8 @@
     {
       "type": "tconstruct:inventory",
       "filter": {
-        "type": "mantle:set",
-        "items": [
-          "minecraft:slime_ball",
-          "tconstruct:sky_slime_ball",
-          "tconstruct:ichor_slime_ball",
-          "tconstruct:ender_slime_ball",
-          "minecraft:magma_cream"
-        ]
+        "type": "mantle:tag",
+        "tag": "tconstruct:slimeball_ammo"
       },
       "limit": {
         "flat": 32
@@ -26,7 +20,7 @@
     },
     {
       "type": "tconstruct:inventory_menu",
-      "on_key": "shift"
+      "on_key": "any"
     },
     {
       "type": "tconstruct:requirements",

@@ -10,6 +10,10 @@
     {
       "type": "tconstruct:melee_instrument",
       "attacker": "mantle:sprinting",
+      "hooks": [
+        "tconstruct:melee_hit",
+        "tconstruct:monster_melee_hit"
+      ],
       "instrument_material": "tconstruct:horn",
       "instrument_tag": "minecraft:regular_goat_horns"
     }

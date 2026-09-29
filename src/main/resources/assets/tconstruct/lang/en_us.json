@@ -1260,6 +1260,7 @@
   "fluid_effect.tconstruct.separator": "%s and %s",
 
   "fluid_effect.tconstruct.extinguish_fire": "Extinguishes fire",
+  "fluid_effect.tconstruct.extinguish": "Extinguishes fire",
   "fluid_effect.tconstruct.remove_block": "Removes block",
   "fluid_effect.tconstruct.weather": "Weathers copper",
   "fluid_effect.tconstruct.teleport": "Teleports target",
@@ -4714,6 +4715,11 @@
   "tool_stat.tconstruct.energy": "%s FE",
   "tool_stat.tconstruct.max_energy": "Max Energy: ",
   "tool_stat.tconstruct.max_energy.description": "Maximum amount of energy that can be stord in this tool",
+
+  "tool_stat.tconstruct.hunger": "Hunger: ",
+  "tool_stat.tconstruct.hunger.description": "Hunger restored when eating this tool.",
+  "tool_stat.tconstruct.saturation": "Saturation: ",
+  "tool_stat.tconstruct.saturation.description": "Rate of saturation restored when eating this tool. Multiplied by hunger restored.",
 
   "stat.tconstruct.repair_kit": "Repair Kit",
 

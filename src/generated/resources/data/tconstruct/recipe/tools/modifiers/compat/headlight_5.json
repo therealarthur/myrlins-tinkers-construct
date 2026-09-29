@@ -27,5 +27,5 @@
     "upgrades": 1
   },
   "tools": "#tconstruct:modifiable/armor/helmets",
-  "variant_formatter": "tconstruct:paraoeter"
+  "variant_formatter": "tconstruct:parameter"
 }
