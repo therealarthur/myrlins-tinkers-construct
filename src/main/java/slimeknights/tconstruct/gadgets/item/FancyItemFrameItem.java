@@ -1,19 +1,24 @@
 package slimeknights.tconstruct.gadgets.item;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import javax.annotation.Nonnull;
+import java.util.function.Consumer;
 
 public class FancyItemFrameItem extends Item {
 
@@ -56,6 +61,12 @@ public class FancyItemFrameItem extends Item {
       return InteractionResult.SUCCESS;
     }
     return InteractionResult.CONSUME;
+  }
+
+  /** Official 3.12.1 describes each frame's behavior under its name; the port had dropped this and the six keys. */
+  @Override
+  public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+    tooltip.accept(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
   }
 
   private boolean canPlace(Player player, Direction facing, ItemStack stack, BlockPos pos) {

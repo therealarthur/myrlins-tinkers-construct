@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.3,
+  "ingredient": "tconstruct:nether_grout",
+  "result": {
+    "id": "tconstruct:scorched_brick"
+  }
+}

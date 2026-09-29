@@ -27,6 +27,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import slimeknights.tconstruct.TConstruct;
+import slimeknights.tconstruct.gadgets.TinkerGadgets;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.shared.block.SlimeType;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
@@ -59,6 +60,8 @@ public class EntityLootTableProvider extends EntityLootSubProvider {
     this.add(TinkerTools.thrownTool.get(), LootTable.lootTable());
     this.add(TinkerModifiers.fluidSpitEntity.get(), LootTable.lootTable());
     this.add(TinkerModifiers.fireball.get(), LootTable.lootTable());
+    // official 3.12.1: "not really sure why armor stands have a loot table, but vanilla does it"
+    this.add(TinkerGadgets.armorStandEntity.get(), LootTable.lootTable());
     this.add(TinkerWorld.skySlimeEntity.get(), dropSlimeballs(SlimeType.SKY, TinkerWorld.steelShard.get()));
     this.add(TinkerWorld.enderSlimeEntity.get(), dropSlimeballs(SlimeType.ENDER, TinkerWorld.knightmetalShard.get()));
 

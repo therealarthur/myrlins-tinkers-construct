@@ -74,7 +74,25 @@ public class EntityTypeTagProvider extends EntityTypeTagsProvider {
 
     // melting
     this.tag(TinkerTags.EntityTypes.MELTING_SHOW).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM, EntityType.VILLAGER, EntityType.PLAYER);
-    this.tag(TinkerTags.EntityTypes.MELTING_HIDE).add(EntityType.GIANT);
+    this.tag(TinkerTags.EntityTypes.MELTING_HIDE).add(EntityType.GIANT)
+      // official 3.12.1: hidden entities include the melting blacklist and the common hidden tag
+      .addTag(TinkerTags.EntityTypes.MELTING_BLACKLIST)
+      .addOptionalTag(TagKey.create(Registries.ENTITY_TYPE, TinkerTags.HIDDEN_FROM_RECIPE_VIEWERS));
+    this.tag(TinkerTags.EntityTypes.MELTING_BLACKLIST);
+
+    // meltable, restored from official 3.12.1 so packs can extend the entity melting recipes
+    this.tag(TinkerTags.EntityTypes.MELTABLE_FARM_ANIMALS).add(
+      EntityType.CHICKEN, EntityType.RABBIT,
+      EntityType.COW, EntityType.MOOSHROOM,
+      EntityType.PIG, EntityType.HOGLIN,
+      EntityType.SHEEP, EntityType.GOAT,
+      EntityType.COD, EntityType.SALMON, EntityType.TROPICAL_FISH);
+    this.tag(TinkerTags.EntityTypes.MELTABLE_ZOMBIE).add(EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIE_HORSE);
+    this.tag(TinkerTags.EntityTypes.MELTABLE_DROWNED).add(EntityType.DROWNED);
+    this.tag(TinkerTags.EntityTypes.MELTABLE_SKELETON).addTag(EntityTypeTags.SKELETONS).add(EntityType.SKELETON_HORSE);
+    this.tag(TinkerTags.EntityTypes.MELTABLE_ENDER).add(EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.ENDER_DRAGON);
+    this.tag(TinkerTags.EntityTypes.MELTABLE_SLIME).add(EntityType.SLIME);
+    this.tag(TinkerTags.EntityTypes.MELTABLE_MAGMA).add(EntityType.MAGMA_CUBE);
 
     // collecting - TODO 1.21: remove legacy tags
     this.tag(COLLECTABLES).add(

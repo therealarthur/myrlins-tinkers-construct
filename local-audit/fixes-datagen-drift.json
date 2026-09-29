@@ -1,0 +1,2644 @@
+{
+ "_comment": "runData drift on parity/fixes after DatagenComponentBootstrap (2026-09-29). \"content\" = parsed JSON differs from the committed file (provider and committed JSON disagree); \"format only\" = same parsed JSON, differing only in indentation, trailing newline or key order. Owners follow ws-*.md. Nothing listed here was committed; the committed generated files were restored after the run.",
+ "runDataLog": "D:/MC/tinkers-parity/tools/logs/wt-fixes-20260929-131942.log",
+ "filesChanged": 438,
+ "summary": {
+  "unassigned (no stream owns it; orchestrator) | content": 4,
+  "unassigned (no stream owns it; orchestrator) | format only": 13,
+  "fixes | format only": 63,
+  "materials | format only": 50,
+  "materials | content": 1,
+  "modifiers | format only": 10,
+  "modifiers | content": 292,
+  "materials (non-numeric) / balance (numbers) | content": 4,
+  "materials (non-numeric) / balance (numbers) | format only": 1
+ },
+ "content": [
+  {
+   "path": "data/tconstruct/advancement/recipes/combat/tools/armor/travelers/boots.json",
+   "owner": "unassigned (no stream owns it; orchestrator)",
+   "kind": "content",
+   "changes": [
+    "/criteria/has_item/conditions/items[0]/items: \"#c:leathers\" -> \"#c:ingots/copper\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/advancement/recipes/combat/tools/armor/travelers/chestplate.json",
+   "owner": "unassigned (no stream owns it; orchestrator)",
+   "kind": "content",
+   "changes": [
+    "/criteria/has_item/conditions/items[0]/items: \"#c:leathers\" -> \"#c:ingots/copper\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/advancement/recipes/combat/tools/armor/travelers/goggles.json",
+   "owner": "unassigned (no stream owns it; orchestrator)",
+   "kind": "content",
+   "changes": [
+    "/criteria/has_item/conditions/items[0]/items: \"#c:leathers\" -> \"#c:ingots/copper\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/advancement/recipes/combat/tools/armor/travelers/pants.json",
+   "owner": "unassigned (no stream owns it; orchestrator)",
+   "kind": "content",
+   "changes": [
+    "/criteria/has_item/conditions/items[0]/items: \"#c:leathers\" -> \"#c:ingots/copper\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/recipe/tools/materials/horn/default.json",
+   "owner": "materials",
+   "kind": "content",
+   "changes": [
+    "/neoforge:conditions[0]/match: \"minecraft:goat_horns\" -> [\"minecraft:goat_horns\"]"
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/airborne.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/ambush.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/amorphous.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/antiaquatic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/antitoxin.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/apotheosis.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/aqua_affinity.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/attractive.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/autosmelt.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/ballista.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/balm_of_sssss.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/bane_of_sssss.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/barebow.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/barkskin.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blast_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blasting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blaze_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blindshot.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blockade.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blocking.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/blunted.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/bonking.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/boon_of_sssss.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/bounce.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/bouncy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/boundless.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/brushing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/bucketing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/bulk_quiver.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/cave_spider_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/channeling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/charge_attack.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/cheap.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/cobalamin.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/collecting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/conductive.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/consecrated.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/consecrated_skull.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/cooling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/crafting_table.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/creeper_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/crumbling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/crystalbound.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/crystalshot.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/crystalstrike.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/cultivated.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/decay.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/decayed_bones.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/deciduous.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/dense.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/depth_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/depth_strider.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/diamond.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/double_jump.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/draconic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/dragonborn.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/dragonfall.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/dragonheart.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/dragonshot.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/drawback.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/drill_attack.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/drowned_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/ductile.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/economical.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/embossed.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/emerald.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/enderclearance.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/enderdodging.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/enderference.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/enderman_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/enhanced.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/entangled.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/entwined.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/erratic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/expanded.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/experienced.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/explosive.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/farsighted.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/feather_fall.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/feather_falling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/featherweight.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fiery.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fins.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fins_ammo.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fire_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fireborn.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fireprimer.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/firestarter.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fishing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/flame_barrier.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/flamestance.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/flamewake.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/flaming_bones.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/flinging.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/float.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/forecast.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/forming.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fortified.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fortunate.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fortune.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/freezing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/frost_walker.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/frostshield.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/fuse.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/gilded.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/glowing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/godspeed.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/golden.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/grapple.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/harmonious.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/harvest.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/haste.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/headlight.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/heavy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/holy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/hover.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/husk_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/hydraulic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/impaling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/invariant.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/item_frame.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/jagged.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/keen.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/killager.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/kinetic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/knockback.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/knockback_resistance.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/leaping.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/lightspeed.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/lightweight.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/long_fall.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/looter.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/looting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/loyal.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/luck.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/lure.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/lure_rod.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/lustrous.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/magic_bones.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/magic_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/magnetic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/maintained.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/melee_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/melting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/minimap.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/mithridatism.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/modium_forged.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/mossy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/multishot.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/nearsighted.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/necrotic.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/netherite.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/offhanded.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overburn.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overcast.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overforced.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overgrowth.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overlord.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overshield.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/overwield.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/padded.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/pathing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/pierce.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/piercing_guard.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/piglin_brute_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/piglin_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/pockets.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/power.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/preserved.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/projectile_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/punch.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/quick_charge.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/raging.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/ram_attack.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/reach.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/rebound.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/rebuff.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/recapitated.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/reclaim.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/recurrent_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/redirected.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/reflecting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/reinforced.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/respiration.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/respiration_skull.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/restore.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/resurrected.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/returning.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/revenge.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/reverted.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/revitalizing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/ricochet.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/savory.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/scope.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/scorch_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/scorching.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/scrumptious.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/searing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/severing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/sharpness.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shears.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shell_gut.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shell_storage.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shield_strap.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shiny.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shock.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shulker_box.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/shulking.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/silky.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/silky_aoe_shears.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/silky_shears.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/skeleton_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/skyfall.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/sleeves.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/slimeball.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/sliver.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/slow_bones.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/slurping.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/smashing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/smashing_ammo.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/smelting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/smite.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/snow_boots.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/snowdrift.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/soft.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/solar_powered.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/solid.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/soul_belt.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/soulbound.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/soulspeed.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spectral.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/speedy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spider_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spike.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spilling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spilling_rod.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spiny.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/spitting.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/splashing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/springing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/springy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/stalwart.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/step_up.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/sticky.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/stonebound.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/stoneshield.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/stray_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/strength.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/stringy.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/stripping.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/supercharged.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/sweeping_edge.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/swift_sneak.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/swiftstrike.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tank.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tanned.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tasty.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/temperate.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tempered_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/the_one_probe.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/thorns.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/thorns_shell.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/throwing.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tilling.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tipped.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/tool_belt.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/trick_quiver.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/trueshot.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/turtle_shell.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/turtles_grace.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/unbreakable.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/unburdened.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/valiant.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/venom.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/vintage.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/vital_protection.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/vital_protection_skull.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"parts_only\"",
+    "/tooltip_display: removed \"never\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/war_charge.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/warded.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/warping.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/weak.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/wings.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/wither_skeleton_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/withered.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/woodwind.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/workbench.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/worldbound.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/writable.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/show_in_tooltips: added \"bonus_slot\"",
+    "/tooltip_display: removed \"tinker_station\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/zombie_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/zombified_piglin_disguise.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/modifiers/zoom.json",
+   "owner": "modifiers",
+   "kind": "content",
+   "changes": [
+    "/tooltip_display: removed \"always\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/tool_definitions/slime_boots.json",
+   "owner": "materials (non-numeric) / balance (numbers)",
+   "kind": "content",
+   "changes": [
+    "/modules[1]/hooks: added [\"tconstruct:trim_trait\"]",
+    "/modules[1]/material_index: added 0",
+    "/modules[1]/materials: removed [{\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:skyslime_vine\"}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstr",
+    "/modules[1]/stat_type: added \"tconstruct:laces\"",
+    "/modules[1]/type: \"tconstruct:default_materials\" -> \"tconstruct:material_traits\"",
+    "/modules[2]/materials: added [{\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:skyslime_vine\"}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstr",
+    "/modules[2]/parts: removed [\"tconstruct:laces\"]",
+    "/modules[2]/type: \"tconstruct:tool_parts\" -> \"tconstruct:default_materials\"",
+    "/modules[3]/parts: added [\"tconstruct:laces\"]",
+    "/modules[3]/slots: removed {\"abilities\": 2, \"upgrades\": 3}",
+    "/modules[3]/type: \"tconstruct:modifier_slots\" -> \"tconstruct:tool_parts\"",
+    "/modules[4]/slots: added {\"abilities\": 2, \"upgrades\": 3}",
+    "/modules[4]/traits: removed [{\"level\": 1, \"name\": \"tconstruct:bouncy\"}]"
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/tool_definitions/slime_chestplate.json",
+   "owner": "materials (non-numeric) / balance (numbers)",
+   "kind": "content",
+   "changes": [
+    "/modules[1]/hooks: added [\"tconstruct:tool_traits\", \"tconstruct:trim_trait\"]",
+    "/modules[1]/material_index: added 0",
+    "/modules[1]/materials: removed [{\"type\": \"tconstruct:random\", \"allow_hidden\": true}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:blood\"}]",
+    "/modules[1]/stat_type: added \"tconstruct:ribcage\"",
+    "/modules[1]/type: \"tconstruct:default_materials\" -> \"tconstruct:material_traits\"",
+    "/modules[2]/materials: added [{\"type\": \"tconstruct:random\", \"allow_hidden\": true}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:blood\"}]",
+    "/modules[2]/multipliers: removed {\"tconstruct:attack_damage\": 0.6}",
+    "/modules[2]/type: \"tconstruct:multiply_stats\" -> \"tconstruct:default_materials\"",
+    "/modules[3]/multipliers: added {\"tconstruct:attack_damage\": 0.6}",
+    "/modules[3]/parts: removed [\"tconstruct:ribcage\"]",
+    "/modules[3]/type: \"tconstruct:tool_parts\" -> \"tconstruct:multiply_stats\"",
+    "/modules[4]/parts: added [\"tconstruct:ribcage\"]",
+    "/modules[4]/slots: removed {\"abilities\": 2, \"upgrades\": 3}"
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/tool_definitions/slime_helmet.json",
+   "owner": "materials (non-numeric) / balance (numbers)",
+   "kind": "content",
+   "changes": [
+    "/modules[1]/hooks: added [\"tconstruct:trim_trait\"]",
+    "/modules[1]/material_index: added 0",
+    "/modules[1]/missing: removed [{\"type\": \"tconstruct:random\", \"allow_hidden\": true}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:blood\"}]",
+    "/modules[1]/remap: removed [{\"tconstruct:glass\": \"tconstruct:gunpowder\", \"tconstruct:venombone\": \"tconstruct:ice\", \"tconstruct:blazing_bone\": \"tcon",
+    "/modules[1]/stat_type: added \"tconstruct:skull\"",
+    "/modules[1]/type: \"tconstruct:remapping_materials\" -> \"tconstruct:material_traits\"",
+    "/modules[2]/missing: added [{\"type\": \"tconstruct:random\", \"allow_hidden\": true}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:blood\"}]",
+    "/modules[2]/remap: added [{\"tconstruct:blazing_bone\": \"tconstruct:blaze\", \"tconstruct:glass\": \"tconstruct:gunpowder\", \"tconstruct:venombone\": \"tc",
+    "/modules[2]/slots: removed {\"abilities\": 2, \"upgrades\": 3}",
+    "/modules[2]/type: \"tconstruct:modifier_slots\" -> \"tconstruct:remapping_materials\"",
+    "/modules[3]/hooks: removed [\"tconstruct:trim_trait\"]",
+    "/modules[3]/material_index: removed 0",
+    "/modules[3]/slots: added {\"abilities\": 2, \"upgrades\": 3}",
+    "/modules[3]/stat_type: removed \"tconstruct:skull\""
+   ]
+  },
+  {
+   "path": "data/tconstruct/tinkering/tool_definitions/slime_leggings.json",
+   "owner": "materials (non-numeric) / balance (numbers)",
+   "kind": "content",
+   "changes": [
+    "/modules[1]/hooks: added [\"tconstruct:trim_trait\"]",
+    "/modules[1]/material_index: added 0",
+    "/modules[1]/materials: removed [{\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:shulker\"}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:bl",
+    "/modules[1]/stat_type: added \"tconstruct:shell\"",
+    "/modules[1]/type: \"tconstruct:default_materials\" -> \"tconstruct:material_traits\"",
+    "/modules[2]/materials: added [{\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:shulker\"}, {\"type\": \"tconstruct:fixed\", \"material\": \"tconstruct:bl",
+    "/modules[2]/parts: removed [\"tconstruct:shell\"]",
+    "/modules[2]/type: \"tconstruct:tool_parts\" -> \"tconstruct:default_materials\"",
+    "/modules[3]/parts: added [\"tconstruct:shell\"]",
+    "/modules[3]/slots: removed {\"abilities\": 2, \"upgrades\": 3}",
+    "/modules[3]/type: \"tconstruct:modifier_slots\" -> \"tconstruct:tool_parts\"",
+    "/modules[4]/slots: added {\"abilities\": 2, \"upgrades\": 3}",
+    "/modules[4]/traits: removed [{\"level\": 1, \"name\": \"tconstruct:shell_storage\"}]"
+   ]
+  }
+ ],
+ "formatOnly": {
+  "unassigned (no stream owns it; orchestrator)": [
+   "data/tconstruct/function/grant_advancement/adventure_walk_on_powder_snow_with_leather_boots.mcfunction",
+   "data/tconstruct/function/grant_advancement/husbandry_obtain_netherite_hoe.mcfunction",
+   "data/tconstruct/function/grant_advancement/nether_netherite_armor.mcfunction",
+   "data/tconstruct/function/grant_advancement/story_iron_tools.mcfunction",
+   "data/tconstruct/function/grant_advancement/story_obtain_armor.mcfunction",
+   "data/tconstruct/function/grant_advancement/story_root.mcfunction",
+   "data/tconstruct/function/grant_advancement/story_shiny_gear.mcfunction",
+   "data/tconstruct/function/grant_advancement/story_upgrade_tools.mcfunction",
+   "data/tconstruct/recipe/tables/scorched_forge.json",
+   "data/tconstruct/recipe/tables/scorched_forge_material.json",
+   "data/tconstruct/recipe/tables/seared_forge_material.json",
+   "data/tconstruct/recipe/tables/tinkers_forge.json",
+   "data/tconstruct/tags/instrument/variant_horns.json"
+  ],
+  "fixes": [
+   "data/tconstruct/recipe/smeltery/melting/metal/bendalloy/raw_block_fallback.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/bendalloy/raw_fallback.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/brass/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/brass/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/cadmium/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/cadmium/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/cadmium/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/chromium/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/chromium/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/chromium/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/duralumin/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/duralumin/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/electrum/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/electrum/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/lead/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/lead/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/lead/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/lead/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/lead/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nickel/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nickel/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nickel/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nicrosil/raw_block_fallback.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/nicrosil/raw_fallback.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_block_byproduct_2.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/pewter/raw_byproduct_2.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/silver/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/silver/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/silver/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/silver/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/silver/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tin/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tin/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tin/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tin/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tin/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tungsten/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tungsten/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/tungsten/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/uranium/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/uranium/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/uranium/raw_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_large_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_medium_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/bud_small_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/geore/cluster_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_dense_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_singular_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/ore_sparse_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/raw_block_byproduct_1.json",
+   "data/tconstruct/recipe/smeltery/melting/metal/zinc/raw_byproduct_1.json"
+  ],
+  "materials": [
+   "data/tconstruct/recipe/tools/armor/travelers/boots.json",
+   "data/tconstruct/recipe/tools/armor/travelers/boots_cuirass.json",
+   "data/tconstruct/recipe/tools/armor/travelers/boots_leather.json",
+   "data/tconstruct/recipe/tools/armor/travelers/chestplate.json",
+   "data/tconstruct/recipe/tools/armor/travelers/goggles.json",
+   "data/tconstruct/recipe/tools/armor/travelers/goggles_cuirass.json",
+   "data/tconstruct/recipe/tools/armor/travelers/pants.json",
+   "data/tconstruct/recipe/tools/armor/travelers/pants_cuirass.json",
+   "data/tconstruct/recipe/tools/armor/travelers/pants_leather.json",
+   "data/tconstruct/recipe/tools/armor/travelers/shield.json",
+   "data/tconstruct/recipe/tools/armor/travelers/shield_wood.json",
+   "data/tconstruct/recipe/tools/armor/travelers/vest_cuirass.json",
+   "data/tconstruct/recipe/tools/materials/casting/venom.json",
+   "data/tconstruct/recipe/tools/materials/composite/magma.json",
+   "data/tconstruct/recipe/tools/materials/honey_block.json",
+   "data/tconstruct/recipe/tools/materials/horn/admire_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/call_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/dream_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/feel_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/ponder_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/seek_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/sing_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/horn/yearn_goat_horn.json",
+   "data/tconstruct/recipe/tools/materials/melting/venom.json",
+   "data/tconstruct/recipe/tools/materials/slimeskin/composite/ender.json",
+   "data/tconstruct/recipe/tools/materials/slimeskin/composite/ender_cleaning.json",
+   "data/tconstruct/recipe/tools/materials/slimeskin/composite/ender_legacy_cleaning.json",
+   "data/tconstruct/recipe/tools/materials/slimeskin/composite/sky.json",
+   "data/tconstruct/recipe/tools/materials/slimeskin/composite/sky_cleaning.json",
+   "data/tconstruct/recipe/tools/materials/slimeskin/composite/sky_legacy_cleaning.json",
+   "data/tconstruct/recipe/tools/materials/venom_eye.json",
+   "data/tconstruct/recipe/tools/materials/venom_fermented.json",
+   "data/tconstruct/tinkering/materials/definition/enderslimeskin.json",
+   "data/tconstruct/tinkering/materials/definition/skyslimeskin.json",
+   "data/tconstruct/tinkering/materials/definition/venom.json",
+   "data/tconstruct/tinkering/materials/stats/enderslimeskin.json",
+   "data/tconstruct/tinkering/materials/stats/skyslimeskin.json",
+   "data/tconstruct/tinkering/materials/stats/twisting_vine.json",
+   "data/tconstruct/tinkering/materials/stats/venom.json",
+   "data/tconstruct/tinkering/materials/stats/vine.json",
+   "data/tconstruct/tinkering/materials/stats/weeping_vine.json",
+   "data/tconstruct/tinkering/materials/stats/wool.json",
+   "data/tconstruct/tinkering/materials/traits/ender_pearl.json",
+   "data/tconstruct/tinkering/materials/traits/enderslime_vine.json",
+   "data/tconstruct/tinkering/materials/traits/enderslimeskin.json",
+   "data/tconstruct/tinkering/materials/traits/leather.json",
+   "data/tconstruct/tinkering/materials/traits/skyslimeskin.json",
+   "data/tconstruct/tinkering/materials/traits/twisting_vine.json",
+   "data/tconstruct/tinkering/materials/traits/venom.json",
+   "data/tconstruct/tinkering/materials/traits/wool.json"
+  ],
+  "modifiers": [
+   "data/tconstruct/recipe/tools/modifiers/tasty_crafting_table.json",
+   "data/tconstruct/tags/damage_type/rugged/attacks.json",
+   "data/tconstruct/tags/damage_type/rugged/terrain.json",
+   "data/tconstruct/tinkering/modifiers/airborn.json",
+   "data/tconstruct/tinkering/modifiers/banner.json",
+   "data/tconstruct/tinkering/modifiers/dyed.json",
+   "data/tconstruct/tinkering/modifiers/embellishment.json",
+   "data/tconstruct/tinkering/modifiers/rebalanced.json",
+   "data/tconstruct/tinkering/modifiers/rugged.json",
+   "data/tconstruct/tinkering/modifiers/trim.json"
+  ],
+  "materials (non-numeric) / balance (numbers)": [
+   "data/tconstruct/tinkering/tool_definitions/travelers_shield.json"
+  ]
+ }
+}

@@ -219,6 +219,13 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     Consumer<RecipeOutput> fastGrout = c ->
       SimpleCookingRecipeBuilder.blasting(Ingredient.of(TinkerSmeltery.grout), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.MISC, TinkerSmeltery.searedBrick, 0.3f, 100)
                           .unlockedBy("has_item", has(TinkerSmeltery.grout)).save(c);
+    // Official 3.12.1 seared_brick_kiln is a conditional recipe: ceramics:kiln when Ceramics is loaded,
+    // otherwise this 100 tick blasting recipe. The port dropped both, so grout could only be smelted.
+    // Ceramics has no build in this pack and its kiln format is unverified, so only the blasting branch
+    // is restored, under the official ID (unconditional, so a later Ceramics install keeps blasting).
+    SimpleCookingRecipeBuilder.blasting(Ingredient.of(TinkerSmeltery.grout), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.MISC, TinkerSmeltery.searedBrick, 0.3f, 100)
+                              .unlockedBy("has_item", has(TinkerSmeltery.grout))
+                              .save(consumer, recipeKey(wrap(TinkerSmeltery.searedBrick, folder, "_kiln")));
 
 
     // block from bricks
@@ -663,6 +670,10 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     Consumer<RecipeOutput> fastGrout = c ->
       SimpleCookingRecipeBuilder.blasting(Ingredient.of(TinkerSmeltery.netherGrout), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.MISC, TinkerSmeltery.scorchedBrick, 0.3f, 100)
                                 .unlockedBy("has_item", has(TinkerSmeltery.netherGrout)).save(c);
+    // Official 3.12.1 scorched_brick_kiln: blasting branch restored under the official ID, see seared_brick_kiln.
+    SimpleCookingRecipeBuilder.blasting(Ingredient.of(TinkerSmeltery.netherGrout), RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.MISC, TinkerSmeltery.scorchedBrick, 0.3f, 100)
+                              .unlockedBy("has_item", has(TinkerSmeltery.netherGrout))
+                              .save(consumer, recipeKey(wrap(TinkerSmeltery.scorchedBrick, folder, "_kiln")));
 
     // block from bricks
     ShapedRecipeBuilder.shaped(this.items, RecipeCategory.BUILDING_BLOCKS, TinkerSmeltery.scorchedBricks)
@@ -2158,16 +2169,20 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     String headFolder = "smeltery/entity_melting/heads/";
 
     // meat soup just comes from edible creatures
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.CHICKEN, EntityType.COW, EntityType.MOOSHROOM, EntityType.PIG, EntityType.RABBIT, EntityType.SHEEP, EntityType.GOAT, EntityType.COD, EntityType.HOGLIN, EntityType.SALMON, EntityType.TROPICAL_FISH),
+    // official 3.12.1 melts the meltable tags so packs can extend them; the port inlined these same entities:
+    // EntityIngredient.of(EntityType.CHICKEN, EntityType.COW, EntityType.MOOSHROOM, EntityType.PIG, EntityType.RABBIT, EntityType.SHEEP, EntityType.GOAT, EntityType.COD, EntityType.HOGLIN, EntityType.SALMON, EntityType.TROPICAL_FISH)
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_FARM_ANIMALS),
                                        TinkerFluids.meatSoup.result(FluidValues.BOWL / 5)).save(consumer, recipeKey(location(folder + "meat_soup")));
 
     // zombies give iron, they drop it sometimes
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIE_HORSE), TinkerFluids.moltenIron.result(FluidValues.NUGGET), 4)
+    // was EntityIngredient.of(EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIE_HORSE), now the official tag with the same members
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_ZOMBIE), TinkerFluids.moltenIron.result(FluidValues.NUGGET), 4)
                               .save(consumer, recipeKey(location(folder + "zombie")));
     MeltingRecipeBuilder.melting(Ingredient.of(Items.ZOMBIE_HEAD, TinkerWorld.heads.get(TinkerHeadType.HUSK)), TinkerFluids.moltenIron, FluidValues.INGOT)
                         .save(consumer, recipeKey(location(headFolder + "zombie")));
     // drowned drop copper instead
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.DROWNED), TinkerFluids.moltenCopper.result(FluidValues.NUGGET), 4)
+    // was EntityIngredient.of(EntityType.DROWNED)
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_DROWNED), TinkerFluids.moltenCopper.result(FluidValues.NUGGET), 4)
                               .save(consumer, recipeKey(location(folder + "drowned")));
     MeltingRecipeBuilder.melting(Ingredient.of(TinkerWorld.heads.get(TinkerHeadType.DROWNED)), TinkerFluids.moltenCopper, FluidValues.INGOT)
                         .save(consumer, recipeKey(location(headFolder + "drowned")));
@@ -2219,14 +2234,16 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
 
     // melt skeletons to get the milk out if NeoForge provides a milk fluid in the active runtime
     ICondition milkFluidRegistered = new RegisteredCondition<>(net.minecraft.resources.ResourceKey.create(Registries.FLUID, Identifier.fromNamespaceAndPath("minecraft", "milk")));
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityIngredient.of(EntityTypeTags.SKELETONS), EntityIngredient.of(EntityType.SKELETON_HORSE)),
+    // was EntityIngredient.of(EntityIngredient.of(EntityTypeTags.SKELETONS), EntityIngredient.of(EntityType.SKELETON_HORSE)); the official tag holds the same entries
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_SKELETON),
                                        NeoForgeMod.MILK.get(), FluidType.BUCKET_VOLUME / 10)
                               .save(withCondition(consumer, milkFluidRegistered), recipeKey(location(folder + "skeletons")));
     MeltingRecipeBuilder.melting(Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL, TinkerWorld.heads.get(TinkerHeadType.STRAY)), NeoForgeMod.MILK.get(), FluidType.BUCKET_VOLUME / 4)
                         .save(withCondition(consumer, milkFluidRegistered), recipeKey(location(headFolder + "skeleton")));
 
     // slimes melt into slime, shocker
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.SLIME), TinkerFluids.earthSlime.result(FluidValues.SLIMEBALL / 10))
+    // was EntityIngredient.of(EntityType.SLIME)
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_SLIME), TinkerFluids.earthSlime.result(FluidValues.SLIMEBALL / 10))
                               .save(consumer, recipeKey(location(folder + "slime")));
     EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerWorld.skySlimeEntity.get()), TinkerFluids.skySlime.result(FluidValues.SLIMEBALL / 10))
                               .save(consumer, recipeKey(prefix(TinkerWorld.skySlimeEntity, folder)));
@@ -2234,7 +2251,8 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
                               .save(consumer, recipeKey(prefix(TinkerWorld.enderSlimeEntity, folder)));
     EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerWorld.terracubeEntity.get()), TinkerFluids.moltenClay.result(FluidValues.SLIMEBALL / 10))
                               .save(consumer, recipeKey(prefix(TinkerWorld.terracubeEntity, folder)));
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.MAGMA_CUBE), TinkerFluids.magma.result(FluidValues.SLIMEBALL / 10))
+    // was EntityIngredient.of(EntityType.MAGMA_CUBE)
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_MAGMA), TinkerFluids.magma.result(FluidValues.SLIMEBALL / 10))
                               .save(consumer, recipeKey(location(folder + "magma_cube")));
     EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.BEE), TinkerFluids.honey.result(FluidValues.BOTTLE / 10))
                               .save(consumer, recipeKey(location(folder + "bee")));
@@ -2267,7 +2285,8 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
                               .save(consumer, recipeKey(location(folder + "illager")));
 
     // melt ender for the molten ender
-    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.ENDER_DRAGON),
+    // was EntityIngredient.of(EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.ENDER_DRAGON)
+    EntityMeltingRecipeBuilder.melting(EntityIngredient.of(TinkerTags.EntityTypes.MELTABLE_ENDER),
                                        TinkerFluids.moltenEnder.result(FluidValues.SLIMEBALL / 10), 2)
                               .save(consumer, recipeKey(location(folder + "ender")));
     MeltingRecipeBuilder.melting(Ingredient.of(TinkerWorld.heads.get(TinkerHeadType.ENDERMAN)), TinkerFluids.moltenEnder, FluidValues.SLIMEBALL * 2)

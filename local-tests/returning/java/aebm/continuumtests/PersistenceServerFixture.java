@@ -1,28 +1,39 @@
 package aebm.continuumtests;
 
+import com.mojang.logging.LogUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import slimeknights.tconstruct.fluids.TinkerFluids;
 import slimeknights.tconstruct.library.fluid.FluidActions;
@@ -32,6 +43,8 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.smeltery.block.entity.CastingBlockEntity;
+import slimeknights.tconstruct.smeltery.block.entity.controller.SmelteryBlockEntity;
+import slimeknights.tconstruct.smeltery.block.entity.module.MeltingModuleInventory;
 import slimeknights.tconstruct.tools.TinkerTools;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 import slimeknights.tconstruct.tools.data.material.MaterialIds;
@@ -60,7 +73,27 @@ public final class PersistenceServerFixture {
       this.source = source;
       this.level = source.getLevel();
       // Instances are never installed into chunks; any normal casting state-update attempt is out of bounds.
-      this.position = BlockPos.containing(source.getPosition().x, level.getMaxY() + 32, source.getPosition().z);
+      this.position = unloadedColumn(level, BlockPos.containing(source.getPosition().x, level.getMaxY() + 32, source.getPosition().z));
+    }
+
+    /**
+     * Casting notifications (sendBlockUpdated) reach ChunkHolder.blockChanged, which indexes the chunk
+     * section array without a height check when the column's chunk is ticking. Above build height that
+     * throws ArrayIndexOutOfBoundsException, a vanilla environment artifact that real casting tables inside
+     * build height never hit. The head2 console runs used an unloaded spawn column; a player-issued run or
+     * a forceloaded area does not. Step east in whole chunks until the column is not loaded, so the
+     * notifications stay no-ops as intended. This only inspects chunk state; it never loads a chunk.
+     */
+    private static BlockPos unloadedColumn(ServerLevel level, BlockPos start) {
+      // Negative control for the harness: keep the command's own column even when it is loaded.
+      if (Boolean.getBoolean("aebm.fixture.persistence.sourceColumn")) {
+        return start;
+      }
+      BlockPos candidate = start;
+      for (int step = 0; step < 256 && level.hasChunkAt(candidate); step++) {
+        candidate = candidate.east(16);
+      }
+      return candidate;
     }
 
     private int run() {
@@ -107,6 +140,11 @@ public final class PersistenceServerFixture {
         midCooling(false, new ItemStack(TinkerSmeltery.ingotCast.getSand()), 90, null, Items.IRON_INGOT));
       test("casting_basin_mid_cooling_reload", () ->
         midCooling(true, ItemStack.EMPTY, 810, null, Items.IRON_BLOCK));
+      // Acceptance rows from the parity ledger (fixes stream, 2026-09-29): a smeltery larger than 255
+      // item slots, and breaking an empty smeltery controller. Official 3.12.1 stored the slot index as a
+      // byte; Continuum stores ints and reads legacy bytes as unsigned.
+      test("smeltery_slots_above_255_and_tank_reload", this::smelteryAbove255);
+      test("empty_smeltery_break_drops_only_controller", this::emptySmelteryBreak);
       source.sendSuccess(() -> Component.literal("AEBM_PERSISTENCE_SUMMARY passed=" + passed + " failed=" + failed), false);
       return failed == 0 ? 1 : 0;
     }
@@ -244,6 +282,97 @@ public final class PersistenceServerFixture {
         "post-reload tick must retain one output without recasting");
     }
 
+    /** Detached smeltery controller with real structure metadata; never placed into a chunk. */
+    private SmelteryBlockEntity smeltery(boolean withStructure) {
+      SmelteryBlockEntity controller = new SmelteryBlockEntity(position, TinkerSmeltery.smelteryController.get().defaultBlockState());
+      controller.setLevel(level);
+      if (withStructure) {
+        // Smeltery structures have a floor and no ceiling: 7 x 8 x 7 = 392 inner item slots.
+        controller.setStructureSize(position, position.offset(8, 8, 8), List.of());
+      }
+      return controller;
+    }
+
+    private void smelteryAbove255() throws IOException {
+      SmelteryBlockEntity original = smeltery(true);
+      MeltingModuleInventory inventory = original.getMeltingInventory();
+      int size = inventory.getSlots();
+      require(size == 392, "7 x 8 x 7 structure must allocate 392 slots, got " + size);
+      int[] slots = {0, 255, 256, 300, size - 1};
+      Item[] items = {Items.IRON_INGOT, Items.GOLD_INGOT, Items.COPPER_INGOT, Items.RAW_IRON, Items.IRON_NUGGET};
+      for (int i = 0; i < slots.length; i++) {
+        inventory.setStackInSlot(slots[i], new ItemStack(items[i]));
+      }
+      require(original.getTank().fill(iron(1000), FluidActions.EXECUTE) == 1000, "tank must accept 1000 mB iron");
+      require(original.getTank().fill(new FluidStack(TinkerFluids.moltenCopper.get(), 250), FluidActions.EXECUTE) == 250, "tank must accept 250 mB copper");
+      CompoundTag saved = saveBlockEntity(original);
+      SmelteryBlockEntity restored = loadSmeltery(saved);
+      MeltingModuleInventory reloaded = restored.getMeltingInventory();
+      require(reloaded.getSlots() == size, "slot count above 255 must survive reload, got " + reloaded.getSlots());
+      for (int slot = 0; slot < size; slot++) {
+        require(ItemStack.matches(inventory.getStackInSlot(slot), reloaded.getStackInSlot(slot)), "slot " + slot + " must survive reload");
+      }
+      require(restored.getTank().getContained() == 1250 && restored.getTank().getFluids().size() == 2, "tank amounts must survive reload");
+      require(restored.getTank().getFluidInTank(0).getAmount() == 1000 && restored.getTank().getFluidInTank(1).getAmount() == 250,
+        "per-fluid amounts and order must survive reload");
+      // Legacy data: official 3.12.1 wrote the slot index and size as bytes; 200 was written as (byte) -56.
+      CompoundTag legacy = saved.copy();
+      CompoundTag inventoryTag = legacy.getCompoundOrEmpty("inventory");
+      ListTag list = inventoryTag.getListOrEmpty("items");
+      for (int i = 0; i < list.size(); i++) {
+        CompoundTag entry = list.getCompoundOrEmpty(i);
+        if (entry.getIntOr("slot", -1) == 0) {
+          entry.putByte("slot", (byte) 200);
+        }
+      }
+      SmelteryBlockEntity fromLegacy = loadSmeltery(legacy);
+      require(fromLegacy.getMeltingInventory().getStackInSlot(200).is(Items.IRON_INGOT), "legacy byte slot 200 must read as unsigned 200");
+    }
+
+    private void emptySmelteryBreak() {
+      SmelteryBlockEntity controller = smeltery(false);
+      require(controller.getTank().getContained() == 0, "fixture controller starts empty");
+      List<ItemStack> spawned = new ArrayList<>();
+      Consumer<EntityJoinLevelEvent> capture = event -> {
+        if (event.getLevel() == level && event.getEntity() instanceof ItemEntity item) {
+          spawned.add(item.getItem().copy());
+          event.setCanceled(true);
+        }
+      };
+      NeoForge.EVENT_BUS.addListener(capture);
+      try {
+        // 26.1 runs this before a block entity is removed; containers drop contents here.
+        controller.preRemoveSideEffects(position, controller.getBlockState());
+      } finally {
+        NeoForge.EVENT_BUS.unregister(capture);
+      }
+      require(spawned.isEmpty(), "removing an empty controller must spawn nothing: " + spawned);
+      List<ItemStack> drops = controller.getBlockState().getDrops(new LootParams.Builder(level)
+        .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(position))
+        .withParameter(LootContextParams.TOOL, new ItemStack(Items.IRON_PICKAXE))
+        .withOptionalParameter(LootContextParams.BLOCK_ENTITY, controller));
+      require(drops.size() == 1 && drops.getFirst().getCount() == 1
+        && ItemStack.isSameItemSameComponents(drops.getFirst(), new ItemStack(TinkerSmeltery.smelteryController.get())),
+        "breaking an empty controller must drop exactly one plain controller: " + drops);
+    }
+
+    private CompoundTag saveBlockEntity(net.minecraft.world.level.block.entity.BlockEntity blockEntity) throws IOException {
+      ProblemReporter.Collector problems = new ProblemReporter.Collector();
+      TagValueOutput output = TagValueOutput.createWithContext(problems, level.registryAccess());
+      blockEntity.saveWithoutMetadata(output);
+      require(problems.isEmpty(), "block entity encoding: " + problems.getReport());
+      return binaryRoundtrip(output.buildResult());
+    }
+
+    private SmelteryBlockEntity loadSmeltery(CompoundTag saved) {
+      ProblemReporter.Collector problems = new ProblemReporter.Collector();
+      SmelteryBlockEntity restored = new SmelteryBlockEntity(position, TinkerSmeltery.smelteryController.get().defaultBlockState());
+      restored.loadWithComponents(TagValueInput.create(problems, level.registryAccess(), saved));
+      require(problems.isEmpty(), "smeltery decoding: " + problems.getReport());
+      restored.setLevel(level);
+      return restored;
+    }
+
     private void test(String name, CheckedRunnable test) {
       try {
         test.run();
@@ -256,6 +385,8 @@ public final class PersistenceServerFixture {
           cause = cause.getCause();
         }
         source.sendFailure(Component.literal("AEBM_PERSISTENCE_FAIL " + name + " " + cause));
+        // Full stack for diagnosis; the FAIL line above stays the single machine-readable record.
+        LogUtils.getLogger().error("AEBM_PERSISTENCE_TRACE {}", name, failure);
       }
     }
   }

@@ -116,8 +116,10 @@ public final class TinkerGadgets extends TinkerModule {
                       .clientTrackingRange(10)
                       .updateInterval(Integer.MAX_VALUE));
   public static final DeferredHolder<EntityType<?>, EntityType<FancyArmorStandEntity>> armorStandEntity = ENTITIES.register("armor_stand", () ->
+    // Official 3.12.1 gives the fancy stand the (empty) tconstruct:entities/armor_stand loot table, like the
+    // vanilla stand; drops come from brokenByPlayer/brokenByAnything and the table stays datapack-overridable.
+    // The port had .noLootTable() here, which skipped the table lookup entirely.
     EntityType.Builder.of(FancyArmorStandEntity::new, MobCategory.MISC)
-                      .noLootTable()
                       .sized(0.5F, 1.975F)
                       .clientTrackingRange(10));
   @Deprecated
