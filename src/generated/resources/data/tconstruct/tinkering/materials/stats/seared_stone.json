@@ -35,7 +35,7 @@
       "knockback_resistance": 0.1
     },
     "tconstruct:plating_shield": {
-      "durability": 308,
+      "durability": 252,
       "knockback_resistance": 0.1
     }
   }
