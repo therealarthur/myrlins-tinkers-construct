@@ -29,8 +29,7 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
   private static final AtomicBoolean LISTENING = new AtomicBoolean();
   private static final SmelteryDisplayGenerator.Recipes RECIPES = new SmelteryDisplayGenerator.Recipes();
   private static volatile EntryRegistry entries;
-  private static long entryRevision = -1;
-  private static boolean entriesReady;
+  private static final ClientEntryRefresh ENTRY_REFRESH = new ClientEntryRefresh();
 
   public TConstructREIClientPlugin() {
     // REI discovers this class only on clients with REI. Reloading plugins must not accumulate listeners.
@@ -104,7 +103,7 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
   @Override
   public void registerEntries(EntryRegistry registry) {
     entries = registry;
-    entryRevision = -1;
+    ENTRY_REFRESH.reset();
   }
 
   private static void clientTick(ClientTickEvent.Post event) {
@@ -112,19 +111,15 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
     if (registry == null || registry.isReloading()) return;
     var snapshot = ClientRecipeCache.getSnapshot();
     boolean ready = Minecraft.getInstance().level != null && snapshot.recipes() != RecipeMap.EMPTY && MaterialRegistry.isFullyLoaded();
-    if (entryRevision == snapshot.revision() && entriesReady == ready) return;
-    // Only our five custom types are replaced. Other plugins and ordinary item/fluid entries are untouched.
-    registry.removeEntryIf(TinkerEntryTypes::isOwned);
-    if (ready) {
+    // REI's tag filters need a connected world. Never refilter from a title-screen
+    // tick, incomplete synchronization, or logout. Only our custom entries change.
+    ENTRY_REFRESH.refresh(ready, snapshot.revision(), () -> registry.removeEntryIf(TinkerEntryTypes::isOwned), () -> {
       var unique = new LinkedHashSet<EntryStack<?>>();
       for (SmelteryDisplay display : RECIPES.all()) {
         java.util.stream.Stream.concat(display.getRequiredEntries().stream(), display.outputs().stream())
           .flatMap(List::stream).filter(TinkerEntryTypes::isOwned).map(EntryStack::normalize).forEach(unique::add);
       }
       registry.addEntries(unique);
-    }
-    registry.refilter();
-    entryRevision = snapshot.revision();
-    entriesReady = ready;
+    }, registry::refilter);
   }
 }
