@@ -437,7 +437,9 @@ tasks.register('returningFixtureJar', Jar) {
     dependsOn tasks.named('returningFixtureClasses')
     archiveBaseName = 'aebm-continuum-returning-fixture'
     // 0.0.6 adds FixtureAutorun (unattended plan runner for tools/run-fixture-server.ps1); 0.0.5 was the arthur.5 fixture.
-    archiveVersion = '0.0.6'
+    // 0.0.7 (release arthur.8) folds in every stream's fixture suites plus aebmtoolverifytest.
+    // archiveVersion = '0.0.6'
+    archiveVersion = '0.0.7'
     from sourceSets.returningFixture.output
     from('LICENSE') { into 'META-INF/licenses/continuum' }
 }
