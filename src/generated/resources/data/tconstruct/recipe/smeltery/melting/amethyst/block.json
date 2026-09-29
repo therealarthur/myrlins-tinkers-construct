@@ -1,7 +1,13 @@
 {
   "type": "tconstruct:melting",
   "id": "tconstruct:smeltery/melting/amethyst/block",
-  "ingredient": "#c:storage_blocks/amethyst",
+  "ingredient": {
+    "neoforge:ingredient_type": "neoforge:compound",
+    "children": [
+      "#c:storage_blocks/amethyst",
+      "minecraft:amethyst_block"
+    ]
+  },
   "result": {
     "amount": 400,
     "fluid": "tconstruct:molten_amethyst"

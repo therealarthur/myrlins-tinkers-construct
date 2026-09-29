@@ -1,8 +1,0 @@
-{
-  "type": "tconstruct:table_tool_casting",
-  "cast": "minecraft:elytra",
-  "cast_purpose": "consumed",
-  "id": "tconstruct:tools/armor/table/slimelytra",
-  "item_cost": 8,
-  "result": "tconstruct:slime_wings"
-}

@@ -2,19 +2,25 @@
   "level_display": "tconstruct:single_level",
   "modules": [
     {
-      "type": "tconstruct:edible",
-      "counter_chance": {
-        "each_level": 0.15
-      },
+      "type": "tconstruct:trait",
+      "fixed_level": true,
+      "level": 1,
+      "name": "tconstruct:edible"
+    },
+    {
+      "type": "tconstruct:edible_representative_item",
+      "representative_item": "minecraft:honey_bottle"
+    },
+    {
+      "type": "tconstruct:edible_consume_durability",
       "durability_usage": {
         "each_level": 3,
         "flat": 5
-      },
-      "duration": {
-        "flat": 16
-      },
-      "remove_effect": "minecraft:poison",
-      "representative_item": "minecraft:honey_bottle"
+      }
+    },
+    {
+      "type": "tconstruct:edible_remove_effect",
+      "effect": "minecraft:poison"
     },
     {
       "type": "tconstruct:stat_boost",
@@ -29,10 +35,10 @@
       "stat": "tconstruct:saturation"
     },
     {
-      "type": "tconstruct:trait",
-      "fixed_level": true,
-      "level": 1,
-      "name": "tconstruct:edible_tooltip"
+      "type": "tconstruct:stat_boost",
+      "each_level": 0.15,
+      "operation": "add",
+      "stat": "tconstruct:edible_counter_chance"
     }
   ]
 }

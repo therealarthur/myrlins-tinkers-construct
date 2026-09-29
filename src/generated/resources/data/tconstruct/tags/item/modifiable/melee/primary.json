@@ -9,10 +9,6 @@
     "tconstruct:cleaver",
     "tconstruct:javelin",
     "tconstruct:battlesign",
-    "tconstruct:swasher",
-    {
-      "id": "tconstruct:minotaur_axe",
-      "required": false
-    }
+    "tconstruct:swasher"
   ]
 }

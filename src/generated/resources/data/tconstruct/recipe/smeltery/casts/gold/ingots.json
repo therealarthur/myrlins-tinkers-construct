@@ -11,7 +11,11 @@
       {
         "neoforge:ingredient_type": "tconstruct:material",
         "match": "tconstruct:fake_ingot"
-      }
+      },
+      [
+        "minecraft:brick",
+        "minecraft:nether_brick"
+      ]
     ]
   },
   "cast_consumed": true,
