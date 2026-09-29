@@ -107,6 +107,12 @@ public class MaterialValueSwappingRecipe extends MaterialIndexSwappingRecipe imp
       if (!material.matches(variant.getVariant())) continue;
       int used = recipe.getItemsUsed(cost);
       for (ItemStack stack : recipe.getDisplayItems()) {
+        // arthur.8: the station reads an input through MaterialRecipeCache.findRecipe (first loaded recipe that accepts
+        // the item, as official), so only list a stack under the recipe the station will really use for it. Otherwise
+        // an item accepted by two material recipes (bamboo planks: default wood planks needed 1, and tconstruct:bamboo
+        // needed 2) was shown at the wrong material and cost (2 shown, 4 used). The stack still appears under its real
+        // recipe when that recipe's material matches this swap.
+        if (!stack.isEmpty() && MaterialRecipeCache.findRecipe(stack) != recipe) continue;
         if (!stack.isEmpty() && used > 0 && used <= stack.getMaxStackSize()) {
           alternatives.add(new Alternative(variant, stack.copyWithCount(used), recipe.getLeftover(cost)));
         }
