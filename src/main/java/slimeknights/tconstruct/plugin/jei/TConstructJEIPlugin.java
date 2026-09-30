@@ -327,4 +327,33 @@ public class TConstructJEIPlugin implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(TinkerSmeltery.smelteryController), TConstructJEIConstants.MELTING, TConstructJEIConstants.ALLOY);
     registration.addRecipeCatalyst(new ItemStack(TinkerSmeltery.scorchedAlloyer), TConstructJEIConstants.ALLOY);
     registration.addRecipeCatalyst(new ItemStack(TinkerSmeltery.foundryController), TConstructJEIConstants.FOUNDRY);
-  }}
+  }
+
+  /**
+   * myrlin.2: official JEIPlugin#onRuntimeAvailable ingredient hiding, which the port had not carried over. Removes the
+   * modifier crystal and the creative slot item in every variant (shown through the modifier and slot ingredients), the
+   * compat fluids whose metal is absent with their buckets, molten porcelain without Ceramics, and the variantless potion
+   * fluid. The rules are shared with REI in {@link slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding}.
+   */
+  @Override
+  public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime jeiRuntime) {
+    try {
+      mezz.jei.api.runtime.IIngredientManager manager = jeiRuntime.getIngredientManager();
+      List<ItemStack> removeItems = new java.util.ArrayList<>();
+      removeItems.add(new ItemStack(slimeknights.tconstruct.tools.TinkerModifiers.modifierCrystal));
+      slimeknights.tconstruct.tools.item.ModifierCrystalItem.addVariants(removeItems::add);
+      removeItems.add(new ItemStack(slimeknights.tconstruct.tools.TinkerModifiers.creativeSlotItem));
+      slimeknights.tconstruct.tools.TinkerModifiers.creativeSlotItem.get().addVariants(removeItems::add);
+      removeItems.addAll(slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.hiddenBuckets());
+      manager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, removeItems);
+      List<net.neoforged.neoforge.fluids.FluidStack> removeFluids = new java.util.ArrayList<>();
+      for (net.minecraft.world.level.material.Fluid fluid : slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.hiddenFluids()) {
+        removeFluids.add(new net.neoforged.neoforge.fluids.FluidStack(fluid, net.neoforged.neoforge.fluids.FluidType.BUCKET_VOLUME));
+      }
+      manager.removeIngredientsAtRuntime(mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK, removeFluids);
+    } catch (RuntimeException exception) {
+      // hiding is cosmetic; never break JEI's runtime over it
+      TConstruct.LOG.warn("Could not hide compat ingredients in JEI", exception);
+    }
+  }
+}

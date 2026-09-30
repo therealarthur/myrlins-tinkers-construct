@@ -20,6 +20,10 @@ import slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.*;
 final class TinkerEntryRenderers {
   private TinkerEntryRenderers() {}
 
+  /** Repair kit per material, built once (official MaterialIconIngredientRenderer caches the same way) */
+  private static final java.util.Map<slimeknights.tconstruct.library.materials.definition.MaterialVariantId, net.minecraft.world.item.ItemStack> MATERIAL_ICONS =
+    new java.util.concurrent.ConcurrentHashMap<>();
+
   static <T extends Value> EntryRenderer<T> renderer() {
     return new EntryRenderer<>() {
       @Override
@@ -46,6 +50,21 @@ final class TinkerEntryRenderers {
           // official JEI's bookmark renderer draws the modifier icon in item-sized cells (sidebar, worktable)
           slimeknights.tconstruct.library.client.modifiers.ModifierIconManager.renderIcon(graphics, modifier.modifier().getModifier(), bounds.x, bounds.y, 100, 16);
           return;
+        }
+        // myrlin.2: item-sized cells (bookmarks, focus) drew these as bare text ("1 x", "Bla")
+        if (value instanceof MaterialValue material && bounds.width <= 18) {
+          // official MaterialIconIngredientRenderer: the repair kit made of the material
+          graphics.item(MATERIAL_ICONS.computeIfAbsent(material.material(),
+            id -> slimeknights.tconstruct.tools.TinkerToolParts.repairKit.get().withMaterialForDisplay(id)), bounds.x, bounds.y);
+          return;
+        }
+        if (value instanceof EntityValue entity && bounds.width <= 18) {
+          // the spawn egg, as the port's entity melting layout shows it (official draws a live entity there)
+          var egg = net.minecraft.world.item.SpawnEggItem.byId(entity.entity());
+          if (egg.isPresent()) {
+            graphics.item(new net.minecraft.world.item.ItemStack(egg.get()), bounds.x, bounds.y);
+            return;
+          }
         }
         var font = Minecraft.getInstance().font;
         graphics.drawString(font, font.plainSubstrByWidth(TinkerEntryTypes.name(value).getString(), bounds.width), bounds.x, bounds.y + 4, -1, true);

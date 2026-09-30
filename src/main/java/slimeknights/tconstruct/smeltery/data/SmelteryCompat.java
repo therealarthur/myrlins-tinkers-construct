@@ -115,6 +115,12 @@ public enum SmelteryCompat {
     return name;
   }
 
+  /** Material whose presence shows this compat even without the ingot tag, or null when only the ingot counts */
+  @Nullable
+  public MaterialId getMaterial() {
+    return material;
+  }
+
   public CompatType getType() {
     return type;
   }

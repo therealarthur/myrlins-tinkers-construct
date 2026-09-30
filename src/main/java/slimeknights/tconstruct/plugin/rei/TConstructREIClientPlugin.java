@@ -204,6 +204,10 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
     } catch (RuntimeException exception) {
       showFilled = true; // config not loaded: change nothing
     }
+    // myrlin.2, official JEIPlugin#onRuntimeAvailable: compat fluids whose metal is absent, their buckets, and the
+    // variantless potion fluid. Needs bound tags and loaded materials, so it is marked dirty again once the recipe
+    // snapshot and materials arrive (clientTick), and REI evaluates it on that refilter.
+    COMPAT_HIDING = rule.hide(TConstructREIClientPlugin::hiddenCompatEntries);
     if (showFilled) return;
     rule.hide(() -> {
       if (Minecraft.getInstance().level == null) return List.of();
@@ -213,6 +217,58 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
       }
       return hidden;
     });
+  }
+
+  /** Handle of the compat hiding rule, marked dirty when tags and materials become ready */
+  @org.jetbrains.annotations.Nullable
+  private static volatile me.shedaniel.rei.api.client.entry.filtering.base.BasicFilteringRule.MarkDirty COMPAT_HIDING;
+
+  /** Fluid and bucket entries official hides; nothing before a world is joined (tags unbound) */
+  private static java.util.Collection<EntryStack<?>> hiddenCompatEntries() {
+    if (Minecraft.getInstance().level == null) return List.of();
+    List<EntryStack<?>> hidden = new java.util.ArrayList<>();
+    for (net.minecraft.world.level.material.Fluid fluid : slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.hiddenFluids()) {
+      hidden.add(EntryStacks.of(fluid));
+    }
+    for (ItemStack bucket : slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.hiddenBuckets()) {
+      hidden.add(EntryStacks.of(bucket));
+    }
+    return hidden;
+  }
+
+  /**
+   * REI 26.1.819 draws fluid entries with a no-op renderer, so every fluid in the entry list, the tag browser and other
+   * mods' categories is an empty slot. Tinkers fluids get the same tiled fluid drawing the Tinkers layouts already use
+   * ({@link ReiLayout#drawFluid}), drawn full; tooltips stay REI's. Other mods' fluids keep REI's renderer.
+   */
+  @Override
+  public void registerEntryRenderers(me.shedaniel.rei.api.client.entry.renderer.EntryRendererRegistry registry) {
+    registry.register(me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes.FLUID, (entry, last) -> isTinkersFluid(entry) ? new TinkersFluidRenderer(last) : last);
+  }
+
+  private static boolean isTinkersFluid(EntryStack<dev.architectury.fluid.FluidStack> entry) {
+    try {
+      return TConstruct.MOD_ID.equals(net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(entry.getValue().getFluid()).getNamespace());
+    } catch (RuntimeException exception) {
+      return false;
+    }
+  }
+
+  /** Draws a Tinkers fluid entry as a full tile of its fluid; everything else comes from REI's renderer */
+  private record TinkersFluidRenderer(me.shedaniel.rei.api.client.entry.renderer.EntryRenderer<dev.architectury.fluid.FluidStack> last)
+    implements me.shedaniel.rei.api.client.entry.renderer.EntryRenderer<dev.architectury.fluid.FluidStack> {
+    @Override
+    public void render(EntryStack<dev.architectury.fluid.FluidStack> entry, me.shedaniel.rei.api.client.gui.compat.GuiGraphics graphics,
+                       me.shedaniel.math.Rectangle bounds, int mouseX, int mouseY, float delta) {
+      net.neoforged.neoforge.fluids.FluidStack fluid = dev.architectury.hooks.fluid.forge.FluidStackHooksForge.toForge(entry.getValue());
+      if (fluid.isEmpty()) return;
+      ReiLayout.drawFluid(graphics, fluid, bounds.x, bounds.y, bounds.width, bounds.height);
+    }
+
+    @Override
+    public me.shedaniel.rei.api.client.gui.widgets.Tooltip getTooltip(EntryStack<dev.architectury.fluid.FluidStack> entry, me.shedaniel.rei.api.client.gui.widgets.TooltipContext context) {
+      return last.getTooltip(entry, context);
+    }
   }
 
   /** Crafting station, tool inventory crafting and tinker station transfer, sent as ordinary menu clicks. */
@@ -294,6 +350,21 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
     if (!isMinotaurAxeActive()) {
       registry.removeEntryIf(entry -> entry.getValue() instanceof ItemStack stack && stack.is(slimeknights.tconstruct.tools.TinkerTools.minotaurAxe.get()));
     }
+    // myrlin.2, official JEIPlugin#onRuntimeAvailable: the modifier crystal and the creative slot item are removed in
+    // every variant; they are shown through the modifier and slot ingredients instead.
+    registry.removeEntryIf(entry -> entry.getValue() instanceof ItemStack stack && slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.isAlwaysHiddenItem(stack));
+  }
+
+  /** Whether official lists this Tinkers entry in the viewer's ingredient list (modifiers per config, slot types) */
+  private static boolean listedInViewer(EntryStack<?> entry) {
+    boolean showModifiers;
+    try {
+      showModifiers = slimeknights.tconstruct.common.config.Config.CLIENT.showModifiersInJEI.get();
+    } catch (RuntimeException exception) {
+      showModifiers = true; // config not loaded: the default
+    }
+    return entry.getValue() instanceof slimeknights.tconstruct.library.client.recipe.RecipeDisplayData.Value value
+      && slimeknights.tconstruct.library.client.recipe.RecipeViewerHiding.listedInViewer(value, showModifiers);
   }
 
   /** The minotaur axe is only "present" when Twilight Forest is loaded, matching official registration */
@@ -315,10 +386,18 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
     ENTRY_REFRESH.refresh(reloadBusy, ready, snapshot.revision(), () -> registry.removeEntryIf(TinkerEntryTypes::isOwned), () -> {
       var unique = new LinkedHashSet<EntryStack<?>>();
       for (SmelteryDisplay display : RECIPES.all()) {
+        // myrlin.2: only what official lists (modifiers, slot types); materials, patterns and entities stay inside
+        // recipes, as in official JEI, where the list drew them as bare text ("1 x", "Bla") or faint outlines
         java.util.stream.Stream.concat(display.getRequiredEntries().stream(), display.outputs().stream())
-          .flatMap(List::stream).filter(TinkerEntryTypes::isOwned).map(EntryStack::normalize).forEach(unique::add);
+          .flatMap(List::stream).filter(TinkerEntryTypes::isOwned).filter(TConstructREIClientPlugin::listedInViewer)
+          .map(EntryStack::normalize).forEach(unique::add);
       }
       registry.addEntries(unique);
-    }, registry::refilter);
+    }, () -> {
+      // tags and materials are ready now: recompute the compat hiding before REI refilters
+      var compat = COMPAT_HIDING;
+      if (compat != null) compat.markDirty();
+      registry.refilter();
+    });
   }
 }
