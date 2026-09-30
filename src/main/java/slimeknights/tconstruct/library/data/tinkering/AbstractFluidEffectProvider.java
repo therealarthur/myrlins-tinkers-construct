@@ -73,7 +73,19 @@ public abstract class AbstractFluidEffectProvider extends GenericDataProvider {
   @Override
   public CompletableFuture<?> run(CachedOutput cache) {
     addFluids();
-    return allOf(entries.entrySet().stream().map(entry -> saveJson(cache, entry.getKey(), entry.getValue().build(entry.getKey()))));
+    // return allOf(entries.entrySet().stream().map(entry -> saveJson(cache, entry.getKey(), entry.getValue().build(entry.getKey()))));
+    return allOf(entries.entrySet().stream().map(entry -> saveJson(cache, entry.getKey(), postProcess(entry.getKey(), entry.getValue().build(entry.getKey())))));
+  }
+
+  /**
+   * Last chance to adjust a generated fluid effect before it is written; unchanged by default.
+   * Added in arthur.9 so a provider can write compat block ids that 26.1 datagen cannot build as fake blocks.
+   * @param id    Fluid effect ID
+   * @param json  Generated JSON, may be modified in place
+   * @return JSON to write
+   */
+  protected JsonObject postProcess(Identifier id, JsonObject json) {
+    return json;
   }
 
   /* Helpers */

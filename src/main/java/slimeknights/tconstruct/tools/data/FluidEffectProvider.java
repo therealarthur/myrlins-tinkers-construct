@@ -1,5 +1,7 @@
 package slimeknights.tconstruct.tools.data;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -88,15 +90,51 @@ import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.tools.modifiers.traits.skull.StrongBonesModifier;
 import slimeknights.tconstruct.world.block.DirtType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public class FluidEffectProvider extends AbstractFluidEffectProvider {
   private final CompletableFuture<HolderLookup.Provider> lookupProvider;
+  /**
+   * Datagen only (arthur.9): tconstruct:set_block targets that 26.1 datagen could not build as fake blocks, keyed by fluid
+   * effect ID. {@link #postProcess(Identifier, JsonObject)} writes these IDs in place of the minecraft:air fallback.
+   */
+  private final Map<Identifier, Identifier> compatSetBlockIds = new HashMap<>();
 
   public FluidEffectProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
     super(packOutput, TConstruct.MOD_ID);
     this.lookupProvider = lookupProvider;
+  }
+
+  @Override
+  protected JsonObject postProcess(Identifier id, JsonObject json) {
+    Identifier block = compatSetBlockIds.get(id);
+    if (block != null) {
+      replaceAirSetBlock(json, block.toString());
+    }
+    return json;
+  }
+
+  /** Points every tconstruct:set_block effect below the element that fell back to minecraft:air at the given block ID. */
+  private static void replaceAirSetBlock(JsonElement element, String block) {
+    if (element.isJsonArray()) {
+      for (JsonElement child : element.getAsJsonArray()) {
+        replaceAirSetBlock(child, block);
+      }
+    } else if (element.isJsonObject()) {
+      JsonObject object = element.getAsJsonObject();
+      JsonElement type = object.get("type");
+      JsonElement target = object.get("block");
+      if (type != null && type.isJsonPrimitive() && "tconstruct:set_block".equals(type.getAsString())
+          && target != null && target.isJsonPrimitive() && "minecraft:air".equals(target.getAsString())) {
+        object.addProperty("block", block);
+      }
+      for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+        replaceAirSetBlock(entry.getValue(), block);
+      }
+    }
   }
 
   @SuppressWarnings("removal")
@@ -337,7 +375,12 @@ public class FluidEffectProvider extends AbstractFluidEffectProvider {
       // committed concrete.json had been generated with minecraft:air (placing air when Immersive Engineering is loaded).
       // The committed JSON is hand corrected to immersiveengineering:concrete_sprayed as in official v3.12.1.
       // Check concrete.json after any datagen run until this provider can emit compat block IDs.
+      // arthur.9: it can now. When the fake block falls back to air, postProcess writes the real ID, so datagen with an
+      // empty .cache reproduces the committed concrete.json instead of needing the hand correction.
       Block concreteSprayed = FakeRegistryEntry.block(Identifier.parse(ie + ":concrete_sprayed"));
+      if (concreteSprayed == Blocks.AIR) {
+        compatSetBlockIds.put(TConstruct.getResource("concrete"), Identifier.parse(ie + ":concrete_sprayed"));
+      }
       MobEffect concreteFeetEffect = FakeRegistryEntry.effect(Identifier.parse(ie + ":concrete_feet"));
       Holder<MobEffect> concreteFeetHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(concreteFeetEffect);
       AreaMobEffectFluidEffect concreteFeet = new AreaMobEffectFluidEffect(new FluidMobEffect(concreteFeetHolder, MobEffectInstance.INFINITE_DURATION, 1), TimeAction.SET, GroupCost.MAX);
