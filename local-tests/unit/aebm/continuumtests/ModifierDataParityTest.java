@@ -344,10 +344,13 @@ final class ModifierDataParityTest {
     zoom|"tconstruct:no_levels"|tconstruct:zoom|
     """;
 
-  /** Official IDs with no JSON in Continuum because another implementation replaces them. */
-  private static final Map<String, String> REPLACED = Map.of(
-    "chrysophilite", "static Java modifier TinkerModifiers.chrysophilite (older official implementation)",
-    "gold_guard", "static Java modifier TinkerModifiers.goldGuard (older official implementation)");
+  /**
+   * Official IDs with no JSON in Continuum because another implementation replaces them. Empty since arthur.9 ported
+   * chrysophilite and gold_guard to the official golden_attribute JSON. Former entries:
+   * "chrysophilite", "static Java modifier TinkerModifiers.chrysophilite (older official implementation)",
+   * "gold_guard", "static Java modifier TinkerModifiers.goldGuard (older official implementation)".
+   */
+  private static final Map<String, String> REPLACED = Map.of();
   // oracle fixes: edible is the official 3.12.1 JSON again (shared trait plus effect modules), so it is compared like any
   // other official modifier. Former entry: "edible" split into the Continuum tconstruct:edible module on each food modifier.
 

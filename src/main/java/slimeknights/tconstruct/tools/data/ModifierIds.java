@@ -334,6 +334,10 @@ public class ModifierIds {
   public static final ModifierId balmOfSssss = id("balm_of_sssss");
   public static final ModifierId slowBones = id("slow_bones");
   public static final ModifierId witheredBones = id("withered");
+  /** Official 3.12.1 JSON modifier since arthur.9 (was the static Java {@code TinkerModifiers.goldGuard}) */
+  public static final ModifierId goldGuard = id("gold_guard");
+  /** Official 3.12.1 JSON modifier since arthur.9 (was the static Java {@code TinkerModifiers.chrysophilite}) */
+  public static final ModifierId chrysophilite = id("chrysophilite");
   public static final ModifierId magicBones = id("magic_bones");
   public static final ModifierId flamingBones = id("flaming_bones");
   public static final ModifierId decayedBones = id("decayed_bones");

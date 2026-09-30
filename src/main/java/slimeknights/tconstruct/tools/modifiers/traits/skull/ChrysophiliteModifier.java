@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -27,9 +28,17 @@ import slimeknights.tconstruct.library.tools.context.EquipmentChangeContext;
 import slimeknights.tconstruct.library.tools.definition.ModifiableArmorMaterial;
 import slimeknights.tconstruct.library.tools.item.armor.ModifiableArmorItem;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.shared.TinkerAttributes;
 
 import javax.annotation.Nullable;
 
+/**
+ * Older official Java implementation of chrysophilite.
+ * @deprecated arthur.9: chrysophilite is the official 3.12.1 JSON modifier ({@link slimeknights.tconstruct.tools.modules.armor.GoldenAttributeModule}
+ * with {@link TinkerAttributes#CHRYSOPHILITE}), registered as dynamic, so this class is no longer constructed. Its static helpers
+ * stay in use: {@link #getTotalGold(Entity)} reads the attribute and {@link #onLivingDrops(LivingDropsEvent)} is called from ModifierEvents.
+ */
+@Deprecated
 public class ChrysophiliteModifier extends NoLevelsModifier implements EquipmentChangeModifierHook {
   public static final ComputableDataKey<TotalGold> TOTAL_GOLD = TConstruct.createKey("chrysophilite", TotalGold::new);
   public ChrysophiliteModifier() {
@@ -89,8 +98,21 @@ public class ChrysophiliteModifier extends NoLevelsModifier implements Equipment
     }
   }
 
-  /** Gets the level of the modifier on an entity */
+  /**
+   * Gets the chrysophilite level on an entity: 1 for the modifier plus 1 per golden armor piece, 0 without it.
+   * arthur.9: reads the official {@link TinkerAttributes#CHRYSOPHILITE} attribute that the JSON modifier sets, as official
+   * 3.12.1 loot condition, loot function and drop bonus do. Before, it read this class's own {@link #TOTAL_GOLD} data.
+   */
   public static int getTotalGold(@Nullable Entity entity) {
+    if (entity instanceof LivingEntity living) {
+      AttributeInstance instance = living.getAttribute(TinkerAttributes.CHRYSOPHILITE);
+      return instance == null ? 0 : (int) instance.getValue();
+    }
+    return 0;
+  }
+
+  /** Gets the level of the older Java modifier data on an entity. Kept for reference; nothing sets that data since arthur.9. */
+  public static int getLegacyTotalGold(@Nullable Entity entity) {
     if (entity instanceof LivingEntity living) {
       TinkerDataCapability.Holder data = TinkerDataCapability.getData(living);
       TotalGold gold = data == null ? null : data.get(ChrysophiliteModifier.TOTAL_GOLD);
@@ -104,8 +126,12 @@ public class ChrysophiliteModifier extends NoLevelsModifier implements Equipment
     return EnchantmentHelper.getTagEnchantmentLevel(target.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.VANISHING_CURSE), stack) > 0;
   }
 
-  /** Causes more gold armor to drop */
-  private static void onLivingDrops(LivingDropsEvent event) {
+  /**
+   * Causes more gold armor to drop. Called from ModifierEvents since arthur.9 (this class is no longer constructed).
+   * The chance uses the killer's chrysophilite, as arthur.8 and older official did; official 3.12.1 reads the attribute of
+   * the entity that died instead, which is listed as an open question in release/UPSTREAM-SYNC-REPORT.md.
+   */
+  public static void onLivingDrops(LivingDropsEvent event) {
     DamageSource source = event.getSource();
     if (source != null) {
       int gold = getTotalGold(source.getEntity());

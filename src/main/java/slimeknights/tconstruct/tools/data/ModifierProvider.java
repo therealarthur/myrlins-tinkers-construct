@@ -220,6 +220,7 @@ import slimeknights.tconstruct.tools.modules.ZoomModule;
 import slimeknights.tconstruct.tools.modules.armor.DepthProtectionModule;
 import slimeknights.tconstruct.tools.modules.armor.EnderclearanceModule;
 import slimeknights.tconstruct.tools.modules.armor.FieryCounterModule;
+import slimeknights.tconstruct.tools.modules.armor.GoldenAttributeModule;
 import slimeknights.tconstruct.tools.modules.armor.FireWalkerModule;
 import slimeknights.tconstruct.tools.modules.armor.FlameBarrierModule;
 import slimeknights.tconstruct.tools.modules.armor.FreezingCounterModule;
@@ -1765,6 +1766,15 @@ public class ModifierProvider extends AbstractModifierProvider {
         .variable(LEVEL).constant(2).multiply().subtract()
         .constant(1).max().min()
         .build(), ModifierHooks.MODIFY_DAMAGE);
+    // arthur.9 parity: official 3.12.1 JSON form of the gold skull traits (were the older static Java modifiers).
+    // Value = flat + each level per golden armor piece; the skull only counts itself once the modifier reaches level 2,
+    // which is also when it makes piglins neutral. So a lone level 1 skull gives chrysophilite 1 and +4 max health.
+    buildModifier(ModifierIds.chrysophilite).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
+      .addModule(GoldenAttributeModule.builder(TinkerAttributes.CHRYSOPHILITE, Operation.ADD_VALUE).amount(1, 1))
+      .addModule(new VolatileFlagModule(ModifiableArmorItem.PIGLIN_NEUTRAL, ModifierCondition.ANY_CONTEXT.minLevel(2)));
+    buildModifier(ModifierIds.goldGuard).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
+      .addModule(GoldenAttributeModule.builder(Attributes.MAX_HEALTH.value(), Operation.ADD_VALUE).amount(4, 4))
+      .addModule(new VolatileFlagModule(ModifiableArmorItem.PIGLIN_NEUTRAL, ModifierCondition.ANY_CONTEXT.minLevel(2)));
     // bones
     buildModifier(ModifierIds.slowBones).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
       .addModule(new EffectImmunityModule(MobEffects.SLOWNESS.value(), LevelingInt.LEVEL))

@@ -28,6 +28,12 @@ import slimeknights.tconstruct.library.utils.Util;
 import javax.annotation.Nullable;
 import java.util.List;
 
+/**
+ * Older official Java implementation of gold guard.
+ * @deprecated arthur.9: gold guard is the official 3.12.1 JSON modifier ({@link slimeknights.tconstruct.tools.modules.armor.GoldenAttributeModule}
+ * on max health), registered as dynamic, so this class is no longer constructed.
+ */
+@Deprecated
 public class GoldGuardModifier extends NoLevelsModifier implements EquipmentChangeModifierHook, TooltipModifierHook {
   private static final Identifier GOLD_GUARD_ID = TConstruct.getResource("gold_guard");
   private static final ComputableDataKey<GoldGuardGold> TOTAL_GOLD = TConstruct.createKey("gold_guard", GoldGuardGold::new);

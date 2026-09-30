@@ -43,6 +43,7 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
@@ -160,6 +161,16 @@ public class ModifierEvents {
     if (effectInstance != null && EffectImmunityModule.getImmunity((LivingEntity) event.getEntity(), effectInstance.getEffect()) > effectInstance.getAmplifier()) {
       event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
     }
+  }
+
+  /**
+   * Chrysophilite gold armor drop bonus. Official 3.12.1 handles it here; the port registered it from the older Java
+   * ChrysophiliteModifier constructor, which is no longer constructed now that chrysophilite is the JSON modifier (arthur.9).
+   */
+  @SubscribeEvent
+  @SuppressWarnings("deprecation")
+  static void onLivingDrops(LivingDropsEvent event) {
+    slimeknights.tconstruct.tools.modifiers.traits.skull.ChrysophiliteModifier.onLivingDrops(event);
   }
 
   /** Called when the player dies to store the item in the original inventory */
