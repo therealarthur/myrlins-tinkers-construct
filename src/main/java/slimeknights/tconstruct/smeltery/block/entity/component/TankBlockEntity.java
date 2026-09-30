@@ -12,11 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -104,16 +104,32 @@ public class TankBlockEntity extends SmelteryComponentBlockEntity implements ITa
    * Tank methods
    */
 
-  /** Updates the light for this tank using {@link SearedTankBlock#LIGHT} */
+  /**
+   * Updates the light for this tank using {@link SearedTankBlock#LIGHT}.
+   * The block change is queued so it never runs while a fluid transaction is open or closing.
+   * Asking for the current transaction during close throws and aborts the rollback, which left
+   * the server tank empty after a single bucket while the client still showed the poured fluid.
+   */
   public static void updateLight(BlockEntity be, IFluidTank tank) {
     Level level = be.getLevel();
-    if (level != null && !level.isClientSide()) {
-      FluidStack fluid = tank.getFluid();
-      int light = fluid.isEmpty() ? 0 : fluid.getFluid().getFluidType().getLightLevel(fluid);
-      BlockState state = be.getBlockState();
-      if (light != state.getValue(SearedTankBlock.LIGHT)) {
-        ((LevelAccessor) level).setBlock(be.getBlockPos(), state.setValue(SearedTankBlock.LIGHT, light), Block.UPDATE_ALL);
-      }
+    if (!(level instanceof ServerLevel server) || be.isRemoved()) {
+      return;
+    }
+    server.getServer().execute(() -> applyLight(be, tank));
+  }
+
+  private static void applyLight(BlockEntity be, IFluidTank tank) {
+    Level level = be.getLevel();
+    if (level == null || level.isClientSide() || be.isRemoved()) {
+      return;
+    }
+    FluidStack fluid = tank.getFluid();
+    int light = fluid.isEmpty() ? 0 : fluid.getFluid().getFluidType().getLightLevel(fluid);
+    // Read the world state. The block entity cache can still say this tank is outside the
+    // structure, and writing that cache back drops the tank from the smeltery.
+    BlockState state = level.getBlockState(be.getBlockPos());
+    if (state.hasProperty(SearedTankBlock.LIGHT) && light != state.getValue(SearedTankBlock.LIGHT)) {
+      level.setBlock(be.getBlockPos(), state.setValue(SearedTankBlock.LIGHT, light), Block.UPDATE_CLIENTS);
     }
   }
 
@@ -127,6 +143,9 @@ public class TankBlockEntity extends SmelteryComponentBlockEntity implements ITa
 
   @Override
   public void onTankContentsChanged() {
+    if (tank.isEmpty()) {
+      clearStoredFluidComponent();
+    }
 
     ITankBlockEntity.super.onTankContentsChanged();
     if (this.level != null) {
@@ -190,15 +209,22 @@ public class TankBlockEntity extends SmelteryComponentBlockEntity implements ITa
     return data.copyTag().getCompound(NBTTags.TANK).orElseGet(CompoundTag::new);
   }
 
-  /**
-   * Sets the tag on the stack based on the contained tank.
-   * The component is written even when the tank is empty, as the value the block was placed with otherwise survives
-   * in the stored component patch and a drained tank drops still holding its original fluid.
-   */
+  /** Drops the fluid that was on the item when the tank was placed, so a drained tank breaks empty. */
+  private void clearStoredFluidComponent() {
+    DataComponentMap stored = components();
+    if (stored.get(DataComponents.CUSTOM_DATA) == null) {
+      return;
+    }
+    DataComponentMap.Builder builder = DataComponentMap.builder();
+    builder.addAll(stored);
+    builder.set(DataComponents.CUSTOM_DATA, null);
+    setComponents(builder.build());
+  }
+
   @Override
   protected void collectImplicitComponents(DataComponentMap.Builder components) {
     super.collectImplicitComponents(components);
-    components.set(DataComponents.CUSTOM_DATA, writeTankData(tank.getFluid()));
+    components.set(DataComponents.CUSTOM_DATA, writeTankData(tank.getFluid().copy()));
   }
 
   /**
@@ -275,8 +301,11 @@ public class TankBlockEntity extends SmelteryComponentBlockEntity implements ITa
   @Override
   public void saveAdditional(ValueOutput output) {
     super.saveAdditional(output);
-    if (!tank.isEmpty()) {
-      output.child(NBTTags.TANK).store("fluid", FluidStack.OPTIONAL_CODEC, tank.getFluid());
+    if (tank.isEmpty()) {
+      // Leaving the previous tank tag in place reloads lava into a tank that already burned it.
+      output.discard(NBTTags.TANK);
+    } else {
+      output.child(NBTTags.TANK).store("fluid", FluidStack.OPTIONAL_CODEC, tank.getFluid().copy());
     }
   }
 

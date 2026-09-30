@@ -5,6 +5,9 @@ import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.neoforged.neoforge.fluids.FluidStack;
+import slimeknights.tconstruct.shared.TinkerCommons;
+import slimeknights.tconstruct.shared.particle.FluidParticleData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -149,19 +152,23 @@ public class FaucetBlock extends Block implements EntityBlock {
    * @param worldIn  World instance
    * @param pos      Faucet position
    */
-  private static void addParticles(BlockState state, LevelAccessor worldIn, BlockPos pos) {
+  private static void addParticles(BlockState state, LevelAccessor worldIn, BlockPos pos, FluidStack fluid) {
     Direction direction = state.getValue(FACING);
     double x = (double)pos.getX() + 0.5D - 0.3D * (double)direction.getStepX();
     double y = (double)pos.getY() + 0.5D - 0.3D * (double)direction.getStepY();
     double z = (double)pos.getZ() + 0.5D - 0.3D * (double)direction.getStepZ();
-    worldIn.addParticle(new DustParticleOptions(0xFFFF0000, 0.5f), x, y, z, 0.0D, 0.0D, 0.0D);
+    if (fluid.isEmpty()) {
+      worldIn.addParticle(new DustParticleOptions(0xFFFF0000, 0.5f), x, y, z, 0.0D, 0.0D, 0.0D);
+    } else {
+      worldIn.addParticle(new FluidParticleData(TinkerCommons.fluidParticle.get(), fluid), x, y, z, 0.0D, -0.08D, 0.0D);
+    }
   }
 
   @Override
   public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
     getFaucet(worldIn, pos).ifPresent(faucet -> {
-      if (faucet.isPouring() && faucet.getRenderFluid().isEmpty() && rand.nextFloat() < 0.25F) {
-        addParticles(stateIn, worldIn, pos);
+      if (faucet.isPouring() && rand.nextFloat() < 0.45F) {
+        addParticles(stateIn, worldIn, pos, faucet.getRenderFluid());
       }
     });
   }

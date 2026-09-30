@@ -79,7 +79,12 @@ public class FaucetBlockEntity extends MantleBlockEntity {
    */
   private IFluidHandler findFluidHandler(Direction side) {
     assert level != null;
-    BlockPos target = worldPosition.relative(side);
+    return findFluidHandler(level, worldPosition, side);
+  }
+
+  /** Looks up the fluid handler on {@code side} of {@code origin}, including Tinkers blocks that are not capability-registered. */
+  public static IFluidHandler findFluidHandler(net.minecraft.world.level.Level level, BlockPos origin, Direction side) {
+    BlockPos target = origin.relative(side);
     Direction targetSide = side.getOpposite();
     var blockEntity = level.getBlockEntity(target);
     if (blockEntity instanceof CastingBlockEntity casting) {

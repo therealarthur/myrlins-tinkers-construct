@@ -1,14 +1,29 @@
 package slimeknights.tconstruct.fluids.fluids;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import slimeknights.mantle.fluid.FlowingFluidEffects;
 
 public abstract class SlimeFluid extends BaseFlowingFluid {
 
   protected SlimeFluid(Properties properties) {
     super(properties);
+  }
+
+  @Override
+  public void animateTick(Level level, BlockPos pos, FluidState state, RandomSource random) {
+    FlowingFluidEffects.animate(this, level, pos, state, random);
+  }
+
+  @Override
+  protected ParticleOptions getDripParticle() {
+    return FlowingFluidEffects.drip(getSource());
   }
 
   /* TODO: no idea what this logic is supposed to be doig, it needs rethinking

@@ -101,11 +101,23 @@ public class ChannelBlockEntity extends MantleBlockEntity implements IFluidPacke
 	}
 
 	private IFluidHandler getNeighborHandlerUncached(Direction side) {
-		return EmptyFluidHandler.INSTANCE;
+		if (level == null) {
+			return EmptyFluidHandler.INSTANCE;
+		}
+		return FaucetBlockEntity.findFluidHandler(level, worldPosition, side);
 	}
 
 	protected IFluidHandler getNeighborHandler(Direction side) {
-		return neighborTanks.computeIfAbsent(side, this::getNeighborHandlerUncached);
+		IFluidHandler cached = neighborTanks.get(side);
+		if (cached != null) {
+			return cached;
+		}
+		// Do not cache an empty handler. The casting table may be placed after the first tick.
+		IFluidHandler handler = getNeighborHandlerUncached(side);
+		if (handler != EmptyFluidHandler.INSTANCE) {
+			neighborTanks.put(side, handler);
+		}
+		return handler;
 	}
 
 	public void removeCachedNeighbor(Direction side) {

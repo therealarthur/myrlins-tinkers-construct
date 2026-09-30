@@ -4,11 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import slimeknights.tconstruct.smeltery.block.entity.ITankBlockEntity;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler;
 import slimeknights.mantle.block.entity.MantleBlockEntity;
 import slimeknights.mantle.fluid.FluidTransferHelper;
+import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
 import slimeknights.tconstruct.library.utils.BlockPosNbt;
 
 import javax.annotation.Nonnull;
@@ -67,13 +69,27 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
     }
   }
 
+  /**
+   * Reads the tank that is actually stored on the block.
+   * Capability wrappers are cached and can keep an emptied tank after the block behind them changes,
+   * so fuel must come from the live block entity.
+   */
+  @Nullable
+  private IFluidHandler handlerAt(Level world, BlockPos pos) {
+    BlockEntity be = world.getBlockEntity(pos);
+    if (be instanceof ITankBlockEntity tank) {
+      return tank.getTank();
+    }
+    return FluidTransferHelper.getFluidHandler(world, pos, null);
+  }
+
   /** Gets the map from position to fluid handler. */
   private Map<BlockPos,IFluidHandler> getTankHandlers() {
     if (tankHandlers == null) {
       tankHandlers = new LinkedHashMap<>();
       Level world = getLevel();
       for (BlockPos pos : tankSupplier.get()) {
-        IFluidHandler handler = FluidTransferHelper.getFluidHandler(world, pos, null);
+        IFluidHandler handler = handlerAt(world, pos);
         if (handler != null) {
           tankHandlers.put(pos, handler);
         }
@@ -87,17 +103,16 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
   /* Fuel finding */
 
   /**
-   * Tries to consume fuel from the given position
+   * Tries to consume fuel from the tank currently at this position.
+   * The handler is read from the block entity each time so a cached wrapper cannot keep an emptied tank selected.
    * @param pos  Position
    * @return   Temperature of the consumed fuel, 0 if none found
    */
   private int tryFuelPosition(BlockPos pos, boolean consume) {
-    IFluidHandler tankCap = getTankHandlers().get(pos);
+    IFluidHandler tankCap = handlerAt(getLevel(), pos);
     if (tankCap != null) {
-      // if we find a valid handler, try to consume fuel from it
       int temperature = tryLiquidFuel(tankCap, consume);
       if (temperature > 0) {
-        clearLastListener();
         fluidHandler = tankCap;
         lastPos = pos;
         return temperature;
@@ -112,31 +127,28 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
    */
   @Override
   public int findFuel(boolean consume) {
-    // only fetch a handler if we haven't done so
-    if (fluidHandler != null) {
-      // if we have a handler, try to use that if possible
-      int temperature = tryLiquidFuel(fluidHandler, consume);
+    // Drop cached handlers first. An emptied tank must not hide the other tank that still has fuel.
+    tankHandlers = null;
+    List<BlockPos> positions = tankSupplier.get();
+    BlockPos current = lastPos;
+    if (current != NULL_POS) {
+      int temperature = tryFuelPosition(current, consume);
       if (temperature > 0) {
         return temperature;
       }
-    } else if (lastPos != NULL_POS) {
-      // if no handler, try to find one at the last position
-      int posTemp = tryFuelPosition(lastPos, consume);
-      if (posTemp > 0) {
-        return posTemp;
+    }
+
+    for (BlockPos pos : positions) {
+      if (pos.equals(current)) {
+        continue;
+      }
+      int temperature = tryFuelPosition(pos, consume);
+      if (temperature > 0) {
+        return temperature;
       }
     }
 
-    // find a new handler among our tanks
-    for (BlockPos pos : tankSupplier.get()) {
-      // already checked the last position above, no reason to try again
-      if (!pos.equals(lastPos)) {
-        int posTemp = tryFuelPosition(pos, consume);
-        if (posTemp > 0) {
-          return posTemp;
-        }
-      }
-    }
+    fluidHandler = null;
 
     // no handler found, tell client of the lack of fuel
     if (consume) {
@@ -236,16 +248,13 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
         IFluidHandler handler = entry.getValue();
         FluidStack fluid = handler.getFluidInTank(0);
         if (!fluid.isEmpty()) {
-          int temperature = 0;
-          if (findRecipe(fluid.getFluid()) != null) {
-            temperature = findRecipe(fluid.getFluid()).getTemperature();
-          }
-          if (temperature > 0) {
-            mainTank = entry.getKey();
-            fluidHandler = handler;
-            info = FuelInfo.of(fluid, handler.getTankCapacity(0), temperature);
-            break;
-          }
+          MeltingFuel recipe = findRecipe(fluid.getFluid());
+          int temperature = recipe == null ? 0 : recipe.getTemperature();
+          mainTank = entry.getKey();
+          fluidHandler = handler;
+          lastPos = mainTank;
+          info = FuelInfo.of(fluid, handler.getTankCapacity(0), temperature);
+          break;
         }
       }
     }
@@ -259,7 +268,7 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
           FluidStack fluid = handler.getFluidInTank(0);
           if (fluid.isEmpty()) {
             info.add(0, handler.getTankCapacity(0));
-          } else if (FluidStack.isSameFluidSameComponents(currentFuel, fluid)) {
+          } else if (FluidStack.isSameFluid(currentFuel, fluid)) {
             info.add(fluid.getAmount(), handler.getTankCapacity(0));
           }
         }

@@ -58,7 +58,7 @@ public abstract class TableBlockEntity extends InventoryBlockEntity {
   public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
     CompoundTag nbt = super.getUpdateTag(registries);
     // inventory is already in main NBT, include it in update tag
-    writeInventoryToNBT(nbt);
+    writeInventoryToNBT(nbt, registries);
     return nbt;
   }
 

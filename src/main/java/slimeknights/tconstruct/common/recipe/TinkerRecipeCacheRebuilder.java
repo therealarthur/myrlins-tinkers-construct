@@ -10,6 +10,8 @@ import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingLo
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialCastingRecipe;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialFluidRecipe;
 import slimeknights.tconstruct.library.recipe.casting.material.ToolCastingRecipe;
+import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
+import slimeknights.tconstruct.library.recipe.fuel.MeltingFuelLookup;
 import slimeknights.tconstruct.library.recipe.material.MaterialRecipe;
 import slimeknights.tconstruct.library.recipe.material.MaterialRecipeCache;
 
@@ -59,6 +61,10 @@ public final class TinkerRecipeCacheRebuilder {
     } else {
       MaterialCastingLookup.rebuildRecipes(fluids, materialCastingRecipes, toolCastingRecipes);
     }
+    // Upstream 3.12.4: rebuild liquid fuels from the loaded recipes on both sides (upstream also runs this from its
+    // JEI plugin on the client). An empty FUEL list only drops the negative cache, so a client snapshot without
+    // fuel recipes keeps the fuels its recipe constructors registered.
+    MeltingFuelLookup.rebuild(getRecipes(recipeMap, TinkerRecipeTypes.FUEL.get(), MeltingFuel.class));
   }
 
   /** Gets all recipes of the given type and class from a loaded recipe map. */

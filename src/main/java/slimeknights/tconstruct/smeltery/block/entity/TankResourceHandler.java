@@ -2,12 +2,16 @@ package slimeknights.tconstruct.smeltery.block.entity;
 
 import static slimeknights.tconstruct.library.fluid.FluidActions.EXECUTE;
 
+import java.util.function.IntSupplier;
+
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import slimeknights.tconstruct.library.fluid.FluidTankBase;
 import slimeknights.tconstruct.smeltery.block.entity.tank.CastingFluidHandler;
 import slimeknights.tconstruct.smeltery.block.entity.tank.SmelteryTank;
 
@@ -52,7 +56,7 @@ public class TankResourceHandler implements ResourceHandler<FluidResource> {
       return 0;
     }
     journal.updateSnapshots(transaction);
-    return tank.fill(resource.toStack(maxAmount), EXECUTE);
+    return transfer(() -> tank.fill(resource.toStack(maxAmount), EXECUTE));
   }
 
   @Override
@@ -61,7 +65,17 @@ public class TankResourceHandler implements ResourceHandler<FluidResource> {
       return 0;
     }
     journal.updateSnapshots(transaction);
-    return tank.drain(resource.toStack(maxAmount), EXECUTE).getAmount();
+    return transfer(() -> tank.drain(resource.toStack(maxAmount), EXECUTE).getAmount());
+  }
+
+  /** Runs a tank mutation without publishing it until the transaction commits. */
+  private int transfer(IntSupplier action) {
+    FluidTankBase.beginDeferredSync();
+    try {
+      return action.getAsInt();
+    } finally {
+      FluidTankBase.endDeferredSync();
+    }
   }
 
   private class Journal extends SnapshotJournal<Object> {
@@ -91,11 +105,25 @@ public class TankResourceHandler implements ResourceHandler<FluidResource> {
         return;
       }
       FluidStack[] fluids = (FluidStack[])snapshot;
+      // drain/fill here runs while the transaction is closing and fires tank callbacks.
+      // Those callbacks cannot ask about the open transaction, and a throw leaves the tank empty.
+      if (tank instanceof FluidTank fluidTank && fluids.length == 1) {
+        FluidStack restored = fluids[0];
+        fluidTank.setFluid(restored.isEmpty() ? FluidStack.EMPTY : restored.copy());
+        return;
+      }
       for (int i = 0; i < fluids.length; i++) {
         tank.drain(Integer.MAX_VALUE, EXECUTE);
         if (!fluids[i].isEmpty()) {
           tank.fill(fluids[i].copy(), EXECUTE);
         }
+      }
+    }
+
+    @Override
+    protected void onRootCommit(Object originalState) {
+      if (tank instanceof FluidTankBase<?> base) {
+        base.onContentsChanged();
       }
     }
   }

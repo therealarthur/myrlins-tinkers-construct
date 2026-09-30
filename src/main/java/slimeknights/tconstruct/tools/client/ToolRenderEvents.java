@@ -120,7 +120,13 @@ public class ToolRenderEvents {
     }
   }
 
-  /** Adds extra mining cracks to the state consumed by Minecraft's normal breaking-model renderer. */
+  /**
+   * Adds extra mining cracks to the state consumed by Minecraft's normal breaking-model renderer.
+   * Upstream 3.12.4 fixed the same missing cracks with a SubmitCustomGeometryEvent renderer that reads the local
+   * player's destroy stage. The merge keeps only this extract-phase version (running both would draw every crack twice):
+   * like official 3.12.1 it takes the progress recorded for the targeted block, and vanilla's submit pass applies the
+   * same model render shape check official's renderBreakingTexture did.
+   */
   @SubscribeEvent
   static void renderBlockDamageProgress(ExtractLevelRenderStateEvent event) {
     Minecraft minecraft = Minecraft.getInstance();

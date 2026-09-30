@@ -654,6 +654,12 @@ FluidUpdatePacket.IFluidPacketReceiver {
         super.writeInventoryToNBT(tag);
     }
 
+    @Override
+    public void writeInventoryToNBT(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+        this.rebindUnregisteredInventoryItems();
+        super.writeInventoryToNBT(tag, registries);
+    }
+
     protected void writeInventoryToOutput(ValueOutput output) {
         this.rebindUnregisteredInventoryItems();
         super.writeInventoryToOutput(output);

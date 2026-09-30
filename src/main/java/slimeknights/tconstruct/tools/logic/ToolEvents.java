@@ -313,6 +313,11 @@ public class ToolEvents {
     return (int)damage;
   }
 
+  /** NeoForge rejects a negative amount in {@code DamageContainer.setNewDamage}. */
+  private static float nonNegativeDamage(float damage) {
+    return damage > 0f ? damage : 0f;
+  }
+
   /** Modifier ID used for the extra correction damage on armor. Needs to be a "real modifier" for the tag so we use protection as a reasonable enough source. */
   private static final ModifierId ARMOR_DAMAGE = new ModifierId(TConstruct.MOD_ID, "protection");
 
@@ -388,15 +393,15 @@ public class ToolEvents {
     }
     
     // ensure any changes made so far apply, though we may change it again
+    originalDamage = nonNegativeDamage(originalDamage);
     event.setAmount(originalDamage);
 
     // for our own armor, we have boosts from modifiers to consider
     if (context.hasModifiableArmor()) {
       // first, allow modifiers to change the damage being dealt and respond to it happening
-      originalDamage = ModifyDamageModifierHook.modifyDamageTaken(ModifierHooks.MODIFY_HURT, context, source, originalDamage, OnAttackedModifierHook.isDirectDamage(source));
+      originalDamage = nonNegativeDamage(ModifyDamageModifierHook.modifyDamageTaken(ModifierHooks.MODIFY_HURT, context, source, originalDamage, OnAttackedModifierHook.isDirectDamage(source)));
       event.setAmount(originalDamage);
       if (originalDamage <= 0) {
-        event.setAmount(0);
         return;
       }
 
@@ -439,7 +444,7 @@ public class ToolEvents {
       }
 
       // set the final dealt damage
-      float finalDamage = ArmorUtil.getDamageForEvent(originalDamage, armor, toughness, vanillaModifier, modifierValue, cap);
+      float finalDamage = nonNegativeDamage(ArmorUtil.getDamageForEvent(originalDamage, armor, toughness, vanillaModifier, modifierValue, cap));
       event.setAmount(finalDamage);
 
       // armor is damaged less as a result of our math, so damage the armor based on the difference if there is one
@@ -475,11 +480,8 @@ public class ToolEvents {
     float amount = event.getNewDamage();
     EquipmentContext context = new EquipmentContext(entity);
     if (context.hasModifiableArmor()) {
-      amount = ModifyDamageModifierHook.modifyDamageTaken(ModifierHooks.MODIFY_DAMAGE, context, source, amount, OnAttackedModifierHook.isDirectDamage(source));
+      amount = nonNegativeDamage(ModifyDamageModifierHook.modifyDamageTaken(ModifierHooks.MODIFY_DAMAGE, context, source, amount, OnAttackedModifierHook.isDirectDamage(source)));
       event.setNewDamage(amount);
-      if (amount <= 0) {
-        event.setNewDamage(0);
-      }
     }
 
     // for remaining code, ensure amount is not more than they will take

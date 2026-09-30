@@ -1,3 +1,51 @@
+Continuum Construct 26.1.2-3.12.4
+
+This release keeps other mods' tank colors, brings thrown tools back, heats a smeltery from a second fuel tank, stops the part builder from freezing when a chest is beside it, and no longer crashes when tool damage math goes below zero.
+
+Fixes
+- Tanks tint from the fluid model, so other mods keep their color (#27).
+- Returning brings a thrown tool back, and a higher level is visibly faster (#28).
+- A smeltery keeps heating from a second fuel tank when the first is empty. Liquid fuel recipes are no longer wiped by the shared fallback id during world load.
+- Shift-clicking the part builder result no longer freezes when a chest is beside it, and the client no longer shows a ghost stack after the material runs out (#29).
+- Being hit no longer crashes the server when modifier or armor math would set damage below zero. NeoForge 26.1.2.112 rejects a negative amount, so incoming and final damage are clamped to zero.
+
+Compatibility
+- Requires Continuum Core 1.12.1.
+- Built against Minecraft 26.1.2 / NeoForge 26.1.2.112.
+
+Continuum Construct 26.1.2-3.12.3
+
+This release keeps players moving in custom fluids, lets channels pour into tanks and casting tables, and shows fluid particles.
+
+Fixes
+- Joining a world with a tool table no longer crashes. Inventory updates use the world registry, so enchantments on stored items can be written. Requires the Continuum Core build that includes that registry lookup; the Core version number stays 1.12.0.
+- Channels pour into tanks and casting tables as well as other channels.
+- Molten fluids show surface, drip, faucet, and step-in particles, and standing in a full source block no longer freezes movement.
+- Area-harvest tools draw the break crack on the extra blocks, not only the block in the crosshair.
+
+Compatibility
+- Requires Continuum Core 1.12.0.
+- Built against Minecraft 26.1.2 / NeoForge 26.1.2.109.
+
+Continuum Construct 26.1.2-3.12.2
+
+This release restores wings and the enderman mask on Tinkers armor, lets tools that reuse a part swap either copy, and repairs tanks, lanterns, enchantment converting, and the creative slot icons.
+
+Fixes
+- Chestplates with wings glide again. NeoForge 26.1 dropped the old elytra item hooks, so a chestplate now carries the vanilla glider component whenever the elytra flag is set and the tool is not broken.
+- The enderman mask once again stops endermen (and other gaze attacks) from aggroing, using the renamed NeoForge gaze-disguise hook.
+- Tools that use the same part twice, such as a hammer's two large plates, can swap either copy at the Tinker Station or anvil instead of only the first one filled.
+- Tinkers custom sound events are registered again.
+- Drained tanks and emptied Tinkers chests no longer drop the fluid or items they were placed with (#23).
+- Enchantment converting at the modifier worktable works again. The enchantment-to-modifier map is synced to clients and keyed by registry key (#25).
+- Creative modifier slots show their upgrade, ability, defense, soul, and slotless icons in JEI and the creative tab (#24).
+- The blazing blood and manyullyn lantern advancements trigger again. They now match the fluid format tanks actually write, and the lantern challenge still needs a full stack of 64.
+- Filled lanterns keep their fluid when placed, render it in world, and can be filled from a casting table, basin, faucet, or fluid container.
+
+Compatibility
+- Requires Continuum Core 1.12.0.
+- Built against Minecraft 26.1.2 / NeoForge 26.1.2.109.
+
 Continuum Construct 26.1.2-3.12.1
 
 This release repairs the luck modifier, which did nothing in 3.12.0.0, and stops the debug modifier command from pushing modifiers past their crafting cap. It also fixes large smelteries closing their own screen and the blaze head rendering as a black cube.

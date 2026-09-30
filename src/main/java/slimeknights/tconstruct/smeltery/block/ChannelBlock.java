@@ -39,8 +39,11 @@ import slimeknights.mantle.util.BlockEntityHelper;
 import slimeknights.mantle.util.RegistryHelper;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.utils.Util;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.smeltery.block.entity.ChannelBlockEntity;
+import slimeknights.tconstruct.smeltery.block.entity.FaucetBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -168,8 +171,13 @@ public class ChannelBlock extends Block implements EntityBlock {
 	 * @return  True if its a fluid handler
 	 */
 	private static boolean isFluidHandler(LevelAccessor world, Direction side, BlockPos pos) {
-    return false;
-  }
+		if (!(world instanceof Level level)) {
+			return false;
+		}
+		// side is the face of the neighbor that points back at the channel
+		IFluidHandler handler = FaucetBlockEntity.findFluidHandler(level, pos.relative(side), side.getOpposite());
+		return handler != EmptyFluidHandler.INSTANCE;
+	}
 
 	/**
 	 * Checks if the block can connect on the given side
@@ -354,6 +362,12 @@ public class ChannelBlock extends Block implements EntityBlock {
 			if (isPowered != state.getValue(POWERED)) {
 				state = state.setValue(POWERED, isPowered).setValue(DOWN, isPowered && canConnect(worldIn, pos, Direction.DOWN));
 				worldIn.setBlock(pos, state, Block.UPDATE_CLIENTS);
+			}
+			// Neighbor updates no longer include the source position, so drop every cached output handler.
+			if (worldIn.getBlockEntity(pos) instanceof ChannelBlockEntity channel) {
+				for (Direction direction : Direction.values()) {
+					channel.removeCachedNeighbor(direction);
+				}
 			}
 		}
 	}

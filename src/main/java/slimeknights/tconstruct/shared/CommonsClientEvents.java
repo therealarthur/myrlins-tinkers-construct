@@ -2,7 +2,6 @@ package slimeknights.tconstruct.shared;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.core.particles.ParticleType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
@@ -14,7 +13,6 @@ import slimeknights.tconstruct.common.ClientEventBase;
 import slimeknights.tconstruct.library.client.book.TinkerBook;
 import slimeknights.tconstruct.library.utils.DomainDisplayName;
 import slimeknights.tconstruct.shared.client.FluidParticle;
-import slimeknights.tconstruct.shared.particle.FluidParticleData;
 
 import net.neoforged.fml.common.EventBusSubscriber;
 
@@ -39,7 +37,7 @@ public class CommonsClientEvents extends ClientEventBase {
 
   @SubscribeEvent
   static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-    event.registerSpecial((ParticleType<FluidParticleData>) TinkerCommons.fluidParticle.get(), new FluidParticle.Factory());
+    event.registerSpecial(TinkerCommons.fluidParticle.get(), new FluidParticle.Factory());
   }
 
   private static Font unicodeRenderer;

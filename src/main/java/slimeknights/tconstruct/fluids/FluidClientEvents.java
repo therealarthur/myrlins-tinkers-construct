@@ -36,7 +36,7 @@ public class FluidClientEvents extends ClientEventBase {
   }
   @SubscribeEvent
   static void clientSetup(final FMLClientSetupEvent event) {
-    // Fluid render layers are now inferred from FluidModel materials in NeoForge 26.1.
+    FluidAmbientClient.init();
   }
 
   // TODO: Update to use RegisterColorHandlersEvent.ItemTintSources with new API

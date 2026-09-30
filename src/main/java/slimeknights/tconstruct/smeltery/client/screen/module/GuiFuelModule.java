@@ -101,11 +101,9 @@ public class GuiFuelModule implements IScreenWithFluidTank, ClickableTankModule 
 // draw tank second, it changes the image
     // store fuel info into a field for other methods, this one updates most often
     if (!hasFuelSlot) {
-      FuelInfo currentFuelInfo = fuelModule.getFuelInfo();
-      boolean currentFuelInfoEmpty = currentFuelInfo.isEmpty();
-if (!currentFuelInfoEmpty) {
-        fuelInfo = currentFuelInfo;
-      }
+      // Always use the live reading. Keeping the previous total made a second tank
+      // stay on screen after the structure had stopped counting it.
+      fuelInfo = fuelModule.getFuelInfo();
       if (!fuelInfo.isEmpty()) {
         GuiUtil.renderFluidTank(graphics, screen, fuelInfo.getFluid(), fuelInfo.getTotalAmount(), fuelInfo.getCapacity(), x, y, width, height, 100);
       }

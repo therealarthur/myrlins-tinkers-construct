@@ -113,14 +113,28 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
 
   /** Sets any relevant properties from the stack */
   private void updateFromStack() {
-    this.entityData.set(STACK, getThrownStack());
+    // Snapshot. The held stack can be shrunk after throw, and entity data must keep its own copy.
+    ItemStack thrown = getThrownStack();
+    this.entityData.set(STACK, thrown.copy());
     // Vanilla's return movement reads this inherited accessor, not a separate tool-only value.
-    this.entityData.set(ID_LOYALTY, (byte) ModifierUtil.getVolatileInt(getThrownStack(), LOYALTY));
+    // Merge note (3.12.4): upstream kept a private LOYALTY_DATA plus its own return code with a squared speed curve.
+    // Official 3.12.1 sets ID_LOYALTY and lets ThrownTrident#tick pull the tool back (speed linear in the level, like
+    // a loyalty trident), so that is what this port keeps. Upstream's level lookup and byte clamp are kept.
+    this.entityData.set(ID_LOYALTY, (byte) loyaltyLevel(thrown));
     this.entityData.set(FOIL_DATA, ModifierUtil.checkVolatileFlag(getThrownStack(), ModifiableItem.SHINY));
     this.noDespawn = ModifierUtil.checkVolatileFlag(getThrownStack(), IndestructibleItemEntity.INDESTRUCTIBLE_ENTITY);
     if (!level().isClientSide()) {
       this.magnet = ModifierUtil.getVolatileInt(getThrownStack(), MAGNET);
     }
+  }
+
+  /** Returning level on the thrown tool. Volatile data and the modifier level should match; use whichever is higher. */
+  private static int loyaltyLevel(ItemStack stack) {
+    int loyalty = ModifierUtil.getVolatileInt(stack, LOYALTY);
+    if (!stack.isEmpty() && stack.getItem() instanceof ModifiableItem) {
+      loyalty = Math.max(loyalty, ToolStack.from(stack).getModifiers().getLevel(ModifierIds.returning));
+    }
+    return Math.min(Math.max(loyalty, 0), 127);
   }
 
   /** Called after {@link #shoot(double, double, double, float, float)} but before the first tick of hte projectile to do final setup. */
@@ -210,6 +224,7 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
       }
       dealtDamage = true;
     }
+    // ThrownTrident#tick runs the loyalty return from ID_LOYALTY and the inherited dealtDamage flag (see updateFromStack).
     super.tick();
 
     // magnet
@@ -353,6 +368,13 @@ public class ThrownTool extends ThrownTrident implements ToolProjectile {
     super.onHitBlock(result);
   }
 
+
+  /*
+   * Merge note (3.12.4): upstream added returnToOwner, isAcceptableReturnOwner and a findHitEntity override here
+   * because its ThrownTool shadowed vanilla's loyalty accessor and dealtDamage flag. This port uses the inherited
+   * ones (as official 3.12.1 does), so ThrownTrident already runs the same owner check, the return pull and the
+   * "no second entity hit after impact" rule. Keeping upstream's copies would pull the tool twice per tick.
+   */
 
   /* returning to slot */
 

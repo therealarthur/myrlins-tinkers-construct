@@ -24,20 +24,20 @@ public class FluidParticleData implements ParticleOptions {
 
   /** Particle type for a fluid particle */
   public static class Type extends ParticleType<FluidParticleData> {
-    private final MapCodec<FluidParticleData> codec = FluidStack.MAP_CODEC.xmap(
-      fluid -> new FluidParticleData(this, fluid), data -> data.fluid
-    ).fieldOf("fluid");
-
-    private final StreamCodec<? super RegistryFriendlyByteBuf, FluidParticleData> streamCodec =
-      FluidStack.STREAM_CODEC.map(
-        fluid -> new FluidParticleData(this, fluid), data -> data.fluid
-      );
-
     private final Identifier id;
+    private final MapCodec<FluidParticleData> codec;
+    private final StreamCodec<? super RegistryFriendlyByteBuf, FluidParticleData> streamCodec;
 
     public Type(Identifier id) {
       super(false);
       this.id = id;
+      // The decoded options must keep this type. A null type makes the client drop the particle.
+      this.codec = FluidStack.MAP_CODEC.xmap(
+        fluid -> new FluidParticleData(this, fluid), data -> data.fluid
+      ).fieldOf("fluid");
+      this.streamCodec = FluidStack.STREAM_CODEC.map(
+        fluid -> new FluidParticleData(this, fluid), data -> data.fluid
+      );
     }
 
     @Override

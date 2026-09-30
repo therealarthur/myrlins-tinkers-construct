@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.joml.Vector3f;
 import slimeknights.mantle.client.render.FluidCuboid;
 import slimeknights.mantle.client.render.FluidRenderer;
-import slimeknights.mantle.fluid.texture.FluidTextureManager;
 import slimeknights.tconstruct.fluids.TinkerFluids;
 import slimeknights.tconstruct.fluids.fluids.PotionFluidType;
 import slimeknights.tconstruct.library.fluid.FluidTankAnimated;
@@ -28,26 +26,15 @@ public final class RenderUtils {
     return copy;
   }
   public static Identifier getStillTexture(FluidStack fluid, FluidType fluidType) {
-    if (fluid.getFluid() == Fluids.LAVA || fluid.getFluid() == Fluids.FLOWING_LAVA) {
-      return Identifier.withDefaultNamespace("block/lava_still");
-    }
-    if (fluid.getFluid() == Fluids.WATER || fluid.getFluid() == Fluids.FLOWING_WATER) {
-      return Identifier.withDefaultNamespace("block/water_still");
-    }
-    return FluidTextureManager.getStillTexture(fluidType);
+    return FluidRenderer.getStillSprite(fluid).contents().name();
   }
 
   public static Identifier getFlowingTexture(FluidStack fluid, FluidType fluidType) {
-    if (fluid.getFluid() == Fluids.LAVA || fluid.getFluid() == Fluids.FLOWING_LAVA) {
-      return Identifier.withDefaultNamespace("block/lava_flow");
-    }
-    if (fluid.getFluid() == Fluids.WATER || fluid.getFluid() == Fluids.FLOWING_WATER) {
-      return Identifier.withDefaultNamespace("block/water_flow");
-    }
-    return FluidTextureManager.getFlowingTexture(fluidType);
+    return FluidRenderer.getFlowingSprite(fluid).contents().name();
   }
 
   public static int getFluidColor(FluidStack fluid, FluidType fluidType) {
+    // Potion color lives on the stack. The fluid model tint only knows the default magenta.
     if (fluid.getFluid() == TinkerFluids.potion.get()) {
       PotionContents contents = PotionFluidType.getPotionContents(fluid);
       if (contents.customColor().isPresent()) {
@@ -57,10 +44,7 @@ public final class RenderUtils {
         return contents.getColor() | 0xFF000000;
       }
     }
-    if (fluid.getFluid() == Fluids.WATER || fluid.getFluid() == Fluids.FLOWING_WATER) {
-      return 0xFF3F76E4;
-    }
-    return FluidTextureManager.getColor(fluidType);
+    return FluidRenderer.getFluidColor(fluid);
   }
 
   /** Renders a transparent fluid cuboid using SubmitNodeCollector */

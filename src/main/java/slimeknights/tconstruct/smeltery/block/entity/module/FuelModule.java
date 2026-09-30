@@ -6,19 +6,24 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import slimeknights.mantle.block.entity.MantleBlockEntity;
-import slimeknights.tconstruct.TConstruct;
+import slimeknights.mantle.recipe.ingredient.FluidIngredient;
+import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
 import slimeknights.tconstruct.library.recipe.fuel.MeltingFuelLookup;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -74,26 +79,67 @@ public abstract class FuelModule implements ContainerData {
    */
   @Nullable
   protected MeltingFuel findRecipe(Fluid fluid) {
-    if (lastRecipe != null && lastRecipe.matches(fluid)) {
+    return findRecipe(fluid, Integer.MAX_VALUE);
+  }
+
+  /**
+   * Finds a liquid fuel this tank can actually spend. The hottest fitting recipe wins, so a
+   * larger unrelated fuel cannot hide blazing blood that the tank still holds.
+   */
+  @Nullable
+  protected MeltingFuel findRecipe(Fluid fluid, int available) {
+    if (lastRecipe != null && acceptsFuel(lastRecipe, fluid, available)) {
       return lastRecipe;
     }
-    MeltingFuel recipe = MeltingFuelLookup.findFuel(fluid);
-    if (recipe == null) {
-      Level level = getLevel();
-      if (level.getServer() != null) {
-        recipe = level.getServer().getRecipeManager().getRecipes().stream()
-          .map(holder -> holder.value())
-          .filter(found -> found instanceof MeltingFuel)
-          .map(found -> (MeltingFuel) found)
-          .filter(found -> found.matches(fluid))
-          .findFirst()
-          .orElse(null);
+    MeltingFuel best = bestFuel(MeltingFuelLookup.getAll(), fluid, available);
+    Level level = getLevel();
+    if (best == null && level.getServer() != null) {
+      best = bestFuel(level.getServer().getRecipeManager().recipeMap().byType(TinkerRecipeTypes.FUEL.get()).stream().map(RecipeHolder::value).toList(), fluid, available);
+    }
+    if (best != null) {
+      lastRecipe = best;
+    }
+    return best;
+  }
+
+  @Nullable
+  private static MeltingFuel bestFuel(List<MeltingFuel> fuels, Fluid fluid, int available) {
+    MeltingFuel best = null;
+    for (MeltingFuel candidate : fuels) {
+      if (!acceptsFuel(candidate, fluid, available)) {
+        continue;
+      }
+      if (best == null || candidate.getTemperature() > best.getTemperature()) {
+        best = candidate;
       }
     }
-    if (recipe != null) {
-      lastRecipe = recipe;
+    return best;
+  }
+
+  /** Liquid fuel whose cost fits in the tank. Solid fuel has no fluid input and is ignored here. */
+  private static boolean acceptsFuel(MeltingFuel recipe, Fluid fluid, int available) {
+    if (recipe.getInput() == FluidIngredient.EMPTY || !matchesFuel(recipe, fluid)) {
+      return false;
     }
-    return recipe;
+    int amount = recipe.getAmount(fluid);
+    return amount > 0 && available >= amount;
+  }
+
+  /** Matches a fuel recipe by its ingredient, then by the fluid's registry id. */
+  private static boolean matchesFuel(MeltingFuel recipe, Fluid fluid) {
+    if (recipe.matches(fluid)) {
+      return true;
+    }
+    Identifier id = BuiltInRegistries.FLUID.getKey(fluid);
+    if (id == null) {
+      return false;
+    }
+    for (FluidStack input : recipe.getInputs()) {
+      if (id.equals(BuiltInRegistries.FLUID.getKey(input.getFluid()))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /* Fuel attributes */
@@ -125,26 +171,29 @@ public abstract class FuelModule implements ContainerData {
    */
   protected int tryLiquidFuel(IFluidHandler handler, boolean consume) {
     FluidStack fluid = handler.getFluidInTank(0);
-    MeltingFuel recipe = findRecipe(fluid.getFluid());
-    if (recipe != null) {
-      int amount = recipe.getAmount(fluid.getFluid());
-      if (fluid.getAmount() >= amount) {
-        if (consume) {
-          FluidStack drained = handler.drain(fluid.copyWithAmount(amount), EXECUTE);
-          if (drained.getAmount() != amount) {
-            TConstruct.LOG.error("Invalid amount of fuel drained from tank");
-          }
-          fuel += recipe.getDuration();
-          fuelQuality = recipe.getDuration();
-          temperature = recipe.getTemperature();
-          rate = recipe.getRate();parent.setChangedFast();
-          return temperature;
-        } else {
-          return recipe.getTemperature();
-        }
-      }
+    if (fluid.isEmpty()) {
+      return 0;
     }
-    return 0;
+    MeltingFuel recipe = findRecipe(fluid.getFluid(), fluid.getAmount());
+    if (recipe == null) {
+      return 0;
+    }
+    int amount = recipe.getAmount(fluid.getFluid());
+    if (consume) {
+      // The tank only holds this fluid. Take the amount directly so a component mismatch
+      // cannot refuse the drain and leave the structure on an empty tank.
+      FluidStack drained = handler.drain(amount, EXECUTE);
+      if (drained.getAmount() < amount) {
+        return 0;
+      }
+      fuel += recipe.getDuration();
+      fuelQuality = recipe.getDuration();
+      temperature = recipe.getTemperature();
+      rate = recipe.getRate();
+      parent.setChangedFast();
+      return temperature;
+    }
+    return recipe.getTemperature();
   }
 
   /**

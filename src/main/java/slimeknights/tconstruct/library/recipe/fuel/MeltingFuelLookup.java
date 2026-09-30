@@ -21,6 +21,11 @@ import java.util.function.Function;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MeltingFuelLookup {
+  /**
+   * Every JSON fuel is constructed with this id. {@link net.minecraft.world.item.crafting.RecipeManager}
+   * no longer passes the recipe key into the codec, so the id cannot tell blaze apart from lava or solid fuel.
+   */
+  private static final Identifier FALLBACK_ID = Identifier.fromNamespaceAndPath("mantle", "loadable_recipe");
   /** Dummy fuel instance sine caches don't support caching null */
   private static final MeltingFuel EMPTY = new MeltingFuel(Identifier.parse("missingno"), FluidIngredient.EMPTY, 0, 0, 0);
   /** Temperature for solid fuels in the heater */
@@ -55,17 +60,47 @@ public class MeltingFuelLookup {
       return;
     }
     LISTENER.checkClear();
-    RECIPES.removeIf(recipe -> recipe.getId().equals(fuel.getId()));
-    CACHE.clear();
-    if (fuel.getInput() != FluidIngredient.EMPTY) {
-      RECIPES.add(fuel);
-    } else if (SOLID.getId().equals(fuel.getId())) {
+    // Solid fuel shares the fallback id with lava and blazing blood. Removing by that id
+    // deletes every liquid fuel already registered, so a full tank never counts as fuel.
+    if (fuel.getInput() == FluidIngredient.EMPTY) {
+      if (SOLID != EMPTY && SOLID != fuel && !SOLID.getId().equals(fuel.getId())) {
+        TConstruct.LOG.warn("Multiple fuel recipes for solid fuel. This usually indicates a datapack error and may cause desyncs. Original {}, latest {}", SOLID.getId(), fuel.getId());
+      }
       SOLID = fuel;
-    } else if (SOLID == EMPTY) {
-      SOLID = fuel;
-    } else {
-      TConstruct.LOG.warn("Multiple fuel recipes for solid fuel. This usually indicates a datapack error and may cause desyncs. Original {}, latest {}", SOLID.getId(), fuel.getId());
+      CACHE.clear();
+      return;
     }
+    // Do not compare fluid stacks here. Recipe loading runs before fluid components
+    // are bound, and building those stacks crashes world load. The shared fallback id
+    // is also not unique, so removing by it would delete lava when blazing blood loads.
+    if (!FALLBACK_ID.equals(fuel.getId())) {
+      RECIPES.removeIf(existing -> existing.getId().equals(fuel.getId()));
+    }
+    CACHE.clear();
+    RECIPES.add(fuel);
+  }
+
+  /**
+   * Replaces the constructor-built list once the recipe manager has finished loading.
+   * An empty list leaves recipes already added in place and only drops a negative cache
+   * recorded before those recipes existed.
+   */
+  public static void rebuild(List<MeltingFuel> fuels) {
+    CACHE.clear();
+    if (fuels.isEmpty()) {
+      return;
+    }
+    LISTENER.cancelQueued();
+    SOLID = EMPTY;
+    RECIPES.clear();
+    for (MeltingFuel fuel : fuels) {
+      addFuel(fuel);
+    }
+  }
+
+  /** Liquid fuels currently registered. Solid fuel is not included. */
+  public static List<MeltingFuel> getAll() {
+    return List.copyOf(RECIPES);
   }
 
   /** Checks if the given fluid is a fuel */

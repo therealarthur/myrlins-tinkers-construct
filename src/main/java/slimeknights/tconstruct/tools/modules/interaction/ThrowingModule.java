@@ -1,5 +1,6 @@
 package slimeknights.tconstruct.tools.modules.interaction;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -85,21 +86,25 @@ public enum ThrowingModule implements ModifierModule, GeneralInteractionModifier
   public void onStoppedUsing(IToolStackView tool, ModifierEntry modifier, LivingEntity entity, int timeLeft) {
     if (entity instanceof Player player) {
       int chargeTime = getUseDuration(tool, modifier) - timeLeft;
-      if (chargeTime > 10) {
-        Level level = player.level();
+      if (chargeTime > 10 && player.level() instanceof ServerLevel level) {
         ItemStack stack = player.getUseItem();
+        // Copy first. Creative keeps the original; survival shrinks it. The projectile must not share that stack.
+        ItemStack thrownStack = stack.consumeAndReturn(1, player);
+        if (thrownStack.isEmpty()) {
+          return;
+        }
 
         // unlike the trident, we actually consider how long you charged for, and change the power of the projectile
         float charge = GeneralInteractionModifierHook.getToolCharge(tool, chargeTime);
         float velocity = ConditionalStatModifierHook.getModifiedStat(tool, entity, ToolStats.VELOCITY);
-        ThrownTool thrown = new ThrownTool(level, player, stack, charge, velocity, ConditionalStatModifierHook.getModifiedStat(tool, entity, ToolStats.WATER_INERTIA));
+        ThrownTool thrown = new ThrownTool(level, player, thrownStack, charge, velocity, ConditionalStatModifierHook.getModifiedStat(tool, entity, ToolStats.WATER_INERTIA));
         if (player.getUsedItemHand() == InteractionHand.OFF_HAND) {
           thrown.setOriginalSlot(Inventory.SLOT_OFFHAND);
         } else {
           thrown.setOriginalSlot(player.getInventory().getSelectedSlot());
         }
         thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0, charge * velocity * 2, ModifierUtil.getInaccuracy(tool, entity));
-        if (player.getAbilities().instabuild) {
+        if (player.hasInfiniteMaterials()) {
           thrown.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
         }
 
@@ -109,9 +114,6 @@ public enum ThrowingModule implements ModifierModule, GeneralInteractionModifier
         // don't run projectile hooks, as the projectile has the tool already for that. Throwing runs melee hooks
         level.addFreshEntity(thrown);
         level.playSound(null, thrown, SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1, 1);
-        if (!player.getAbilities().instabuild) {
-          player.getInventory().removeItem(stack);
-        }
         player.awardStat(Stats.ITEM_USED.get(tool.getItem()));
       }
     }

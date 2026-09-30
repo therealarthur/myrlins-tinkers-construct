@@ -87,6 +87,71 @@ public class PartBuilderContainerMenu extends TabbedContainerMenu<PartBuilderBlo
     return slotIn != this.outputSlot && super.canTakeItemForPickAll(stack, slotIn);
   }
 
+  @Override
+  public ItemStack quickMoveStack(Player player, int index) {
+    if (this.outputSlot != null && index == this.outputSlot.index) {
+      return this.quickMoveResult(player);
+    }
+    if (index < 0 || index >= this.slots.size()) {
+      return ItemStack.EMPTY;
+    }
+    Slot slot = this.slots.get(index);
+    int countBefore = slot.hasItem() ? slot.getItem().getCount() : 0;
+    ItemStack moved = super.quickMoveStack(player, index);
+    // The click handler repeats while the source slot still holds the same item.
+    // Stop when this transfer did not actually remove any of that stack.
+    if (!moved.isEmpty() && slot.hasItem() && slot.getItem().getCount() >= countBefore && ItemStack.isSameItem(slot.getItem(), moved)) {
+      return ItemStack.EMPTY;
+    }
+    return moved;
+  }
+
+  /**
+   * Shift-click every part the inputs can pay for.
+   * The click handler repeats this method while it returns the same item. The client copy of the
+   * recipe still matches after the material is gone, so that repeat painted a ghost stack and the
+   * server correction snapped it back. Craft here and return empty so the repeat runs once.
+   */
+  private ItemStack quickMoveResult(Player player) {
+    if (this.tile == null || !this.outputSlot.hasItem()) {
+      return ItemStack.EMPTY;
+    }
+    if (player.level().isClientSide()) {
+      return ItemStack.EMPTY;
+    }
+
+    for (int guard = 0; guard < 64 && this.outputSlot.hasItem(); guard++) {
+      ItemStack result = this.outputSlot.getItem().copy();
+      ItemStack materialBefore = this.tile.getItem(PartBuilderBlockEntity.MATERIAL_SLOT).copy();
+      ItemStack patternBefore = this.tile.getItem(PartBuilderBlockEntity.PATTERN_SLOT).copy();
+      this.tile.onCraft(player, result, result.getCount());
+      boolean consumed = !ItemStack.matches(materialBefore, this.tile.getItem(PartBuilderBlockEntity.MATERIAL_SLOT))
+                         || !ItemStack.matches(patternBefore, this.tile.getItem(PartBuilderBlockEntity.PATTERN_SLOT));
+      if (!consumed) {
+        break;
+      }
+
+      int countBeforeMove = result.getCount();
+      if (!this.subContainers.isEmpty()) {
+        this.refillAnyContainer(result, this.subContainers);
+      }
+      this.moveToPlayerInventory(result);
+      if (!result.isEmpty() && !this.subContainers.isEmpty()) {
+        this.moveToAnyContainer(result, this.subContainers);
+      }
+      boolean inserted = result.getCount() != countBeforeMove;
+      if (!result.isEmpty()) {
+        player.drop(result, false);
+      }
+      this.tile.getCraftingResult().clearContent();
+      if (!inserted) {
+        break;
+      }
+    }
+    this.tile.getCraftingResult().clearContent();
+    return ItemStack.EMPTY;
+  }
+
   /** Slot to update recipe on change */
   private static class PartBuilderSlot extends Slot {
     private final LazyResultContainer craftResult;

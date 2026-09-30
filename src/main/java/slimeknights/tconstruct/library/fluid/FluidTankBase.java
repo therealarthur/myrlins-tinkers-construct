@@ -9,7 +9,25 @@ import slimeknights.tconstruct.smeltery.network.FluidUpdatePacket;
 
 public class FluidTankBase<T extends MantleBlockEntity> extends FluidTank {
 
+  /** While positive, content callbacks wait until the surrounding fluid transaction commits. */
+  private static final ThreadLocal<Integer> DEFERRED_SYNC = ThreadLocal.withInitial(() -> 0);
+
   protected T parent;
+
+  /** Skips client sync until {@link #endDeferredSync()} and a later {@link #onContentsChanged()} after commit. */
+  public static void beginDeferredSync() {
+    DEFERRED_SYNC.set(DEFERRED_SYNC.get() + 1);
+  }
+
+  /** Ends one {@link #beginDeferredSync()} scope. */
+  public static void endDeferredSync() {
+    int depth = DEFERRED_SYNC.get() - 1;
+    if (depth <= 0) {
+      DEFERRED_SYNC.remove();
+    } else {
+      DEFERRED_SYNC.set(depth);
+    }
+  }
 
   public FluidTankBase(int capacity, T parent) {
     super(capacity);
@@ -62,7 +80,22 @@ public class FluidTankBase<T extends MantleBlockEntity> extends FluidTank {
   }
 
   @Override
+  public FluidStack drain(int maxDrain, FluidAction action) {
+    FluidStack drained = super.drain(maxDrain, action);
+    // A zero-amount stack still carries its fluid type. Dropping or copying that stack
+    // can revive lava that was already burned, so an emptied tank must hold the empty singleton.
+    if (action.execute() && this.fluid != FluidStack.EMPTY && this.fluid.getAmount() <= 0) {
+      this.fluid = FluidStack.EMPTY;
+    }
+    return drained;
+  }
+
+  @Override
   public void onContentsChanged() {
+    // A simulated insert still calls this. Syncing here publishes fluid the transaction is about to roll back.
+    if (DEFERRED_SYNC.get() > 0) {
+      return;
+    }
     if (parent instanceof IFluidTankUpdater updater) {
       updater.onTankContentsChanged();
     }
