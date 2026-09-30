@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
- * File: CoreBookFixMixinPluginTest.java (Myrlin's Tinker Remaster remaster.1, 2026-09-30).
+ * File: CoreBookFixMixinPluginTest.java (Myrlin's Tinkers' Construct, 2026-09-30).
  *
  * Why: the book fix mixins must apply on stock Continuum Core 1.12.1 and must stay out of the way on the private Core
  * fork (1.12.1-arthur.1), which already carries the same fixes; applying them there would fail the injection checks

@@ -10,7 +10,7 @@ import slimeknights.mantle.client.screen.book.BookScreen;
 import javax.annotation.Nullable;
 
 /**
- * File: BookFonts.java (Myrlin's Tinker Remaster; folded in from the private Continuum Core fork 1.12.1-arthur.1,
+ * File: BookFonts.java (Myrlin's Tinkers' Construct; folded in from the private Continuum Core fork 1.12.1-arthur.1,
  * commit a3d6c780, BookScreen#getAltFont, BookScreen#getUniformFont and the font line of BookData#load; based on
  * SlimeKnights Mantle, MIT).
  *

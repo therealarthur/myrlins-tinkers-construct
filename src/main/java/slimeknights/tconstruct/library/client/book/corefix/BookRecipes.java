@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import javax.annotation.Nullable;
 
 /**
- * File: BookRecipes.java (Myrlin's Tinker Remaster; folded in from the private Continuum Core fork 1.12.1-arthur.1,
+ * File: BookRecipes.java (Myrlin's Tinkers' Construct; folded in from the private Continuum Core fork 1.12.1-arthur.1,
  * commit 71e3a774, class slimeknights.mantle.client.book.BookRecipes, based on SlimeKnights Mantle, MIT).
  *
  * Recipes the server synced to this client, for Continuum Core book pages that show a recipe by ID

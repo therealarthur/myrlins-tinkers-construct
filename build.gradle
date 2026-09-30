@@ -57,9 +57,10 @@ repositories {
 
 group = 'slimeknights.tconstruct'
 base {
-    // Myrlin's Tinker Remaster (remaster.1): public jar name. Continuum Construct builds used archivesName 'ContinuumConstruct'.
+    // Myrlin's Tinkers' Construct (myrlin.1): public jar name. Continuum Construct builds used archivesName 'ContinuumConstruct'.
     // archivesName = 'ContinuumConstruct'
-    archivesName = 'MyrlinsTinkerRemaster'
+    // archivesName = 'MyrlinsTinkerRemaster' (remaster.1, never released under that name)
+    archivesName = 'MyrlinsTinkersConstruct'
 }
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 tasks.withType(net.neoforged.nfrtgradle.NeoFormRuntimeTask).configureEach {
@@ -287,8 +288,8 @@ tasks.named('jar', Jar).configure {
     from('LICENSE') { into 'META-INF/licenses/continuum' }
     manifest {
         attributes([
-                // was "Continuum Construct" before the remaster rename
-                "Specification-Title"     : "Myrlin's Tinker Remaster",
+                // was "Continuum Construct", then "Myrlin's Tinker Remaster" for the unreleased remaster.1
+                "Specification-Title"     : "Myrlin's Tinkers' Construct",
                 "Based-On"                : "Continuum Construct by justduck25 (Tinkers' Construct 3 by Slime Knights)",
                 "Specification-Vendor"    : "Slime Knights",
                 "Specification-Version"   : "1", // We are version 1 of ourselves

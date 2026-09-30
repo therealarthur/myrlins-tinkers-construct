@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.joml.Matrix3x2fStack;
 
 /**
- * File: BookText.java (Myrlin's Tinker Remaster; folded in from the private Continuum Core fork 1.12.1-arthur.1,
+ * File: BookText.java (Myrlin's Tinkers' Construct; folded in from the private Continuum Core fork 1.12.1-arthur.1,
  * commit 71e3a774, BookScreen, TextComponentDataRenderer, TextDataRenderer, SelectionElement and MultiModuleScreen;
  * based on SlimeKnights Mantle, MIT).
  *

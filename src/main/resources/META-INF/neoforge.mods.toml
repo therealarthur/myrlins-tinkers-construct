@@ -1,9 +1,12 @@
 modLoader="javafml"
 loaderVersion="${loader_range}"
-# Myrlin's Tinker Remaster (remaster.1): issues go to the remaster repo. Continuum Construct upstream tracker was
-# https://github.com/justduck25/Tinker-Construct-3-NeoForge/issues
-issueTrackerURL="https://github.com/therealarthur/myrlins-tinker-remaster/issues"
+# Myrlin's Tinkers' Construct (myrlin.1): issues go to the fork's repo. Continuum Construct upstream tracker was
+# https://github.com/justduck25/Tinker-Construct-3-NeoForge/issues ; the unreleased remaster.1 build used
+# https://github.com/therealarthur/myrlins-tinker-remaster/issues
+issueTrackerURL="https://github.com/therealarthur/myrlins-tinkers-construct/issues"
 logoFile="logo.png"
+# The logo is 61 px pixel art scaled 4x; unblurred it stays crisp in the mod list.
+logoBlur=false
 license="MIT"
 
 [[mods]]
@@ -11,13 +14,15 @@ license="MIT"
     version="${version}"
     # Continuum Construct shipped as displayName "Continuum Construct", authors "Slime Knights, justduck25", with the
     # description "Community NeoForge 26.1 port of the classic modular tool, material, modifier, and smeltery experience."
-    displayName="Myrlin's Tinker Remaster"
+    # The unreleased remaster.1 build was named "Myrlin's Tinker Remaster".
+    displayName="Myrlin's Tinkers' Construct"
     authors="Slime Knights, justduck25, Myrlin"
     enumExtensions="META-INF/enumextensions.json"
     description='''
-Tinkers' Construct 3 for Minecraft 26.1 on NeoForge. A fork of justduck25's Continuum Construct, checked against official Tinkers' Construct 3.12.1 for Minecraft 1.20.1 and fixed where they differed. Runs on stock Continuum Core 1.12.1; the book fixes that needed a patched Core are built in.
+An unofficial fork of Tinkers' Construct 3 (Tinkers Construct, TConstruct) for Minecraft 26.1.2 on NeoForge: modular tools, materials, modifiers and the smeltery. It builds on justduck25's Continuum Construct port, was checked against official Tinkers' Construct 3.12.1 for Minecraft 1.20.1, and was fixed where the two differed. Runs on stock Continuum Core 1.12.1; the book fixes that needed a patched Core are built in. This is not the official Tinkers' Construct.
     '''
-    displayURL="https://github.com/therealarthur/myrlins-tinker-remaster"
+    # remaster.1 pointed at https://github.com/therealarthur/myrlins-tinker-remaster
+    displayURL="https://github.com/therealarthur/myrlins-tinkers-construct"
 
 [[mixins]]
     config="tconstruct.mixins.json"

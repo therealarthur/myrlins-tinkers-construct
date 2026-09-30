@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * File: CoreBookFixMixinPlugin.java (Myrlin's Tinker Remaster, 2026-09-30).
+ * File: CoreBookFixMixinPlugin.java (Myrlin's Tinkers' Construct, 2026-09-30).
  *
  * Mixin config plugin for {@code tconstruct.client.mixins.json}, the book fixes folded in from the private Continuum
  * Core fork. Before a mixin is applied, this reads the target Core class and checks that it still has the exact stock
@@ -32,7 +32,7 @@ import java.util.Set;
  * Why: the same fixes also ship in the Core fork 1.12.x-arthur.1, and a later Core release may take them too. There
  * the stock code is gone, so a mixin would either fail its injection check (a crash while loading the class) or apply
  * a fix twice. Skipping instead leaves the Core's own fix in charge, which draws the same thing. Each decision is
- * logged once as "Tinker Remaster book fix".
+ * logged once as "Myrlin's Tinkers' Construct book fix".
  *
  * Only ASM, Mixin and Log4j types are used here: this class is loaded while mixins are being prepared, before
  * Minecraft classes may load. It must not reference the other classes of this package.
@@ -76,21 +76,21 @@ public class CoreBookFixMixinPlugin implements IMixinConfigPlugin {
     String mixin = mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1);
     ClassNode target = readClass(targetClassName);
     if (target == null) {
-      LOG.warn("Tinker Remaster book fix {}: could not read {}, skipping it", mixin, targetClassName);
+      LOG.warn("Myrlin's Tinkers' Construct book fix {}: could not read {}, skipping it", mixin, targetClassName);
       return false;
     }
     String mismatch;
     try {
       mismatch = checkStock(mixin, target);
     } catch (RuntimeException e) {
-      LOG.warn("Tinker Remaster book fix {}: could not inspect {}, skipping it", mixin, targetClassName, e);
+      LOG.warn("Myrlin's Tinkers' Construct book fix {}: could not inspect {}, skipping it", mixin, targetClassName, e);
       return false;
     }
     if (mismatch == null) {
-      LOG.info("Tinker Remaster book fix {}: applying to stock Continuum Core {}", mixin, targetClassName);
+      LOG.info("Myrlin's Tinkers' Construct book fix {}: applying to stock Continuum Core {}", mixin, targetClassName);
       return true;
     }
-    LOG.info("Tinker Remaster book fix {}: skipped, {} is not the stock Continuum Core 1.12.1 code ({}); the installed Core is expected to carry this fix itself", mixin, targetClassName, mismatch);
+    LOG.info("Myrlin's Tinkers' Construct book fix {}: skipped, {} is not the stock Continuum Core 1.12.1 code ({}); the installed Core is expected to carry this fix itself", mixin, targetClassName, mismatch);
     return false;
   }
 
@@ -104,7 +104,7 @@ public class CoreBookFixMixinPlugin implements IMixinConfigPlugin {
     try {
       node = MixinService.getService().getBytecodeProvider().getClassNode(dottedName);
     } catch (Exception e) {
-      LOG.warn("Tinker Remaster book fix: could not read class {}", dottedName, e);
+      LOG.warn("Myrlin's Tinkers' Construct book fix: could not read class {}", dottedName, e);
     }
     nodes.put(dottedName, node);
     return node;
