@@ -1,97 +1,80 @@
-# Continuum Construct
+# Myrlin's Tinkers' Construct
 
-> A community NeoForge 26.1 port of a classic modular tool and smeltery experience.
+Tinkers' Construct 3 for Minecraft 26.1.2 on NeoForge: modular tools, materials, modifiers, the smeltery and the foundry.
 
-**Continuum Construct** is the working name for this community-maintained port to **Minecraft 26.1 / NeoForge 26.1**.
+This is an unofficial fork. It is not the official Tinkers' Construct, and it is not affiliated with or endorsed by SlimeKnights or by justduck25. Please report problems with it [here](https://github.com/therealarthur/myrlins-tinkers-construct/issues), not to them.
 
-This is not an official SlimeKnights release. The original mod, source code, assets, design, and license remain credited to SlimeKnights. This repository exists to keep the mod playable on the NeoForge 26.1 target while the upstream ecosystem catches up.
+It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25/Tinker-Construct-3-NeoForge), the NeoForge 26.1 port of Tinkers' Construct. Each part of this fork was compared with official Tinkers' Construct 3.12.1 (build 3.12.1.231, Minecraft 1.20.1) and changed back to official behavior where the port differed. Upstream Continuum Construct's own README is kept in [docs/UPSTREAM-README.md](docs/UPSTREAM-README.md).
 
-## Port target
+Current version: 3.12.4-myrlin.1, based on Continuum Construct 3.12.4.
 
-| Component | Version |
-|---|---|
-| Minecraft | 26.1.2 |
-| NeoForge | 26.1.2.78 |
-| Java | 25 |
-| Gradle | 9.1 |
+## Install
 
-## Current support
+You need:
 
-This port currently focuses on the core modular tool experience:
+- Minecraft 26.1.2 with NeoForge 26.1.2.109 or a later 26.1.2 build (Java 25).
+- Continuum Core 1.12.1 or a later 1.12.x release (anything from 1.12.1 up to, but not including, 1.13). The stock CurseForge release works; no patched Core is needed.
+- Optional: JEI 29.34.0.90 or later, or REI, for recipe pages.
 
-- Tools, materials, parts, modifiers, tool stats, and tooltips.
-- Smeltery, foundry, melter, casting, fluids, tanks, and related rendering.
-- Recipes, loot, advancements, data generation, tags, and world generation that have been ported to the current data/API format.
-- Client features needed for normal play on NeoForge 26.1.
+Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.1.jar` in the `mods` folder of the server and of every client.
 
-Optional compatibility currently included:
+Do not install it next to Continuum Construct. Both use the mod id `tconstruct`, so the game refuses to start with both. To switch, remove the Continuum Construct jar and add this one. Existing worlds keep working: no item, block, fluid or other registry ID was removed or renamed. Back up your world before switching anyway, and switch the server and all clients together.
 
-| Mod | Status |
-|---|---|
-| JEI | Recipe/category integration for the current port. |
-| JsonThings | Flex item/block integration for Continuum Construct content where supported. |
-| Apotheosis / Apothic Enchanting | Tool enchant/modifier bridge, loot category mapping, post-cap handling, and related recipe/tooltip cleanup for the supported 26.1 versions. |
-| Jade | Basic block tooltip integration for fluid tanks and related tank blocks. |
+## What is different from Continuum Construct
 
-Other historical integrations are not listed as supported here until those mods have usable NeoForge 26.1 builds and the compat has been tested in this port.
+Gameplay and data, compared with official Tinkers' Construct 3.12.1:
+
+- A data comparison against official, last run for the 3.12.2 parity release, ended with 247 modifier definitions equal to official (217 before this work), material stat differences down from 39 to 8, tool definition differences down from 11 to 4, and official language keys missing from the port down from 204 to 8.
+- Official v3.12.1 balance for modifiers (for example dragonborn 8% per level, entwined +10% speed), shields, material tiers, chestplate unarmed attack and the tools mobs spawn with.
+- 135 encyclopedia entries and 17 official modifier behaviors restored, among them fireborn, sticky, silky, tank and thorns.
+- Fixes: the smeltery only melts mobs it can actually hurt; rugged, frost walker and long fall cancel the damage they block completely; the tinker station preview no longer damages the tool in the station; travelers gear crafted in a crafting table keeps its materials; armor keeps repairs made through mending; saved tools recompute their stats once when loaded, without touching materials, upgrades or damage.
+
+Screens, books and recipe viewers:
+
+- The part builder shows its material panel in multiplayer, station titles and the Inventory label are visible again, the smeltery and foundry screens are centered like official, and tool tooltips use official wording and modifier order.
+- The Tinkers books use official's small uniform font and colors and show their crafting recipes in multiplayer. These fixes are built into this mod, so the stock Continuum Core release is enough.
+- REI: official layouts for all 15 Tinkers categories, a working "+" transfer on the crafting station, tinker station and both anvils, and one worktable page per recipe (25 instead of 250).
+
+From upstream:
+
+- Continuum Construct 3.12.3 and 3.12.4 are merged in (10 upstream commits), including their fluid, fuel, casting table, part builder and thrown tool fixes. Where upstream added behavior that official 3.12.1 does not have, such as fluid particles from faucets and fluid surfaces, the upstream behavior was kept.
+
+## How it was checked
+
+The code of this release was tested before release with these results:
+
+- 125 automated tests (unit tests and in-game tests run by NeoForge's test framework): 120 pass, 5 need a graphical client and are skipped in the headless run, 0 fail.
+- 153 server test cases in 17 suites on a disposable dedicated server: all pass. They cover thrown tools, crafting, saving and reloading tools and casting tables, armor and materials, frost walker, solid and liquid fuels, combat, modifiers, tool building in the stations, recipe viewer data, entity melting, fancy armor stands, saved tool loading and the upstream 3.12.3 and 3.12.4 fixes.
+- A dump of all 3417 registry entries in the `tconstruct` namespace (items, blocks, fluids, entities, menus, serializers and the rest) is byte for byte the same as the previous build of this fork. Every one of the 3411 entries of the Continuum Construct 3.12.2 release jar is still there; the 6 additions are the official chrysophilite attribute, the material value swapping recipe serializer and the instrument ingredient serializer. Upstream 3.12.3 and 3.12.4 added no registry entries.
+- A dedicated server with only NeoForge, stock Continuum Core 1.12.1, this mod and JEI starts on a fresh world and on a copy of an existing world, and stops cleanly, with no errors.
+- A real client joins a multiplayer test server and runs 78 scripted steps (every station, the smeltery and foundry, casting, REI pages and transfers, all six books): 78 pass. The book pages were compared pixel by pixel with the previous build, which carried the same fixes in a patched Continuum Core: text, fonts, colors and all 11 crafting page recipes are identical.
+- Screenshots of 118 screens were compared side by side with official Tinkers' Construct 3.12.1 on Minecraft 1.20.1.
+
+Engineering notes from this work are in the `*-REPORT.md` files and in `local-audit/`.
+
+## Known issues
+
+- A saved tool whose stats changed with the official balance is refreshed when a player or mob holding it loads. A tool stored in a chest or item frame keeps its old stats until someone picks it up.
+- The minotaur axe exists only with Twilight Forest installed, as in official.
+- REI 26.1.819 draws no fluids in its sidebar; the Tinkers pages draw their own tanks.
+
+## Reporting problems
+
+Open an issue at [github.com/therealarthur/myrlins-tinkers-construct/issues](https://github.com/therealarthur/myrlins-tinkers-construct/issues) with the Minecraft, NeoForge, Continuum Core and Myrlin's Tinkers' Construct versions, the other mods involved, the steps to reproduce, and `latest.log` or the crash report. Please do not send reports about this fork to SlimeKnights or to justduck25.
 
 ## Building from source
 
-Requirements:
+You need JDK 25 and Git. The build reads a few jars from a local folder given with `-PaebmDepsRoot=<folder>`:
 
-- Git available on the system `PATH`.
-- JDK 25.
-- A working internet connection for Gradle dependencies and Minecraft/NeoForge artifacts.
+- `<folder>/downloads/ContinuumCore-26.1.2-1.12.1.jar` (Continuum Core, compile and test dependency)
+- `<folder>/runtime/bmc6-client/mods/RoughlyEnoughItems-26.1.819.jar`, `architectury-neoforge-20.1.15.jar` and `cloth-config-26.1.154.jar` (compile only, for the REI plugin)
 
-From the `Tcon4` directory, run:
-
-```powershell
-.\gradlew.bat compileJava
-.\gradlew.bat processResources
-.\gradlew.bat runData
-.\gradlew.bat runClientData
-```
-
-To start the development client:
-
-```powershell
-.\gradlew.bat runClient
-```
-
-Build artifacts are written under `build/libs`. Generated resources are written under `src/generated`. Do not edit generated files manually; update the corresponding data provider or source resource and run datagen again.
-
-## Issue reporting
-
-Please include the following information:
-
-- Minecraft version: `26.1.2`.
-- NeoForge version/build: `26.1.2.78`.
-- Port version or commit.
-- Versions of other mods that may be related to the issue.
-- Exact steps to reproduce the problem.
-- Relevant screenshots or video.
-- For crashes or runtime errors, attach the relevant `latest.log`, `debug.log`, or crash report.
-
-Please mention whether the issue happens with this NeoForge 26.1 port only, or also happens in an official upstream build.
-
-## Documentation
-
-For documentation about writing addons or working with datapacks for the original project, see the [SlimeKnights documentation](https://slimeknights.github.io/docs/).
-
-For the original project and official releases, see the [SlimeKnights project page](https://slimeknights.github.io/projects/#tinkers-construct).
+Then run `gradlew.bat jar -PaebmDepsRoot=<folder>` (or `./gradlew` on Linux and macOS). The jar is written to `build/libs`. Generated resources live in `src/generated`; change the data providers and run `runData` instead of editing them by hand.
 
 ## Credits and license
 
-This port is based on the original modular tool project by [SlimeKnights](https://github.com/SlimeKnights).
+- [SlimeKnights](https://github.com/SlimeKnights) made Tinkers' Construct and Mantle.
+- justduck25 made [Continuum Construct](https://github.com/justduck25/Tinker-Construct-3-NeoForge) and Continuum Core, the NeoForge 26.1 ports this fork is built on.
+- This fork is maintained by Myrlin ([therealarthur](https://github.com/therealarthur)).
 
-This NeoForge 26.1 community port is maintained by **justduck**.
-
-Copyright (c) 2022 SlimeKnights.
-
-Code, textures, binaries, and documentation are licensed under the [MIT License](LICENSE), unless a different license is noted in the relevant file or asset. The copyright notice and license text must be included in all copies or substantial portions of the software.
-
-You may use the mod in a modpack. Modpack authors are responsible for user support for their packs. Official support from the original project applies to official upstream builds, not custom port builds.
-
-## Jar signing
-
-Some jars from official build servers may be signed. Under no circumstances does anyone have permission to verify signatures on jars from other mods. Signing is for informational purposes only.
+Tinkers' Construct, Mantle, Continuum Construct and Continuum Core are released under the MIT License, and so is this fork. See [LICENSE](LICENSE) (Copyright (c) 2022 SlimeKnights). The copyright notice and license text must be included in all copies or substantial portions of the software.
