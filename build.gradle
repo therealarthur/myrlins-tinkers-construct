@@ -293,7 +293,8 @@ tasks.named('jar', Jar).configure {
                 "Implementation-Vendor"   : "Slime Knights",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "Source-Revision"         : project.buildInfo.revision,
-                "Upstream-Revision"       : '72602856c8403c51f9f488ab1580f1216fa42fda'
+                // arthur.9: upstream Continuum Construct 3.12.4 (justduck25 Main f2aefea3) is merged; was 72602856 (3.12.1 base)
+                "Upstream-Revision"       : 'f2aefea32cd92f1bf0f57341fd428bd59ddb0862'
         ])
     }
 }
