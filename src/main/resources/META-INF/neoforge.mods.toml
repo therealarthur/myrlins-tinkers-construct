@@ -1,19 +1,23 @@
 modLoader="javafml"
 loaderVersion="${loader_range}"
-issueTrackerURL="https://github.com/justduck25/Tinker-Construct-3-NeoForge/issues"
+# Myrlin's Tinker Remaster (remaster.1): issues go to the remaster repo. Continuum Construct upstream tracker was
+# https://github.com/justduck25/Tinker-Construct-3-NeoForge/issues
+issueTrackerURL="https://github.com/therealarthur/myrlins-tinker-remaster/issues"
 logoFile="logo.png"
 license="MIT"
 
 [[mods]]
     modId="tconstruct"
     version="${version}"
-    displayName="Continuum Construct"
-    authors="Slime Knights, justduck25"
+    # Continuum Construct shipped as displayName "Continuum Construct", authors "Slime Knights, justduck25", with the
+    # description "Community NeoForge 26.1 port of the classic modular tool, material, modifier, and smeltery experience."
+    displayName="Myrlin's Tinker Remaster"
+    authors="Slime Knights, justduck25, Myrlin"
     enumExtensions="META-INF/enumextensions.json"
     description='''
-Community NeoForge 26.1 port of the classic modular tool, material, modifier, and smeltery experience.
+Tinkers' Construct 3 for Minecraft 26.1 on NeoForge. A fork of justduck25's Continuum Construct, checked against official Tinkers' Construct 3.12.1 for Minecraft 1.20.1 and fixed where they differed. Runs on stock Continuum Core 1.12.1; the book fixes that needed a patched Core are built in.
     '''
-    displayURL="https://github.com/justduck25/Tinker-Construct-3-NeoForge"
+    displayURL="https://github.com/therealarthur/myrlins-tinker-remaster"
 
 [[mixins]]
     config="tconstruct.mixins.json"
