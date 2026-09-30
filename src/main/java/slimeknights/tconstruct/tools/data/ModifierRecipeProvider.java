@@ -221,12 +221,26 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     Ingredient advancedAESwimSpeedCard = modItem(advancedAE, "swim_speed_card");
     Ingredient advancedAEWalkSpeedCard = modItem(advancedAE, "walk_speed_card");
     Ingredient advancedAEWaterBreathingCard = modItem(advancedAE, "water_breathing_card");
-    Ingredient harvestTools = ingredientFromTags(TinkerTags.Items.HARVEST_PRIMARY, TinkerTags.Items.STONE_HARVEST);
-    Ingredient harvestAndFishingTools = ingredientFromTags(TinkerTags.Items.HARVEST_PRIMARY, TinkerTags.Items.STONE_HARVEST, TinkerTags.Items.FISHING_RODS);
-    Ingredient combatTools = ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY);
-    Ingredient combatAndLaunchers = ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.LAUNCHERS);
-    Ingredient combatAndHarvestTools = ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.HARVEST_PRIMARY, TinkerTags.Items.STONE_HARVEST);
-    Ingredient combatHarvestLaunchers = ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.HARVEST_PRIMARY, TinkerTags.Items.STONE_HARVEST, TinkerTags.Items.LAUNCHERS);
+    // parity (oracle): Continuum narrowed these to the primary tool tags, which dropped secondary melee and harvest
+    // tools (bows, crossbows, pickaxes as weapons, excavator, cleaver, kama, flint and brick) from about 80 official
+    // recipes. Official 3.12.1 uses the broad tags directly, so the helpers now resolve to exactly those tags:
+    //   harvestTools          = #modifiable/harvest                         (official TinkerTags.Items.HARVEST)
+    //   combatTools           = #modifiable/melee                           (official TinkerTags.Items.MELEE)
+    //   meleeWeapons          = #modifiable/melee/weapon                    (fins, swiftstrike, channeling)
+    //   weaponAndHarvestTools = #modifiable/melee/weapon + #modifiable/harvest (magnetic, returning, throwing)
+    //   combatAndHarvestTools = #modifiable/melee + #modifiable/harvest     (melting)
+    //   combatHarvestLaunchers= #modifiable/melee/weapon + harvest + launchers (luck, official luckSupporting)
+    // Former Continuum definitions, kept for reference:
+    //   harvestTools = ingredientFromTags(HARVEST_PRIMARY, STONE_HARVEST)
+    //   combatTools  = ingredientFromTags(MELEE_PRIMARY, SWORD, PARRY)
+    Ingredient harvestTools = tagIngredient(TinkerTags.Items.HARVEST);
+    Ingredient harvestAndFishingTools = ingredientFromTags(TinkerTags.Items.HARVEST, TinkerTags.Items.FISHING_RODS);
+    Ingredient combatTools = tagIngredient(TinkerTags.Items.MELEE);
+    Ingredient meleeWeapons = tagIngredient(TinkerTags.Items.MELEE_WEAPON);
+    Ingredient combatAndLaunchers = ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.LAUNCHERS);
+    Ingredient combatAndHarvestTools = ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.HARVEST);
+    Ingredient weaponAndHarvestTools = ingredientFromTags(TinkerTags.Items.MELEE_WEAPON, TinkerTags.Items.HARVEST);
+    Ingredient combatHarvestLaunchers = ingredientFromTags(TinkerTags.Items.MELEE_WEAPON, TinkerTags.Items.HARVEST, TinkerTags.Items.LAUNCHERS);
 
     /*
      * durability
@@ -363,14 +377,14 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .addInput(Items.EXPERIENCE_BOTTLE)
                          .setMaxLevel(5) // max +250%
                          .setSlots(SlotType.UPGRADE, 1)
-                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.HARVEST_PRIMARY, TinkerTags.Items.STONE_HARVEST, TinkerTags.Items.LAUNCHERS, TinkerTags.Items.LEGGINGS))
+                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.HARVEST, TinkerTags.Items.LAUNCHERS, TinkerTags.Items.LEGGINGS))
                          .saveSalvage(consumer, prefix(ModifierIds.experienced, upgradeSalvage))
                          .save(consumer, prefix(ModifierIds.experienced, upgradeFolder));
     ModifierRecipeBuilder.modifier(ModifierIds.magnetic)
                          .addInput(Items.COMPASS)
                          .setMaxLevel(5)
                          .setSlots(SlotType.UPGRADE, 1)
-                         .setTools(combatAndHarvestTools)
+                         .setTools(weaponAndHarvestTools)
                          .save(consumer, prefix(ModifierIds.magnetic, upgradeFolder));
     // armor has a max level of 1 per piece, so 4 total
     ModifierRecipeBuilder.modifier(ModifierIds.magnetic)
@@ -382,13 +396,13 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     // salvage supports either
     ModifierRecipeBuilder.modifier(ModifierIds.magnetic)
                          .setSlots(SlotType.UPGRADE, 1)
-                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.HARVEST_PRIMARY, TinkerTags.Items.STONE_HARVEST, TinkerTags.Items.WORN_ARMOR))
+                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE_WEAPON, TinkerTags.Items.HARVEST, TinkerTags.Items.WORN_ARMOR))
                          .saveSalvage(consumer, prefix(ModifierIds.magnetic, upgradeSalvage));
     ModifierRecipeBuilder.modifier(ModifierIds.magnetic)
                          .addInput(advancedAEMagnetCard)
                          .setMaxLevel(5)
                          .setSlots(SlotType.UPGRADE, 1)
-                         .setTools(combatAndHarvestTools)
+                         .setTools(weaponAndHarvestTools)
                          .save(advancedAEConsumer, wrap(ModifierIds.magnetic, advancedAECompatFolder, "_from_magnet_card"));
     ModifierRecipeBuilder.modifier(ModifierIds.magnetic)
                          .addInput(advancedAEMagnetCard)
@@ -446,7 +460,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                                     .save(consumer, prefix(ModifierIds.blasting, upgradeFolder));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.hydraulic)
                                     .setTools(harvestTools)
-                                    .setInput(Tags.Items.GEMS_PRISMARINE, 1, 36) // stupid forge name
+                                    .setInput(Items.PRISMARINE_SHARD, 1, 36) // parity (oracle): official forge:dusts/prismarine is the shard; NeoForge c:gems/prismarine is crystals
                                     .setMaxLevel(5)
                                     .setSlots(SlotType.UPGRADE, 1)
                                     .saveSalvage(consumer, prefix(ModifierIds.hydraulic, upgradeSalvage))
@@ -531,7 +545,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .saveSalvage(consumer, prefix(TinkerModifiers.severing, upgradeSalvage))
                          .save(consumer, prefix(TinkerModifiers.severing, upgradeFolder));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.fiery)
-                                    .setTools(ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS, TinkerTags.Items.WORN_ARMOR, TinkerTags.Items.SHIELDS))
+                                    .setTools(ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS, TinkerTags.Items.WORN_ARMOR, TinkerTags.Items.SHIELDS))
                                     .setInput(Items.BLAZE_POWDER, 1, 25)
                                     .setMaxLevel(5) // +25 seconds fire damage
                                     .setSlots(SlotType.UPGRADE, 1)
@@ -543,7 +557,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .addInput(Items.GHAST_TEAR)
                          .setMaxLevel(5) // +50% chance of heal, combine with +40% from traits for +90% total
                          .setSlots(SlotType.UPGRADE, 1)
-                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS))
+                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS))
                          .saveSalvage(consumer, prefix(ModifierIds.necrotic, upgradeSalvage))
                          .save(consumer, prefix(ModifierIds.necrotic, upgradeFolder));
 
@@ -624,15 +638,16 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                                     .saveSalvage(consumer, prefix(ModifierIds.sweeping, upgradeSalvage))
                                     .save(consumer, prefix(ModifierIds.sweeping, upgradeFolder));
     // swiftstrike is a weapon-speed modifier; keep mining tools on haste/lightspeed instead.
+    // parity (oracle): official 3.12.1 uses #modifiable/melee/weapon ("swiftstrike works on blocks too, we are nice").
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.swiftstrike)
-                                    .setTools(combatTools)
+                                    .setTools(meleeWeapons)
                                     .setInput(Items.AMETHYST_SHARD, 1, 72)
                                     .setMaxLevel(5)
                                     .setSlots(SlotType.UPGRADE, 1)
                                     .saveSalvage(consumer, prefix(ModifierIds.swiftstrike, upgradeSalvage))
                                     .save(consumer, wrap(ModifierIds.swiftstrike, upgradeFolder, "_from_shard"));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.swiftstrike)
-                                    .setTools(combatTools)
+                                    .setTools(meleeWeapons)
                                     .setInput(Blocks.AMETHYST_BLOCK, 4, 72)
                                     .setLeftover(new ItemStack(Holder.direct(Items.AMETHYST_SHARD, DataComponentMap.EMPTY), 1))
                                     .setMaxLevel(5)
@@ -640,7 +655,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                                     .setSlots(SlotType.UPGRADE, 1)
                                     .save(consumer, wrap(ModifierIds.swiftstrike, upgradeFolder, "_from_block"));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.swiftstrike)
-                                    .setTools(combatTools)
+                                    .setTools(meleeWeapons)
                                     .setInput(advancedAEAttackSpeedCard, 1, 2)
                                     .setMaxLevel(5)
                                     .setSlots(SlotType.UPGRADE, 1)
@@ -710,7 +725,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .addInput(Items.POWDER_SNOW_BUCKET)
                          .setMaxLevel(3)
                          .setSlots(SlotType.UPGRADE, 1)
-                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS, TinkerTags.Items.WORN_ARMOR, TinkerTags.Items.SHIELDS))
+                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS, TinkerTags.Items.WORN_ARMOR, TinkerTags.Items.SHIELDS))
                          .saveSalvage(consumer, prefix(ModifierIds.freezing, upgradeSalvage))
                          .save(consumer, prefix(ModifierIds.freezing, upgradeFolder));
 
@@ -718,7 +733,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.reinforced, tagIngredient(TinkerTags.Items.DURABILITY), apotheosisSigil, 6, 7, Ingredient.of(TinkerModifiers.emeraldReinforcement));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.haste, CompoundIngredient.of(harvestTools, tagIngredient(TinkerTags.Items.CHESTPLATES)), apotheosisSigil, 6, 7, tagIngredient(Tags.Items.STORAGE_BLOCKS_REDSTONE));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.knockback, CompoundIngredient.of(combatTools, tagIngredient(TinkerTags.Items.CHESTPLATES)), apotheosisSigil, 4, 5, Ingredient.of(Items.PISTON), Ingredient.of(TinkerWorld.slime.get(SlimeType.EARTH)));
-    apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.fiery, ingredientFromTags(TinkerTags.Items.MELEE_PRIMARY, TinkerTags.Items.SWORD, TinkerTags.Items.PARRY, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS, TinkerTags.Items.WORN_ARMOR, TinkerTags.Items.SHIELDS), apotheosisSigil, 6, 7, Ingredient.of(Items.BLAZE_POWDER));
+    apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.fiery, ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.BOWS, TinkerTags.Items.FISHING_RODS, TinkerTags.Items.WORN_ARMOR, TinkerTags.Items.SHIELDS), apotheosisSigil, 6, 7, Ingredient.of(Items.BLAZE_POWDER));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.smite, combatTools, apotheosisSigil, 6, 7, Ingredient.of(Items.GLISTERING_MELON_SLICE));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.baneOfSssss, combatTools, apotheosisSigil, 6, 7, Ingredient.of(Items.FERMENTED_SPIDER_EYE));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.sharpness, combatTools, apotheosisSigil, 6, 7, tagIngredient(getItemTag(COMMON, "storage_blocks/quartz")));
@@ -734,8 +749,8 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.featherFalling, tagIngredient(TinkerTags.Items.BOOTS), apotheosisSigil, 3, 4, Ingredient.of(Items.FEATHER));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.soulspeed, tagIngredient(TinkerTags.Items.BOOTS), apotheosisSigil, 4, 5, Ingredient.of(Items.MAGMA_BLOCK), Ingredient.of(Items.CRYING_OBSIDIAN));
     apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.depthStrider, tagIngredient(TinkerTags.Items.BOOTS), apotheosisSigil, 4, 5, tagIngredient(ItemTags.FISHES), Ingredient.of(Blocks.PRISMARINE_BRICKS));
-    apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.protection, tagIngredient(TinkerTags.Items.WORN_ARMOR), apotheosisSigil, 2, 3, SlotType.ABILITY, Ingredient.of(TinkerModifiers.goldReinforcement), Ingredient.of(TinkerModifiers.searedReinforcement), Ingredient.of(TinkerModifiers.obsidianReinforcement), Ingredient.of(TinkerModifiers.ironReinforcement));
-    apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.returning, combatAndHarvestTools, apotheosisSigil, 5, 6, Ingredient.of(Items.ENDER_PEARL), Ingredient.of(Items.CLOCK));
+    apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.protection, tagIngredient(TinkerTags.Items.ARMOR), apotheosisSigil, 2, 3, SlotType.ABILITY, Ingredient.of(TinkerModifiers.goldReinforcement), Ingredient.of(TinkerModifiers.searedReinforcement), Ingredient.of(TinkerModifiers.obsidianReinforcement), Ingredient.of(TinkerModifiers.ironReinforcement));
+    apotheosisModifier(apotheosisConsumer, apotheosisUpgradeFolder, ModifierIds.returning, weaponAndHarvestTools, apotheosisSigil, 5, 6, Ingredient.of(Items.ENDER_PEARL), Ingredient.of(Items.CLOCK));
     ModifierRecipeBuilder.modifier(ModifierIds.bulkQuiver)
                          .addInput(Items.LEATHER)
                          .addInput(TinkerWorld.skySlimeVine)
@@ -886,7 +901,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
       .setTools(IntersectionIngredient.of(
         tagIngredient(TinkerTags.Items.DURABILITY),
         tagIngredient(TinkerTags.Items.INTERACTABLE_CHARGE),
-        combatAndHarvestTools
+        weaponAndHarvestTools // parity (oracle): official [harvest | melee/weapon]
       ))
       .addInput(bowLimb)
       .addInput(TinkerMaterials.cinderslime.getIngotTag())
@@ -896,7 +911,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
       .saveSalvage(consumer, prefix(ModifierIds.throwing, abilitySalvage))
       .save(consumer, prefix(ModifierIds.throwing, abilityFolder));
     MultilevelModifierRecipeBuilder.modifier(ModifierIds.returning)
-      .setTools(combatAndHarvestTools)
+      .setTools(weaponAndHarvestTools) // parity (oracle): official [harvest | melee/weapon]
       .addInput(Items.ENDER_PEARL)
       .addInput(Items.CLOCK)
       .addInput(Items.ENDER_PEARL)
@@ -910,7 +925,9 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
      * armor
      */
     // protection
-    Ingredient protectableTools = tagIngredient(TinkerTags.Items.WORN_ARMOR);
+    // parity (oracle): all held tools can receive defense slots, so official gives them something to use it for.
+    // Continuum limited these to worn armor: tagIngredient(TinkerTags.Items.WORN_ARMOR)
+    Ingredient protectableTools = ingredientFromTags(TinkerTags.Items.ARMOR, TinkerTags.Items.HELD);
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.meleeProtection)
                                     .setInput(TinkerModifiers.cobaltReinforcement, 1, 5)
                                     .setSlots(SlotType.DEFENSE, 1)
@@ -944,7 +961,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.fireProtection)
                                     .setInput(advancedAELavaImmunityCard, 1, 2)
                                     .setSlots(SlotType.DEFENSE, 1)
-                                    .setTools(TinkerTags.Items.WORN_ARMOR)
+                                    .setTools(protectableTools) // same tools as the base fire protection recipe
                                     .save(advancedAEConsumer, wrap(ModifierIds.fireProtection, advancedAECompatFolder, "_from_lava_immunity_card"));
     ModifierRecipeBuilder.modifier(ModifierIds.protection)
                          .addInput(TinkerModifiers.goldReinforcement)
@@ -953,7 +970,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .addInput(TinkerModifiers.ironReinforcement)
                          .addInput(TinkerModifiers.cobaltReinforcement)
                          .setSlots(SlotType.ABILITY, 1)
-                         .setTools(TinkerTags.Items.WORN_ARMOR)
+                         .setTools(TinkerTags.Items.ARMOR) // parity (oracle): official accepts all armor, including shields
                          .setMaxLevel(1)
                          .saveSalvage(consumer, prefix(ModifierIds.protection, abilitySalvage))
                          .save(consumer, prefix(ModifierIds.protection, abilityFolder));
@@ -976,7 +993,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
       .saveSalvage(consumer, prefix(ModifierIds.boundless, abilitySalvage))
       .save(consumer, prefix(ModifierIds.boundless, abilityFolder));
     ModifierRecipeBuilder.modifier(ModifierIds.knockbackResistance)
-                         .setTools(TinkerTags.Items.WORN_ARMOR)
+                         .setTools(TinkerTags.Items.ARMOR) // parity (oracle): official accepts all armor
                          .addInput(SizedIngredient.fromItems(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL))
                          .setSlots(SlotType.DEFENSE, 1)
                          .setMaxLevel(1)
@@ -996,19 +1013,19 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.turtleShell)
                                     .setInput(Items.TURTLE_SCUTE, 1, 5)
                                     .setSlots(SlotType.DEFENSE, 1)
-                                    .setTools(TinkerTags.Items.WORN_ARMOR)
+                                    .setTools(TinkerTags.Items.ARMOR) // parity (oracle): official accepts all armor
                                     .saveSalvage(consumer, prefix(ModifierIds.turtleShell, defenseSalvage))
                                     .save(consumer, prefix(ModifierIds.turtleShell, defenseFolder));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.shulking)
                                     .setInput(Items.SHULKER_SHELL, 1, 3)
                                     .setSlots(SlotType.DEFENSE, 1)
-                                    .setTools(TinkerTags.Items.WORN_ARMOR)
+                                    .setTools(TinkerTags.Items.ARMOR) // parity (oracle): official accepts all armor
                                     .saveSalvage(consumer, prefix(ModifierIds.shulking, defenseSalvage))
                                     .save(consumer, prefix(ModifierIds.shulking, defenseFolder));
     IncrementalModifierRecipeBuilder.modifier(ModifierIds.dragonborn)
                                     .setInput(TinkerModifiers.dragonScale, 1, 5)
                                     .setSlots(SlotType.DEFENSE, 1)
-                                    .setTools(TinkerTags.Items.WORN_ARMOR)
+                                    .setTools(TinkerTags.Items.ARMOR) // parity (oracle): official accepts all armor
                                     .saveSalvage(consumer, prefix(ModifierIds.dragonborn, defenseSalvage))
                                     .save(consumer, prefix(ModifierIds.dragonborn, defenseFolder));
     // 3 each for chest and legs, 2 each for boots and helmet, leads to 10 total
@@ -1478,7 +1495,8 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .disallowCrystal() // prevents cheesing cost using luck 1
                          .saveSalvage(consumer, wrap(ModifierIds.luck, abilitySalvage, "_pants"));
     ModifierRecipeBuilder.modifier(ModifierIds.luck)
-                         .setTools(luckSupporting)
+                         // parity (oracle): official salvage accepts [melee | harvest | launchers], wider than the recipes
+                         .setTools(ingredientFromTags(TinkerTags.Items.MELEE, TinkerTags.Items.HARVEST, TinkerTags.Items.LAUNCHERS))
                          .exactLevel(1)
                          .useSalvageMax()
                          .setSlots(SlotType.ABILITY, 1)
@@ -1510,7 +1528,8 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     ModifierRecipeBuilder.modifier(ModifierIds.autosmelt)
                          .addInput(Tags.Items.RAW_MATERIALS)
                          .addInput(Blocks.BLAST_FURNACE)
-                         .addInput(Tags.Items.INGOTS)
+                         // parity (oracle): official forge:ingots also held brick and nether brick; NeoForge c:ingots does not
+                         .addInput(CompoundIngredient.of(tagIngredient(Tags.Items.INGOTS), Ingredient.of(Items.BRICK, Items.NETHER_BRICK)))
                          .addInput(Tags.Items.STORAGE_BLOCKS_COAL)
                          .addInput(Tags.Items.STORAGE_BLOCKS_COAL)
                          .setMaxLevel(1)
@@ -1526,7 +1545,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
       .addInput(Blocks.LIGHTNING_ROD)
       .setMaxLevel(1).checkTraitLevel()
       .setSlots(SlotType.ABILITY, 1)
-      .setTools(CompoundIngredient.of(combatTools, tagIngredient(TinkerTags.Items.FISHING_RODS)))
+      .setTools(CompoundIngredient.of(meleeWeapons, tagIngredient(TinkerTags.Items.FISHING_RODS)))
       .saveSalvage(consumer, prefix(ModifierIds.channeling, abilitySalvage))
       .save(consumer, prefix(ModifierIds.channeling, abilityFolder));
     ModifierRecipeBuilder.modifier(ModifierIds.fins)
@@ -1535,7 +1554,7 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
       .addInput(ItemTags.FISHES)
       .setMaxLevel(1).checkTraitLevel()
       .setSlots(SlotType.UPGRADE, 1)
-      .setTools(combatTools)
+      .setTools(meleeWeapons)
       .saveSalvage(consumer, prefix(ModifierIds.fins, upgradeSalvage))
       .save(consumer, prefix(ModifierIds.fins, upgradeFolder));
 
@@ -1841,7 +1860,12 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
                          .setMaxLevel(1)
                          .save(consumer, prefix(ModifierIds.harmonious, slotlessFolder));
     Ingredient bonusNoSkull = DifferenceIngredient.of(tagIngredient(TinkerTags.Items.BONUS_SLOTS), tagIngredient(TinkerTags.Items.SKULLS));
-    SizedIngredient standardSkulls = SizedIngredient.of(DifferenceIngredient.of(tagIngredient(ItemTags.SKULLS), Ingredient.of(Items.DRAGON_HEAD)));
+    // parity (oracle): official uses #forge:heads minus the dragon head. Forge 1.20.1 put every vanilla head in that tag and
+    // Tinkers added its own heads; NeoForge 26.1 has no c:heads of its own, so the vanilla heads come from #minecraft:skulls
+    // and the Tinkers heads from the #c:heads tag Tinkers populates. Continuum used #minecraft:skulls alone, which lost them.
+    SizedIngredient standardSkulls = SizedIngredient.of(DifferenceIngredient.of(
+      CompoundIngredient.of(tagIngredient(ItemTags.SKULLS), tagIngredient(ItemTags.create(Identifier.parse("c:heads")))),
+      Ingredient.of(Items.DRAGON_HEAD)));
     ModifierRecipeBuilder.modifier(ModifierIds.recapitated)
       .setTools(bonusNoSkull)
       .addInput(standardSkulls)
@@ -2130,35 +2154,41 @@ public class ModifierRecipeProvider extends BaseRecipeProvider {
     // cosmetics //
     consumer.accept(recipeKey(location(folder + "dyeing")), new ArmorDyeingRecipe(location(folder + "dyeing")), null);
     consumer.accept(recipeKey(location(folder + "trim")), new ArmorTrimRecipe(location(folder + "trim")), null);
-    consumer.accept(recipeKey(location(folder + "banner")), new BannerModifierRecipe(location(folder + "banner")), null);
+    // parity (oracle): official passes the sky slime bottle as the clear input
+    consumer.accept(recipeKey(location(folder + "banner")), new BannerModifierRecipe(location(folder + "banner"), Ingredient.of(TinkerFluids.slimeBottle.get(SlimeType.SKY))), null);
 
     // slimesuit //
+    // parity (oracle): official 3.12.1 only loads these when #tconstruct:modifiable/embellishment/slime has entries, and
+    // official leaves that tag empty (no slime embellishments on any tool). Continuum saved them unconditionally and filled
+    // the tag with the staffs; restoring the condition and the empty tag removes them again. Staffs that already carry a
+    // slime embellishment keep it; only the recipes to apply one are gone.
+    RecipeOutput slimeEmbellishmentConsumer = withCondition(consumer, new TagFilledCondition<>(TinkerTags.Items.EMBELLISHMENT_SLIME));
     // basic slime
-    slimeTexture(consumer, MaterialIds.earthslime, SlimeType.EARTH, folder);
-    slimeTexture(consumer, MaterialIds.skyslime,   SlimeType.SKY, folder);
-    slimeTexture(consumer, MaterialIds.ichor,      SlimeType.ICHOR, folder);
-    slimeTexture(consumer, MaterialIds.enderslime, SlimeType.ENDER, folder);
+    slimeTexture(slimeEmbellishmentConsumer, MaterialIds.earthslime, SlimeType.EARTH, folder);
+    slimeTexture(slimeEmbellishmentConsumer, MaterialIds.skyslime,   SlimeType.SKY, folder);
+    slimeTexture(slimeEmbellishmentConsumer, MaterialIds.ichor,      SlimeType.ICHOR, folder);
+    slimeTexture(slimeEmbellishmentConsumer, MaterialIds.enderslime, SlimeType.ENDER, folder);
     // slimy planks
-    slimyWoodTexture(consumer, MaterialIds.earthslime, TinkerWorld.greenheart,  FoliageType.EARTH, folder);
-    slimyWoodTexture(consumer, MaterialIds.skyslime,   TinkerWorld.skyroot,     FoliageType.SKY,   folder);
-    slimyWoodTexture(consumer, MaterialIds.blood,      TinkerWorld.bloodshroom, FoliageType.BLOOD, folder);
-    slimyWoodTexture(consumer, MaterialIds.enderslime, TinkerWorld.enderbark,   FoliageType.ENDER, folder);
+    slimyWoodTexture(slimeEmbellishmentConsumer, MaterialIds.earthslime, TinkerWorld.greenheart,  FoliageType.EARTH, folder);
+    slimyWoodTexture(slimeEmbellishmentConsumer, MaterialIds.skyslime,   TinkerWorld.skyroot,     FoliageType.SKY,   folder);
+    slimyWoodTexture(slimeEmbellishmentConsumer, MaterialIds.blood,      TinkerWorld.bloodshroom, FoliageType.BLOOD, folder);
+    slimyWoodTexture(slimeEmbellishmentConsumer, MaterialIds.enderslime, TinkerWorld.enderbark,   FoliageType.ENDER, folder);
     // weird slime
     SwappableModifierRecipeBuilder.modifier(TinkerModifiers.embellishment, MaterialIds.clay.toString())
                                   .variantFormatter(VariantFormatter.MATERIAL)
                                   .setTools(TinkerTags.Items.EMBELLISHMENT_SLIME)
                                   .addInput(Blocks.CLAY).addInput(Items.CLAY_BALL).addInput(Blocks.CLAY)
-                                  .save(consumer, wrap(TinkerModifiers.embellishment, folder, "/slime/clay"));
+                                  .save(slimeEmbellishmentConsumer, wrap(TinkerModifiers.embellishment, folder, "/slime/clay"));
     SwappableModifierRecipeBuilder.modifier(TinkerModifiers.embellishment, MaterialIds.magma.toString())
                                   .variantFormatter(VariantFormatter.MATERIAL)
                                   .setTools(TinkerTags.Items.EMBELLISHMENT_SLIME)
                                   .addInput(Blocks.MAGMA_BLOCK).addInput(Items.MAGMA_CREAM).addInput(Blocks.MAGMA_BLOCK)
-                                  .save(consumer, wrap(TinkerModifiers.embellishment, folder, "/slime/magma"));
+                                  .save(slimeEmbellishmentConsumer, wrap(TinkerModifiers.embellishment, folder, "/slime/magma"));
     SwappableModifierRecipeBuilder.modifier(TinkerModifiers.embellishment, MaterialIds.honey.toString())
                                   .variantFormatter(VariantFormatter.MATERIAL)
                                   .setTools(TinkerTags.Items.EMBELLISHMENT_SLIME)
                                   .addInput(Blocks.HONEY_BLOCK).addInput(Items.HONEY_BOTTLE).addInput(Blocks.HONEY_BLOCK)
-                                  .save(consumer, wrap(TinkerModifiers.embellishment, folder, "/slime/honey"));
+                                  .save(slimeEmbellishmentConsumer, wrap(TinkerModifiers.embellishment, folder, "/slime/honey"));
   }
 
   private void addHeadRecipes(RecipeOutput consumer) {

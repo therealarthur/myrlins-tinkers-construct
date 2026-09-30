@@ -194,6 +194,10 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
    */
   @Override
   public void registerBasicEntryFiltering(me.shedaniel.rei.api.client.entry.filtering.base.BasicFilteringRule<?> rule) {
+    // parity (oracle): keep the minotaur axe out of the viewer without Twilight Forest (see registerEntries)
+    if (!isMinotaurAxeActive()) {
+      rule.hide(() -> List.of(EntryStacks.of(new ItemStack(slimeknights.tconstruct.tools.TinkerTools.minotaurAxe.get()))));
+    }
     boolean showFilled;
     try {
       showFilled = slimeknights.tconstruct.common.config.Config.CLIENT.showFilledFluidTanks.get();
@@ -285,6 +289,16 @@ public class TConstructREIClientPlugin implements REIClientPlugin {
   public void registerEntries(EntryRegistry registry) {
     entries = registry;
     ENTRY_REFRESH.reset();
+    // parity (oracle): official registers the minotaur axe only with Twilight Forest, so it never reaches a recipe viewer
+    // without it. The port keeps the item registered for world safety, so hide it here instead.
+    if (!isMinotaurAxeActive()) {
+      registry.removeEntryIf(entry -> entry.getValue() instanceof ItemStack stack && stack.is(slimeknights.tconstruct.tools.TinkerTools.minotaurAxe.get()));
+    }
+  }
+
+  /** The minotaur axe is only "present" when Twilight Forest is loaded, matching official registration */
+  private static boolean isMinotaurAxeActive() {
+    return net.neoforged.fml.ModList.get().isLoaded("twilightforest");
   }
 
   private static void clientTick(ClientTickEvent.Post event) {

@@ -8,11 +8,8 @@
   "tools": {
     "neoforge:ingredient_type": "neoforge:compound",
     "children": [
-      "#tconstruct:modifiable/melee/primary",
-      "#tconstruct:modifiable/melee/sword",
-      "#tconstruct:modifiable/melee/parry",
-      "#tconstruct:modifiable/harvest/primary",
-      "#tconstruct:modifiable/harvest/stone",
+      "#tconstruct:modifiable/melee",
+      "#tconstruct:modifiable/harvest",
       "#tconstruct:modifiable/ranged/launcher",
       "#tconstruct:modifiable/armor/leggings"
     ]

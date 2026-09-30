@@ -312,6 +312,20 @@ public final class TinkerTools extends TinkerModule {
    * Events
    */
 
+  /**
+   * parity (oracle): official registers the minotaur axe only with Twilight Forest. The port keeps the item registered so
+   * copies in existing worlds survive, and loads its tool tags from a built-in data pack only when Twilight Forest is
+   * present. Without it the axe is in no tool, harvest or modifier tag, has no recipes and is hidden from viewers.
+   */
+  @SubscribeEvent
+  void addMinotaurAxePack(net.neoforged.neoforge.event.AddPackFindersEvent event) {
+    if (ModList.get().isLoaded("twilightforest")) {
+      event.addPackFinders(getResource("compat/twilightforest_minotaur_axe"), net.minecraft.server.packs.PackType.SERVER_DATA,
+        net.minecraft.network.chat.Component.literal("Tinkers' Construct minotaur axe"), net.minecraft.server.packs.repository.PackSource.BUILT_IN,
+        true, net.minecraft.server.packs.repository.Pack.Position.TOP);
+    }
+  }
+
   @SubscribeEvent
   void commonSetup(FMLCommonSetupEvent event) {
     EquipmentChangeWatcher.register();
@@ -369,6 +383,9 @@ public final class TinkerTools extends TinkerModule {
       ToolStats.register(ToolEnergyCapability.MAX_STAT);
       ToolStats.register(EdibleModule.HUNGER);
       ToolStats.register(EdibleModule.SATURATION);
+      // parity (oracle): official 3.12.1 edible stats
+      ToolStats.register(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.EAT_DURATION);
+      ToolStats.register(slimeknights.tconstruct.library.modifiers.modules.interaction.edible.EdibleModule.COUNTER_CHANCE);
 
       ToolModule.LOADER.register(getResource("empty"), ToolModule.EMPTY.getLoader());
       // tool definition components

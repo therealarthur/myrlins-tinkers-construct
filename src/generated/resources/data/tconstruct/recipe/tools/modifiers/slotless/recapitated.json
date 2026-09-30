@@ -5,7 +5,13 @@
   "inputs": [
     {
       "neoforge:ingredient_type": "neoforge:difference",
-      "base": "#minecraft:skulls",
+      "base": {
+        "neoforge:ingredient_type": "neoforge:compound",
+        "children": [
+          "#minecraft:skulls",
+          "#c:heads"
+        ]
+      },
       "subtracted": "minecraft:dragon_head"
     }
   ],

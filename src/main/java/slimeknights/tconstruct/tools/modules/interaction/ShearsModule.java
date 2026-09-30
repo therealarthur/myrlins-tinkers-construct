@@ -66,7 +66,14 @@ public record ShearsModule(float flatBonus, float perLevelBonus, float expandedB
 
   @Override
   public boolean canPerformAction(IToolStackView tool, ModifierEntry modifier, ItemAbility itemAbility) {
-    return condition.matches(tool, modifier) && itemAbility == ItemAbilities.SHEARS_DIG;
+    // parity (oracle): official 3.12.1 exposes every shears action it had (dig, harvest, carve, disarm), so a kama carves
+    // pumpkins, harvests beehives and disarms tripwire; Continuum kept only dig. 26.1's newer shears_remove_armor and
+    // shears_trim stay off, as official never had them.
+    return condition.matches(tool, modifier) && (
+      itemAbility == ItemAbilities.SHEARS_DIG ||
+      itemAbility == ItemAbilities.SHEARS_HARVEST ||
+      itemAbility == ItemAbilities.SHEARS_CARVE ||
+      itemAbility == ItemAbilities.SHEARS_DISARM);
   }
 
   /** Runs the hook after shearing an entity */

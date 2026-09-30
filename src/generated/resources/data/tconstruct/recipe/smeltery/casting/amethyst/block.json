@@ -6,7 +6,5 @@
     "fluid": "tconstruct:molten_amethyst"
   },
   "id": "tconstruct:smeltery/casting/amethyst/block",
-  "result": {
-    "tag": "c:storage_blocks/amethyst"
-  }
+  "result": "minecraft:amethyst_block"
 }

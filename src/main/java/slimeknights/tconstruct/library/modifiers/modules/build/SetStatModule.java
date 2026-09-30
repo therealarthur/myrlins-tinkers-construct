@@ -37,7 +37,9 @@ public record SetStatModule<T>(IToolStat<T> stat, T value, ModifierCondition<ITo
 
   @Override
   public void addToolStats(IToolContext context, ModifierEntry modifier, ModifierStatsBuilder builder) {
-    if (condition.matches(context, modifier)) {
+    // parity (oracle): official 3.12.1 also requires the tool to support the stat, so diamond, emerald and netherite
+    // no longer write a harvest tier onto bows, crossbows, armor and staffs
+    if (condition.matches(context, modifier) && stat.supports(context.getItem())) {
       stat.update(builder, value);
     }
   }

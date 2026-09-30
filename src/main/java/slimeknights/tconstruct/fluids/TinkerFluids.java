@@ -95,6 +95,9 @@ import slimeknights.tconstruct.fluids.util.FillBottle;
 @SuppressWarnings("unused")
 public final class TinkerFluids extends TinkerModule {
   public TinkerFluids() {
+    // parity (oracle): official calls ForgeMod.enableMilkFluid(). Without it minecraft:milk is not registered, so every
+    // recipe gated on a registered milk fluid (skull and skeleton melting, milk casting, cheese, milk fluid effects) was dropped.
+    net.neoforged.neoforge.common.NeoForgeMod.enableMilkFluid();
     NeoForge.EVENT_BUS.addListener(this::registerBrewing);
   }
 

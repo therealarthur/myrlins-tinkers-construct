@@ -16,5 +16,5 @@
   "slots": {
     "defense": 1
   },
-  "tools": "#tconstruct:modifiable/armor/worn"
+  "tools": "#tconstruct:modifiable/armor"
 }

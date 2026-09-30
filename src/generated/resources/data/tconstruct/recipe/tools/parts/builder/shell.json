@@ -1,6 +1,6 @@
 {
   "type": "tconstruct:part_builder",
-  "cost": 2,
+  "cost": 4,
   "id": "tconstruct:tools/parts/builder/shell",
   "pattern": "tconstruct:shell",
   "pattern_item": "#tconstruct:patterns/default",

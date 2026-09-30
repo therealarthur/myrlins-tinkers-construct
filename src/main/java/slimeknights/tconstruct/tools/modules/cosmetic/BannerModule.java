@@ -13,6 +13,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.mantle.data.loadable.record.SingletonLoader;
@@ -103,8 +104,8 @@ public enum BannerModule implements ModifierModule, DisplayNameModifierHook, Too
     return modifier.withSuffix("_patterns");
   }
 
-  /** Copies the given banner pattern component to the tool's NBT. */
-  public static void copyPatterns(ModDataNBT data, ModifierId id, DyeColor dye, BannerPatternLayers banner) {
+  /** Copies the given banner pattern component to the tool's NBT. A null dye skips the base color, making a clear banner. */
+  public static void copyPatterns(ModDataNBT data, ModifierId id, @Nullable DyeColor dye, BannerPatternLayers banner) {
     ListTag patterns = new ListTag();
     for (BannerPatternLayers.Layer layer : banner.layers()) {
       CompoundTag tag = new CompoundTag();
@@ -114,13 +115,25 @@ public enum BannerModule implements ModifierModule, DisplayNameModifierHook, Too
     }
     copyPatterns(data, id, dye, patterns);
   }
-  /** Copies the given list of patterns from banner format to the tool's NBT */
-  public static void copyPatterns(ModDataNBT data, ModifierId id, DyeColor dye, ListTag banner) {
-    int baseColor = Util.getColor(dye);
+  /** Copies the given list of patterns from banner format to the tool's NBT. A null dye skips the base color, making a clear banner. */
+  public static void copyPatterns(ModDataNBT data, ModifierId id, @Nullable DyeColor dye, ListTag banner) {
     ListTag patterns = new ListTag();
 
     // need a cache key, but it's just going to get hashed anyway, so store its hash
-    int hashCode = baseColor;
+    int hashCode = 0;
+
+    // parity (oracle): official 3.12.1 stores the banner's base color as a "base" pattern first; banner items only carry
+    // the layers on top of it. Continuum dropped this layer, so shields lost their base color, the name took the first
+    // pattern's color and the clear banner recipe had nothing to clear. Passing a null dye skips it (clear banner).
+    if (dye != null) {
+      int baseColor = Util.getColor(dye);
+      hashCode = baseColor;
+      CompoundTag basePattern = new CompoundTag();
+      basePattern.putString(KEY_PATTERN, BannerPatterns.BASE.identifier().toString());
+      basePattern.putInt(KEY_DYE, dye.getId());
+      basePattern.putInt(KEY_COLOR, baseColor);
+      patterns.add(basePattern);
+    }
 
     // add in all other patterns
     for (int i = 0; i < banner.size(); i++) {

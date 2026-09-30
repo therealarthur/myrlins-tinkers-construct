@@ -37,14 +37,7 @@
   "tools": {
     "neoforge:ingredient_type": "neoforge:compound",
     "children": [
-      {
-        "neoforge:ingredient_type": "neoforge:compound",
-        "children": [
-          "#tconstruct:modifiable/melee/primary",
-          "#tconstruct:modifiable/melee/sword",
-          "#tconstruct:modifiable/melee/parry"
-        ]
-      },
+      "#tconstruct:modifiable/melee",
       "#tconstruct:modifiable/armor/chestplate"
     ]
   }

@@ -1,6 +1,19 @@
 {
   "type": "tconstruct:casting_basin",
-  "cast": "#c:stones",
+  "cast": {
+    "neoforge:ingredient_type": "neoforge:compound",
+    "children": [
+      "#c:stones",
+      [
+        "minecraft:polished_andesite",
+        "minecraft:polished_diorite",
+        "minecraft:polished_granite",
+        "minecraft:polished_deepslate",
+        "minecraft:infested_stone",
+        "minecraft:infested_deepslate"
+      ]
+    ]
+  },
   "cast_consumed": true,
   "cooling_time": 113,
   "fluid": {

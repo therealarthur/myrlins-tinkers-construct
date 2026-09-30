@@ -39,6 +39,7 @@ import slimeknights.tconstruct.library.recipe.melting.IMeltingContainer.OreRateT
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeBuilder;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
+import net.minecraft.world.level.ItemLike;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -276,8 +277,12 @@ public class SmelteryRecipeBuilder {
 
   /** Adds a recipe for melting an item from a tag */
   private void tagMelting(float scale, String output, float factor, Identifier tagName, boolean damagable, boolean forceOptional) {
-    RecipeOutput wrapped = optional || forceOptional ? withCondition(tagCondition(tagName)) : consumer;
-    MeltingRecipeBuilder builder = MeltingRecipeBuilder.melting(tagIngredient(ItemTags.create(tagName)), result((int) (baseUnit * scale)), temperature, factor);
+    // parity (oracle): a storage block the loader tag no longer lists (NeoForge 26.1 ships no c:storage_blocks/amethyst)
+    // is added as a direct recipe input, so the recipe loads without the tag and without editing the c: tag
+    ItemLike extra = "block".equals(output) ? storageBlockItem : null;
+    RecipeOutput wrapped = extra == null && (optional || forceOptional) ? withCondition(tagCondition(tagName)) : consumer;
+    Ingredient input = extra == null ? tagIngredient(ItemTags.create(tagName)) : net.neoforged.neoforge.common.crafting.CompoundIngredient.of(tagIngredient(ItemTags.create(tagName)), Ingredient.of(extra));
+    MeltingRecipeBuilder builder = MeltingRecipeBuilder.melting(input, result((int) (baseUnit * scale)), temperature, factor);
     if (damagable) {
       builder.setDamagable(damageUnits());
     }
@@ -387,8 +392,9 @@ public class SmelteryRecipeBuilder {
   /** Recipe to cast the block */
   public SmelteryRecipeBuilder blockCasting(int factor, Ingredient cast, boolean forceOptional) {
     String tagName = "storage_blocks/" + this.name.getPath();
-    RecipeOutput wrapped = optional || forceOptional ? withCondition(tagCondition(tagName)) : consumer;
-    ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(itemTag(tagName)))
+    RecipeOutput wrapped = storageBlockItem == null && (optional || forceOptional) ? withCondition(tagCondition(tagName)) : consumer;
+    // parity (oracle): cast the known storage block directly when the loader tag lacks it (casting output was air)
+    ItemCastingRecipeBuilder.basinRecipe(storageBlockItem != null ? ItemOutput.fromItem(storageBlockItem) : ItemOutput.fromTag(itemTag(tagName)))
       .setFluid(ingredient(baseUnit * factor))
       .setCoolingTime(temperature, baseUnit * factor)
       .setCast(cast, true)
@@ -569,6 +575,19 @@ public class SmelteryRecipeBuilder {
   }
 
   /** Adds basic recipes for a amethyst/quartz style gem */
+  /** Storage block used directly when the loader tag no longer holds it, see {@link #storageBlock(ItemLike)} */
+  @Nullable
+  private ItemLike storageBlockItem = null;
+
+  /**
+   * Sets the storage block item for block melting and casting. Forge 1.20.1 listed vanilla storage blocks such as the
+   * amethyst block in its common tags; NeoForge 26.1 does not, so recipes built from the tag alone lost them.
+   */
+  public SmelteryRecipeBuilder storageBlock(ItemLike block) {
+    this.storageBlockItem = block;
+    return this;
+  }
+
   public SmelteryRecipeBuilder smallGem() {
     return gem(4);
   }

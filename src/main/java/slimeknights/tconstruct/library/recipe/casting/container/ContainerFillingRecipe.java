@@ -181,9 +181,12 @@ public class ContainerFillingRecipe implements ICastingRecipe, IMultiRecipe<Disp
       displayRecipes = BuiltInRegistries.FLUID.stream()
         .filter(fluid -> {
           // skip flowing fluids (redundant to source) and fluids with no bucket (probably internal)
-          if (fluid.isSource(fluid.defaultFluidState())) {
+          // parity (oracle): official also skips fluids hidden from creative tanks (the potion fluid, whose container would
+          // lose its potion) and fluids whose bucket is hidden from recipe viewers
+          if (fluid.isSource(fluid.defaultFluidState()) && !fluid.is(slimeknights.tconstruct.common.TinkerTags.Fluids.HIDE_IN_CREATIVE_TANKS)) {
             try {
-              return fluid.getBucket() != Items.AIR;
+              net.minecraft.world.item.Item bucket = fluid.getBucket();
+              return bucket != Items.AIR && !bucket.builtInRegistryHolder().is(slimeknights.tconstruct.common.TinkerTags.Items.HIDDEN_IN_RECIPE_VIEWERS);
             } catch (Exception e) {
               // Registrate (popular dependency for making registration easier) is broken and throws in getBucket for fluids with no bucket
               // we could just skip the bucket check, but its just going to throw when we try to fill an empty bucket in map below

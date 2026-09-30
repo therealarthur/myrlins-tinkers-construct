@@ -1,0 +1,8 @@
+{
+  "pack": {
+    "description": "Tinkers' Construct minotaur axe tags, enabled only with Twilight Forest (official registers the axe only then)",
+    "pack_format": 101,
+    "min_format": 101,
+    "max_format": 101
+  }
+}

@@ -149,7 +149,7 @@ public class MaterialRecipeProvider extends BaseRecipeProvider implements IMater
     materialRecipe(consumer, MaterialIds.blaze,      LegacyIngredientType.ofTag(Tags.Items.RODS_BLAZE),       1, 1, folder + "blaze");
     materialRecipe(consumer, MaterialIds.enderPearl, LegacyIngredientType.ofTag(Tags.Items.ENDER_PEARLS),     1, 1, folder + "ender_pearl");
     materialRecipe(consumer, MaterialIds.amethyst,   LegacyIngredientType.ofTag(Tags.Items.GEMS_AMETHYST),    1, 1, folder + "amethyst");
-    materialRecipe(consumer, MaterialIds.prismarine, LegacyIngredientType.ofTag(Tags.Items.GEMS_PRISMARINE), 1, 1, folder + "prismarine");
+    materialRecipe(consumer, MaterialIds.prismarine, Ingredient.of(Items.PRISMARINE_SHARD), 1, 1, folder + "prismarine"); // parity (oracle): official forge:dusts/prismarine is the shard; NeoForge c:gems/prismarine is crystals
     materialRecipe(consumer, MaterialIds.glass,      LegacyIngredientType.ofTag(Tags.Items.GLASS_BLOCKS),            4, 1, folder + "glass");
     materialRecipe(consumer, MaterialIds.glass,      LegacyIngredientType.ofTag(Tags.Items.GLASS_PANES),      1, 1, folder + "glass_pane");
 
