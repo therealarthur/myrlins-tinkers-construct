@@ -1343,8 +1343,13 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
                             .setFluidAndTime(TinkerFluids.venom, FluidValues.SLIMEBALL)
                             .setCast(Tags.Items.BONES, true)
                             .save(consumer, recipeKey(location(slimeFolder + "venom/bone")));
+    // arthur.9 parity (oracle, skull venom amount): a skeleton skull in a basin with venom costs 1250 mB in official 3.12.1
+    // (the slime skull tool casting, item cost 5 at 250 mB of venom per material). This Continuum-only legacy venombone head
+    // cast used the same inputs for 1000 mB (cooling 96), so it now takes the official amount and cooling time (107).
+    // ItemCastingRecipeBuilder.basinRecipe(TinkerWorld.headItems.get(TinkerHeadType.VENOMBONE))
+    //   .setFluidAndTime(TinkerFluids.venom, FluidValues.SLIMEBALL * 4)
     ItemCastingRecipeBuilder.basinRecipe(TinkerWorld.headItems.get(TinkerHeadType.VENOMBONE))
-      .setFluidAndTime(TinkerFluids.venom, FluidValues.SLIMEBALL * 4)
+      .setFluidAndTime(TinkerFluids.venom, FluidValues.SLIMEBALL * 5)
       .setCast(Items.SKELETON_SKULL, true)
       .save(consumer, recipeKey(location(slimeFolder + "venom/skull")));
 
