@@ -131,6 +131,9 @@ public class TinkerClient {
     NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientRecipeCache.clear());
     NeoForge.EVENT_BUS.addListener((MaterialsLoadedEvent event) ->
       Minecraft.getInstance().execute(ClientRecipeCache::materialsUpdated));
+    // Continuum Core book pages that show a recipe by ID (mantle:crafting, mantle:smelting) read the recipes the
+    // server synced; folded in from the private Core fork so stock Core 1.12.1 books work in multiplayer.
+    slimeknights.tconstruct.library.client.book.corefix.BookRecipes.init();
 
     // register datagen serializers
     ISpriteTransformer.SERIALIZER.registerDeserializer(RecolorSpriteTransformer.NAME, RecolorSpriteTransformer.DESERIALIZER);

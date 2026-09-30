@@ -1,0 +1,21 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "slimeknights.tconstruct.mixin",
+  "plugin": "slimeknights.tconstruct.library.client.book.corefix.CoreBookFixMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "client.book.BookDataFontMixin",
+    "client.book.BookScreenFontMixin",
+    "client.book.BookScreenTextMixin",
+    "client.book.ContentCraftingMixin",
+    "client.book.ContentSmeltingMixin",
+    "client.book.MultiModuleScreenMixin",
+    "client.book.SelectionElementMixin",
+    "client.book.TextComponentDataRendererMixin",
+    "client.book.TextDataRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

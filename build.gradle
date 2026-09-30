@@ -430,6 +430,8 @@ tasks.named('test', Test) {
     testLogging { events 'passed', 'skipped', 'failed'; showStandardStreams = true }
     systemProperty 'java.io.tmpdir', System.getenv('TEMP')
     systemProperty 'aebm.continuum.projectRoot', project.projectDir.absolutePath
+    // remaster.1: CoreBookFixMixinPluginTest reads the Core class files the book fix mixins target
+    systemProperty 'aebm.continuum.coreJar', file("${aebmDepsRoot}/downloads/ContinuumCore-${minecraft_version}-${mantle_version}.jar").absolutePath
 }
 tasks.register('craftingRegression') {
     dependsOn tasks.named('test')

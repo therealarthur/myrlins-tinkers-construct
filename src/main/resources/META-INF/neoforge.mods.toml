@@ -17,7 +17,11 @@ Community NeoForge 26.1 port of the classic modular tool, material, modifier, an
 
 [[mixins]]
     config="tconstruct.mixins.json"
-    
+
+# Client only: book and station label fixes for stock Continuum Core 1.12.1 (folded in from the private Core fork).
+[[mixins]]
+    config="tconstruct.client.mixins.json"
+
 [[dependencies.tconstruct]]
     modId="neoforge"
     type="required"
