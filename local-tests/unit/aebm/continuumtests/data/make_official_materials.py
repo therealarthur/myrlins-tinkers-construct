@@ -12,7 +12,7 @@ the repository, so this script condenses the official generated JSON into one co
   * the official amounts of the venom, venombone and slimeskin recipes the materials stream owns
 
 Usage (official reference is the shallow clone of tag v3.12.1.231, commit a5a0324954f7):
-  python make_official_materials.py D:/MC/tinkers-parity/reference/TinkersConstruct-v3.12.1.231 official-materials-v3.12.1.231.json
+  python make_official_materials.py <parity-workspace>/reference/TinkersConstruct-v3.12.1.231 official-materials-v3.12.1.231.json
 """
 import json
 import os

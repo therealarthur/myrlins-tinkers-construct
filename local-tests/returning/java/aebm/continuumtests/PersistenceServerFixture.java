@@ -80,7 +80,7 @@ public final class PersistenceServerFixture {
      * Casting notifications (sendBlockUpdated) reach ChunkHolder.blockChanged, which indexes the chunk
      * section array without a height check when the column's chunk is ticking. Above build height that
      * throws ArrayIndexOutOfBoundsException, a vanilla environment artifact that real casting tables inside
-     * build height never hit. The head2 console runs used an unloaded spawn column; a player-issued run or
+     * build height never hit. The first pack server's console runs used an unloaded spawn column; a player-issued run or
      * a forceloaded area does not. Step east in whole chunks until the column is not loaded, so the
      * notifications stay no-ops as intended. This only inspects chunk state; it never loads a chunk.
      */

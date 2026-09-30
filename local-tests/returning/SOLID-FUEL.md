@@ -9,9 +9,9 @@ For partial insertion, two buckets fit and the remaining one must be the stack p
 The production fix restores original stack-aware crafting remainder behavior through the modern ItemStackTemplate API. It also drops `notInserted` instead of the full `container`: the original code's full-stack drop would duplicate the portion already inserted. Fuel amounts, temperature, rate and priority are unchanged. No build or server execution was performed by this subagent.
 
 
-## Head2 .4 burn-hook regression
+## First pack server .4 burn-hook regression
 
-The frozen .3 companion ran on head2: four cases passed, while the extracted-component and partial-insertion cases failed before extraction because the production fuel lookup bypassed the item's `getBurnTime` override. Bucket count three is valid; those assertions are unchanged. See `../../local-audit/solid-fuel-head2-arthur4.md` for target API evidence and the exact observed run.
+The frozen .3 companion ran on the first pack server: four cases passed, while the extracted-component and partial-insertion cases failed before extraction because the production fuel lookup bypassed the item's `getBurnTime` override. Bucket count three is valid; those assertions are unchanged. See `../../local-audit/solid-fuel-first-pack-test-arthur4.md` for target API evidence and the exact observed run.
 
 Four additional cases check `heater_accepts_item_burn_time_override`, `burn_event_zero_veto_is_authoritative`, `burn_event_reduction_applies_once`, and `heater_and_module_share_three_four_tick_boundary`. The real heater accepts the custom 400-tick item absent from the data map and ejects three named buckets after burning. An isolated thread-local event callback sets coal to zero, eight, three or four ticks; both acceptance and actual fuel consumption must obey the final event result. Callback state is removed in `finally`. Nothing modifies the global fuel data map.
 

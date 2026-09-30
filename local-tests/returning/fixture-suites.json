@@ -1,5 +1,5 @@
 {
-  "_comment": "Expected server fixture suites for tools/run-fixture-server.ps1. One suite per entry; the runner fails a suite when a listed case is missing, a label repeats, an unlisted label appears, the summary is missing or duplicated, or the summary disagrees with the PASS/FAIL lines. A stream that adds or renames a case in its own fixture updates only its own suite entry here. Positions are block coordinates in the disposable flat world, inside the forceloaded rectangle, which stays far from world spawn so unpositioned suites run over an unloaded spawn column as they did in the head2 console runs.",
+  "_comment": "Expected server fixture suites for tools/run-fixture-server.ps1. One suite per entry; the runner fails a suite when a listed case is missing, a label repeats, an unlisted label appears, the summary is missing or duplicated, or the summary disagrees with the PASS/FAIL lines. A stream that adds or renames a case in its own fixture updates only its own suite entry here. Positions are block coordinates in the disposable flat world, inside the forceloaded rectangle, which stays far from world spawn so unpositioned suites run over an unloaded spawn column as they did in the first pack server's console runs.",
   "schema": 1,
   "forceload": { "minX": 2048, "minZ": 2048, "maxX": 2111, "maxZ": 2111 },
   "suites": [

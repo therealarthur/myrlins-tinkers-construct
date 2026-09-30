@@ -1,6 +1,6 @@
 {
  "_comment": "runData drift on parity/fixes after DatagenComponentBootstrap (2026-09-29). \"content\" = parsed JSON differs from the committed file (provider and committed JSON disagree); \"format only\" = same parsed JSON, differing only in indentation, trailing newline or key order. Owners follow ws-*.md. Nothing listed here was committed; the committed generated files were restored after the run.",
- "runDataLog": "D:/MC/tinkers-parity/tools/logs/wt-fixes-20260929-131942.log",
+ "runDataLog": "<parity-workspace>/tools/logs/wt-fixes-20260929-131942.log",
  "filesChanged": 438,
  "summary": {
   "unassigned (no stream owns it; orchestrator) | content": 4,

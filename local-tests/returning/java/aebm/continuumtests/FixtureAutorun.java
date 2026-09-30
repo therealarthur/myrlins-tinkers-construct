@@ -28,7 +28,7 @@ import org.slf4j.Logger;
  * {@code -Daebm.fixture.autorun=<plan file>}.
  *
  * <p>Why: the 12 server fixture suites used to need a person typing commands into a server console.
- * {@code D:\MC\tinkers-parity\tools\run-fixture-server.ps1} writes a plan, starts a disposable
+ * {@code <parity-workspace>\tools\run-fixture-server.ps1} writes a plan, starts a disposable
  * headless server with this property, and parses the log afterwards.
  *
  * <p>Plan format, one step per line (UTF-8):

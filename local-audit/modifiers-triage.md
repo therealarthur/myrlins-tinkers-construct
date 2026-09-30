@@ -1,7 +1,7 @@
 # Modifier, fluid effect and mob equipment triage (parity/modifiers)
 
 Written 2026-09-29 by the modifiers stream. Official = TConstruct v3.12.1.231 (`a5a03249`), Continuum = `parity/integration` `6d420d65`.
-Source of the differing file list: `D:\MC\tinkers-parity\ledger-data\balance-leaf-diffs.md`. Every file below was re-diffed after normalizing the format migrations in the legend; the bucket is what remained.
+Source of the differing file list: `<parity-workspace>\ledger-data\balance-leaf-diffs.md`. Every file below was re-diffed after normalizing the format migrations in the legend; the bucket is what remained.
 
 Buckets: **format** (26.1 migration, no change), **semantic** (different module, hook, condition, slot type or trait; restored on `parity/modifiers` unless a 26.1 reason is written), **number** (pure number, proposed in `BALANCE-PROPOSAL.md` on `parity/balance`), **replaced** (another implementation does the same job, recorded).
 

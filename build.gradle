@@ -209,7 +209,7 @@ lombok {
 
 // Root that holds downloads/ and runtime/bmc6-client/mods/. Defaults to the historical
 // pack-folder layout (two levels up from ports/continuum). Parity worktrees under
-// D:/MC/tinkers-parity pass -PaebmDepsRoot=D:/MC/tinkers-parity/deps via tools/build-locked.ps1.
+// the parity workspace pass -PaebmDepsRoot=<parity-workspace>/deps via its tools/build-locked.ps1.
 def aebmDepsRoot = (findProperty('aebmDepsRoot') ?: '../..').toString().replace('\\', '/')
 
 dependencies {

@@ -2,7 +2,7 @@
   {
     "project": "continuum",
     "pin": "72602856c8403c51f9f488ab1580f1216fa42fda",
-    "artifact": "D:\\Myrlin-worktrees\\arthurs-even-better-minecraft\\downloads\\ContinuumConstruct-26.1.2-3.12.2.jar",
+    "artifact": "<pack-workspace>\\downloads\\ContinuumConstruct-26.1.2-3.12.2.jar",
     "artifact_sha256": "e053e6f60582bfa113ae3fedcc104490925a6a83a4389974e35f2aa7557df256",
     "source_resource_count": 32451,
     "counts": {
@@ -76,7 +76,7 @@
   {
     "project": "continuum-core",
     "pin": "c0f1ecc5f1194f6bf746d230e6eb38d46c42d43c",
-    "artifact": "D:\\Myrlin-worktrees\\arthurs-even-better-minecraft\\downloads\\ContinuumCore-26.1.2-1.12.0.jar",
+    "artifact": "<pack-workspace>\\downloads\\ContinuumCore-26.1.2-1.12.0.jar",
     "artifact_sha256": "fb011d7faaeca846665515734b6c931408095fcca2fa2586bb4dfe325bb5ee7c",
     "source_resource_count": 103,
     "counts": {

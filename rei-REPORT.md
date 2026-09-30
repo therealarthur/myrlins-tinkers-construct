@@ -1,6 +1,6 @@
 # parity/rei report: REI recipe viewer (Continuum Construct, Tinkers parity)
 
-Branch `parity/rei` in `D:\MC\tinkers-parity\wt-rei`, based on `parity/integration` `6d420d65`. Release string `3.12.2-arthur.8-rei`. Written 2026-09-29 by the REI stream (Opus). No graphical client was started, nothing was pushed, head2 and the PN51 server were not touched.
+Branch `parity/rei` in `<parity-workspace>\wt-rei`, based on `parity/integration` `6d420d65`. Release string `3.12.2-arthur.8-rei`. Written 2026-09-29 by the REI stream (Opus). No graphical client was started, nothing was pushed, the pack servers were not touched.
 
 ## Status by item
 
@@ -13,9 +13,9 @@ Branch `parity/rei` in `D:\MC\tinkers-parity\wt-rei`, based on `parity/integrati
 | R5 lang | Done: all 37 official `jei.*` and `recipe.*` keys, official English, inserted beside related keys | `src/main/resources/assets/tconstruct/lang/en_us.json` (commit `92101021`) |
 | Reload safety | Done: display cache lifecycle extracted to `SnapshotGate` and tested with the shipped `ClientEntryRefresh` | `SnapshotGateTest` (2 FML tests); `ClientEntryRefreshTest` still passes |
 
-FML suite (`jar craftingRegression returningFixtureJar` on the final code, log `D:\MC\tinkers-parity\tools\logs\wt-rei-20260929-145747.log`): **90 passed, 5 skipped (the same client-only book and model cases as the baseline), 0 failed**. Baseline was 64 passed. `ClientEntryRefreshTest`, `FirstMaterialConcurrencyTest` and `SideInventoryTest` (105 assertions) pass.
+FML suite (`jar craftingRegression returningFixtureJar` on the final code, log `<parity-workspace>\tools\logs\wt-rei-20260929-145747.log`): **90 passed, 5 skipped (the same client-only book and model cases as the baseline), 0 failed**. Baseline was 64 passed. `ClientEntryRefreshTest`, `FirstMaterialConcurrencyTest` and `SideInventoryTest` (105 assertions) pass.
 
-Server fixtures (`tools\run-fixture-server.ps1`, headless, 3 GB, stopped by the runner; result `D:\MC\tinkers-parity\server-fixture\runs\wt-rei-20260929-150840\fixture-result.json`): **36 of 38 pass**. `aebmrecipeviewertest` 14/14 (all eight new REI cases, including both real-menu transfer conservation cases), `aebmrecipemappertest` 14/14, `aebmtooltinkeringtest` 8/10. The two failures are older cases that fail the same way on `parity/fixes` runs since 13:10 today (for example `server-fixture\runs\wt-fixes-20260929-130953`) and come from code outside the viewer; see "Findings for other streams".
+Server fixtures (`tools\run-fixture-server.ps1`, headless, 3 GB, stopped by the runner; result `<parity-workspace>\server-fixture\runs\wt-rei-20260929-150840\fixture-result.json`): **36 of 38 pass**. `aebmrecipeviewertest` 14/14 (all eight new REI cases, including both real-menu transfer conservation cases), `aebmrecipemappertest` 14/14, `aebmtooltinkeringtest` 8/10. The two failures are older cases that fail the same way on `parity/fixes` runs since 13:10 today (for example `server-fixture\runs\wt-fixes-20260929-130953`) and come from code outside the viewer; see "Findings for other streams".
 
 Artifacts (not deployed; built from the tree committed as `7d26fd0d`, so the jar's `Source-Revision` still reads the previous commit `21495c14`): `build\libs\ContinuumConstruct-26.1.2-3.12.2-arthur.8-rei.jar` (SHA-256 `e11e096befdd39e7001f293e39248c44b78f6e82385b96c7dfc70112f7f94611`) and `build\libs\aebm-continuum-returning-fixture-0.0.5.jar` (`928b0e6d7cf5f2060de7a47f68adfd5bd62567fe4ae907badb24fc4533794ffd`). No arthur.1 to .7 artifact was touched. The client keeps using `RoughlyEnoughItems-26.1.819-arthur.1.jar`: the new code uses REI's API packages plus the default plugin's public `BuiltinPlugin` IDs and `CraftingDisplay` (the arthur.7 reload gate's `ReloadManagerImpl` use is unchanged), compiled against the .819 jars that the arthur.1 patch leaves API-identical, and nothing needs REI on the server.
 
@@ -85,12 +85,12 @@ Tags (same IDs and contents as official): `tconstruct:tinkering/tags/modifiers/j
 ## What I need from the coordinator
 
 1. Fold the case lists in `local-audit/rei-fixture-suites.json` into `local-tests/returning/fixture-suites.json` when merging (14 viewer cases, 10 tool tinkering cases, 14 mapper cases).
-2. My branch has no `FixtureAutorun` (it is on `parity/fixes`). I ran the suites with a copy of my fixture jar plus the two `FixtureAutorun` classes from `wt-fixes\build\libs\aebm-continuum-returning-fixture-0.0.6.jar`, built in `D:\MC\tinkers-parity\tmp\wt-rei\fixture\`. After the merge the normal build covers this.
+2. My branch has no `FixtureAutorun` (it is on `parity/fixes`). I ran the suites with a copy of my fixture jar plus the two `FixtureAutorun` classes from `wt-fixes\build\libs\aebm-continuum-returning-fixture-0.0.6.jar`, built in `<parity-workspace>\tmp\wt-rei\fixture\`. After the merge the normal build covers this.
 3. Route findings 1 and 2 above to their owners; once both are fixed, `aebmtooltinkeringtest` should pass 10/10 with no viewer change.
 4. Display IDs of Tinkers pages changed (the layout facts are part of the content hash), so a REI display bookmark saved on arthur.7 may point at an old page. REI keeps the serialized copy; nothing breaks, but the bookmark may not refresh.
 5. Visual acceptance by Arthur with the checklist below.
 
-## Click-through checklist for Arthur (PN51 test server, BMC6 client with REI)
+## Click-through checklist for Arthur (test server, BMC6 client with REI)
 
 Open REI, press the category tabs or use R/U on the named item.
 
