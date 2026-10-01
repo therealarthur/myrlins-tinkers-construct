@@ -6,7 +6,7 @@ This is an unofficial fork. It is not the official Tinkers' Construct, and it is
 
 It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25/Tinker-Construct-3-NeoForge), the NeoForge 26.1 port of Tinkers' Construct. Each part of this fork was compared with official Tinkers' Construct 3.12.1 (build 3.12.1.231, Minecraft 1.20.1) and changed back to official behavior where the port differed. Upstream Continuum Construct's own README is kept in [docs/UPSTREAM-README.md](docs/UPSTREAM-README.md).
 
-Current version: 3.12.4-myrlin.1, based on Continuum Construct 3.12.4.
+Current version: 3.12.4-myrlin.2, based on Continuum Construct 3.12.4.
 
 ## Install
 
@@ -16,7 +16,7 @@ You need:
 - Continuum Core 1.12.1 or a later 1.12.x release (anything from 1.12.1 up to, but not including, 1.13). The stock CurseForge release works; no patched Core is needed.
 - Optional: JEI 29.34.0.90 or later, or REI, for recipe pages.
 
-Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.1.jar` in the `mods` folder of the server and of every client.
+Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.2.jar` in the `mods` folder of the server and of every client.
 
 Do not install it next to Continuum Construct. Both use the mod id `tconstruct`, so the game refuses to start with both. To switch, remove the Continuum Construct jar and add this one. Existing worlds keep working: no item, block, fluid or other registry ID was removed or renamed. Back up your world before switching anyway, and switch the server and all clients together.
 
@@ -34,6 +34,8 @@ Screens, books and recipe viewers:
 - The part builder shows its material panel in multiplayer, station titles and the Inventory label are visible again, the smeltery and foundry screens are centered like official, and tool tooltips use official wording and modifier order.
 - The Tinkers books use official's small uniform font and colors and show their crafting recipes in multiplayer. These fixes are built into this mod, so the stock Continuum Core release is enough.
 - REI: official layouts for all 15 Tinkers categories, a working "+" transfer on the crafting station, tinker station and both anvils, and one worktable page per recipe (25 instead of 250).
+- REI's item list matches official (new in myrlin.2): fluids and buckets for compat metals that no installed mod provides (for example vibranium) are hidden, as are modifier crystals and creative slots; Tinkers fluids draw in the list; materials show as their repair kit and entities as their spawn egg. JEI gets the same hiding.
+- The queen's slime block renders again (new in myrlin.2); it was invisible when placed.
 
 From upstream:
 
@@ -50,13 +52,16 @@ The code of this release was tested before release with these results:
 - A real client joins a multiplayer test server and runs 78 scripted steps (every station, the smeltery and foundry, casting, REI pages and transfers, all six books): 78 pass. The book pages were compared pixel by pixel with the previous build, which carried the same fixes in a patched Continuum Core: text, fonts, colors and all 11 crafting page recipes are identical.
 - Screenshots of 118 screens were compared side by side with official Tinkers' Construct 3.12.1 on Minecraft 1.20.1.
 
+myrlin.2 changed only the recipe viewer integration and one block model. It was checked with 132 automated tests (0 fail, 5 skipped as above), a registry dump identical to myrlin.1, and a client probe that draws every one of REI's 18,177 entries: Tinkers entries with no picture went from 561 to 0.
+
 Engineering notes from this work are in the `*-REPORT.md` files and in `local-audit/`.
 
 ## Known issues
 
 - A saved tool whose stats changed with the official balance is refreshed when a player or mob holding it loads. A tool stored in a chest or item frame keeps its old stats until someone picks it up.
 - The minotaur axe exists only with Twilight Forest installed, as in official.
-- REI 26.1.819 draws no fluids in its sidebar; the Tinkers pages draw their own tanks.
+- REI 26.1.819 draws other mods' fluids (water and lava included) blank in its item list. Tinkers fluids draw correctly since myrlin.2.
+- The JEI hiding added in myrlin.2 compiles and follows the same rules, but was only tested with REI.
 
 ## Reporting problems
 
