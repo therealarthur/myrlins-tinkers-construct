@@ -1,10 +1,19 @@
 # Myrlin's Tinkers' Construct
 
+> **Please read first: this is an unofficial, temporary port.**
+>
+> - All credit for Tinkers' Construct goes to SlimeKnights, who made it. The 26.1 port this builds on is justduck25's [Continuum Construct](https://github.com/justduck25/Tinker-s-Continuum).
+> - We made this for our own modpack that we play with friends, and we're sharing it to hold people over until the official update.
+> - When an official Tinkers' Construct comes out for the Minecraft version you play, switch to it.
+> - Report bugs in this version to us on [GitHub](https://github.com/therealarthur/myrlins-tinkers-construct/issues), never to SlimeKnights.
+
 Tinkers' Construct 3 for Minecraft 26.1.2 on NeoForge: modular tools, materials, modifiers, the smeltery and the foundry.
 
 This is an unofficial fork. It is not the official Tinkers' Construct, and it is not affiliated with or endorsed by SlimeKnights or by justduck25. Please report problems with it [here](https://github.com/therealarthur/myrlins-tinkers-construct/issues), not to them.
 
 It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25/Tinker-Construct-3-NeoForge), the NeoForge 26.1 port of Tinkers' Construct. Each part of this fork was compared with official Tinkers' Construct 3.12.1 (build 3.12.1.231, Minecraft 1.20.1) and changed back to official behavior where the port differed. Upstream Continuum Construct's own README is kept in [docs/UPSTREAM-README.md](docs/UPSTREAM-README.md).
+
+The fixes in this fork were written mostly by AI (Claude) under Arthur's direction, checked against official Tinkers' Construct 3.12.1 with the tests described below, and tested on his server.
 
 Current version: 3.12.4-myrlin.2, based on Continuum Construct 3.12.4.
 
@@ -83,3 +92,5 @@ Then run `gradlew.bat jar -PaebmDepsRoot=<folder>` (or `./gradlew` on Linux and 
 - This fork is maintained by Myrlin ([therealarthur](https://github.com/therealarthur)).
 
 Tinkers' Construct, Mantle, Continuum Construct and Continuum Core are released under the MIT License, and so is this fork. See [LICENSE](LICENSE) (Copyright (c) 2022 SlimeKnights). The copyright notice and license text must be included in all copies or substantial portions of the software.
+
+Made by Myrlin Mod Works. Its sister project, Myrlin Forge ([forge.myrlin.io](https://forge.myrlin.io)), is an AI asset maker for Minecraft and Hytale mods.
