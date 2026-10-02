@@ -74,7 +74,8 @@ public abstract class AbstractMaterialRenderInfoProvider extends GenericDataProv
         // fallback color is already in the order the render info json wants; swapping it again wrote blue for red wool.
         int color = spriteInfo.getTransformer().getFallbackColor();
         if (color != 0xFFFFFFFF) {
-          builder.color(color);
+          // the old swap masked off alpha and the builder adds an opaque one; keep that, venom's palette is translucent
+          builder.color(color & 0x00FFFFFF);
         }
         builder.generator(spriteInfo);
       }
