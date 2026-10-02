@@ -258,6 +258,8 @@ public class ModifierModelMapProvider extends AbstractModifierModelMapProvider {
     travelers("pants", ArmorType.LEGGINGS);
     travelers("boots", ArmorType.BOOTS);
     travelers("shield", null);
+    // official gives the travelers shield banner patterns too, from its own folder of 41 pattern sprites
+    tool("travelers/shield").banner("armor/travelers/shield/banner/", null);
     tool("travelers/goggles").customTrim("armor/travelers/goggles", null);
 
     // slimesuit

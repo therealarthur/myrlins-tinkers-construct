@@ -1,5 +1,9 @@
 {
   "modifiers": {
+    "tconstruct:banner": {
+      "type": "tconstruct:banner",
+      "prefix": "tconstruct:item/tool/armor/travelers/shield/banner/"
+    },
     "tconstruct:dyed": {
       "type": "tconstruct:dyed",
       "texture": "tconstruct:item/tool/armor/travelers/shield/modifiers/dyed"
