@@ -8,7 +8,8 @@
     "model": "tconstruct:item/armor/plate/helmet_broken",
     "modifier_maps": [
       "tconstruct:plate/helmet_broken",
-      "tconstruct:plate/helmet"
+      "tconstruct:plate/helmet",
+      "tconstruct:armor/helmet"
     ],
     "parts": [
       {

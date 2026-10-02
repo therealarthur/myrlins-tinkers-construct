@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/slime/leggings/slime"
   },
   "modifier_maps": [
-    "tconstruct:slime/leggings"
+    "tconstruct:slime/leggings",
+    "tconstruct:armor/leggings"
   ],
   "parts": [
     {

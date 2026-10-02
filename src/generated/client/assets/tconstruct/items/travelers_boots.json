@@ -9,7 +9,8 @@
       ],
       "model": "tconstruct:item/travelers_boots",
       "modifier_maps": [
-        "tconstruct:travelers/boots"
+        "tconstruct:travelers/boots",
+        "tconstruct:armor/boots"
       ],
       "parts": [
         {
@@ -37,7 +38,8 @@
       "model": "tconstruct:item/armor/travelers/boots_broken",
       "modifier_maps": [
         "tconstruct:travelers/boots_broken",
-        "tconstruct:travelers/boots"
+        "tconstruct:travelers/boots",
+        "tconstruct:armor/boots"
       ],
       "parts": [
         {

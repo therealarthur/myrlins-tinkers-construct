@@ -157,7 +157,10 @@ public class ArmorModelManager extends SimpleJsonResourceReloadListener<JsonElem
       if (texture instanceof TintedArmorTexture tinted) {
         return tinted.texture();
       }
-      return texture == ArmorTexture.EMPTY ? original : EMPTY_ARMOR_TEXTURE;
+      // No tinker texture for this layer (an empty option or the trim layer). The vanilla path in original,
+      // textures/entity/equipment/<type>/armor/layer_N.png, is only an index into the armor model and never exists,
+      // so returning it logged "Missing resource" once; the layer is tinted to nothing anyway, so use the empty texture.
+      return EMPTY_ARMOR_TEXTURE;
     }
 
     @Override

@@ -13,6 +13,9 @@
       },
       "index": 0
     },
+    "tconstruct:emerald": {
+      "type": "tconstruct:empty"
+    },
     "tconstruct:trim": {
       "type": "tconstruct:armor_trim",
       "slot": "chestplate"

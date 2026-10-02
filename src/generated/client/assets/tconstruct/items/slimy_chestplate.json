@@ -8,7 +8,8 @@
       ],
       "model": "tconstruct:item/slimy_chestplate",
       "modifier_maps": [
-        "tconstruct:slime/chestplate"
+        "tconstruct:slime/chestplate",
+        "tconstruct:armor/chestplate"
       ],
       "parts": [
         {
@@ -35,7 +36,8 @@
       "model": "tconstruct:item/armor/slime/chestplate_broken",
       "modifier_maps": [
         "tconstruct:slime/chestplate_broken",
-        "tconstruct:slime/chestplate"
+        "tconstruct:slime/chestplate",
+        "tconstruct:armor/chestplate"
       ],
       "parts": [
         {

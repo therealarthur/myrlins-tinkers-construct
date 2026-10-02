@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/slime/chestplate/slime"
   },
   "modifier_maps": [
-    "tconstruct:slime/chestplate"
+    "tconstruct:slime/chestplate",
+    "tconstruct:armor/chestplate"
   ],
   "parts": [
     {

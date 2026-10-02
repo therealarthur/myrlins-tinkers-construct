@@ -8,7 +8,8 @@
     "model": "tconstruct:item/armor/plate/chestplate_broken",
     "modifier_maps": [
       "tconstruct:plate/chestplate_broken",
-      "tconstruct:plate/chestplate"
+      "tconstruct:plate/chestplate",
+      "tconstruct:armor/chestplate"
     ],
     "parts": [
       {

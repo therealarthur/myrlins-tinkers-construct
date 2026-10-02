@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/plate/helmet/plating"
   },
   "modifier_maps": [
-    "tconstruct:plate/helmet"
+    "tconstruct:plate/helmet",
+    "tconstruct:armor/helmet"
   ],
   "first_modifiers": [
     "tconstruct:dyed",

@@ -27,6 +27,8 @@ public class ArmorModelProvider extends AbstractArmorModelProvider {
     addModel(ArmorDefinitions.TRAVELERS, name -> new ArmorTextureSupplier[] {
       FixedArmorTextureSupplier.builder(name, "/base_").build(),
       new FirstArmorTextureSupplier(
+        // wool cuirass materials dye the white wool layer, as official Tinkers 3.12.1 does
+        new MaterialHasFallbackTextureSupplier(1, new DyedArmorTextureSupplier(name.withSuffix("/cuirass_"), "_tconstruct_wool_white", dyed, null, 0), "wool"),
         new DyedArmorTextureSupplier(name, "/cuirass_", dyed, null),
         new MaterialArmorTextureSupplier.Material(name, "/cuirass_", 1)
       ),

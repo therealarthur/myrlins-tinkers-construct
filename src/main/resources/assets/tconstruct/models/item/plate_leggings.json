@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/plate/leggings/plating"
   },
   "modifier_maps": [
-    "tconstruct:plate/leggings"
+    "tconstruct:plate/leggings",
+    "tconstruct:armor/leggings"
   ],
   "first_modifiers": [
     "tconstruct:dyed",

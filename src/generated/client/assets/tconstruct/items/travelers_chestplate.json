@@ -9,7 +9,8 @@
       ],
       "model": "tconstruct:item/travelers_chestplate",
       "modifier_maps": [
-        "tconstruct:travelers/vest"
+        "tconstruct:travelers/vest",
+        "tconstruct:armor/chestplate"
       ],
       "parts": [
         {
@@ -37,7 +38,8 @@
       "model": "tconstruct:item/armor/travelers/chestplate_broken",
       "modifier_maps": [
         "tconstruct:travelers/vest_broken",
-        "tconstruct:travelers/vest"
+        "tconstruct:travelers/vest",
+        "tconstruct:armor/chestplate"
       ],
       "parts": [
         {

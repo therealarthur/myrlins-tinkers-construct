@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/slime/helmet/slime"
   },
   "modifier_maps": [
-    "tconstruct:slime/helmet"
+    "tconstruct:slime/helmet",
+    "tconstruct:armor/helmet"
   ],
   "parts": [
     {

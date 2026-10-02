@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/plate/chestplate/plating"
   },
   "modifier_maps": [
-    "tconstruct:plate/chestplate"
+    "tconstruct:plate/chestplate",
+    "tconstruct:armor/chestplate"
   ],
   "first_modifiers": [
     "tconstruct:dyed",

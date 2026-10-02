@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/slime/boots/slime"
   },
   "modifier_maps": [
-    "tconstruct:slime/boots"
+    "tconstruct:slime/boots",
+    "tconstruct:armor/boots"
   ],
   "parts": [
     {

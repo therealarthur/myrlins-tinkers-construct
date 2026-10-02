@@ -69,10 +69,13 @@ public abstract class AbstractMaterialRenderInfoProvider extends GenericDataProv
       MaterialSpriteInfo spriteInfo = materialSprites.getMaterialInfo(texture);
       if (spriteInfo != null) {
         builder.fallbacks(spriteInfo.getFallbacks());
-        // colors are in AABBGGRR format, we want AARRGGBB, so swap red and blue
+        // 1.20.1 handed us AABBGGRR pixels and this swapped red and blue to get AARRGGBB. On 26.1 NativeImage already
+        // returns AARRGGBB and the palettes are stored as AARRGGBB (addARGB, or addABGR translated on the way in), so the
+        // fallback color is already in the order the render info json wants; swapping it again wrote blue for red wool.
         int color = spriteInfo.getTransformer().getFallbackColor();
         if (color != 0xFFFFFFFF) {
-          builder.color((color & 0x00FF00) | ((color >> 16) & 0x0000FF) | ((color << 16) & 0xFF0000));
+          // the old swap masked off alpha and the builder adds an opaque one; keep that, venom's palette is translucent
+          builder.color(color & 0x00FFFFFF);
         }
         builder.generator(spriteInfo);
       }

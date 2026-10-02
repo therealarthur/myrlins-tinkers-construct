@@ -1,5 +1,8 @@
 {
-  "color": "FFAC8DED",
+  "color": "FFED8DAC",
+  "fallbacks": [
+    "wool"
+  ],
   "generator": {
     "supported_stats": [
       "tconstruct:arrow_head"
