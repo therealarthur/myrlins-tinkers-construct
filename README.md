@@ -11,7 +11,7 @@ Tinkers' Construct 3 for Minecraft 26.1.2 on NeoForge: modular tools, materials,
 
 This is an unofficial fork. It is not the official Tinkers' Construct, and it is not affiliated with or endorsed by SlimeKnights or by justduck25. Please report problems with it [here](https://github.com/therealarthur/myrlins-tinkers-construct/issues), not to them.
 
-It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25/Tinker-Construct-3-NeoForge), the NeoForge 26.1 port of Tinkers' Construct. Each part of this fork was compared with official Tinkers' Construct 3.12.1 (build 3.12.1.231, Minecraft 1.20.1) and changed back to official behavior where the port differed. Upstream Continuum Construct's own README is kept in [docs/UPSTREAM-README.md](docs/UPSTREAM-README.md).
+It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25/Tinker-s-Continuum) (Continuum Tinker on CurseForge), the NeoForge 26.1 port of Tinkers' Construct. Each part of this fork was compared with official Tinkers' Construct 3.12.1 (build 3.12.1.231, Minecraft 1.20.1) and changed back to official behavior where the port differed. Upstream Continuum Construct's own README is kept in [docs/UPSTREAM-README.md](docs/UPSTREAM-README.md).
 
 The fixes in this fork were written mostly by AI (Claude) under Arthur's direction, checked against official Tinkers' Construct 3.12.1 with the tests described below, and tested on his server.
 
@@ -88,7 +88,7 @@ Then run `gradlew.bat jar -PaebmDepsRoot=<folder>` (or `./gradlew` on Linux and 
 ## Credits and license
 
 - [SlimeKnights](https://github.com/SlimeKnights) made Tinkers' Construct and Mantle.
-- justduck25 made [Continuum Construct](https://github.com/justduck25/Tinker-Construct-3-NeoForge) and Continuum Core, the NeoForge 26.1 ports this fork is built on.
+- justduck25 made [Continuum Construct](https://github.com/justduck25/Tinker-s-Continuum) and [Continuum Core](https://github.com/justduck25/Continuum-Mantle), the NeoForge 26.1 ports this fork is built on.
 - This fork is maintained by Myrlin ([therealarthur](https://github.com/therealarthur)).
 
 Tinkers' Construct, Mantle, Continuum Construct and Continuum Core are released under the MIT License, and so is this fork. See [LICENSE](LICENSE) (Copyright (c) 2022 SlimeKnights). The copyright notice and license text must be included in all copies or substantial portions of the software.
