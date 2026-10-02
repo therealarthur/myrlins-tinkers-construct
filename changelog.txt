@@ -4,7 +4,7 @@ Restores missing assets from SlimeKnights' MIT-licensed Tinkers' Construct 3.12.
 
 - Restores 663 of 664 textures identified by the audit: fluid camera overlays, modifier overlays, worn armor layers, material and wool sprites, and travelers shield banners. The remaining ambidextrous texture belongs to a modifier absent from this port.
 - Restores shared armor modifier map wiring and the wool dye fallback.
-- Restores 1,095 translated book files, including 25 localized images, Classical Chinese language text, and missing translated keys for Mexican Spanish, Russian, Japanese and Simplified Chinese.
+- Restores 1,095 translated book files, including 25 localized images, plus Classical Chinese language text and missing translated keys for Mexican Spanish, Russian, Japanese and Simplified Chinese.
 - Corrects swapped material render-info colors and the clay palette; all 119 shared colors match official 3.12.1.
 - Stops the missing-resource warning for empty leggings armor layers.
 - Keeps all registry IDs from myrlin.2. Requires stock Continuum Core 1.12.1, below 1.13.

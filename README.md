@@ -62,7 +62,7 @@ From upstream:
 
 ## How it was checked
 
-The code of this release was tested before release with these results:
+The earlier parity and myrlin.1 releases were tested with these results:
 
 - 125 automated tests (unit tests and in-game tests run by NeoForge's test framework): 120 pass, 5 need a graphical client and are skipped in the headless run, 0 fail.
 - 153 server test cases in 17 suites on a disposable dedicated server: all pass. They cover thrown tools, crafting, saving and reloading tools and casting tables, armor and materials, frost walker, solid and liquid fuels, combat, modifiers, tool building in the stations, recipe viewer data, entity melting, fancy armor stands, saved tool loading and the upstream 3.12.3 and 3.12.4 fixes.
@@ -72,6 +72,8 @@ The code of this release was tested before release with these results:
 - Screenshots of 118 screens were compared side by side with official Tinkers' Construct 3.12.1 on Minecraft 1.20.1.
 
 myrlin.2 changed only the recipe viewer integration and one block model. It was checked with 132 automated tests (0 fail, 5 skipped as above), a registry dump identical to myrlin.1, and a client probe that draws every one of REI's 18,177 entries: Tinkers entries with no picture went from 561 to 0.
+
+myrlin.3 was checked on head2 with 132 automated tests (127 pass, 5 client-only tests skipped, 0 fail) and all 153 server cases passing. Its 3,417-entry registry dump is byte for byte identical to myrlin.2. The asset audits find no newly broken references and only the deliberately absent ambidextrous texture; all 119 shared material render-info colors match official 3.12.1.
 
 Engineering notes from this work are in the `*-REPORT.md` files and in `local-audit/`.
 
