@@ -15,7 +15,7 @@ It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25
 
 The fixes in this fork were written mostly by AI (Claude) under Arthur's direction, checked against official Tinkers' Construct 3.12.1 with the tests described below, and tested on his server.
 
-Current version: 3.12.4-myrlin.2, based on Continuum Construct 3.12.4.
+Current version: 3.12.4-myrlin.3, based on Continuum Construct 3.12.4.
 
 ## Install
 
@@ -25,9 +25,19 @@ You need:
 - Continuum Core 1.12.1 or a later 1.12.x release (anything from 1.12.1 up to, but not including, 1.13). The stock CurseForge release works; no patched Core is needed.
 - Optional: JEI 29.34.0.90 or later, or REI, for recipe pages.
 
-Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.2.jar` in the `mods` folder of the server and of every client.
+Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.3.jar` in the `mods` folder of the server and of every client.
 
 Do not install it next to Continuum Construct. Both use the mod id `tconstruct`, so the game refuses to start with both. To switch, remove the Continuum Construct jar and add this one. Existing worlds keep working: no item, block, fluid or other registry ID was removed or renamed. Back up your world before switching anyway, and switch the server and all clients together.
+
+## New in myrlin.3
+
+- Restores 663 of the 664 missing textures identified by the asset audit: fluid camera overlays, modifier overlays, worn armor layers, material and dyed wool sprites, and travelers shield banner sprites. The remaining texture is for ambidextrous, a modifier this port does not have.
+- Connects the shared armor modifier maps and restores the wool dye fallback, so armor can use the restored overlays and wool textures.
+- Restores 1,095 translated book files, including 25 localized book images, plus Classical Chinese language text and missing translated keys for Mexican Spanish, Russian, Japanese and Simplified Chinese.
+- Corrects swapped red and blue values in material render info and restores the official clay palette. All 119 shared material render-info colors now match official 3.12.1.
+- Stops requesting a nonexistent leggings texture when an armor layer is empty.
+
+The restored art and book files are copied from SlimeKnights' MIT-licensed Tinkers' Construct 3.12.1. They were not made by Myrlin Forge. No items, blocks, fluids or registry IDs are added or removed in this update.
 
 ## What is different from Continuum Construct
 
