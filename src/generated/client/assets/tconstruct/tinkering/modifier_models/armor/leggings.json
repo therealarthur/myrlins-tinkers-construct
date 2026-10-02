@@ -1,0 +1,16 @@
+{
+  "modifiers": {
+    "tconstruct:emerald": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_emerald",
+    "tconstruct:fiery": {
+      "luminosity": 10,
+      "texture": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_fiery"
+    },
+    "tconstruct:leaping": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_leaping",
+    "tconstruct:luck": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_luck",
+    "tconstruct:shield_strap": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_shield_strap",
+    "tconstruct:speedy": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_speedy",
+    "tconstruct:step_up": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_step_up",
+    "tconstruct:swift_sneak": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_swift_sneak",
+    "tconstruct:thorns": "tconstruct:item/tool/armor/modifiers/leggings/tconstruct_thorns"
+  }
+}

@@ -7,7 +7,8 @@
     "model": "tconstruct:item/armor/slime/leggings_broken",
     "modifier_maps": [
       "tconstruct:slime/leggings_broken",
-      "tconstruct:slime/leggings"
+      "tconstruct:slime/leggings",
+      "tconstruct:armor/leggings"
     ],
     "parts": [
       {

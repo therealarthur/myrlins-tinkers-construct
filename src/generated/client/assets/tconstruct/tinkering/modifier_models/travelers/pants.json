@@ -4,6 +4,7 @@
       "type": "tconstruct:dyed",
       "texture": "tconstruct:item/tool/armor/travelers/pants/modifiers/dyed"
     },
+    "tconstruct:swift_sneak": "tconstruct:item/tool/armor/travelers/pants/modifiers/tconstruct_swift_sneak",
     "tconstruct:trim": {
       "type": "tconstruct:armor_trim",
       "slot": "leggings"

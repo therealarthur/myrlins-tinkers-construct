@@ -8,7 +8,8 @@
     "particle": "tconstruct:item/tool/armor/travelers/pants/cuirass"
   },
   "modifier_maps": [
-    "tconstruct:travelers/pants"
+    "tconstruct:travelers/pants",
+    "tconstruct:armor/leggings"
   ],
   "first_modifiers": [
     "tconstruct:dyed",

@@ -8,7 +8,8 @@
       ],
       "model": "tconstruct:item/slime_boots",
       "modifier_maps": [
-        "tconstruct:slime/boots"
+        "tconstruct:slime/boots",
+        "tconstruct:armor/boots"
       ],
       "parts": [
         {
@@ -35,7 +36,8 @@
       "model": "tconstruct:item/armor/slime/boots_broken",
       "modifier_maps": [
         "tconstruct:slime/boots_broken",
-        "tconstruct:slime/boots"
+        "tconstruct:slime/boots",
+        "tconstruct:armor/boots"
       ],
       "parts": [
         {

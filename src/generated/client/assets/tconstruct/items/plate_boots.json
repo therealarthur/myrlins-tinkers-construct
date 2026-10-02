@@ -9,7 +9,8 @@
       ],
       "model": "tconstruct:item/plate_boots",
       "modifier_maps": [
-        "tconstruct:plate/boots"
+        "tconstruct:plate/boots",
+        "tconstruct:armor/boots"
       ],
       "parts": [
         {
@@ -37,7 +38,8 @@
       "model": "tconstruct:item/armor/plate/boots_broken",
       "modifier_maps": [
         "tconstruct:plate/boots_broken",
-        "tconstruct:plate/boots"
+        "tconstruct:plate/boots",
+        "tconstruct:armor/boots"
       ],
       "parts": [
         {

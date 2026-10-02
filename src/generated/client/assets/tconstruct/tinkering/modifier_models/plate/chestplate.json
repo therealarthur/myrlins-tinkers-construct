@@ -1,5 +1,6 @@
 {
   "modifiers": {
+    "tconstruct:diamond": "tconstruct:item/tool/armor/plate/chestplate/modifiers/tconstruct_diamond",
     "tconstruct:dyed": {
       "type": "tconstruct:material_has_fallback",
       "fallback": "metal",
@@ -13,6 +14,10 @@
       },
       "index": 1
     },
+    "tconstruct:freezing": "tconstruct:item/tool/armor/plate/chestplate/modifiers/tconstruct_freezing",
+    "tconstruct:netherite": "tconstruct:item/tool/armor/plate/chestplate/modifiers/tconstruct_netherite",
+    "tconstruct:ricochet": "tconstruct:item/tool/armor/plate/chestplate/modifiers/tconstruct_ricochet",
+    "tconstruct:springy": "tconstruct:item/tool/armor/plate/chestplate/modifiers/tconstruct_springy",
     "tconstruct:trim": {
       "type": "tconstruct:armor_trim",
       "slot": "chestplate"
