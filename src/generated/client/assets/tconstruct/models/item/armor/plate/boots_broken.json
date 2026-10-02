@@ -9,7 +9,8 @@
   },
   "modifier_maps": [
     "tconstruct:plate/boots_broken",
-    "tconstruct:plate/boots"
+    "tconstruct:plate/boots",
+    "tconstruct:armor/boots"
   ],
   "first_modifiers": [
     "tconstruct:dyed",
