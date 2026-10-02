@@ -253,11 +253,11 @@ public class ModifierModelMapProvider extends AbstractModifierModelMapProvider {
     tool("plate/shield").banner("armor/plate/shield/banner_small/", "armor/plate/shield/banner_large/");
 
     // travelers
-    travelers("goggles", null);
+    travelersWhiteWool("goggles", null);
     travelers("vest", ArmorType.CHESTPLATE);
     travelers("pants", ArmorType.LEGGINGS);
     travelers("boots", ArmorType.BOOTS);
-    travelers("shield", null);
+    travelersWhiteWool("shield", null);
     // official gives the travelers shield banner patterns too, from its own folder of 41 pattern sprites
     tool("travelers/shield").banner("armor/travelers/shield/banner/", null);
     tool("travelers/goggles").customTrim("armor/travelers/goggles", null);
@@ -500,16 +500,39 @@ public class ModifierModelMapProvider extends AbstractModifierModelMapProvider {
     return "Continuum Construct Modifier Model Map Provider";
   }
 
-  /** Adds dyed textures for travelers gear */
-  private void travelers(String name, @Nullable ArmorType type) {
+  /**
+   * Adds dyed textures for travelers gear. As in official Tinkers 3.12.1, a cuirass made of a wool material
+   * (render info fallback "wool") dyes its own wool texture instead of the generic dyed one: boots, pants and
+   * vest have a dyed_wool sprite, goggles and shield dye the white wool cuirass sprite.
+   */
+  private void travelers(String name, @Nullable ArmorType type, String woolDyed, String woolDyedBroken) {
     String root = "armor/travelers/" + name + "/modifiers/";
+    String woolRoot = "armor/travelers/" + name + "/";
     ModifierId dyed = TinkerModifiers.dyed.getId();
     String item = "travelers/" + name;
-    Builder b = tool(item).modifier(dyed, new DyedModifierModel(toolMaterial(root + "dyed"), null));
+    Builder b = tool(item).modifier(dyed, new MaterialHasFallbackModifierModel(1,
+      new DyedModifierModel(toolMaterial(woolRoot + woolDyed), null),
+      new DyedModifierModel(toolMaterial(root + "dyed"), null),
+      "wool"
+    ));
     if (type != null) {
       b.trim(type);
     }
-    tool(item + "_broken").modifier(dyed, new DyedModifierModel(toolMaterial(root + "dyed_broken"), null));
+    tool(item + "_broken").modifier(dyed, new MaterialHasFallbackModifierModel(1,
+      new DyedModifierModel(toolMaterial(woolRoot + woolDyedBroken), null),
+      new DyedModifierModel(toolMaterial(root + "dyed_broken"), null),
+      "wool"
+    ));
+  }
+
+  /** Adds dyed textures for travelers gear whose wool variant is the dyed_wool sprite */
+  private void travelers(String name, @Nullable ArmorType type) {
+    travelers(name, type, "dyed_wool", "dyed_wool_broken");
+  }
+
+  /** Adds dyed textures for travelers gear whose wool variant is the white wool cuirass sprite */
+  private void travelersWhiteWool(String name, @Nullable ArmorType type) {
+    travelers(name, type, "cuirass_tconstruct_wool_white", "cuirass_broken_tconstruct_wool_white");
   }
 
   /** Adds dyed textures to a staff */

@@ -493,7 +493,8 @@ public class TinkerMaterialSpriteProvider extends AbstractMaterialSpriteProvider
     for (DyeColor color : DyeColor.values()) {
       String name = color.getName();
       MaterialSpriteInfoBuilder builder = buildMaterial(MaterialVariantId.create(MaterialIds.wool, name));
-      builder.arrowHead().transformer(transformerFromSprite(Identifier.withDefaultNamespace("block/" + name + "_wool"), 0, 0));
+      // fallback "wool" lets the travelers models pick the wool dye textures, as official does
+      builder.arrowHead().fallbacks("wool").transformer(transformerFromSprite(Identifier.withDefaultNamespace("block/" + name + "_wool"), 0, 0));
       if (color == DyeColor.WHITE) {
         builder.fletching();
       } else {
