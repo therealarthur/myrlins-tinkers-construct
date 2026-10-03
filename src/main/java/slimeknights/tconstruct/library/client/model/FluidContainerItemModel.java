@@ -50,7 +50,7 @@ public record FluidContainerItemModel(DynamicFluidContainerModel.Unbaked delegat
     @Override public Interner interner() { return new FluidInterner(delegate.interner()); }
   }
 
-  private record FluidInterner(ModelBaker.Interner delegate) implements ModelBaker.Interner {
+  record FluidInterner(ModelBaker.Interner delegate) implements ModelBaker.Interner {
     @Override public Vector3fc vector(Vector3fc vector) { return delegate.vector(vector); }
     @Override public BakedNormals normals(BakedNormals normals) { return delegate.normals(normals); }
     @Override public BakedColors colors(BakedColors colors) { return delegate.colors(colors); }
@@ -60,7 +60,7 @@ public record FluidContainerItemModel(DynamicFluidContainerModel.Unbaked delegat
       RenderType type = material.itemRenderType();
       RenderType standard = standardItemSheet(type);
       if (standard != type) {
-        // Preserve light emission and disabled shading. Only the render pass changes.
+        // Preserve material metadata while replacing the shader render pass.
         material = new BakedQuad.MaterialInfo(material.sprite(), material.layer(), standard,
           material.tintIndex(), material.shade(), material.lightEmission(), material.ambientOcclusion());
       }
