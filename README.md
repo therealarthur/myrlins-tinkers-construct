@@ -15,7 +15,7 @@ It is a fork of justduck25's [Continuum Construct](https://github.com/justduck25
 
 The fixes in this fork were written mostly by AI (Claude) under Arthur's direction, checked against official Tinkers' Construct 3.12.1 with the tests described below, and tested on his server.
 
-Current version: 3.12.4-myrlin.3, based on Continuum Construct 3.12.4.
+Current version: 3.12.4-myrlin.4, based on Continuum Construct 3.12.4.
 
 ## Install
 
@@ -25,9 +25,17 @@ You need:
 - Continuum Core 1.12.1 or a later 1.12.x release (anything from 1.12.1 up to, but not including, 1.13). The stock CurseForge release works; no patched Core is needed.
 - Optional: JEI 29.34.0.90 or later, or REI, for recipe pages.
 
-Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.3.jar` in the `mods` folder of the server and of every client.
+Put `MyrlinsTinkersConstruct-26.1.2-3.12.4-myrlin.4.jar` in the `mods` folder of the server and of every client.
 
 Do not install it next to Continuum Construct. Both use the mod id `tconstruct`, so the game refuses to start with both. To switch, remove the Continuum Construct jar and add this one. Existing worlds keep working: no item, block, fluid or other registry ID was removed or renamed. Back up your world before switching anyway, and switch the server and all clients together.
+
+## New in myrlin.4
+
+Filled buckets of glowing molten metals, including manyullyn and rose gold, could look empty in first person with Iris shaders enabled. Their inventory icons and their appearance without shaders were already correct.
+
+This update uses a compatible rendering path only in first person while Iris reports shaders enabled. Iris remains optional. With Iris absent, shaders disabled, or the bucket in another display context, the original rendering path is preserved.
+
+This update adds no Myrlinite content or new art. It retains the assets restored in myrlin.3 below. The shader shadow path can still log an unsupported unlit-pipeline warning; this fix does not cover that path.
 
 ## New in myrlin.3
 

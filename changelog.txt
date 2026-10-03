@@ -1,3 +1,14 @@
+Myrlin's Tinkers' Construct 26.1.2-3.12.4-myrlin.4
+
+Fixes filled buckets of glowing molten metals such as manyullyn and rose gold looking empty in first person with Iris shaders enabled. The buckets already rendered correctly without shaders and in the inventory.
+
+- Uses a compatible rendering path only in first person while Iris reports active shaders.
+- Keeps Iris optional and preserves native rendering with Iris absent, shaders disabled, or another display context.
+- Retains myrlin.3's assets and registry IDs. No Myrlinite content or new art is included.
+- The native shadow path can still log an unsupported unlit-pipeline warning with shaders.
+
+Credit to SlimeKnights for Tinkers' Construct and Mantle, and justduck25 for Continuum Construct and Continuum Core. The art restored in myrlin.3 comes from the MIT original; this update adds no Forge-made assets.
+
 Myrlin's Tinkers' Construct 26.1.2-3.12.4-myrlin.3
 
 Restores missing assets from SlimeKnights' MIT-licensed Tinkers' Construct 3.12.1 to justduck25's Continuum Construct port.
