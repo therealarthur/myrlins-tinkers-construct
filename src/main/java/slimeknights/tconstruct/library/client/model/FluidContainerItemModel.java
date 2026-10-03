@@ -1,6 +1,10 @@
 package slimeknights.tconstruct.library.client.model;
 
+import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
+import java.lang.reflect.Method;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.item.ItemModel;
@@ -11,6 +15,7 @@ import net.minecraft.client.resources.model.ResolvedModel;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.client.resources.model.sprite.MaterialBaker;
 import net.minecraft.resources.Identifier;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.client.NeoForgeRenderTypes;
 import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
 import net.neoforged.neoforge.client.model.quad.BakedColors;
@@ -19,7 +24,7 @@ import org.joml.Matrix4fc;
 import org.joml.Vector3fc;
 import slimeknights.tconstruct.TConstruct;
 
-/** Keeps luminous fluid quads on the standard item sheets used by shader hand passes. */
+/** Uses standard item sheets for Iris shader hands, keeping native fluid rendering elsewhere. */
 public record FluidContainerItemModel(DynamicFluidContainerModel.Unbaked delegate) implements ItemModel.Unbaked {
   public static final Identifier ID = TConstruct.getResource("fluid_container");
   public static final MapCodec<FluidContainerItemModel> MAP_CODEC =
@@ -37,9 +42,50 @@ public record FluidContainerItemModel(DynamicFluidContainerModel.Unbaked delegat
 
   @Override
   public ItemModel bake(ItemModel.BakingContext context, Matrix4fc transformation) {
-    return delegate.bake(new ItemModel.BakingContext(
-      new FluidModelBaker(context.blockModelBaker()), context.entityModelSet(), context.sprites(),
-      context.playerSkinRenderCache(), context.missingItemModel(), context.contextSwapper(), context.pendingAnimations()), transformation);
+    return withShaderHandModel(delegate.bake(context, transformation),
+      () -> delegate.bake(new ItemModel.BakingContext(
+        new FluidModelBaker(context.blockModelBaker()), context.entityModelSet(), context.sprites(),
+        context.playerSkinRenderCache(), context.missingItemModel(), context.contextSwapper(), context.pendingAnimations()), transformation),
+      () -> IrisState.SHADERS_ACTIVE.getAsBoolean());
+  }
+
+  /** Query current shader state on each hand update so shader toggles do not leave a stale model selected. */
+  static ItemModel withShaderHandModel(ItemModel nativeModel, Supplier<ItemModel> shaderHandModel, BooleanSupplier shadersActive) {
+    Supplier<ItemModel> shaderModel = Suppliers.memoize(shaderHandModel::get);
+    return (output, item, resolver, displayContext, level, owner, seed) -> {
+      ItemModel selected = displayContext.firstPerson() && shadersActive.getAsBoolean() ? shaderModel.get() : nativeModel;
+      selected.update(output, item, resolver, displayContext, level, owner, seed);
+    };
+  }
+
+  private static class IrisState {
+    private static final BooleanSupplier SHADERS_ACTIVE = optionalIrisState(() -> ModList.get().isLoaded("iris"), Class::forName);
+  }
+
+  @FunctionalInterface
+  interface ClassLookup {
+    Class<?> load(String name) throws ClassNotFoundException;
+  }
+
+  /** Resolve the optional API once, only after the mod-presence guard succeeds. */
+  static BooleanSupplier optionalIrisState(BooleanSupplier irisLoaded, ClassLookup classes) {
+    Supplier<BooleanSupplier> query = Suppliers.memoize(() -> {
+      try {
+        Class<?> irisApi = classes.load("net.irisshaders.iris.api.v0.IrisApi");
+        Object api = irisApi.getMethod("getInstance").invoke(null);
+        Method shaderPackInUse = irisApi.getMethod("isShaderPackInUse");
+        return () -> {
+          try {
+            return Boolean.TRUE.equals(shaderPackInUse.invoke(api));
+          } catch (ReflectiveOperationException | LinkageError | RuntimeException exception) {
+            return false;
+          }
+        };
+      } catch (ReflectiveOperationException | LinkageError | RuntimeException exception) {
+        return () -> false;
+      }
+    });
+    return () -> irisLoaded.getAsBoolean() && query.get().getAsBoolean();
   }
 
   private record FluidModelBaker(ModelBaker delegate) implements ModelBaker {
