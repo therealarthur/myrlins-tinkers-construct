@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "neoforge:fluid_container",
+    "type": "tconstruct:fluid_container",
     "apply_fluid_luminosity": true,
     "cover_is_mask": true,
     "fluid": "minecraft:empty",

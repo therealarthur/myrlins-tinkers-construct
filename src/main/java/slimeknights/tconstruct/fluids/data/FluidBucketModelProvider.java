@@ -45,7 +45,7 @@ public class FluidBucketModelProvider extends GenericDataProvider {
   private static JsonObject itemDefinition(Identifier item, JsonObject bucketModel) {
     JsonObject definition = new JsonObject();
     JsonObject model = new JsonObject();
-    model.addProperty("type", "neoforge:fluid_container");
+    model.addProperty("type", "tconstruct:fluid_container");
     model.add("textures", bucketModel.getAsJsonObject("textures"));
     model.add("fluid", bucketModel.get("fluid"));
     model.add("flip_gas", bucketModel.get("flip_gas"));

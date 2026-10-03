@@ -323,7 +323,7 @@ public class TinkerItemModelProvider implements DataProvider {
   private static JsonObject fluidContainerItemDefinition(JsonObject sourceModel) {
     JsonObject definition = new JsonObject();
     JsonObject model = new JsonObject();
-    model.addProperty("type", "neoforge:fluid_container");
+    model.addProperty("type", "tconstruct:fluid_container");
     model.add("textures", sourceModel.get("textures"));
     if (sourceModel.has("fluid")) {
       model.add("fluid", sourceModel.get("fluid"));

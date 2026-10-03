@@ -188,6 +188,8 @@ public class TinkerClient {
 
   }
   private static void registerMaterialItemModels(RegisterItemModelsEvent event) {
+    event.register(slimeknights.tconstruct.library.client.model.FluidContainerItemModel.ID,
+      slimeknights.tconstruct.library.client.model.FluidContainerItemModel.MAP_CODEC);
     event.register(MaterialItemModel.Unbaked.ID, MaterialItemModel.Unbaked.MAP_CODEC);
     event.register(ToolItemModel.Unbaked.ID, ToolItemModel.Unbaked.MAP_CODEC);
   }
